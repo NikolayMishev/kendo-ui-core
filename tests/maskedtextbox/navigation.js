@@ -1,504 +1,357 @@
+/* globals createMasked, updateInput, updateInputAt, deleteContent, deleteBackwards, stub, createInput, setupPressKey */
 (function() {
-    var MaskedTextBox = kendo.ui.MaskedTextBox,
-        caret = kendo.caret,
-        input;
+    var MaskedTextBox = kendo.ui.MaskedTextBox;
+    var input;
+    var caret = kendo.caret;
+    var createMaskedTextBox;
 
-    module("kendo.ui.MaskedTextBox navigation", {
-        setup: function() {
-            input = $("<input />").appendTo(QUnit.fixture);
+    describe("kendo.ui.MaskedTextBox navigation:", function() {
+        beforeEach(function() {
+            input = createInput();
+        });
+        afterEach(function() {
+            kendo.destroy(Mocha.fixture);
+        });
 
-            $.fn.pressKey = function(key, eventName, options) {
-                if (typeof key === "string") {
-                    key = key.charCodeAt(0);
+        it("replace empty symbol if valid", function() {
+            var masked = createMasked(input, "0-0");
+            masked.value("_-_");
+            updateInputAt(masked, "0", 0);
+
+            assert.equal(input.val(), "0-_");
+        });
+
+        it("inserts after a static character", function() {
+            var masked = createMasked(input, "-0");
+            masked.value("-_");
+            updateInputAt(masked, "0", 0);
+
+            assert.equal(caret(input[0])[0], 2);
+            assert.equal(input.val(), "-0");
+        });
+
+        it("allows typing of an empty symbol", function() {
+            var masked = createMasked(input, "-0");
+            masked.value("-_");
+            updateInputAt(masked, "_", 0);
+
+            assert.equal(caret(input[0])[0], 2);
+            assert.equal(input.val(), "-_");
+        });
+
+        it("inserts a symbol while shifting rest of the text", function() {
+            var masked = createMasked(input, "0-000");
+            masked.value("0-123");
+            updateInputAt(masked, "0", 2);
+
+            assert.equal(caret(input[0])[0], 3);
+            assert.equal(input.val(), "0-012");
+        });
+
+        it("replaces an empty symbol without shifting rest of the text", function() {
+            var masked = createMasked(input, "0-000");
+            masked.value("0-__3");
+            updateInputAt(masked, "0", 2);
+
+            assert.equal(caret(input[0])[0], 3);
+            assert.equal(input.val(), "0-0_3");
+        });
+
+        it("prevents user input if end of mask is reached", function() {
+            var masked = createMasked(input, "-0");
+            masked.value("-0");
+            updateInputAt(masked, "0", 2);
+
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("does not modify value on invalid symbol", function() {
+            var masked = createMasked(input, "0000");
+            masked.value("0___");
+            updateInputAt(masked, "a", 0);
+
+            assert.equal(caret(input[0])[0], 0);
+            assert.equal(input.val(), "0___");
+        });
+
+        it("return empty symbol on BACKSPACE", function() {
+            var masked = createMasked(input, "0-0");
+            masked.value("2-3");
+            deleteBackwards(masked, 3);
+
+            assert.equal(input.val(), "2-_");
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("prevents user input on BACKSPACE if start is reached", function() {
+            var masked = createMasked(input, "(0-0)");
+            masked.value("(_-_)");
+            deleteBackwards(masked, 0);
+
+            assert.equal(input.val(), "(_-_)");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+        it("does not add empty symbol on BACKSPACE when start is reached", function() {
+            var masked = createMasked(input, "(0-0)");
+            masked.value("(_-_)");
+            deleteBackwards(masked, 1);
+
+            assert.equal(input.val(), "(_-_)");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+        it("skips characters on BACKSPACE", function() {
+            var masked = createMasked(input, "0--0");
+            masked.value("_--_");
+            deleteBackwards(masked, 3);
+
+            assert.equal(input.val(), "_--_");
+            assert.equal(caret(input[0])[0], 1);
+        });
+
+        it("honours static chars on BACKSPACE", function() {
+            var masked = createMasked(input, "0-0");
+            masked.value("2-3");
+            deleteBackwards(masked, 2, 2);
+
+            assert.equal(input.val(), "3-_");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+        it("multiple chars delete with BACKSPACE", function() {
+            var masked = createMasked(input, "0-00");
+            masked.value("2-34");
+            deleteBackwards(masked, 4, 2);
+
+            assert.equal(input.val(), "2-__");
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("delete 0s from the end of the input with BACKSPACE", function() {
+            var masked = createMasked(input, "0-0000");
+            masked.value("1-2000");
+
+            deleteBackwards(masked, 6);
+
+            assert.equal(masked.value(), "1-200_");
+            assert.equal(caret(input[0])[0], 5);
+        });
+
+        it("BACKSPACE over static char ending at mask specific numeric chars", function() {
+            var masked = createMasked(input, "00-00-00");
+            masked.value("00-00");
+
+            deleteBackwards(masked, 6);
+
+            assert.equal(masked.value(), "00-00-__");
+            assert.equal(caret(input[0])[0], 5);
+        });
+
+        it("BACKSPACE over static char ending at mask specific letter chars", function() {
+            var masked = createMasked(input, "LL-LL-00");
+            masked.value("LL-LL");
+
+            deleteBackwards(masked, 6);
+
+            assert.equal(masked.value(), "LL-LL-__");
+            assert.equal(caret(input[0])[0], 5);
+        });
+
+        it("delete prompt char before ambiguous static char", function() {
+            var masked = createMasked(input, "0-0\\00");
+            masked.value("1-_0_");
+
+            deleteBackwards(masked, 3);
+
+            assert.equal(masked.value(), "1-_0_");
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("delete content before ambiguous static char", function() {
+            var masked = createMasked(input, "0-0\\00");
+            masked.value("1-40_");
+
+            deleteBackwards(masked, 3);
+
+            assert.equal(masked.value(), "1-_0_");
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("removes whole value", function() {
+            var masked = createMasked(input, "(000) 0000-000");
+            masked.value("(123) 1234-123");
+            deleteContent(masked, 0, 14);
+
+            assert.equal(input.val(), "(___) ____-___");
+            assert.equal(caret(input[0])[0], 1);
+        });
+
+        it("removes symbol on DELETE", function() {
+            var masked = createMasked(input, "0-0");
+            masked.value("2-2");
+            deleteContent(masked, 0);
+
+            assert.equal(input.val(), "2-_");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+        it("removes selected text on DELETE", function() {
+            var masked = createMasked(input, "0--0");
+            masked.value("2--2");
+            deleteContent(masked, 0, 4);
+
+            assert.equal(input.val(), "_--_");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+
+        it("honours all static characters on DELETE", function() {
+            var masked = createMasked(input, "0--00");
+            masked.value("2--22");
+            deleteContent(masked, 1);
+
+            assert.equal(input.val(), "2--22");
+            assert.equal(caret(input[0])[0], 3);
+        });
+
+        it("with simple mask honours a static character on DELETE", function() {
+            var masked = createMasked(input, "0-00");
+            masked.value("2-22");
+            deleteContent(masked, 1);
+
+            assert.equal(input.val(), "2-22");
+            assert.equal(caret(input[0])[0], 2);
+        });
+
+        it("honours empty spaces on DELETE", function() {
+            var masked = createMasked(input, "0-00");
+            masked.value("_-_2");
+            deleteContent(masked, 0);
+
+            assert.equal(input.val(), "_-2_");
+            assert.equal(caret(input[0])[0], 0);
+        });
+
+        it("does not prevent ENTER", function() {
+            createMasked(input, "0-0");
+
+            input.trigger({
+                type: "keydown",
+                keyCode: kendo.keys.ENTER,
+                preventDefault: function() {
+                    assert.isOk(false);
                 }
-
-                if ($.isPlainObject(eventName)) {
-                    options = eventName;
-                    eventName = "keypress";
-                }
-
-                if (!eventName) {
-                    eventName = "keypress";
-                }
-
-                return this.trigger($.extend({ type: eventName, keyCode: key, which: key }, options) );
-            }
-        },
-        teardown: function() {
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("MaskedTextBox replace empty symbol if valid", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-        caret(input[0], 0);
-        input.pressKey("0");
-
-        equal(input.val(), "0-_");
-    });
-
-    asyncTest("MaskedTextBox inserts after a static character", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "-0"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            caret(input[0], 0);
-            input.pressKey("0");
-
-            equal(caret(input[0])[0], 2);
-            equal(input.val(), "-0");
-        });
-    });
-
-    test("MaskedTextBox allows typing of an empty symbol", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "-0"
-        });
-
-        input.focus();
-        caret(input[0], 0);
-        input.pressKey("_");
-
-        equal(caret(input[0])[0], 2);
-        equal(input.val(), "-_");
-    });
-
-    test("MaskedTextBox inserts a symbol while shifting rest of the text", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-000"
-        });
-
-        input.focus();
-        input.val("0-123");
-        caret(input[0], 2);
-        input.pressKey("0");
-
-        equal(caret(input[0])[0], 3);
-        equal(input.val(), "0-012");
-    });
-
-    test("MaskedTextBox replaces an empty symbol without shifting rest of the text", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-000"
-        });
-
-        input.focus();
-        input.val("0-__3");
-        caret(input[0], 2);
-        input.pressKey("0");
-
-        equal(caret(input[0])[0], 3);
-        equal(input.val(), "0-0_3");
-    });
-
-    asyncTest("MaskedTextBox removes the selected text on keypress", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-000"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            input.val("0-123");
-            caret(input[0], 2, 5);
-            input.pressKey("0");
-
-            equal(caret(input[0])[0], 3);
-            equal(input.val(), "0-0__");
-        });
-    });
-
-    asyncTest("MaskedTextBox prevents user input if end of mask is reached", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "-0"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            caret(input[0], 2);
-            input.pressKey("0");
-
-            equal(caret(input[0])[0], 2);
-        });
-    });
-
-    test("MaskedTextBox does not does not modify value on invalid symbol", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0000"
-        });
-
-        input.focus();
-        input.val("0___");
-        caret(input[0], 0);
-        input.pressKey("a");
-
-        equal(caret(input[0])[0], 0);
-        equal(input.val(), "0___");
-    });
-
-    test("MaskedTextBox return empty symbol on BACKSPACE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-        input.val("2-2");
-        caret(input[0], 3);
-
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "2-_");
-        equal(caret(input[0])[0], 2);
-    });
-
-    test("MaskedTextBox prevents user input on BACKSPACE if start is reached", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(0-0)"
-        });
-
-        input.focus();
-        caret(input[0], 0);
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "(_-_)");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox does not add empty symbol on BACKSPACE when start is reached", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(0-0)"
-        });
-
-        input.focus();
-        caret(input[0], 1);
-
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "(_-_)");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox skips characters on BACKSPACE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0--0"
-        });
-
-        input.focus();
-        caret(input[0], 3);
-
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "_--_");
-        equal(caret(input[0])[0], 1);
-    });
-
-    test("MaskedTextBox honours static chars on BACKSPACE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-        input.val("2-2");
-        caret(input[0], 2);
-
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "2-_");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox removes whole value on BACKSPACE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 0000-000"
-        });
-
-        input.focus();
-        input.val("(123) 1234-123");
-        caret(input[0], 0, 14);
-
-        input.pressKey(kendo.keys.BACKSPACE, "keydown");
-
-        equal(input.val(), "(___) ____-___");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox removes symbol on DELETE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-        input.val("2-2");
-        caret(input[0], 0);
-
-        input.pressKey(kendo.keys.DELETE, "keydown");
-
-        equal(input.val(), "2-_");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox removes selected text on DELETE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0--0"
-        });
-
-        input.focus();
-        input.val("2--2");
-        caret(input[0], 0, 4);
-
-        input.pressKey(kendo.keys.DELETE, "keydown");
-
-        equal(input.val(), "_--_");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox honours all static characters on DELETE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0--00"
-        });
-
-        input.focus();
-        input.val("2--22");
-        caret(input[0], 1);
-
-        input.pressKey(kendo.keys.DELETE, "keydown");
-
-        equal(input.val(), "2--22");
-        equal(caret(input[0])[0], 3);
-    });
-
-    test("MaskedTextBox with simple mask honours a static character on DELETE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-00"
-        });
-
-        input.focus();
-        input.val("2-22");
-        caret(input[0], 1);
-
-        input.pressKey(kendo.keys.DELETE, "keydown");
-
-        equal(input.val(), "2-22");
-        equal(caret(input[0])[0], 2);
-    });
-
-    test("MaskedTextBox honours empty spaces on DELETE", function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-00"
-        });
-
-        input.focus();
-        input.val("_-_2");
-        caret(input[0], 0);
-
-        input.pressKey(kendo.keys.DELETE, "keydown");
-
-        equal(input.val(), "_-2_");
-        equal(caret(input[0])[0], 0);
-    });
-
-    test("MaskedTextBox does not prevent ENTER", 0, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-        input.val("2-2");
-        caret(input[0], 3);
-
-        input.trigger({
-            type: "keydown",
-            keyCode: kendo.keys.ENTER,
-            preventDefault: function() {
-                ok(false);
-            }
-        });
-    });
-
-
-    asyncTest("MaskedTextBox supports pasting a valid value", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0000"
-        });
-
-        input.val("").focus();
-        caret(input[0], 0);
-
-        setTimeout(function() {
-            input.trigger("paste");
-            input.val("1234____");
-            caret(input[0], 4);
-
-            setTimeout(function() {
-                start();
-                equal(input.val(), "1234");
-                equal(caret(input[0])[0], 4);
             });
         });
-    });
 
-    asyncTest("MaskedTextBox unmasks before inserting pasted value", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "00--00"
+
+        it("supports pasting a valid value", function() {
+            var masked = createMasked(input, "0000");
+            masked.value("____");
+            updateInput(masked, "1234");
+
+            assert.equal(input.val(), "1234");
+            assert.equal(caret(input[0])[0], 4);
         });
 
-        input.val("").focus();
-        setTimeout(function() {
-            input.val("12--34");
-            caret(input[0], 0, 4);
+        it("unmasks before inserting pasted value", function() {
+            var masked = createMasked(input, "00--00");
+            masked.value("12--34");
+            updateInput(masked, "56");
 
-            input.trigger("paste");
-            input.val("5634--__");
-            caret(input[0], 2);
-
-            setTimeout(function() {
-                start();
-                equal(input.val(), "56--34");
-                equal(caret(input[0])[0], 4);
-            });
-        });
-    });
-
-    asyncTest("MaskedTextBox pastes correctly when caret is on static symbol", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "00--00"
+            assert.equal(input.val(), "56--12");
+            assert.equal(caret(input[0])[0], 4);
         });
 
-        input.focus();
-        setTimeout(function() {
-            input.val("12--34");
-            caret(input[0], 2);
+        it("pastes correctly when caret is on static symbol", function() {
+            var masked = createMasked(input, "00--00");
+            masked.value("12--34");
+            updateInputAt(masked, "56", 2);
 
-            input.trigger("paste");
-            input.val("1256--34");
-            caret(input[0], 4);
-
-            setTimeout(function() {
-                start();
-                equal(input.val(), "12--56");
-                equal(caret(input[0])[0], 6);
-            });
-        });
-    });
-
-    asyncTest("MaskedTextBox unmasks correctly multiple selection on paste", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000"
+            assert.equal(input.val(), "12--56");
+            assert.equal(caret(input[0])[0], 6);
         });
 
-        input.focus();
-        setTimeout(function() {
+        it("delete existing content keeps the mask", function() {
+            var masked = createMasked(input, "(000) 000");
+            masked.value("(123) 555");
+            input.val("(125");
+            masked.inputChange();
+
+            assert.equal(input.val(), "(125) ___");
+        });
+
+        it("inserts value correctly after unmasking multiple selection", function() {
+            var masked = createMasked(input, "(000) 000");
             input.val("(123) 555");
-            caret(input[0], 3, 8);
+            updateInputAt(masked, "77", 5);
 
-            input.trigger("paste");
-            setTimeout(function() {
-                start();
-                equal(input.val(), "(125) ___");
-            });
-        });
-    });
-
-    asyncTest("MaskedTextBox inserts value correctly after unmasking multiple selection", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000"
+            assert.equal(input.val(), "(123) 775");
+            assert.equal(caret(input[0])[0], 8);
         });
 
-        input.focus();
-        setTimeout(function() {
-            input.val("(123) 555");
-            caret(input[0], 5, 8);
-
-            input.trigger("paste");
-            input.val("(123)77 555");
-            caret(input[0], 7);
-
-            setTimeout(function() {
-                start();
-                equal(input.val(), "(123) 775");
-                equal(caret(input[0])[0], 8);
-            });
-        });
-    });
-
-    asyncTest("MaskedTextBox prevents input event if paste is not finished", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            caret(input[0], 1);
-
-            input.trigger("paste");
-            input.val("(1234___) ___");
-            caret(input[0], 5);
-
-            input.trigger("input");
-
-            setTimeout(function() {
-                start();
-                equal(input.val(), "(123) 4__");
-                equal(caret(input[0])[0], 7);
-            });
-        });
-    });
-
-    asyncTest("MaskedTextBox supports cutting/delete through context menu", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            maskedtextbox.value("123555");
+        it("supports cutting/delete through context menu", function() {
+            var masked = createMasked(input, "(000) 000");
+            masked.value("123555");
 
             input.val("(123)");
             caret(input[0], 5);
+            masked.inputChange();
+
+            assert.equal(input.val(), "(123) ___");
+        });
+
+        it("allows space in middle of mask", function() {
+            var masked = createMasked(input, "(000) 999");
+            input.val(masked._emptyMask);
+            updateInputAt(masked, " ", 6);
+
+            assert.equal(input.val(), "(___)  __");
+        });
+
+        it("allows any character if no mask", function() {
+            var maskedtextbox = new MaskedTextBox(input);
+
+            input.focus();
+            caret(input[0], 0);
+
+            stub(maskedtextbox, {
+                _mask: maskedtextbox._mask
+            });
+
             input.trigger("input");
 
-            equal(input.val(), "(123) ___");
+            assert.equal(maskedtextbox.calls("_mask"), 0);
         });
+
+        it("add duplicated content", function() {
+            var masked = createMasked(input, "00-0000");
+            masked.value("12-3456");
+
+            updateInputAt(masked, "34", 3);
+
+            assert.equal(masked.value(), "12-3434");
+        });
+
+        it("replace with partially duplicated content", function() {
+            var masked = createMasked(input, "00-0000");
+            masked.value("12-3456");
+
+            input.val("12-6");
+            updateInputAt(masked, "34", 3);
+
+            assert.equal(masked.value(), "12-346_");
+        });
+
+        it("insert multiple over a static char", function() {
+            var masked = createMasked(input, "0-00\\00");
+            masked.value("1-__0_");
+
+            updateInputAt(masked, "123", 2);
+
+            assert.equal(masked.value(), "1-1203");
+        });
+
     });
-
-    asyncTest("MaskedTextBox allows space in middle of mask", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 999"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            caret(input[0], 6);
-
-            input.pressKey(" ");
-
-            equal(input.val(), "(___)  __");
-        });
-    });
-
-    test("MaskedTextBox allows any character if no mask", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input);
-
-        input.focus();
-        caret(input[0], 0);
-
-        stub(maskedtextbox, {
-            _mask: maskedtextbox._mask
-        });
-
-        input.pressKey("3");
-
-        equal(maskedtextbox.calls("_mask"), 0);
-    });
-})();
+}());

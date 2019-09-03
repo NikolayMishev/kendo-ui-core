@@ -8,7 +8,7 @@ position: 2
 
 # Cell Formatting
 
-The Kendo UI Spreadsheet widget supports cell-formatting options such as formatting of strings, text, numbers, dates, and time.
+The Spreadsheet widget supports cell-formatting options such as formatting of strings, text, numbers, dates, and time.
 
 ## Formatting
 
@@ -46,7 +46,7 @@ The following example demonstrates how to format the Spreadsheet conditionally.
 
 ###### Example
 
-```html
+```dojo
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
     <div id="example">
@@ -493,7 +493,7 @@ The default format strings that are shown in the formatting drop-down are stored
 | dateTime          | Format values as date-time.                                                   |
 | duration          | Format as an elapsed duration in hours, minutes, or seconds.                  |
 
-You can use these formats with the [`range` value method](/api/javascript/spreadsheet/range#methods-format) in the following way: `sheet.range("A1").format(kendo.spreadsheet.formats.currency)`.
+You can use these formats with the [`range` value method](/api/javascript/spreadsheet/range/methods/format) in the following way: `sheet.range("A1").format(kendo.spreadsheet.formats.currency)`.
 
 ### Text and Numbers
 
@@ -567,8 +567,6 @@ The Spreadsheet does not support the following options that are otherwise availa
 - Filling cell width&mdash;`*` Excel format.
 
 ## See Also
-
-Other articles on the Kendo UI Spreadsheet:
 
 * [Overview]({% slug overview_spreadsheet_widget %})
 * [Custom Functions]({% slug custom_functions_spreadsheet_widget %})

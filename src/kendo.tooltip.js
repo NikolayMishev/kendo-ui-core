@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core", "./kendo.popup" ], f);
+    define([ "./kendo.core", "./kendo.popup", "./kendo.fx" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -92,7 +92,9 @@ var __meta__ = { // jshint ignore:line
 
     function restoreTitle(element) {
         while(element.length) {
-            restoreTitleAttributeForElement(element);
+            if (restoreTitleAttributeForElement(element)) {
+                break;
+            }
             element = element.parent();
         }
     }
@@ -102,6 +104,7 @@ var __meta__ = { // jshint ignore:line
         if (title) {
             element.attr("title", title);
             element.removeData(kendo.ns + "title");
+            return true;
         }
     }
 
@@ -110,12 +113,15 @@ var __meta__ = { // jshint ignore:line
         if (title) {
             element.data(kendo.ns + "title", title);
             element.attr("title", "");
+            return true;
         }
     }
 
     function saveTitleAttributes(element) {
         while(element.length && !element.is("body")) {
-            saveTitleAttributeForElement(element);
+            if (saveTitleAttributeForElement(element)) {
+                break;
+            }
             element = element.parent();
         }
     }
@@ -133,12 +139,18 @@ var __meta__ = { // jshint ignore:line
 
             that._documentKeyDownHandler = proxy(that._documentKeyDown, that);
 
-            that.element
-                .on(that.options.showOn + NS, that.options.filter, proxy(that._showOn, that))
-                .on("mouseenter" + NS, that.options.filter, proxy(that._mouseenter, that));
+            that.element.on(that.options.showOn + NS, that.options.filter, proxy(that._showOn, that));
 
-            if (this.options.autoHide) {
+            if (this._isShownOnMouseEnter() || this._isShownOnClick()) {
+                that.element.on("mouseenter" + NS, that.options.filter, proxy(that._mouseenter, that));
+            }
+
+            if (this.options.autoHide && this._isShownOnMouseEnter()) {
                 that.element.on("mouseleave" + NS, that.options.filter, proxy(that._mouseleave, that));
+            }
+
+            if (this.options.autoHide && this._isShownOnFocus()) {
+                that.element.on("blur" + NS, that.options.filter, proxy(that._blur, that));
             }
         },
 
@@ -147,7 +159,9 @@ var __meta__ = { // jshint ignore:line
             filter: "",
             content: DEFAULTCONTENT,
             showAfter: 100,
+            hideAfter: 100,
             callout: true,
+            offset: 0,
             position: "bottom",
             showOn: "mouseenter",
             autoHide: true,
@@ -159,7 +173,6 @@ var __meta__ = { // jshint ignore:line
                     duration: 0
                 },
                 close: {
-                    effects: "fade:out",
                     duration: 40,
                     hide: true
                 }
@@ -167,6 +180,18 @@ var __meta__ = { // jshint ignore:line
         },
 
         events: [ SHOW, HIDE, CONTENTLOAD, ERROR, REQUESTSTART ],
+
+        _isShownOnFocus: function(){
+            return this.options.showOn && this.options.showOn.match(/focus/);
+        },
+
+        _isShownOnMouseEnter: function(){
+            return this.options.showOn && this.options.showOn.match(/mouseenter/);
+        },
+
+        _isShownOnClick: function(){
+            return this.options.showOn && this.options.showOn.match(/click/);
+        },
 
         _mouseenter: function(e) {
             saveTitleAttributes($(e.currentTarget));
@@ -176,7 +201,10 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             var currentTarget = $(e.currentTarget);
-            if (that.options.showOn && that.options.showOn.match(/click|focus/)) {
+            if (that._isShownOnClick() && !that._isShownOnMouseEnter()) {
+                that._show(currentTarget);
+            } else if (that._isShownOnFocus()) {
+                saveTitleAttributes(currentTarget);
                 that._show(currentTarget);
             } else {
                 clearTimeout(that.timeout);
@@ -317,6 +345,7 @@ var __meta__ = { // jshint ignore:line
                 DOCUMENT.off("keydown" + NS, that._documentKeyDownHandler);
             });
 
+            that.popup._hovered = true;
             that.popup.open();
         },
 
@@ -330,6 +359,7 @@ var __meta__ = { // jshint ignore:line
                 }));
 
             that.popup = new Popup(wrapper, extend({
+                autosize:true,
                 activate: function() {
                     var anchor = this.options.anchor,
                         ariaId = anchor[0].id || that.element[0].id;
@@ -341,6 +371,8 @@ var __meta__ = { // jshint ignore:line
 
                     if (options.callout) {
                         that._positionCallout();
+                    } else {
+                        that._offset(that.options.position, that.options.offset);
                     }
 
                     this.element.removeAttr("aria-hidden");
@@ -348,6 +380,7 @@ var __meta__ = { // jshint ignore:line
                     DOCUMENT.on("keydown" + NS, that._documentKeyDownHandler);
 
                     that.trigger(SHOW);
+                    that.popup._hovered = undefined;
                 },
                 close: function() {
                     that.trigger(HIDE);
@@ -364,7 +397,7 @@ var __meta__ = { // jshint ignore:line
             that.content = wrapper.find(".k-tooltip-content");
             that.arrow = wrapper.find(".k-callout");
 
-            if (options.autoHide) {
+            if (options.autoHide && this._isShownOnMouseEnter()) {
                 wrapper.on("mouseleave" + NS, proxy(that._mouseleave, that));
             } else {
                 wrapper.on("click" + NS, ".k-tooltip-button", proxy(that._closeButtonClick, that));
@@ -377,24 +410,32 @@ var __meta__ = { // jshint ignore:line
         },
 
         _mouseleave: function(e) {
-            if (this.popup) {
-                var element = $(e.currentTarget),
-                    offset = element.offset(),
-                    pageX = e.pageX,
-                    pageY = e.pageY;
+            var that = this;
 
-                offset.right = offset.left + kendo._outerWidth(element);
-                offset.bottom = offset.top + kendo._outerHeight(element);
+            clearTimeout(that.timeout);
 
-                if (pageX > offset.left && pageX < offset.right && pageY > offset.top && pageY < offset.bottom) {
-                    return;
-                }
+            that.timeout = setTimeout(function() {
+                that._closePopup(e.currentTarget);
+            }, that.options.hideAfter);
+        },
 
+        _blur: function(e){
+            this._closePopup(e.currentTarget);
+        },
+
+        _closePopup: function(target){
+            if (this.popup && !this.popup._hovered) {
                 this.popup.close();
             } else {
-                restoreTitle($(e.currentTarget));
+                restoreTitle($(target));
             }
-            clearTimeout(this.timeout);
+        },
+
+        target: function() {
+            if (this.popup) {
+                return this.popup.options.anchor;
+            }
+            return null;
         },
 
         _positionCallout: function() {
@@ -405,22 +446,16 @@ var __meta__ = { // jshint ignore:line
                 popup = that.popup,
                 anchor = popup.options.anchor,
                 anchorOffset = $(anchor).offset(),
-                arrowBorder = parseInt(that.arrow.css("border-top-width"), 10),
                 elementOffset = $(popup.element).offset(),
                 cssClass = DIRCLASSES[popup.flipped ? REVERSE[position] : position],
-                offsetAmount = anchorOffset[offset] - elementOffset[offset] + ($(anchor)[dimensions.size]() / 2) - arrowBorder;
+                offsetAmount = anchorOffset[offset] - elementOffset[offset] + ($(anchor)[dimensions.size]() / 2);
 
-           that.arrow
+            that._offset(position, that.options.offset);
+
+            that.arrow
                .removeClass("k-callout-n k-callout-s k-callout-w k-callout-e")
                .addClass("k-callout-" + cssClass)
                .css(offset, offsetAmount);
-        },
-
-        target: function() {
-            if (this.popup) {
-                return this.popup.options.anchor;
-            }
-            return null;
         },
 
         destroy: function() {
@@ -438,7 +473,19 @@ var __meta__ = { // jshint ignore:line
             DOCUMENT.off("keydown" + NS, this._documentKeyDownHandler);
 
             Widget.fn.destroy.call(this);
+        },
+
+        _offset: function(position, offsetAmount) {
+            var that = this,
+                isTopLeft = position == "top" || position == "left",
+                isFlipped = that.popup.flipped,
+                direction = (isTopLeft && isFlipped) || (!isTopLeft && !isFlipped) ? 1 : -1,
+                marginRule = isTopLeft ? "margin-" + position : "margin-" + REVERSE[position],
+                offset = (kendo._outerWidth(that.arrow) / 2) + offsetAmount;
+
+            that.popup.wrapper.css(marginRule, offset * direction + "px");
         }
+
     });
 
     kendo.ui.plugin(Tooltip);

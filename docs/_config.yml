@@ -1,8 +1,13 @@
 # The public documentation URL, used for sitemap.xml
-url: "http://docs.telerik.com/kendo-ui"
+url: "https://docs.telerik.com/kendo-ui"
+
+all_pages_domain: "https://docs.telerik.com"
+
+capital_casing_redirects: true
 
 # Exclude files which should not be in the output
-exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb]
+exclude: [README.md, Gemfile, Gemfile.lock,api_sort.rb, all-pages.md, Dockerfile, bs-config.js, build-docs.sh, copy_content.sh, copy_local.sh, docs-watcher/*, exclude_files.txt, install-npm.sh, start-docs.sh, watch.sh]
+exclude_navigation: ["knowledge-base/*"]
 navigation:
 ## List your directory names and order here, like this:
     "api":
@@ -10,66 +15,147 @@ navigation:
         position: 0
     "api/javascript/dataviz":
         title: "dataviz"
+    "knowledge-base":
+        title: "Knowledge Base"
+        position: 1
     "intro":
         title: "Getting Started"
-        position: 2
-    "intro/installation":
-        title: "Prerequisites and Installation"
-        position: 1
-    "intro/widget-basics":
-        title: "Widget Basics"
-        position: 2
-    "intro/supporting":
-        title: "Additional Resources"
         position: 3
+    "intro/supporting":
+        title: "Prerequisites"
+        position: 1
+    "intro/installation":
+        title: "Download and Installation"
+        position: 2
+    "intro/widget-basics":
+        title: "Working with Widgets"
+        position: 3
+    "intro/scripts":
+        title: "Widget Script Dependencies"
+        position: 4
     "controls":
         title: "Widgets"
-        position: 3
+        position: 4
     "controls/data-management":
         title: "Data Management"
         position: 1
+    "controls/data-management/grid/binding":
+        title: "Data Binding"
+        position: 2
+    "controls/data-management/grid/editing":
+        title: "Editing"
+        position: 3
+    "controls/data-management/grid/grouping":
+        title: "Grouping"
+        position: 5
+    "controls/data-management/grid/columns":
+        title: "Columns"
+        position: 11
+    "controls/data-management/grid/scrolling":
+        title: "Scroll Modes"
+        position: 12
+    "controls/data-management/grid/export":
+        title: "Export"
+        position: 13
+    "controls/data-management/grid/Templates":
+        title: "Templates"
+        position: 14
+    "controls/data-management/grid/appearance":
+        title: "Appearance"
+        position: 15
+    "controls/data-management/grid/performance":
+        title: "Performance Tips"
+        position: 16
+    "controls/data-management/grid/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/data-management/grid/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/data-management/grid/how-to":
+        title: "How To"
+        position: 70
     "controls/data-management/grid/how-to/AngularJS":
         title: "AngularJS"
-        position: 1
     "controls/data-management/grid/how-to/Layout":
-        title: "Appearance"
-        position: 2
+        title: "Rendering and Dimensions"
     "controls/data-management/grid/how-to/binding":
-        title: "Binding"
-        position: 3
+        title: "Data Binding"
     "controls/data-management/grid/how-to/Editing":
         title: "Editing"
-        position: 4
     "controls/data-management/grid/how-to/pdf-export":
-        title: "Export in PDF"
-        position: 5
+        title: "PDF Export"
     "controls/data-management/grid/how-to/excel":
-        title: "Export to Excel"
-        position: 6
+        title: "Excel Export"
     "controls/data-management/grid/how-to/filtering":
         title: "Filtering"
-        position: 7
     "controls/data-management/grid/how-to/hidden":
         title: "Hidden Containers"
-        position: 8
     "controls/data-management/grid/how-to/integration":
         title: "Integration"
-        position: 9
+    "controls/data-management/grid/how-to/Paging":
+        title: "Paging"
     "controls/data-management/grid/how-to/Selection":
         title: "Selection"
-        position: 10
+    "controls/data-management/grid/how-to/sorting":
+        title: "Sorting"
     "controls/data-management/grid/how-to/state":
-        title: "State Management"
-        position: 11
+        title: "State Persistence"
     "controls/data-management/grid/how-to/Templates":
         title: "Templates"
-        position: 12
     "controls/data-management/grid/how-to/various":
         title: "Various"
-        position: 13
     "controls/editors":
         title: "Editors"
         position: 2
+    "controls/editors/datepicker/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/editors/datepicker/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/datepicker/how-to":
+        title: "How To"
+        position: 70
+    "controls/editors/dropdownlist/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/editors/dropdownlist/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/dropdownlist/how-to":
+        title: "How To"
+        position: 70
+    "controls/editors/multiselect/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/editors/multiselect/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/multiselect/how-to":
+        title: "How To"
+        position: 70
+    "controls/editors/numerictextbox/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/editors/numerictextbox/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/numerictextbox/how-to":
+        title: "How To"
+        position: 70
+    "controls/editors/upload/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/editors/upload/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/rating/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/editors/upload/how-to":
+        title: "How To"
+        position: 70
     "controls/charts":
         title: "Charts"
         position: 3
@@ -103,22 +189,60 @@ navigation:
     "controls/layout":
         title: "Layout"
         position: 8
+    "controls/layout/window/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/layout/window/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/layout/window/how-to":
+        title: "How To"
+        position: 70
     "controls/navigation":
         title: "Navigation"
         position: 9
+    "controls/navigation/button/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/navigation/button/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/navigation/buttongroup":
+        title: "ButtonGroup"
+    "controls/navigation/drawer":
+        title: "Drawer"
+    "controls/navigation/tabstrip/globalization":
+        title: "Globalization"
+        position: 40
+    "controls/navigation/tabstrip/accessibility":
+        title: "Accessibility"
+        position: 50
+    "controls/navigation/tabstrip/how-to":
+        title: "How To"
+        position: 70
+    "controls/conversational-ui":
+        title: "Conversational UI"
+        position: 10
+    "controls/conversational-ui/chat":
+        title: "Chat"
     "controls/interactivity":
         title: "Interactivity and UX"
-        position: 10
+        position: 11
     "controls/interactivity/fx":
         title: "FX"
     "controls/interactivity/draganddrop":
         title: "Drag and Drop"
+    "controls/interactivity/ripplecontainer":
+        title: "Ripple Container"
     "controls/media":
         title: "Media"
-        position: 11
+        position: 12
+    "controls/pdf":
+        title: "PDF"
+        position: 13
     "controls/hybrid":
         title: "Hybrid UI"
-        position: 12
+        position: 14
     "controls/hybrid/styles":
         title: "Styles and Appearance"
         position: 5
@@ -181,101 +305,90 @@ navigation:
     "controls/hybrid/faq":
         title: "Frequently Asked Questions"
         position: 24
-    "styles-and-layout":
-        title: "Styles and Appearance"
-        position: 4
     "framework":
-        title: "Framework and Utilities"
+        title: "Shared Utilities"
         position: 5
     "framework/datasource":
-        title: "DataSource"
+        title: "Data Source"
         position: 1
-    "framework/hierarchicaldatasource":
-        title: "HierarchicalDataSource"
-        position: 2
     "framework/mvvm":
-        title: "MVVM"
-        position: 3
+        title: "MVVM Pattern"
+        position: 2
     "framework/mvvm/bindings":
         title: "Bindings"
-        position: 3
+        position: 4
     "framework/mvvm/how-to":
         title: "How To"
-        position: 4
-    "framework/mvvm/tutorials":
-        title: "Tutorials"
         position: 5
     "framework/templates":
         title: "Templates"
+        position: 3
+    "framework/drawing":
+        title: "Drawing Library"
         position: 4
-    "framework/spa":
-        title: "Single Page Applications"
+    "framework/drawing/dom-elements":
+        title: "Drawing DOM Elements"
+        position: 2
+    "framework/drawing/pdf-output":
+        title: "PDF Output"
+        position: 3
+    "framework/pdf":
+        title: "PDF Export"
         position: 5
     "framework/excel":
         title: "Excel Export"
         position: 6
-    "framework/drawing":
-        title: "Drawing API"
-        position: 7
-    "framework/globalization":
-        title: "Globalization"
-        position: 8
-    "framework/localization":
-        title: "Localization"
-        position: 9
-    "framework/class":
-        title: "Class"
-        position: 10
-    "framework/validator":
-        title: "Validator"
-        position: 11
-    "framework/save-files":
-        title: "Saving Files"
-        position: 12
-    "third-party":
-        title: "Third-Party Frameworks and Utilities"
-        position: 6
-    "third-party/tutorials":
-        title: "Tutorials"
-        position: 100
-    "third-party/tutorials/webforms":
-        title: "ASP.NET Web Forms"
-        position: 1
-    "AngularJS":
+    "framework/AngularJS":
         title: "AngularJS Directives"
-        position: 7
-    "AngularJS/how-to":
-        title: "How To"
-        position: 6
-    "AngularJS/Troubleshooting":
-        title: "Troubleshooting"
-        position: 7
-    "AngularJS/tutorials":
-        title: "Tutorials"
         position: 8
-    "jsp":
-        title: "UI for JSP"
-        position: 9
-    "php":
-        title: "UI for PHP"
-        position: 10
-    "php/widgets":
-        title: "Classes"
-    "troubleshoot":
+    "framework/AngularJS/widget-basics":
+        title: "Working with Widgets"
+        position: 2
+    "framework/AngularJS/how-to":
+        title: "How To"
+        position: 7
+    "framework/AngularJS/Troubleshooting":
         title: "Troubleshooting"
-        position: 11
+        position: 8
+    "framework/spa":
+        title: "Single-Page Applications"
+        position: 9
+    "styles-and-layout":
+        title: "Styles & Appearance"
+        position: 6
+    "third-party":
+        title: "Third-Party Libraries"
+        position: 7
+    "third-party/webforms":
+        title: "ASP.NET Web Forms"
+        position: 20
+    "kendo-in-the-cloud":
+        title: "Cloud Integration"
+        position: 8
+        isNew: true
+    "globalization":
+        title: "Globalization"
+        position: 9
+    "globalization/intl":
+        title: "Internationalization"
+        position: 2
     "accessibility":
         title: "Accessibility"
+        position: 10
+    "jsp":
+        title: "Progress<sup>®</sup> Telerik<sup>®</sup> UI for JSP"
+        position: 11
+    "php":
+        title: "Progress<sup>®</sup> Telerik<sup>®</sup> UI for PHP"
         position: 12
+    "php/widgets":
+        title: "Classes"
     "backwards-compatibility":
         title: "Breaking Changes"
-        position: 13
-    "updates":
-        title: "Updates and  Contribution"
-        position: 14
-    "copyright":
-        title: "Copyright"
-        position: 15
+        position: 20
+    "troubleshoot":
+        title: "Troubleshooting"
+        position: 30
     "*how-to":
         title: "How To"
         position: 200
@@ -299,6 +412,8 @@ navigation:
         title: "Export"
     "*filtering":
         title: "Filtering"
+    "*event-handling":
+        title: "Event Handling"
     "*integration":
         title: "Integration"
     "*cascade":
@@ -307,8 +422,18 @@ navigation:
         title: "Customizing Behavior"
     "*other":
         title: "Other"
+    "*scrolling":
+        title: "Scrolling"
+    "*validation":
+        title: "Validation"
     "*selection":
         title: "Selection"
+    "*various":
+        title: "Various"
+    "*nodes":
+        title: "Handling Nodes"
+    "*custom-views":
+        title: "Custom Views"
     "*angular":
         title: "AngularJS"
         position: 1
@@ -373,6 +498,8 @@ navigation:
         title: "TreeMap"
     "*qrcode":
         title: "QRCode"
+    "*arcgauge":
+        title: "ArcGauge"
     "*radialgauge":
         title: "RadialGauge"
     "*sparkline":
@@ -391,6 +518,8 @@ navigation:
         title: "Drag and Drop"
     "*fx":
         title: "FX"
+    "*ripplecontainer":
+        title: "Ripple Container"
     "*globalization":
         title: "Globalization"
     "*mvvm":
@@ -403,28 +532,41 @@ navigation:
         title: "Validator"
     "*autocomplete":
         title: "AutoComplete"
+    "*autocomplete/how-to/input":
+        title: "Managing Inputs"
     "*/button":
         title: "Button"
     "*/radiobutton":
         title: "RadioButton"
-    "*calendar":
+    "controls/scheduling/calendar":
         title: "Calendar"
+    "controls/scheduling/multiviewcalendar":
+        title: "MultiViewCalendar"
     "*colorpalette":
         title: "ColorPalette"
     "*flatcolorpicker":
         title: "FlatColorPicker"
     "*colorpicker":
         title: "ColorPicker"
+    "*/multicolumncombobox":
+        isNew: true
+        title: "MultiColumnComboBox"
     "*combobox":
         title: "ComboBox"
+    "*dateinput":
+        title: "DateInput"
     "*datepicker":
         title: "DatePicker"
+    "*daterangepicker":
+        title: "DateRangePicker"
     "*datetimepicker":
         title: "DateTimePicker"
     "*dialog":
         title: "Dialog"
     "*dropdownlist":
         title: "DropDownList"
+    "*dropdowntree":
+        title: "DropDownTree"
     "*editor":
         title: "Editor"
     "*gantt":
@@ -440,16 +582,18 @@ navigation:
     "*spreadsheet":
         title: "Spreadsheet"
     "*import-and-export-data":
-        title: "Import and Export Data"
+        title: "Import and Export of Data"
         position: 5
     "*localization-spreadsh":
         title: "Localization"
         position: 6
     "*end-user":
-        title: "For the End User"
+        title: "End-User Documentation"
         position: 7
     "*listview":
         title: "ListView"
+    "*listbox":
+        title: "ListBox"
     "*maskedtextbox":
         title: "MaskedTextBox"
     "*menu":
@@ -462,8 +606,12 @@ navigation:
         title: "Popup"
     "*numerictextbox":
         title: "NumericTextBox"
+    "*rating":
+        title: "Rating"
     "*panelbar":
         title: "PanelBar"
+    "*pdfviewer":
+        title: "PDFViewer"
     "*pivotdatasource":
         title: "PivotDataSource"
     "*pivotconfigurator":
@@ -476,8 +624,12 @@ navigation:
         title: "ResponsivePanel"
     "*scheduler":
         title: "Scheduler"
+    "*scrollview":
+        title: "ScrollView"
     "*slider":
         title: "Slider"
+    "*switch":
+        title: "Switch"
     "*sortable":
         title: "Sortable"
     "*splitter":
@@ -515,26 +667,816 @@ navigation:
     "api/php":
         title: "PHP"
         position: 4
+    "all-pages":
+        title: "All Pages GSA"
 
 ## The application virtual path
 baseurl: /kendo-ui
 
 ## The Kendo UI version used
-cdnVersion: "2016.2.607"
+cdnVersion: "2019.2.619"
 
 ## The MVC Core version used
-mvcCoreVersion: "2016.2.616"
+mvcCoreVersion: "2019.2.619"
 
 ## Progress NPM Registry
 registry_url: 'https://registry.npm.telerik.com/'
 
+## Describing API reference articles which contain child properties which shall be rendered (grouped) on a same page
+api:
+-
+    file: "api/javascript/kendo"
+    group_parents:
+      - "support"
+-
+    file: "api/javascript/data/datasource"
+    group_parents:
+      - "aggregate"
+      - "filter"
+      - "group"
+      - "schema"
+      - "sort"
+      - "transport.create"
+      - "transport.destroy"
+      - "transport.read"
+      - "transport.signalr"
+      - "transport.update"
+-
+    file: "api/javascript/data/ganttdatasource"
+    group_parents:
+      - "schema"
+-
+    file: "api/javascript/data/ganttdependencydatasource"
+    group_parents:
+      - "schema"
+-
+    file: "api/javascript/data/hierarchicaldatasource"
+    group_parents:
+      - "schema"
+-
+    file: "api/javascript/data/pivotdatasource"
+    group_parents:
+      - "columns"
+      - "measures"
+      - "rows"
+      - "transport"
+      - "schema"
+-
+    file: "api/javascript/data/schedulerdatasource"
+    group_parents:
+      - "schema"
+-
+    file: "api/javascript/data/treelistdatasource"
+    group_parents:
+      - "schema"
+-
+    file: "api/javascript/dataviz/diagram/circle"
+    group_parents:
+      - "fill"
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/connection"
+    group_parents:
+      - "content"
+      - "stroke"
+      - "startCap"
+      - "endCap"
+      - "points"
+-
+    file: "api/javascript/dataviz/diagram/connector"
+    group_parents:
+      - "hover"
+      - "hover.fill"
+      - "hover.stroke"
+      - "fill"
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/line"
+    group_parents:
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/path"
+    group_parents:
+      - "endCap"
+      - "fill"
+      - "startCap"
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/polyline"
+    group_parents:
+      - "endCap"
+      - "fill"
+      - "startCap"
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/rectangle"
+    group_parents:
+      - "fill"
+      - "stroke"
+-
+    file: "api/javascript/dataviz/diagram/shape"
+    group_parents:
+      - "stroke"
+      - "fill"
+      - "hover"
+      - "connectors"
+      - "rotation"
+      - "content"
+      - "connectorDefaults.hover"
+      - "connectorDefaults.fill"
+      - "connectorDefaults.stroke"
+-
+    file: "api/javascript/dataviz/map/marker-layer"
+    skip_redirect: true
+    group_parents:
+      - "---"
+-
+    file: "api/javascript/dataviz/map/marker"
+    group_parents:
+      - "tooltip.animation"
+      - "tooltip.content"
+-
+    file: "api/javascript/dataviz/ui/barcode"
+    group_parents:
+      - "border"
+      - "padding"
+      - "text.margin"
+-
+    file: "api/javascript/dataviz/ui/chart"
+    group_parents:
+      - "axisDefaults.crosshair"
+      - "axisDefaults.labels"
+      - "axisDefaults.line"
+      - "axisDefaults.majorGridLines"
+      - "axisDefaults.majorTicks"
+      - "axisDefaults.minorGridLines"
+      - "axisDefaults.minorTicks"
+      - "axisDefaults.plotBands"
+      - "axisDefaults.title"
+      - "categoryAxis.autoBaseUnitSteps"
+      - "categoryAxis.crosshair"
+      - "categoryAxis.labels"
+      - "categoryAxis.line"
+      - "categoryAxis.majorGridLines"
+      - "categoryAxis.majorTicks"
+      - "categoryAxis.minorGridLines"
+      - "categoryAxis.minorTicks"
+      - "categoryAxis.plotBands"
+      - "categoryAxis.select"
+      - "categoryAxis.title"
+      - "categoryAxis.notes.icon"
+      - "categoryAxis.notes.label"
+      - "categoryAxis.notes.line"
+      - "categoryAxis.notes.data.icon"
+      - "categoryAxis.notes.data.label"
+      - "categoryAxis.notes.data.line"
+      - "chartArea"
+      - "legend.border"
+      - "legend.incactiveItems"
+      - "legend.item"
+      - "legend.labels"
+      - "legend.margin"
+      - "legend.padding"
+      - "panes.border"
+      - "panes.margin"
+      - "panes.padding"
+      - "panes.title"
+      - "pannable"
+      - "pdf.margin"
+      - "plotArea"
+      - "series.border"
+      - "series.connectors"
+      - "series.errorBars"
+      - "series.highlight"
+      - "series.labels.border"
+      - "series.labels.margin"
+      - "series.labels.padding"
+      - "series.labels.from"
+      - "series.labels.to"
+      - "series.line"
+      - "series.markers.border"
+      - "series.markers.from"
+      - "series.markers.to"
+      - "series.outliers"
+      - "series.extremes"
+      - "series.negativeValues"
+      - "series.overlay"
+      - "series.stack"
+      - "series.target"
+      - "series.tooltip"
+      - "series.notes.icon"
+      - "series.notes.label"
+      - "series.notes.line"
+      - "seriesDefaults.border"
+      - "seriesDefaults.labels.border"
+      - "seriesDefaults.labels.margin"
+      - "seriesDefaults.labels.padding"
+      - "seriesDefaults.labels.from"
+      - "seriesDefaults.labels.to"
+      - "seriesDefaults.overlay"
+      - "seriesDefaults.tooltip"
+      - "seriesDefaults.notes.icon"
+      - "seriesDefaults.notes.label"
+      - "seriesDefaults.notes.line"
+      - "title"
+      - "tooltip"
+      - "valueAxis.crosshair"
+      - "valueAxis.labels"
+      - "valueAxis.line"
+      - "valueAxis.majorGridLines"
+      - "valueAxis.majorTicks"
+      - "valueAxis.minorGridLines"
+      - "valueAxis.minorTicks"
+      - "valueAxis.plotBands"
+      - "valueAxis.title"
+      - "valueAxis.notes.icon"
+      - "valueAxis.notes.label"
+      - "valueAxis.notes.line"
+      - "valueAxis.notes.data.icon"
+      - "valueAxis.notes.data.label"
+      - "valueAxis.notes.data.line"
+      - "xAxis.crosshair"
+      - "xAxis.labels"
+      - "xAxis.line"
+      - "xAxis.majorGridLines"
+      - "xAxis.majorTicks"
+      - "xAxis.minorGridLines"
+      - "xAxis.minorTicks"
+      - "xAxis.plotBands"
+      - "xAxis.title"
+      - "xAxis.notes.icon"
+      - "xAxis.notes.label"
+      - "xAxis.notes.line"
+      - "xAxis.notes.data.icon"
+      - "xAxis.notes.data.label"
+      - "xAxis.notes.data.line"
+      - "yAxis.crosshair"
+      - "yAxis.labels"
+      - "yAxis.line"
+      - "yAxis.majorGridLines"
+      - "yAxis.majorTicks"
+      - "yAxis.minorGridLines"
+      - "yAxis.minorTicks"
+      - "yAxis.plotBands"
+      - "yAxis.title"
+      - "yAxis.notes.icon"
+      - "yAxis.notes.label"
+      - "yAxis.notes.line"
+      - "yAxis.notes.data.icon"
+      - "yAxis.notes.data.label"
+      - "yAxis.notes.data.line"
+      - "zoomable"
+-
+    file: "api/javascript/dataviz/ui/diagram"
+    group_parents:
+      - "connectionDefaults.content"
+      - "connectionDefaults.editable"
+      - "connectionDefaults.endCap"
+      - "connectionDefaults.hover"
+      - "connectionDefaults.selection"
+      - "connectionDefaults.startCap"
+      - "connectionDefaults.stroke"
+      - "connections.content"
+      - "connections.editable"
+      - "connections.endCap"
+      - "connections.from"
+      - "connections.hover"
+      - "connections.points"
+      - "connections.selection"
+      - "connections.startCap"
+      - "connections.stroke"
+      - "connections.to"
+      - "editable.drag"
+      - "editable.resize"
+      - "editable.rotate"
+      - "editable.tools"
+      - "layout.grid"
+      - "pannable"
+      - "pdf.margin"
+      - "selectable"
+      - "shapeDefaults.connectors"
+      - "shapeDefaults.connectorDefaults"
+      - "shapeDefaults.content"
+      - "shapeDefaults.editable"
+      - "shapeDefaults.fill"
+      - "shapeDefaults.hover"
+      - "shapeDefaults.rotation"
+      - "shapeDefaults.stroke"
+      - "shape.connectors"
+      - "shape.connectorDefaults"
+      - "shape.content"
+      - "shape.editable"
+      - "shape.fill"
+      - "shape.hover"
+      - "shape.rotation"
+      - "shape.stroke"
+-
+    file: "api/javascript/dataviz/ui/lineargauge"
+    group_parents:
+      - "gaugeArea.border"
+      - "gaugeArea.margin"
+      - "pointer.border"
+      - "pointer.track.border"
+      - "scale.line"
+      - "scale.labels.border"
+      - "scale.labels.margin"
+      - "scale.labels.padding"
+      - "scale.majorTicks"
+      - "scale.minorTicks"
+      - "scale.ranges"
+-
+    file: "api/javascript/dataviz/ui/map"
+    group_parents:
+      - "controls.attribution"
+      - "controls.navigator"
+      - "controls.zoom"
+      - "layerDefaults.marker.tooltip.animation"
+      - "layerDefaults.marker.tooltip.content"
+      - "layerDefaults.shape.style.fill"
+      - "layerDefaults.shape.style.stroke"
+      - "layerDefaults.bubble.style.fill"
+      - "layerDefaults.bubble.style.stroke"
+      - "layerDefaults.tile"
+      - "layerDefaults.bing"
+      - "layers.tooltip.animation"
+      - "layers.tooltip.content"
+      - "layers.style.fill"
+      - "layers.style.stroke"
+      - "markerDefaults.tooltip.animation"
+      - "markerDefaults.tooltip.content"
+      - "markers.tooltip.animation"
+      - "markers.tooltip.content"
+-
+    file: "api/javascript/dataviz/ui/qrcode"
+    group_parents:
+      - "border"
+-
+    file: "api/javascript/dataviz/ui/radialgauge"
+    group_parents:
+      - "gaugeArea.border"
+      - "gaugeArea.margin"
+      - "pointer"
+      - "scale.labels.border"
+      - "scale.labels.margin"
+      - "scale.labels.padding"
+      - "scale.majorTicks"
+      - "scale.ranges"
+-
+    file: "api/javascript/dataviz/ui/sparkline"
+    group_parents:
+      - "categoryAxis.crosshair"
+      - "categoryAxis.labels"
+      - "categoryAxis.line"
+      - "categoryAxis.majorGridLines"
+      - "categoryAxis.majorTicks"
+      - "categoryAxis.minorGridLines"
+      - "categoryAxis.minorTicks"
+      - "categoryAxis.plotBands"
+      - "categoryAxis.select"
+      - "categoryAxis.title"
+      - "categoryAxis.notes.icon"
+      - "categoryAxis.notes.label"
+      - "categoryAxis.notes.line"
+      - "categoryAxis.notes.data.icon"
+      - "categoryAxis.notes.data.label"
+      - "categoryAxis.notes.data.line"
+      - "chartArea"
+      - "plotArea"
+      - "series.border"
+      - "series.connectors"
+      - "series.errorBars"
+      - "series.highlight"
+      - "series.labels"
+      - "series.line"
+      - "series.markers"
+      - "series.target"
+      - "series.tooltip"
+      - "series.notes.icon"
+      - "series.notes.label"
+      - "series.notes.line"
+      - "seriesDefaults.border"
+      - "seriesDefaults.labels"
+      - "seriesDefaults.tooltip"
+      - "tooltip"
+      - "valueAxis.crosshair"
+      - "valueAxis.labels"
+      - "valueAxis.line"
+      - "valueAxis.majorGridLines"
+      - "valueAxis.majorTicks"
+      - "valueAxis.minorGridLines"
+      - "valueAxis.minorTicks"
+      - "valueAxis.plotBands"
+      - "valueAxis.title"
+      - "valueAxis.notes.icon"
+      - "valueAxis.notes.label"
+      - "valueAxis.notes.line"
+      - "valueAxis.notes.data.icon"
+      - "valueAxis.notes.data.label"
+      - "valueAxis.notes.data.line"
+-
+    file: "api/javascript/dataviz/ui/stock-chart"
+    group_parents:
+      - "navigator.categoryAxis.autoBaseUnitSteps"
+      - "navigator.categoryAxis.crosshair"
+      - "navigator.categoryAxis.labels"
+      - "navigator.categoryAxis.majorGridLines"
+      - "navigator.categoryAxis.majorTicks"
+      - "navigator.categoryAxis.minorTicks"
+      - "navigator.categoryAxis.minorGridLines"
+      - "navigator.categoryAxis.plotBands"
+      - "navigator.categoryAxis.position"
+      - "navigator.categoryAxis.notes.icon"
+      - "navigator.categoryAxis.notes.label"
+      - "navigator.categoryAxis.notes.line"
+      - "navigator.categoryAxis.notes.data.icon"
+      - "navigator.categoryAxis.notes.data.label"
+      - "navigator.categoryAxis.notes.data.line"
+      - "navigator.pane"
+      - "navigator.select"
+      - "navigator.hint"
+      - "navigator.series.highlight"
+      - "navigator.series.labels"
+      - "navigator.series.markers"
+      - "navigator.series.tooltip"
+      - "categoryAxis.crosshair"
+      - "categoryAxis.labels"
+      - "categoryAxis.line"
+      - "categoryAxis.majorGridLines"
+      - "categoryAxis.majorTicks"
+      - "categoryAxis.minorGridLines"
+      - "categoryAxis.minorTicks"
+      - "categoryAxis.plotBands"
+      - "categoryAxis.select"
+      - "categoryAxis.title"
+      - "categoryAxis.notes.icon"
+      - "categoryAxis.notes.label"
+      - "categoryAxis.notes.line"
+      - "categoryAxis.notes.data.icon"
+      - "categoryAxis.notes.data.label"
+      - "categoryAxis.notes.data.line"
+      - "chartArea"
+      - "plotArea"
+      - "series.border"
+      - "series.connectors"
+      - "series.errorBars"
+      - "series.highlight"
+      - "series.labels"
+      - "series.line"
+      - "series.markers"
+      - "series.target"
+      - "series.tooltip"
+      - "series.notes.icon"
+      - "series.notes.label"
+      - "series.notes.line"
+      - "seriesDefaults.border"
+      - "seriesDefaults.labels"
+      - "seriesDefaults.tooltip"
+      - "tooltip"
+      - "valueAxis.crosshair"
+      - "valueAxis.labels"
+      - "valueAxis.line"
+      - "valueAxis.majorGridLines"
+      - "valueAxis.majorTicks"
+      - "valueAxis.minorGridLines"
+      - "valueAxis.minorTicks"
+      - "valueAxis.plotBands"
+      - "valueAxis.title"
+      - "valueAxis.notes.icon"
+      - "valueAxis.notes.label"
+      - "valueAxis.notes.line"
+      - "valueAxis.notes.data.icon"
+      - "valueAxis.notes.data.label"
+      - "valueAxis.notes.data.line"
+-
+    file: "api/javascript/drawing/surface"
+    group_parents:
+      - "tooltip.animation"
+-
+    file: "api/javascript/mobile/ui/actionsheet"
+    group_parents:
+      - "popup"
+-
+    file: "api/javascript/mobile/ui/listview"
+    group_parents:
+      - "messages"
+      - "filterable"
+-
+    file: "api/javascript/mobile/ui/popover"
+    group_parents:
+      - "pane"
+      - "popup"
+-
+    file: "api/javascript/mobile/ui/scroller"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ooxml/workbook"
+    group_parents:
+      - "sheets.columns"
+      - "sheets.freezePane"
+      - "sheets.filter"
+      - "sheets.rows.cells.borderBottom"
+      - "sheets.rows.cells.borderLeft"
+      - "sheets.rows.cells.borderTop"
+      - "sheets.rows.cells.borderRight"
+-
+    file: "api/javascript/ui/alert"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/autocomplete"
+    group_parents:
+      - "animation"
+      - "virtual"
+-
+    file: "api/javascript/ui/buttongroup"
+    group_parents:
+      - "items"
+-
+    file: "api/javascript/ui/calendar"
+    group_parents:
+      - "messages"
+      - "month"
+-
+    file: "api/javascript/ui/colorpalette"
+    group_parents:
+      - "tileSize"
+-
+    file: "api/javascript/ui/colorpicker"
+    group_parents:
+      - "tileSize"
+      - "messages"
+-
+    file: "api/javascript/ui/combobox"
+    group_parents:
+      - "animation"
+      - "popup"
+      - "virtual"
+-
+    file: "api/javascript/ui/confirm"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/contextmenu"
+    group_parents:
+      - "animation"
+-
+    file: "api/javascript/ui/dateinput"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/datepicker"
+    group_parents:
+      - "animation"
+      - "month"
+-
+    file: "api/javascript/ui/datetimepicker"
+    group_parents:
+      - "animation"
+      - "month"
+-
+    file: "api/javascript/ui/dialog"
+    group_parents:
+      - "actions"
+      - "animation"
+      - "messages"
+-
+    file: "api/javascript/ui/dropdownlist"
+    group_parents:
+      - "animation"
+      - "popup"
+      - "virtual"
+-
+    file: "api/javascript/ui/editor"
+    group_parents:
+      - "deserialization"
+      - "immutables"
+      - "pasteCleanup"
+      - "pdf.margin"
+      - "tools.items"
+      - "imageBrowser.transport.read"
+      - "imageBrowser.transport.destroy"
+      - "imageBrowser.transport.create"
+      - "imageBrowser.schema.model.fields"
+      - "imageBrowser.messages"
+      - "fileBrowser.transport.read"
+      - "fileBrowser.transport.destroy"
+      - "fileBrowser.transport.create"
+      - "fileBrowser.schema.model.fields"
+      - "fileBrowser.messages"
+-
+    file: "api/javascript/ui/filtermenu"
+    group_parents:
+      - "messages"
+      - "operators.string"
+      - "operators.number"
+      - "operators.date"
+      - "operators.enums"
+-
+    file: "api/javascript/ui/flatcolorpicker"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/gantt"
+    group_parents:
+      - "assignments"
+      - "currentTimeMarker"
+      - "messages.actions"
+      - "messages.editor"
+      - "messages.views"
+      - "pdf.margin"
+      - "range"
+      - "toolbar"
+      - "tooltip"
+      - "views.range"
+-
+    file: "api/javascript/ui/grid"
+    group_parents:
+      - "allowCopy"
+      - "columns.command"
+      - "columns.filterable.cell"
+      - "columns.sortable"
+      - "columnMenu.messages"
+      - "filterable.messages"
+      - "filterable.operators.string"
+      - "filterable.operators.number"
+      - "filterable.operators.date"
+      - "filterable.operators.enums"
+      - "messages.commands"
+      - "noRecords"
+      - "pageable.messages"
+      - "pdf.margin"
+-
+    file: "api/javascript/ui/listbox"
+    group_parents:
+      - "draggable"
+      - "messages"
+      - "toolbar"
+-
+    file: "api/javascript/ui/mediaplayer"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/menu"
+    group_parents:
+      - "animation"
+      - "openOnClick"
+      - "scrollable"
+-
+    file: "api/javascript/ui/multiselect"
+    group_parents:
+      - "animation"
+      - "popup"
+      - "virtual"
+-
+    file: "api/javascript/ui/notification"
+    group_parents:
+      - "position"
+      - "templates"
+-
+    file: "api/javascript/ui/pager"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/panelbar"
+    group_parents:
+      - "animation"
+      - "messages"
+-
+    file: "api/javascript/ui/pivotconfigurator"
+    group_parents:
+      - "sortable"
+      - "messages.fieldMenu.operators"
+-
+    file: "api/javascript/ui/pivotgrid"
+    group_parents:
+      - "excel"
+      - "pdf.margin"
+      - "sortable"
+      - "messages.fieldMenu.operators"
+-
+    file: "api/javascript/ui/popup"
+    group_parents:
+      - "animation"
+-
+    file: "api/javascript/ui/prompt"
+    group_parents:
+      - "messages"
+-
+    file: "api/javascript/ui/rangeslider"
+    group_parents:
+      - "tooltip"
+-
+    file: "api/javascript/ui/scheduler"
+    group_parents:
+      - "currentTimeMarker"
+      - "group"
+      - "messages.editor"
+      - "messages.recurrenceEditor.daily"
+      - "messages.recurrenceEditor.end"
+      - "messages.recurrenceEditor.frequencies"
+      - "messages.recurrenceEditor.monthly"
+      - "messages.recurrenceEditor.offsetPositions"
+      - "messages.recurrenceEditor.weekly"
+      - "messages.recurrenceEditor.weekdays"
+      - "messages.recurrenceEditor.yearly"
+      - "messages.recurrenceMessages"
+      - "messages.views"
+      - "pdf.margin"
+      - "resources"
+      - "views.editable"
+      - "views.group"
+-
+    file: "api/javascript/ui/slider"
+    group_parents:
+      - "tooltip"
+-
+    file: "api/javascript/ui/sortable"
+    group_parents:
+      - "cursorOffset"
+-
+    file: "api/javascript/ui/splitter"
+    group_parents:
+      - "panes"
+-
+    file: "api/javascript/ui/spreadsheet"
+    group_parents:
+      - "defaultCellStyle"
+      - "excel"
+      - "pdf.margin"
+      - "sheets.columns"
+      - "sheets.filter"
+      - "sheets.rows.cells.borderBottom"
+      - "sheets.rows.cells.borderLeft"
+      - "sheets.rows.cells.borderTop"
+      - "sheets.rows.cells.borderRight"
+      - "sheets.rows.cells.validation"
+      - "sheets.sort"
+      - "toolbar"
+-
+    file: "api/javascript/ui/tabstrip"
+    group_parents:
+      - "animation"
+      - "scrollable"
+-
+    file: "api/javascript/ui/timepicker"
+    group_parents:
+      - "animation"
+-
+    file: "api/javascript/ui/toolbar"
+    group_parents:
+      - "items.buttons"
+      - "items.menuButtons"
+-
+    file: "api/javascript/ui/tooltip"
+    group_parents:
+      - "animation"
+      - "content"
+-
+    file: "api/javascript/ui/treelist"
+    group_parents:
+      - "columns.command"
+      - "columns.filterable"
+      - "columnMenu.messages"
+      - "editable"
+      - "excel"
+      - "filterable.messages"
+      - "filterable.operators.string"
+      - "filterable.operators.number"
+      - "filterable.operators.date"
+      - "messages.commands"
+      - "pdf.margin"
+      - "sortable"
+      - "toolbar"
+-
+    file: "api/javascript/ui/treeview"
+    group_parents:
+      - "animation"
+      - "checkboxes"
+      - "messages"
+-
+    file: "api/javascript/ui/upload"
+    group_parents:
+      - "files"
+      - "validation"
+-
+    file: "api/javascript/ui/window"
+    group_parents:
+      - "animation"
+      - "content"
+      - "position"
+
+product: "Kendo UI for jQuery"
+platform: kendo-ui
+
 ## Assign layout and category per different paths
+
 defaults:
 -
     scope:
         path: ""
     values:
-        layout: "page"
+        layout: "documentation"
         category: "default"
         product: "kendo-ui"
         editable: true
@@ -549,12 +1491,14 @@ defaults:
     values:
         product: "php-ui"
         editable: false
+        has_api_toc: true
 -
     scope:
         path: "api/jsp"
     values:
         product: "jsp-ui"
         editable: false
+        has_api_toc: true
 -
     scope:
         path: "jsp"
@@ -564,12 +1508,400 @@ defaults:
     scope:
         path: "api"
     values:
+        res_type: api
         kind: "api"
 -
     scope:
         path: "api/javascript"
     values:
         editableExample: "true"
+        api_type: "javascript"
+-
+    scope:
+        path: "knowledge-base"
+    values:
+        res_type: "kb"
+
+    ## Component Tags
+-
+    scope:
+        path: "controls/gauges/lineargauge"
+    values:
+        component: "gauges"
+
+-
+    scope:
+        path: "controls/gauges/radialgauge"
+    values:
+        component: "gauges"
+
+-
+    scope:
+        path: "controls/editors/autocomplete"
+    values:
+        component: "autocomplete"
+
+-
+    scope:
+        path: "controls/barcodes/barcode"
+    values:
+        component: "barcode"
+
+-
+    scope:
+        path: "controls/navigation/button"
+    values:
+        component: "button"
+
+-
+    scope:
+        path: "controls/scheduling/calendar"
+    values:
+        component: "calendar"
+
+-
+    scope:
+        path: "controls/charts"
+    values:
+        component: "charts"
+
+-
+    scope:
+        path: "controls/editors/colorpicker"
+    values:
+        component: "color-picker"
+
+-
+    scope:
+        path: "controls/editors/combobox"
+    values:
+        component: "combobox"
+
+-
+    scope:
+        path: "framework/datasource"
+    values:
+        component: "data-source"
+
+-
+    scope:
+        path: "controls/editors/datepicker"
+    values:
+        component: "date-time-pickers"
+
+-
+    scope:
+        path: "controls/editors/timepicker"
+    values:
+        component: "date-time-pickers"
+
+-
+    scope:
+        path: "controls/editors/dateinput"
+    values:
+        component: "dateinput"
+
+-
+    scope:
+        path: "controls/diagrams-and-maps/diagram"
+    values:
+        component: "diagram"
+
+-
+    scope:
+        path: "controls/layout/dialog"
+    values:
+        component: "dialog"
+
+-
+    scope:
+        path: "controls/interactivity/draganddrop"
+    values:
+        component: "drag-and-drop"
+
+-
+    scope:
+        path: "framework/drawing"
+    values:
+        component: "drawing-api"
+
+-
+    scope:
+        path: "controls/editors/dropdownlist"
+    values:
+        component: "dropdownlist"
+
+
+        scope:
+        path: "controls/editors/editor"
+    values:
+        component: "editor"
+
+-
+    scope:
+        path: "controls/interactivity/fx"
+    values:
+        component: "effects"
+
+-
+    scope:
+        path: "controls/interactivity/ripplecontainer"
+    values:
+        component: "ripple-container"
+
+-
+    scope:
+        path: "controls/scheduling/gantt"
+    values:
+        component: "gantt"
+
+-
+    scope:
+        path: "framework/globalization"
+    values:
+        component: "globalization"
+
+-
+    scope:
+        path: "controls/data-management/grid"
+    values:
+        component: "grid"
+
+-
+    scope:
+        path: "framework/hierarchicaldatasource"
+    values:
+        component: "hierarchical-data-source"
+
+-
+    scope:
+        path: "controls/editors/listbox"
+    values:
+        component: "listbox"
+
+-
+    scope:
+        path: "controls/data-management/listview"
+    values:
+        component: "listview"
+
+-
+    scope:
+        path: "controls/hybrid/listview"
+    values:
+        component: "mobile-listview"
+
+-
+    scope:
+        path: "framework/mvvm"
+    values:
+        component: "mvvm"
+
+-
+    scope:
+        path: "controls/diagrams-and-maps/map"
+    values:
+        component: "map"
+
+-
+    scope:
+        path: "controls/editors/maskedtextbox"
+    values:
+        component: "maskedtextbox"
+
+-
+    scope:
+        path: "controls/media/mediaplayer"
+    values:
+        component: "mediaplayer"
+
+-
+    scope:
+        path: "controls/navigation/menu"
+    values:
+        component: "menu"
+
+-
+    scope:
+        path: "controls/editors/multiselect"
+    values:
+        component: "multi-select"
+
+-
+    scope:
+        path: "controls/editors/multicolumncombobox"
+    values:
+        component: "multicolumn-combobox"
+
+-
+    scope:
+        path: "controls/layout/notification"
+    values:
+        component: "notification"
+
+-
+    scope:
+        path: "controls/editors/numerictextbox"
+    values:
+        component: "numeric-textbox"
+
+-
+    scope:
+        path: "controls/editors/rating"
+    values:
+        component: "rating"
+
+-
+    scope:
+        path: "controls/navigation/panelbar"
+    values:
+        component: "panelbar"
+
+-
+    scope:
+        path: "controls/data-management/pivotgrid"
+    values:
+        component: "pivotgrid"
+
+-
+    scope:
+        path: "controls/interactivity/progressbar"
+    values:
+        component: "progressbar"
+
+-
+    scope:
+        path: "controls/barcodes/qrcode"
+    values:
+        component: "qrcode"
+
+-
+    scope:
+        path: "controls/layout/responsivepanel"
+    values:
+        component: "responsivepanel"
+
+-
+    scope:
+        path: "framework/spa"
+    values:
+        component: "spa"
+
+-
+    scope:
+        path: "controls/scheduling/scheduler"
+    values:
+        component: "scheduler"
+
+-
+    scope:
+        path: "controls/hybrid/scrollview"
+    values:
+        component: "scrollview"
+
+-
+    scope:
+        path: "controls/editors/slider"
+    values:
+        component: "slider"
+
+-
+    scope:
+        path: "controls/interactivity/sortable"
+    values:
+        component: "sortable"
+
+-
+    scope:
+        path: "controls/charts/sparkline"
+    values:
+        component: "sparkline"
+
+-
+    scope:
+        path: "controls/layout/splitter"
+    values:
+        component: "splitter"
+
+-
+    scope:
+        path: "controls/data-management/spreadsheet"
+    values:
+        component: "spreadsheet"
+
+-
+    scope:
+        path: "controls/editors/switch"
+    values:
+        component: "switch"
+
+    scope:
+        path: "controls/navigation/tabstrip"
+    values:
+        component: "tabstrip"
+
+-
+    scope:
+        path: "api/javascript/kendo/methods/template"
+    values:
+        component: "templates"
+
+-
+    scope:
+        path: "framework/templates"
+    values:
+        component: "templates"
+
+-
+    scope:
+        path: "controls/navigation/toolbar"
+    values:
+        component: "toolbar"
+
+-
+    scope:
+        path: "controls/layout/tooltip"
+    values:
+        component: "tooltip"
+
+-
+    scope:
+        path: "controls/data-management/treelist"
+    values:
+        component: "treelist"
+
+-
+    scope:
+        path: "controls/charts/treemap"
+    values:
+        component: "treemap"
+
+-
+    scope:
+        path: "controls/navigation/treeview"
+    values:
+        component: "treeview"
+
+-
+    scope:
+        path: "controls/editors/upload"
+    values:
+        component: "upload"
+
+-
+    scope:
+        path: "controls/editors/validator"
+    values:
+        component: "validation"
+
+-
+    scope:
+        path: "controls/layout/window"
+    values:
+        component: "window"
+
+    ## End Component Tags
+
 
 type_links:
     "kendo.Class": "/api/javascript/class"
@@ -584,13 +1916,60 @@ type_links:
     "Object": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"
     "Number": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number"
     "String": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String"
+    "Date": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
+    "Element": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
 
 # Aliases available in the markdown template. The below will expand {{site.foo}} to Bar in the output
 # "foo": "Bar"
 
+ff-sheet-id: 14zzclhdh7dMLpg0iq4-2hweCdEiuxxqP3tHdr42-_Cs
+
 # The google services configuration
 google_tag_manager: GTM-6X92
-google_custom_search: '001595215763381649090:eblhnfskwrk'
+gcs_engine: '001595215763381649090:eblhnfskwrk'
+gcs_api_key: 'AIzaSyBVGH-YHfdOHBr67dIYorAPzyndpaRL6bg'
+
+main_theme: "kendo"
+enable_dojo: true
+has_web_api: true
+skip_tabbed_code: true
+code_lang: true
+has_kb_portal: true
+edit_repo_url: https://github.com/telerik/kendo-ui-core/edit/master/docs
+download: http://www.telerik.com/download/kendo-ui
+nav:
+  "Demos": https://demos.telerik.com/kendo-ui/
+  "Release History": https://www.telerik.com/support/whats-new/kendo-ui/release-history
+  "About": http://www.telerik.com/kendo-ui
+  "Pricing": http://www.telerik.com/purchase/kendo-ui
+
+footer:
+-
+  title: "Getting Started"
+  links:
+    "Getting Started": https://docs.telerik.com/kendo-ui/intro/installation/getting-started
+    "Demos": https://demos.telerik.com/aspnet-core/
+    "Whats New": "https://www.telerik.com/support/whats-new/kendo-ui"
+    "Roadmap": https://www.telerik.com/support/whats-new/kendo-ui/roadmap
+-
+  title: "Community"
+  links:
+    "Forums": https://www.telerik.com/forums/kendo-ui
+    "Blogs": https://www.telerik.com/blogs/kendo-ui
+    "Feedback Portal": https://feedback.telerik.com/kendo-jquery-ui
+-
+  title: "Frameworks"
+  links:
+    "Kendo UI for jQuery": https://www.telerik.com/kendo-jquery-ui
+    "Kendo UI for Angular": https://www.telerik.com/kendo-angular-ui
+    "Kendo UI for React": https://www.telerik.com/kendo-react-ui
+    "Kendo UI for Vue": https://www.telerik.com/kendo-vue-ui
+
+footer_social:
+    facebook: https://www.facebook.com/KendoUI/
+    youtube: https://www.youtube.com/user/TelerikInc
+    linkedin: https://www.linkedin.com/showcase/telerik/
+    twitter: https://twitter.com/KendoUI/
 
 # Assets pipeline configuration
 assets:

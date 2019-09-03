@@ -725,7 +725,7 @@ var __meta__ = { // jshint ignore:line
         _start: function(e) {
             var that = this,
                 options = that.options,
-                container = options.container,
+                container = options.container ? $(options.container): null,
                 hint = options.hint;
 
             if (this._shouldIgnoreTarget(e.touch.initialTouch) || (options.holdToDrag && !that._activated)) {
@@ -790,7 +790,7 @@ var __meta__ = { // jshint ignore:line
         _hold: function(e) {
             this.currentTarget = e.target;
 
-            if (this._trigger(HOLD, e)) {
+            if (this.options.holdToDrag && this._trigger(HOLD, e)) {
                 this.userEvents.cancel();
             } else {
                 this._activated = true;
@@ -896,7 +896,7 @@ var __meta__ = { // jshint ignore:line
                 parent.scrollLeft += velocity.x;
             }
 
-            if (isRootNode && (xInBounds || yInBounds)) {
+            if (this.hint && isRootNode && (xInBounds || yInBounds)) {
                 if (yInBounds) {
                     compensation.top += velocity.y;
                 }
@@ -1064,7 +1064,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function scrollableRoot() {
-        return $(kendo.support.browser.chrome ? document.body : document.documentElement);
+        return $(kendo.support.browser.edge || kendo.support.browser.safari ? document.body : document.documentElement);
     }
 
     function findScrollableParent(element) {

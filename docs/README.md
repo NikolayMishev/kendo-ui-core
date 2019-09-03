@@ -20,8 +20,6 @@ There are two ways you can contribute to the public Kendo UI documentation: eith
         Title: api/DataViz/chart.md is missing an image
         Description: Example 3 is missing an image right after the code sample. https://github.com/telerik/kendo-ui-core/issues?state=open
 
-> **Important**
->
 > When creating issues, do not modify the assignee or milestone fields. Also, create one issue per fix or change. "Bundled" entries will be deleted.
 
 * **Send us a pull request** - Creating an issue is great&mdash;and we certainly appreciate them&mdash;but what we really love are pull requests. So, if you find an issue in the docs, or even feel like creating new content, we'd be happy to have your contributions! If you're just getting started with open source, Git and GitHub, we suggest you first read up on [forking repositories](https://help.github.com/articles/fork-a-repo) and [sending pull requests](https://help.github.com/articles/using-pull-requests), both great articles from the GitHub bootcamp.
@@ -44,14 +42,14 @@ There are two ways you can contribute to the public Kendo UI documentation: eith
         ---
         ```
 
-    - When adding content or making changes, please use only standard Markdown syntax, and make to preview your additions or changes before sending us a pull request. You can use an online tool like [Dillinger.io](http://dillinger.io/) or [Marked](http://markedapp.com/) on OSX to view what your changes will look like when ported to HTML.
+    - When adding content or making changes, please use only standard Markdown syntax, and make to preview your additions or changes before sending us a pull request. You can use an online tool like [Dillinger.io](https://dillinger.io/) or [Marked](http://markedapp.com/) on OSX to view what your changes will look like when ported to HTML.
 
 
     Once you've made your changes, commit, pull, merge, push and [send us a pull request](https://help.github.com/articles/using-pull-requests)! We — and Kendo UI users everywhere — thank you for making our docs the best front-end library documentation on the web!
 
 ## Local Generation
 
-You can generate a static web site from the Kendo UI the documentation and browse it locally.
+You can generate a static website from the Kendo UI the documentation and browse it locally.
 
 1. Clone the repository `git clone git@github.com:telerik/kendo-ui-core.git`
 2. Run `bundle install` (you must have ruby and bundler installed beforehand)
@@ -64,7 +62,7 @@ The Kendo UI Documentation is licensed under an MIT license. This license applie
 
 ### MIT License
 
-Copyright (c) 2012-2015 Telerik
+*Copyright © 2012-2019 Progress Software Corporation and/or one of its subsidiaries or affiliates. All rights reserved.*
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

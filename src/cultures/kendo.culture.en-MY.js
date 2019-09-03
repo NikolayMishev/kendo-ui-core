@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["en-MY"] = {
         name: "en-MY",
         numberFormat: {
@@ -18,7 +18,7 @@
             currency: {
                 name: "Malaysian Ringgit",
                 abbr: "MYR",
-                pattern: ["($n)","$n"],
+                pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",

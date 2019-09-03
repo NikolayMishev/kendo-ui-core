@@ -1,9 +1,11 @@
 ---
 title: Location
 page_title: API reference for Kendo UI Map Location
+res_type: api
 ---
 
 # kendo.dataviz.map.Location : kendo.Class
+
 Represents a geographic location.
 
 ## Constructor Parameters
@@ -15,7 +17,7 @@ The location latitude in decimal degrees.
 The location longitude in decimal degrees.
 
 
-## Class methods
+## Class Methods
 
 ### create
 Creates a Location instance from various input types.

@@ -8,13 +8,13 @@ slug: howto_panandzoomrebind_charts
 
 # Maintain Pan and Zoom State on Rebind
 
-Normally, the Kendo UI Chart resets the axis range after the data source fetches new data. If users pan or zoom the Chart, they will see the initial viewport after the new data is loaded. 
+Normally, the Kendo UI Chart resets the axis range after the data source fetches new data. If users pan or zoom the Chart, they will see the initial viewport after the new data is loaded.
 
-The example below demonstrates how to store and load the axis range. Changes are detected in the [`drag`](/api/javascript/dataviz/ui/chart#events-drag) and [`zoom`](/api/javascript/dataviz/ui/chart#events-zoom) events. The axis range is restored in the [`dataBound` event](/api/javascript/dataviz/ui/chart#events-dataBound).
+The example below demonstrates how to store and load the axis range. Changes are detected in the [`drag`](/api/javascript/dataviz/ui/chart/events/drag) and [`zoom`](/api/javascript/dataviz/ui/chart/events/zoom) events. The axis range is restored in the [`databound` event](/api/javascript/dataviz/ui/chart/events/databound).
 
 ###### Example
 
-```html
+```dojo
     <button id="rebind">Rebind Chart</button>
     <div id="chart"></div>
     <script>
@@ -33,8 +33,10 @@ The example below demonstrates how to store and load the axis range. Changes are
         var axisMax = 10;
 
         function updateRange(e) {
-          axisMin = e.axisRanges.axis.min;
-          axisMax = e.axisRanges.axis.max;
+          var axis = e.sender.getAxis('axis')
+          var range = axis.range()
+          axisMin = range.min;
+          axisMax = range.max;
         }
 
         function restoreRange(e) {
@@ -87,8 +89,6 @@ The example below demonstrates how to store and load the axis range. Changes are
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
 * [How to Aggregate Data in Pie Charts]({% slug howto_aggregatedata_piecharts %})
@@ -100,4 +100,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

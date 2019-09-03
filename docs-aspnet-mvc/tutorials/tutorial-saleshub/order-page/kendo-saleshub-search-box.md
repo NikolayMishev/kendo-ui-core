@@ -9,7 +9,7 @@ position: 3
 
 # Create the Search Box
 
-![kendo-saleshub-search-box-screenshot](/tutorials/tutorial-saleshub/images/kendo-saleshub-search-box-screenshot.png)
+![kendo-saleshub-search-box-screenshot](../images/kendo-saleshub-search-box-screenshot.png)
 
 The Search Box in SalesHub allows users to search for Orders based on their Order Number. It is
 implemented using a [Kendo AutoComplete](http://demos.telerik.com/kendo-ui/web/autocomplete/index.html)
@@ -18,7 +18,7 @@ box. The search results displayed in the dropdown are limited to the first 20 re
 the user can press enter and it will open a [Kendo Window](http://demos.telerik.com/kendo-ui/web/window/index.html)
 that will display all of the search results.
 
-![kendo-saleshub-search-results-screenshot](/tutorials/tutorial-saleshub/images/kendo-saleshub-search-results-screenshot.png)
+![kendo-saleshub-search-results-screenshot](../images/kendo-saleshub-search-results-screenshot.png)
 
 ## Set up the AutoComplete
 
@@ -94,7 +94,7 @@ property called `item`, which is a jQuery object that points to the HTML element
 
 This event handler can be found in **Scripts/search.js**.
 
-## Set up the Search Results Window and Grid
+## Set Up the Search Results Window and Grid
 
 Since our AutoComplete only displays the first 20 results, we need a way of efficiently showing the user all of the results.
 To do this we create a [Kendo Window](http://demos.telerik.com/kendo-ui/web/window/index.html) that contains a

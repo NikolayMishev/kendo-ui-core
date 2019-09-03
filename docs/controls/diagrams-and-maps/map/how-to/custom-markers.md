@@ -7,11 +7,11 @@ slug: howto_customizemarkersonmap_map
 
 # Customize Markers on Map
 
-The example below demonstrates how to use custom markers on a Kendo UI Map.
+The following example demonstrates how to use custom markers on a Kendo UI Map.
 
 ###### Example
 
-```html
+```dojo
     <div id="map"></div>
     <script>
         function createMap() {
@@ -38,19 +38,17 @@ The example below demonstrates how to use custom markers on a Kendo UI Map.
 
       $(document).ready(createMap);
     </script>
- 	<style>
-      .k-map .k-marker-custom-marker {
-        background-image: url('http://demos.telerik.com/kendo-ui/content/shared/images/we-are-here.png');
-        background-size: 50px;
-        width: 50px;
-        height: 50px;
+    <style>
+      .k-map .k-i-marker-custom-marker {
+        background-image: url('https://demos.telerik.com/kendo-ui/content/dataviz/chart/images/sunny.png');
+        background-size: 30px;
+        width: 30px;
+        height: 30px;
       }
     </style>
 ```
 
 ## See Also
-
-Other articles on the Kendo UI Map:
 
 * [Map JavaScript API Reference](/api/javascript/dataviz/ui/map)
 * [How to Disable Mousewheel Zoom]({% slug howto_disablemousezoom_map %})

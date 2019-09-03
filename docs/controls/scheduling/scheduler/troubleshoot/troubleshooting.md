@@ -35,7 +35,7 @@ Update the remote service in use, so it can return valid responses. Make sure th
 
 ### Created Events Are Offset after Create/Update Request
 
-This behavior may be caused if the Scheduler [`timezone`](/api/javascript/ui/scheduler#configuration-timezone) option is not set, or if the remote service does not keep dates in the correct format.
+This behavior may be caused if the Scheduler [`timezone`](/api/javascript/ui/scheduler/configuration/timezone) option is not set, or if the remote service does not keep dates in the correct format.
 
 **Solution**
 
@@ -43,11 +43,11 @@ Set the timezone option of the Scheduler and make sure the dates on the remote s
 
 ### Defined Timezone Is Not Applied
 
-In this case, the specified [`timezone`](/api/javascript/ui/scheduler#configuration-timezone) option is not recognized by the widget and the events are visualized with a specific time offset. This could happen when the `SchedulerDataSource` instance is created separately, outside the Scheduler.
+In this case, the specified [`timezone`](/api/javascript/ui/scheduler/configuration/timezone) option is not recognized by the widget and the events are visualized with a specific time offset. This could happen when the `SchedulerDataSource` instance is created separately, outside the Scheduler.
 
 **Solution**
 
-Set directly the [`schema.timezone`](/api/javascript/data/schedulerdatasource#configuration-schema.timezone) option of the `SchedulerDataSource` instance to the desired value.
+Set directly the [`schema.timezone`](/api/javascript/data/schedulerdatasource/configuration/schema.timezone) option of the `SchedulerDataSource` instance to the desired value.
 
 ## Performance Issues
 
@@ -65,7 +65,7 @@ Such behavior may be caused by various reasons. Follow the instructions below to
 
 **Step 1** Use your browser developer console and check for JavaScript errors. Pressing the `F12` functional key is the shortcut for most browsers to display the console. Now you can easily address all JavaScript errors.
 
-**Step 2** Check the **Network** (or **Net** in Firebug) tab of the browser developer console. Look for a failed HTTP request for the [transport operations](/api/javascript/data/datasource#configuration-transport) configured via the [dataSource](/api/javascript/ui/scheduler#configuration-dataSource) Scheduler option.
+**Step 2** Check the **Network** (or **Net** in Firebug) tab of the browser developer console. Look for a failed HTTP request for the [transport operations](/api/javascript/data/datasource/configuration/transport) configured via the [dataSource](/api/javascript/ui/scheduler/configuration/datasource) Scheduler option.
 
 * HTTP status code [401](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#401) indicates that an authentication is required and has failed, or not is not provided yet.
 * HTTP status code [403](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#403) indicates that a request is not authorized. It is possible that the current user does not have the required permissions.
@@ -87,20 +87,15 @@ When widget navigation is enabled, the widget wrapper becomes a focusable elemen
 > The page re-positioning is a default browser behavior, which cannot be prevented nor modified.
 
 To avoid this behavior, choose either of the available options:
-* [Disable widget's navigation](/api/javascript/ui/scheduler#configuration-selectable), if it is not needed in your business case.
+* [Disable widget's navigation](/api/javascript/ui/scheduler/configuration/selectable), if it is not needed in your business case.
 * [Size the widget to the view-port dimensions]({% slug howto_calculate_scheduler_height_dunamically_onmobile_scheduler %}).
 
 ## See Also
-
-Other articles on the Kendo UI Scheduler:
 
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [Resources]({% slug resources_kendoui_scheduler_widget %})
 * [Timezones]({% slug timezones_kendoui_scheduler_widget %})
 * [Overview of the Scheduler Widget]({% slug overview_kendoui_scheduler_widget %})
-
-Other articles on troubleshooting:
-
 * [Common Issues in Kendo UI]({% slug troubleshooting_common_issues_kendoui %})
 * [Kendo UI JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
 * [Kendo UI Performance Issues]({% slug troubleshooting_system_memory_symptoms_kendoui %})
@@ -114,7 +109,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI Editor]({% slug troubleshooting_editor_widget %})
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

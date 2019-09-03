@@ -1,7 +1,7 @@
 ---
 title: Overview
 page_title: Overview | Team Efficiency Dashboard Tutorial
-description: "Start building the Team Efficiency Dashboard application by using Telerik UI for ASP.NET MVC."
+description: "Start building the Team Efficiency Dashboard application by using Progress Telerik UI for ASP.NET MVC."
 slug: overview_timeefficiencyapp_aspnetmvc6
 previous_url: /tutorials/tutorial-aspnetmvc-quick-start/chapter0
 position: 1
@@ -13,7 +13,7 @@ The tutorial on how to build the Team Efficiency Dashboard application by using 
 
 ## Introduction
 
-Welcome to the [UI for ASP.NET MVC](http://www.telerik.com/aspnet-mvc) quick start guide. In this guided tutorial you will learn how to install, configure, and utilize UI for ASP.NET MVC to build a rich single-page dashboard application that works beautifully on any device.
+Welcome to the [Telerik UI for ASP.NET MVC](http://www.telerik.com/aspnet-mvc) quick start guide. In this guided tutorial you will learn how to install, configure, and utilize Telerik UI for ASP.NET MVC to build a rich single-page dashboard application that works beautifully on any device.
 
 ### What You're Building
 
@@ -31,15 +31,15 @@ And here is what the app will look like on mobile.
 
 ![](images/chapter0/mobile-dashboard.jpg)
 
-### UI for ASP.NET MVC vs Kendo UI Widgets
+### Telerik UI for ASP.NET MVC vs Kendo UI Widgets
 
-From client-side point of view, the vanilla HTML/JavaScript **Kendo UI** widgets and the rendered **UI for ASP.NET MVC** represent the same thing and provide the same capabilities.
-However, the UI for ASP.NET MVC wrappers provide additional capabilities for use with ASP.NET MVC and tooling for VisualStudio. Refer to the [documentation]({% slug wrappersvswidgets_aspnetmvc %}) for a complete feature comparison.
+From client-side point of view, the vanilla HTML/JavaScript **Kendo UI** widgets and the rendered **Telerik UI for ASP.NET MVC** represent the same thing and provide the same capabilities.
+However, the Telerik UI for ASP.NET MVC wrappers provide additional capabilities for use with ASP.NET MVC and tooling for VisualStudio. Refer to the [documentation]({% slug wrappersvswidgets_aspnetmvc %}) for a complete feature comparison.
 
 ### Important Resources
 
-- [Documentation - UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
-- [API References - UI for ASP.NET MVC](/api/Kendo.Mvc/AggregateFunction)
+- [Documentation - Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
+- [API References - Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc/AggregateFunction)
 - [Support](http://www.telerik.com/account/support-tickets/my-support-tickets.aspx)
 
 ## Next Steps

@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["it-IT"] = {
         name: "it-IT",
         numberFormat: {
@@ -18,7 +18,7 @@
             currency: {
                 name: "Euro",
                 abbr: "EUR",
-                pattern: ["-$ n","$ n"],
+                pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",
                 ".": ",",

@@ -2,6 +2,8 @@
 title: PanelBar
 page_title: Configuration, methods and events of Kendo UI PanelBar
 description: Configure the PanelBar UI widget, use methods and explore the events which are triggered upon certain behaviors.
+res_type: api
+component: panelbar
 ---
 
 # kendo.ui.PanelBar
@@ -249,7 +251,7 @@ A whitespace-delimited string of animation effects that are used when an item is
 
 ### autoBind `Boolean` *(default: true)*
 
-If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource#events-change) event of the
+If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource/events/change) event of the
 data source is fired. By default the widget will bind to the data source specified in the configuration.
 
 > Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source does not make more than one request to the remote service.
@@ -288,7 +290,7 @@ Sets an array with the URLs from which the **PanelBar** items content to be load
         $("#panelbar").kendoPanelBar({
             contentUrls: [
               null,
-              "http://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
+              "https://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
             ]
         });
     </script>
@@ -302,8 +304,8 @@ Sets the field of the data item that provides the image URL of the **PanelBar** 
     <div id="panelbar"></div>
     <script>
     var items = [
-      { text: "Baseball", image: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png" },
-      { text: "Golf", image: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/golf.png" }
+      { text: "Baseball", image: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png" },
+      { text: "Golf", image: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/golf.png" }
     ];
     $("#panelbar").kendoPanelBar({
       dataImageUrlField: "image",
@@ -323,7 +325,7 @@ If the `dataSource` option is an existing [kendo.data.HierarchicalDataSource](/a
 
     <div id="panelbar"></div>
     <script>
-    $("#panelbar").kendoTreeView({
+    $("#panelbar").kendoPanelBar({
       dataSource: {
         data: [
           { text: "foo", items: [
@@ -336,8 +338,7 @@ If the `dataSource` option is an existing [kendo.data.HierarchicalDataSource](/a
 
 #### Example - set dataSource as a JavaScript array
 
-   <ul id="panelbar"></ul>
-
+    <ul id="panelbar"></ul>
     <script>
       $("#panelbar").kendoPanelBar({
           dataSource: [
@@ -354,12 +355,12 @@ If the `dataSource` option is an existing [kendo.data.HierarchicalDataSource](/a
               {
                   text: "Item 3",
                   // content URL to load within an item
-                  contentUrl: "http://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
+                  contentUrl: "https://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
               },
               {
                   text: "Item 4",
                   // item image URL, optional
-                  imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                  imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
                   expanded: true,                                 // item is rendered expanded
                   items: [{                                       // Sub item collection.
                       text: "Sub Item 1"
@@ -382,7 +383,7 @@ If the `dataSource` option is an existing [kendo.data.HierarchicalDataSource](/a
     var dataSource = new kendo.data.HierarchicalDataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/Employees",
+          url: "https://demos.telerik.com/kendo-ui/service/Employees",
           dataType: "jsonp"
         }
       },
@@ -409,8 +410,8 @@ If an array, each level uses the field that is at the same index in the array, o
 
     <style>
         #panelbar .k-sprite {
-            background-image: url("http://demos.telerik.com/kendo-ui/content/shared/styles/flags.png");
-        }    
+            background-image: url("https://demos.telerik.com/kendo-ui/content/shared/styles/flags.png");
+        }
     </style>
     <div id="panelbar"></div>
     <script>
@@ -541,7 +542,7 @@ Setting this to false causes all child DataSources to be loaded at initializatio
 
 The text messages displayed in the widget. Use it to customize or localize the messages.
 
-#### Example - customize TreeView messages
+#### Example - customize PanelBar messages
 
     <div id="panelbar"></div>
     <script>
@@ -685,11 +686,11 @@ Appends an item(s) to the PanelBar.
                 },
                 {
                     text: "Item 3",
-                    contentUrl: "http://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
+                    contentUrl: "https://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
                 },
                 {
                     text: "Item 4",
-                    imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                    imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
                     expanded: true,                                 // item is rendered expanded
                     items: [{                                       // Sub item collection.
                         text: "Sub Item 1"
@@ -714,7 +715,7 @@ Appends an item(s) to the PanelBar.
 Target item, specified as the JSON representation of an object. You can pass item `text`, `content` or
 `contentUrl` here. Can handle an HTML string or array of such strings or JSON.
 
-##### referenceItem `String|Element|jQuery`
+##### referenceItem `String|Element|jQuery` *(optional)*
 
 A reference item to append the new item in the PanelBar, can be omitted.
 
@@ -799,6 +800,36 @@ when collapsing items.
 #### Returns
 
 `kendo.ui.PanelBar` Returns the PanelBar object to support chaining.
+
+### dataItem
+
+Returns the data item to which the specified item is bound. The method will return an item only when the PanelBar is populated using a DataSource.
+
+#### Parameters
+
+##### node `jQuery|Element|String`
+
+A string, DOM element or jQuery object which represents the item. A string is treated as a jQuery selector.
+
+#### Returns
+
+`kendo.data.Node` The model of the item that was passed as a parameter.
+
+#### Example - get the data item of the first node
+
+    <div id="panelBar"></div>
+    <script>
+        $("#panelBar").kendoPanelBar({
+            dataSource: [
+                { id: 1, text: "foo" },
+                { id: 2, text: "bar" }
+            ]
+        });
+
+        var panelBar = $("#panelBar").data("kendoPanelBar");
+        var dataItem = panelBar.dataItem(".k-item:first");
+        console.log(dataItem.text); // displays "foo"
+    </script>
 
 ### destroy
 Prepares the **PanelBar** for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
@@ -969,11 +1000,11 @@ Inserts a PanelBar item after the specified referenceItem
             },
             {
                 text: "Item 3",
-                contentUrl: "http://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
+                contentUrl: "https://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
             },
             {
                 text: "Item 4",
-                imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
                 expanded: true,                              // item is rendered expanded
                 items: [{                                    // Sub item collection.
                      text: "Sub Item 1"
@@ -1038,11 +1069,11 @@ Inserts a PanelBar item before the specified referenceItem
             },
             {
                 text: "Item 3",
-                contentUrl: "http://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
+                contentUrl: "https://demos.telerik.com/kendo-ui/content/web/panelbar/ajax/ajaxContent1.html"
             },
             {
                 text: "Item 4",
-                imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
                 expanded: true,                              // item is rendered expanded
                 items: [{                                    // Sub item collection.
                      text: "Sub Item 1"
@@ -1615,7 +1646,7 @@ The expanding item of the PanelBar.
 
 ### select
 
-Triggered when an item of a PanelBar is selected.
+Triggered when an item of a PanelBar is selected by the user.
 
 #### Event Data
 

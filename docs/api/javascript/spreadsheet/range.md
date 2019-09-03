@@ -1,13 +1,14 @@
 ---
 title: Range
 page_title: Configuration, methods and events of Kendo UI Spreadsheet Range Instance object
+res_type: api
 ---
 
 # kendo.spreadsheet.Range
 
 Represents one or more rectangular regions of cells in a given [Sheet](/api/javascript/spreadsheet/sheet). Inherits from [Class](/api/javascript/class).
 
-An instance of a range object may be obtained as a return value from the Sheet [range](/api/javascript/spreadsheet/sheet#methods-range) or [selection](/api/javascript/spreadsheet/sheet#methods-selection) methods.
+An instance of a range object may be obtained as a return value from the Sheet [range](/api/javascript/spreadsheet/sheet/methods/range) or [selection](/api/javascript/spreadsheet/sheet/methods/selection) methods.
 
 ## Methods
 
@@ -226,6 +227,34 @@ Any valid [CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_val
 </script>
 ```
 
+### comment
+
+Gets or sets the comment for the cells.  The comment is a text tooltip that appears when the cell is hovered.
+
+#### Parameters
+
+##### value `String` *optional*
+
+Text comment.  Pass `null` to remove the comment.
+
+#### Returns
+
+`String` the current comment of the top-left cell in the range.
+
+#### Example
+
+```
+<div id="spreadsheet"></div>
+<script type="text/javascript" charset="utf-8">
+    $("#spreadsheet").kendoSpreadsheet();
+    var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+    var sheet = spreadsheet.activeSheet();
+    sheet.range("A1").comment("Test");
+    sheet.range("A1").comment(null); // remove it
+    sheet.range("B2").comment("This is a comment");
+</script>
+```
+
 ### clear
 
 Clears the contents of the range cells.
@@ -332,7 +361,7 @@ The name of the custom cell editor, registered as [described in this help articl
                 context = options;
                 open();
             },
-            icon: "k-font-icon k-i-background"
+            icon: "k-icon k-i-background"
         };
 
         // This function actually creates the UI if not already there, and
@@ -680,7 +709,7 @@ The function that will be executed against every cell. The function receives the
 
 - **rowIndex** - the row index of the cell
 - **columnIndex** - the column index of the cell
-- **value** - the cell properties
+- **cellProperties** - the cell properties
 
 #### Example
 
@@ -706,7 +735,7 @@ The function that will be executed against every cell. The function receives the
     var sheet = spreadsheet.activeSheet();
     var range = sheet.range("A1:B2");
 
-    range.forEachCell(function (row, column, value) {
+    range.forEachCell(function (row, column, cellProperties) {
         console.log(row, column, value);
     });
 </script>
@@ -1124,7 +1153,7 @@ Un-merges any merged cells which are included in the range.
 
 ### values
 
-Sets the values of the range cells. The argument should be an array of arrays which match the dimensions of the range.
+Gets or sets the values of the range cells. The argument should be an array of arrays which match the dimensions of the range.
 
 > This method clears the formulas on every cell.
 
@@ -1133,6 +1162,10 @@ Sets the values of the range cells. The argument should be an array of arrays wh
 ##### values `Array`
 
 The cell values.
+
+#### Returns
+
+`Array` the cell values.
 
 #### Example
 
@@ -1172,7 +1205,7 @@ The `type` Can be set to "warning" or "reject". By default the type is "warning"
 
 The `comparerType` Can be set to "greaterThan", "lessThan", "between", "equalTo", "notEqualTo", "greaterThanOrEqualTo", "lessThanOrEqualTo", "notBetween" or "custom".
 
-The `dataType` Can be set to "date", "text", "number" or "custom".
+The `dataType` Can be set to "date", "text", "number", "list" or "custom".
 
 The `from` This key holds formula or value. Used as first or only compare value depending on specified comparer.
 

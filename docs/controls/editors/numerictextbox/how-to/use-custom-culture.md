@@ -7,18 +7,18 @@ slug: howto_use_custom_culture_script_numerictextbox
 
 # Use Custom Culture Script
 
-The example below demonstrates how to extend an existing culture script, create a custom script, and use it with the Kendo UI NumericTextBox widget.
+The following example demonstrates how to extend an existing culture script, create a custom script, and use it with the NumericTextBox.
 
 ###### Example
 
-```html
+```dojo
 <script src="http://kendo.cdn.telerik.com/2014.3.1119/js/cultures/kendo.culture.en-GB.min.js"></script>
 
 <div id="example">
     <input id="initial" value="10" min="1"/>
     <script>
         //extend en-GB
-        var customGB = $.extend({}, kendo.culture(), {
+        var customGB = $.extend(true, {}, kendo.culture(), {
             name: "custom-GB",
             numberFormat: {
               ",": " "
@@ -26,7 +26,7 @@ The example below demonstrates how to extend an existing culture script, create 
         });
 
         //add a reference to the custom culture script
-        kendo.cultures["custom-GB"] = customGB";
+        kendo.cultures["custom-GB"] = customGB;
     </script>
     <script>
         kendo.culture("en-GB");
@@ -41,8 +41,6 @@ The example below demonstrates how to extend an existing culture script, create 
 ```
 
 ## See Also
-
-Other articles on the Kendo UI NumericTextBox:
 
 * [NumericTextBox JavaScript API Reference](/api/javascript/ui/numerictextbox)
 * [How to Change Text Color]({% slug howto_change_text_color_numerictextbox %})

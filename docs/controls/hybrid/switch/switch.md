@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI Switch
 description: "Display two exclusive choices with the hybrid mobile Kendo UI Switch widget, check and uncheck, and tailor on and off its labels."
 slug: overview_hybridswitch
 position: 1
+component: switch
 ---
 
 # Switch Overview
@@ -75,8 +76,6 @@ The example below demonstrates how to customize the on/off labels of a Hybrid UI
     </script>
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the Switch:
 
 * [Hybrid UI Switch JavaScript API Reference](/api/javascript/mobile/ui/switch)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

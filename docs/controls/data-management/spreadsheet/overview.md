@@ -8,7 +8,7 @@ position: 1
 
 # Spreadsheet Overview
 
-The [Kendo UI Spreadsheet widget](http://demos.telerik.com/kendo-ui/spreadsheet/index) allows editing and visualization of tabular data with a variety of cell formatting options, styles, and themes.
+The [Kendo UI Spreadsheet widget](http://demos.telerik.com/kendo-ui/spreadsheet/index) enables you to edit and visualize tabular data by using cell formatting options, styles, and themes.
 
 Out of the box, the Spreadsheet supports:
 
@@ -26,9 +26,9 @@ Out of the box, the Spreadsheet supports:
 
 Each of these features is exposed as a user interface (UI) to the end user and as API calls for further UI customization to the developer.
 
-> **Important**  
+> **Important**
 >
-> The Spreadsheet widget supports Internet Explorer 9 or later versions.
+> The Spreadsheet supports Internet Explorer 9 or later versions.
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ To instantiate the Spreadsheet, use an empty `<div>` element, as demonstrated in
 
 ###### Example
 
-```html
+```dojo
 
     <div id="spreadsheet">
     </div>
@@ -54,7 +54,7 @@ To find the detailed list of configuration options supported by the Spreadsheet,
 
 ### Using the Spreadsheet API
 
-The Spreadsheet instance exposes [methods](/api/javascript/ui/spreadsheet#methods) for sheet instance retrieval, insertion, and deletion. The most commonly used one is the [`activeSheet`](/api/javascript/ui/spreadsheet#methods-activeSheet) method.
+The Spreadsheet instance exposes [methods](/api/javascript/ui/spreadsheet#methods) for sheet instance retrieval, insertion, and deletion. The most commonly used one is the [`activeSheet`](/api/javascript/ui/spreadsheet/methods/activesheet) method.
 
 The [`sheet`](/api/javascript/spreadsheet/sheet) object instance interface enables you to get and set settings and data on the sheet level.
 
@@ -97,11 +97,9 @@ For more information on the data-binding Spreadsheet functionality, refer to the
 
 ## Mobile Integration
 
-The Spreadsheet is primarily targeted at desktop users. Its performance and functionalities are limited on mobile devices.  
+The Spreadsheet is primarily targeted at desktop users. Its performance and functionalities are limited on mobile devices.
 
 ## See Also
-
-Other articles on the Kendo UI Spreadsheet:
 
 * [Custom Functions]({% slug custom_functions_spreadsheet_widget %})
 * [Custom Cell Editors]({% slug custom_editors_spreadsheet_widget %})

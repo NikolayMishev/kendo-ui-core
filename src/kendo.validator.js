@@ -31,7 +31,7 @@ var __meta__ = { // jshint ignore:line
         //events
         VALIDATE = "validate",
         CHANGE = "change",
-        VALIDATE_INPUT = "validateInput",        
+        VALIDATE_INPUT = "validateInput",
         proxy = $.proxy,
         patternMatcher = function(value, pattern) {
             if (typeof pattern === "string") {
@@ -368,6 +368,15 @@ var __meta__ = { // jshint ignore:line
             input.toggleClass(INVALIDINPUT, !valid);
             input.toggleClass(VALIDINPUT, valid);
 
+            if(kendo.widgetInstance(input)) {
+                var inputWrap = kendo.widgetInstance(input)._inputWrapper;
+
+                if (inputWrap) {
+                    inputWrap.toggleClass(INVALIDINPUT, !valid);
+                    inputWrap.toggleClass(INVALIDINPUT, !valid);
+                }
+            }
+
             return valid;
         },
 
@@ -416,11 +425,16 @@ var __meta__ = { // jshint ignore:line
         _extractMessage: function(input, ruleKey) {
             var that = this,
                 customMessage = that.options.messages[ruleKey],
-                fieldName = input.attr(NAME);
+                fieldName = input.attr(NAME),
+                nonDefaultMessage;
+
+            if (!kendo.ui.Validator.prototype.options.messages[ruleKey]) {
+                 nonDefaultMessage = kendo.isFunction(customMessage) ? customMessage(input) : customMessage;
+            }
 
             customMessage = kendo.isFunction(customMessage) ? customMessage(input) : customMessage;
 
-            return kendo.format(input.attr(kendo.attr(ruleKey + "-msg")) || input.attr("validationMessage") || input.attr("title") || customMessage || "",
+            return kendo.format(input.attr(kendo.attr(ruleKey + "-msg")) || input.attr("validationMessage") || nonDefaultMessage || input.attr("title") || customMessage || "",
                 fieldName,
                 input.attr(ruleKey) || input.attr(kendo.attr(ruleKey)));
         },

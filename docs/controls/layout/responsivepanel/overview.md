@@ -24,10 +24,10 @@ The example below demonstrates how to collapse the menu on the left of small scr
 
 ###### Example
 
-```html
+```dojo
   <header>
     <!-- toggle icon, .k-rpanel-toggle hides it on page width > breakpoint -->
-    <button class="k-rpanel-toggle"><i class="k-icon k-i-hbars"></i></button>
+    <button class="k-rpanel-toggle"><i class="k-icon k-i-menu"></i></button>
 
     <h1>Site header</h1>
   </header>
@@ -92,7 +92,5 @@ The example below demonstrates how to collapse the menu on the left of small scr
 ```
 
 ## See Also
-
-Other articles on Kendo UI ResponsivePanel:
 
 * [ResponsivePanel JavaScript API Reference](/api/javascript/ui/responsivepanel)

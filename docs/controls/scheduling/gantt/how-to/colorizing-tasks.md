@@ -11,7 +11,7 @@ The example below demonstrates how to colorize each task based on a condition in
 
 ###### Example
 
-```html
+```dojo
     <div id="gantt"></div>
 
     <script>
@@ -31,7 +31,7 @@ The example below demonstrates how to colorize each task based on a condition in
       }
 
       $(document).ready(function() {
-        var serviceRoot = "http://demos.telerik.com/kendo-ui/service";
+        var serviceRoot = "https://demos.telerik.com/kendo-ui/service";
         var tasksDataSource = new kendo.data.GanttDataSource({
           batch: false,
           transport: {
@@ -141,8 +141,6 @@ The example below demonstrates how to colorize each task based on a condition in
 ```
 
 ## See Also
-
-Other articles on the Kendo UI Gantt:
 
 * [Gantt JavaScript API Reference](/api/javascript/ui/gantt)
 * [How to Create Custom Views]({% slug howto_create_custom_views_gantt %})

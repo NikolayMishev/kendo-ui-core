@@ -14,7 +14,7 @@ In the first mode, a single Data Source instance is used for both the main and t
 
 A second data source can be configured to load the **Navigator** data, usually with reduced time resolution. This mode enables filtering on the main data source and can be made more efficient.
 
-In both cases, a [`dateField`](/api/javascript/dataviz/ui/stock-chart#configuration-dateField) must be set to indicate the field that contains the date of the data item.
+In both cases, a [`dateField`](/api/javascript/dataviz/ui/stock-chart/configuration/datefield) must be set to indicate the field that contains the date of the data item.
 
 > **Important**
 > * The Stock Chart supports only binding to time series.
@@ -26,13 +26,13 @@ In both cases, a [`dateField`](/api/javascript/dataviz/ui/stock-chart#configurat
 
 In this mode, the Stock Chart is set up with a single data source. It is used for all series in the Chart, including the **Navigator** pane below. To see the single data-binding mode in action, refer to the [demo on its basic usage](http://demos.telerik.com/kendo-ui/financial/virtualization).
 
-The Data Source is [fetched](/api/javascript/data/datasource#methods-fetch) once and filtered internally by the Chart. No additional requests will be made unless the Data Source API methods are invoked.
+The Data Source is [fetched](/api/javascript/data/datasource/methods/fetch) once and filtered internally by the Chart. No additional requests will be made unless the Data Source API methods are invoked.
 
 The example below demonstrates a Stock Chart in a single data-binding mode.
 
 ###### Example
 
-```html
+```dojo
     <div id="stock-chart"></div>
     <script>
         $("#stock-chart").kendoStockChart({
@@ -80,7 +80,7 @@ This mode makes sense when the service is expected to provide views over the dat
 
 The data for the **Navigator** will be fetched only once and without any filters. To change this behavior, alter its configuration or call methods directly on the DataSource. The fetched data will be displayed in its entirety in the **Navigator** pane.
 
-The main data source will be filtered based on the selected date range before being fetched. It is recommended to use [server filtering](/api/javascript/data/datasource#configuration-serverFiltering) to make sure that only the visible range data is transferred. Even without applying server filtering, there will be a reduction in the processing time needed by the Chart to display the data.
+The main data source will be filtered based on the selected date range before being fetched. It is recommended to use [server filtering](/api/javascript/data/datasource/configuration/serverfiltering) to make sure that only the visible range data is transferred. Even without applying server filtering, there will be a reduction in the processing time needed by the Chart to display the data.
 
 Each subsequent pan, zoom, and selection operation will update the filters on the main data source and fetch it.
 
@@ -88,7 +88,7 @@ The example below demonstrates a Stock Chart in the master and navigator data-bi
 
 ##### Example
 
-```html
+```dojo
     <div id="stock-chart"></div>
     <script>
     var stockDataSchema = {
@@ -106,7 +106,7 @@ The example below demonstrates a Stock Chart in the master and navigator data-bi
             serverFiltering: true,
             transport: {
                 read: {
-                    url: "http://demos.telerik.com/kendo-ui/service/StockData",
+                    url: "https://demos.telerik.com/kendo-ui/service/StockData",
                     dataType: "jsonp"
                 },
                 parameterMap: function(data) {
@@ -130,7 +130,7 @@ The example below demonstrates a Stock Chart in the master and navigator data-bi
             dataSource: {
                 transport: {
                     read: {
-                        url: "http://demos.telerik.com/kendo-ui/service/StockData",
+                        url: "https://demos.telerik.com/kendo-ui/service/StockData",
                         dataType: "jsonp"
                     }
                 },
@@ -176,8 +176,6 @@ The example below demonstrates a sample filter submitted by the Stock Chart for 
 ```
 
 ## See Also
-
-Other articles on Kendo UI Charts and chart types:
 
 * [Overview of the Chart Widgets]({% slug overview_kendoui_charts_widget %})
 * [Data Series Charts]({% slug seriestypeofcharts_widget %})

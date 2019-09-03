@@ -7,11 +7,13 @@ slug: howto_changeshapevisualelements_dynamically_diagram
 
 # Change Shape Visual Elements Dynamically
 
-The example below demonstrates how to find a particular element from the shape visual and dynamically change it in a Kendo UI Diagram widget, i.e. change the rectangle fill and stroke options on `hover`.
+The following example demonstrates how to find a particular element from the shape visual in the Diagram and dynamically change it.
+
+This means to change the rectangle fill and stroke options on `hover`.
 
 ###### Example
 
-```html
+```dojo
 
     <div id="diagram"></div>
     <script>
@@ -145,7 +147,7 @@ The example below demonstrates how to find a particular element from the shape v
         }));
 
         g.append(new dataviz.diagram.Image({
-          source: "http://demos.telerik.com/kendo-ui/content/dataviz/diagram/people/" + dataItem.image,
+          source: "https://demos.telerik.com/kendo-ui/content/dataviz/diagram/people/" + dataItem.image,
           x: 3,
           y: 3,
           width: 68,
@@ -161,11 +163,9 @@ The example below demonstrates how to find a particular element from the shape v
 
 ## See Also
 
-Other articles on the Kendo UI Diagram:
-
 * [JavaScript API Reference](/api/javascript/dataviz/ui/diagram)
 * [How to Implement Local Data Editing]({% slug howto_editlocaladata_diagram %})
 * [How to Use Scrollbars]({% slug howto_usescrollbar_diagram %})
 * [How to Wrap Text]({% slug howto_wraptext_diagram %})
 
-For more runnable examples on the Kendo UI Diagram, browse the [**How To** documentation folder]({% slug howto_draganddrop_onshapes_diagram %}).
+For more runnable examples on the Kendo UI Diagram, browse its [**How To** documentation folder]({% slug howto_adjustpathorigin_diagram %}).

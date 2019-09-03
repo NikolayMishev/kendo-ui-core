@@ -7,7 +7,13 @@ var __meta__ = { // jshint ignore:line
     name: "TabStrip",
     category: "web",
     description: "The TabStrip widget displays a collection of tabs with associated tab content.",
-    depends: [ "data" ]
+    depends: [ "data" ],
+    features: [ {
+        id: "tabstrip-fx",
+        name: "Animation",
+        description: "Support for animation",
+        depends: [ "fx" ]
+    } ]
 };
 
 (function ($, undefined) {
@@ -28,6 +34,7 @@ var __meta__ = { // jshint ignore:line
         IMG = "img",
         HREF = "href",
         PREV = "prev",
+        NEXT = "next",
         SHOW = "show",
         LINK = "k-link",
         LAST = "k-last",
@@ -50,7 +57,9 @@ var __meta__ = { // jshint ignore:line
         HOVERSTATE = "k-state-hover",
         TABONTOP = "k-tab-on-top",
         NAVIGATABLEITEMS = ".k-item:not(." + DISABLEDSTATE + ")",
+        KEYBOARDNAVIGATABLEITEMS = ".k-item",
         HOVERABLEITEMS = ".k-tabstrip-items > " + NAVIGATABLEITEMS + ":not(." + ACTIVESTATE + ")",
+        DEFAULTDISTANCE = 200,
 
         templates = {
             content: template(
@@ -126,6 +135,7 @@ var __meta__ = { // jshint ignore:line
 
         tabs.filter("li[disabled]")
             .addClass(DISABLEDSTATE)
+            .attr("aria-disabled", "true")
             .removeAttr("disabled");
 
         tabs.filter(":not([class*=k-state])")
@@ -162,7 +172,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function scrollButtonHtml(buttonClass, iconClass) {
-        return "<span class='k-button k-button-icon k-button-bare k-tabstrip-" + buttonClass + "' unselectable='on'><span class='k-icon " + iconClass + "'></span></span>";
+        return "<span class='k-button k-button-icon k-bare k-tabstrip-" + buttonClass + "' unselectable='on'><span class='k-icon " + iconClass + "'></span></span>";
     }
 
     var TabStrip = Widget.extend({
@@ -275,6 +285,10 @@ var __meta__ = { // jshint ignore:line
             return this.tabGroup.children(NAVIGATABLEITEMS)[action]();
         },
 
+        _getItem: function(action) {
+            return this.tabGroup.children(KEYBOARDNAVIGATABLEITEMS)[action]();
+        },
+
         _item: function(item, action) {
             var endItem;
             if (action === PREV) {
@@ -290,11 +304,14 @@ var __meta__ = { // jshint ignore:line
             item = item[action]();
 
             if (!item[0]) {
-                item = this._endItem(endItem);
+                item = this.tabGroup.children(KEYBOARDNAVIGATABLEITEMS)[endItem]();
             }
 
             if (item.hasClass(DISABLEDSTATE)) {
-                item = this._item(item, action);
+                item.addClass(FOCUSEDSTATE);
+            }
+            if (item.hasClass(DISABLEDSTATE) || item.hasClass(ACTIVESTATE)) {
+                this._focused = item;
             }
 
             return item;
@@ -310,9 +327,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (focused) {
-                if (focused[0].id === id) {
-                    focused.removeAttr("id");
-                }
+                that.tabGroup.children("#" + id).removeAttr("id");
                 focused.removeClass(FOCUSEDSTATE);
             }
 
@@ -339,25 +354,30 @@ var __meta__ = { // jshint ignore:line
                 key = e.keyCode,
                 current = that._current(),
                 rtl = that._isRtl,
+                isHorizontal = /top|bottom/.test(that.options.tabPosition),
                 action;
 
-            if (e.target != e.currentTarget) {
+            if (e.target != e.currentTarget || !current) {
                 return;
             }
 
-            if (key == keys.DOWN || key == keys.RIGHT) {
-                action = rtl ? PREV : "next";
-            } else if (key == keys.UP || key == keys.LEFT) {
-                action = rtl ? "next" : PREV;
+            if (key === keys.DOWN && !isHorizontal) {
+                action = NEXT;
+            } else if (key === keys.UP && !isHorizontal) {
+                action = PREV;
+            } else if (key === keys.RIGHT && isHorizontal) {
+                action = rtl ? PREV : NEXT;
+            } else if (key === keys.LEFT && isHorizontal) {
+                action = rtl ? NEXT : PREV;
             } else if (key == keys.ENTER || key == keys.SPACEBAR) {
                 that._click(current);
                 e.preventDefault();
             } else if (key == keys.HOME) {
-                that._click(that._endItem("first"));
+                that._click(that._getItem("first"));
                 e.preventDefault();
                 return;
             } else if (key == keys.END) {
-                that._click(that._endItem("last"));
+                that._click(that._getItem("last"));
                 e.preventDefault();
                 return;
             }
@@ -398,6 +418,7 @@ var __meta__ = { // jshint ignore:line
         refresh: function(e) {
             var that = this,
                 options = that.options,
+                encoded = kendo.getter(options.dataEncodedField),
                 text = kendo.getter(options.dataTextField),
                 content = kendo.getter(options.dataContentField),
                 contentUrl = kendo.getter(options.dataContentUrlField),
@@ -423,6 +444,10 @@ var __meta__ = { // jshint ignore:line
                 tab = {
                     text: text(view[idx])
                 };
+
+                if (options.dataEncodedField) {
+                    tab.encoded = encoded(view[idx]);
+                }
 
                 if (options.dataContentField) {
                     tab.content = content(view[idx]);
@@ -529,6 +554,7 @@ var __meta__ = { // jshint ignore:line
 
         options: {
             name: "TabStrip",
+            dataEncodedField: "",
             dataTextField: "",
             dataContentField: "",
             dataImageUrlField: "",
@@ -549,7 +575,7 @@ var __meta__ = { // jshint ignore:line
             navigatable: true,
             contentUrls: false,
             scrollable: {
-                distance: 200
+                distance: DEFAULTDISTANCE
             }
         },
 
@@ -609,7 +635,7 @@ var __meta__ = { // jshint ignore:line
             return this;
         },
 
-        reload: function (element) {
+          reload: function (element) {
             element = this.tabGroup.find(element);
             var that = this;
             var contentUrls = that._contentUrls;
@@ -672,7 +698,7 @@ var __meta__ = { // jshint ignore:line
 
             var that = this,
                 inserted = that._create(tab),
-                referenceContent = that.element.find("#" + referenceTab.attr("aria-controls"));
+                referenceContent = that.element.find("[id='" + referenceTab.attr("aria-controls") + "']");
 
             each(inserted.tabs, function (idx) {
                 var contents = inserted.contents[idx];
@@ -701,7 +727,7 @@ var __meta__ = { // jshint ignore:line
 
             var that = this,
                 inserted = that._create(tab),
-                referenceContent = that.element.find("#" + referenceTab.attr("aria-controls"));
+                referenceContent = that.element.find("[id='" + referenceTab.attr("aria-controls") + "']");
 
             each(inserted.tabs, function (idx) {
                 var contents = inserted.contents[idx];
@@ -790,7 +816,7 @@ var __meta__ = { // jshint ignore:line
                 contents = $();
                 tabs.each(function () {
                     if (/k-tabstrip-items/.test(this.parentNode.className)) {
-                        var element = that.element.find("#" + this.getAttribute("aria-controls"));
+                        var element = that.element.find("[id='" + this.getAttribute("aria-controls") + "']");
                         content = element;
                     } else {
                         content = $("<div class='" + CONTENT + "'/>");
@@ -810,7 +836,8 @@ var __meta__ = { // jshint ignore:line
             element.each(function () {
                 $(this)
                     .toggleClass(DEFAULTSTATE, enable)
-                    .toggleClass(DISABLEDSTATE, !enable);
+                    .toggleClass(DISABLEDSTATE, !enable)
+                    .attr("aria-disabled", !enable);
             });
         },
 
@@ -874,7 +901,7 @@ var __meta__ = { // jshint ignore:line
         _updateContentElements: function(isInitialUpdate) {
             var that = this,
                 contentUrls = that._contentUrls,
-                items = that.tabGroup.find(".k-item"),
+                items = that.tabGroup.children(".k-item"),
                 contentElements = that.wrapper.children("div"),
                 _elementId = that._elementId.bind(that);
 
@@ -1004,13 +1031,24 @@ var __meta__ = { // jshint ignore:line
                 collapse = that.options.collapsible,
                 index = item.index(),
                 contentHolder = that.contentHolder(index),
-                prevent, isAnchor;
+                prevent, isAnchor,
+                neighbours = item.parent().children(),
+                oldFocusedTab = neighbours.filter("." + FOCUSEDSTATE);
 
             if (item.closest(".k-widget")[0] != that.wrapper[0]) {
                 return;
             }
 
             if (item.is("." + DISABLEDSTATE + (!collapse ? ",." + ACTIVESTATE : ""))) {
+                oldFocusedTab.removeClass(FOCUSEDSTATE);
+                that._focused = item;
+
+                item.addClass(FOCUSEDSTATE);
+                that._current(item);
+
+                if (that._scrollableModeActive) {
+                    that._scrollTabsToItem(item);
+                }
                 return true;
             }
 
@@ -1061,6 +1099,8 @@ var __meta__ = { // jshint ignore:line
                     that._isRtl = kendo.support.isRtl(that.element);
                     var mouseDown = kendo.support.mobileOS ? "touchstart" : "mousedown";
                     var mouseUp = kendo.support.mobileOS ? "touchend" : "mouseup";
+                    var browser = kendo.support.browser;
+                    var isRtlScrollDirection = that._isRtl && !browser.msie && !browser.edge;
 
                     that.wrapper.append(scrollButtonHtml("prev", "k-i-arrow-60-left") + scrollButtonHtml("next", "k-i-arrow-60-right"));
 
@@ -1071,12 +1111,12 @@ var __meta__ = { // jshint ignore:line
 
                     scrollPrevButton.on(mouseDown + NS, function () {
                         that._nowScrollingTabs = true;
-                        that._scrollTabsByDelta(options.scrollable.distance * (that._isRtl ? 1 : -1));
+                        that._scrollTabsByDelta(options.scrollable.distance * (isRtlScrollDirection ? 1 : -1));
                     });
 
                     scrollNextButton.on(mouseDown + NS, function () {
                         that._nowScrollingTabs = true;
-                        that._scrollTabsByDelta(options.scrollable.distance * (that._isRtl ? -1 : 1));
+                        that._scrollTabsByDelta(options.scrollable.distance * (isRtlScrollDirection ? -1 : 1));
                     });
 
                     scrollPrevButton.add(scrollNextButton).on(mouseUp + NS, function () {
@@ -1104,6 +1144,11 @@ var __meta__ = { // jshint ignore:line
 
         _scrollableAllowed: function() {
             var options = this.options;
+
+            if(options.scrollable && !options.scrollable.distance){
+                options.scrollable = {distance: DEFAULTDISTANCE};
+            }
+
             return options.scrollable && !isNaN(options.scrollable.distance) && (options.tabPosition == "top" || options.tabPosition == "bottom");
         },
 
@@ -1142,7 +1187,7 @@ var __meta__ = { // jshint ignore:line
             var scrLeft = tabGroup.scrollLeft();
 
             tabGroup.finish().animate({ "scrollLeft": scrLeft + delta }, "fast", "linear", function () {
-                if (that._nowScrollingTabs) {
+                if (that._nowScrollingTabs && !jQuery.fx.off) {
                     that._scrollTabsByDelta(delta);
                 } else {
                     that._toggleScrollButtons();
@@ -1153,10 +1198,10 @@ var __meta__ = { // jshint ignore:line
         _toggleScrollButtons: function () {
             var that = this,
                 ul = that.tabGroup,
-                scrollLeft = ul.scrollLeft();
+                scrollLeft = kendo.scrollLeft(ul);
 
-            that._scrollPrevButton.toggle(that._isRtl ? scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1 : scrollLeft !== 0);
-            that._scrollNextButton.toggle(that._isRtl ? scrollLeft !== 0 : scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1);
+                that._scrollPrevButton.toggle(scrollLeft !== 0);
+                that._scrollNextButton.toggle(scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1);
         },
 
         deactivateTab: function (item) {
@@ -1199,7 +1244,8 @@ var __meta__ = { // jshint ignore:line
                 hasCloseAnimation = close && "effects" in close,
                 neighbours = item.parent().children(),
                 oldTab = neighbours.filter("." + ACTIVESTATE),
-                itemIndex = neighbours.index(item);
+                itemIndex = neighbours.index(item),
+                isAnimationEnabled = animation && "duration" in animation && "effects" in animation;
 
             close = extend( hasCloseAnimation ? close : extend({ reverse: true }, animation), { hide: true });
             // deactivate previously active tab
@@ -1257,19 +1303,8 @@ var __meta__ = { // jshint ignore:line
 
             item.attr("data-animating", true);
 
-            var isAjaxContent = (item.children("." + LINK).data(CONTENTURL) || that._contentUrls[itemIndex] || false) && contentHolder.is(EMPTY),
+          var isAjaxContent = (item.children("." + LINK).data(CONTENTURL) || that._contentUrls[itemIndex] || false) && contentHolder.is(EMPTY),
                 showContentElement = function () {
-                    that.tabGroup.find("." + TABONTOP).removeClass(TABONTOP);
-                    item.addClass(TABONTOP) // change these directly to bring the tab on top.
-                        .css("z-index");
-
-                    if (kendo.size(animation.effects)) {
-                        oldTab.kendoAddClass(DEFAULTSTATE, { duration: animation.duration });
-                        item.kendoAddClass(ACTIVESTATE, { duration: animation.duration });
-                    } else {
-                        oldTab.addClass(DEFAULTSTATE);
-                        item.addClass(ACTIVESTATE);
-                    }
                     oldTab.removeAttr("aria-selected");
                     item.attr("aria-selected", true);
 
@@ -1293,6 +1328,17 @@ var __meta__ = { // jshint ignore:line
                                 kendo.resize(contentHolder);
 
                                 that.scrollWrap.css("height", "").css("height");
+
+                                // Force IE and Edge rendering to fix visual glitches telerik/kendo-ui-core#2777.
+                                if (isAnimationEnabled && (kendo.support.browser.msie || kendo.support.browser.edge)) {
+                                    contentHolder.finish().animate({
+                                        opacity: 0.9
+                                    },"fast", "linear", function(){
+                                        contentHolder.finish().animate({
+                                            opacity: 1
+                                        },"fast", "linear");
+                                    });
+                                }
                             }
                         } ) );
                 },
@@ -1317,6 +1363,18 @@ var __meta__ = { // jshint ignore:line
 
             visibleContents
                     .removeClass(ACTIVESTATE);
+
+            that.tabGroup.find("." + TABONTOP).removeClass(TABONTOP);
+                    item.addClass(TABONTOP) // change these directly to bring the tab on top.
+                        .css("z-index");
+
+            if (kendo.size(animation.effects)) {
+                oldTab.kendoAddClass(DEFAULTSTATE, { duration: animation.duration });
+                item.kendoAddClass(ACTIVESTATE, { duration: animation.duration });
+            } else {
+                oldTab.addClass(DEFAULTSTATE);
+                item.addClass(ACTIVESTATE);
+            }
 
             visibleContents.attr("aria-hidden", true);
             visibleContents.attr("aria-expanded", false);
@@ -1385,7 +1443,7 @@ var __meta__ = { // jshint ignore:line
                 setTimeout(oldProgressAnimation, 40);
             }
 
-            url = url || link.data(CONTENTURL) || that._contentUrls[element.index()] || link.attr(HREF);
+             url = url || link.data(CONTENTURL) || that._contentUrls[element.index()] || link.attr(HREF);
             that.inRequest = true;
 
             var ajaxOptions = {

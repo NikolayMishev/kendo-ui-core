@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["be"] = {
         name: "be",
         numberFormat: {
@@ -51,8 +51,8 @@
                     t: "HH:mm",
                     T: "HH:mm:ss",
                     u: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
-                    y: "MMMM yyyy",
-                    Y: "MMMM yyyy"
+                    y: "MMMM yyyy г.",
+                    Y: "MMMM yyyy г."
                 },
                 "/": ".",
                 ":": ":",

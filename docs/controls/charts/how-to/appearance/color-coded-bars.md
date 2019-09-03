@@ -4,6 +4,7 @@ page_title: Implement Color-Coded Ranges in Bars | Kendo UI Charts
 description: "Learn how to implement color-coded ranges in bars when working with the Kendo UI Charts."
 previous_url: /controls/charts/how-to/color-coded-bars
 slug: howto_implementcolorcodedranges_inbars_charts
+position: 1
 ---
 
 # Implement Color-Coded Ranges in Bars
@@ -12,17 +13,17 @@ Color ranges can be used to convey additional information&mdash;for example, val
 
 This behavior is usually achieved through stacked bar series. However, if you need to convey more flexibility, consider the following Chart.
 
-**Figure 1. Color ranges in a Kendo UI Chart**
+**Figure 1: Color ranges in a Kendo UI Chart**
 
-![Color-coded ranges](/controls/charts/how-to/images/color-coded-bars.png)
+![Color-coded ranges](../images/color-coded-bars.png)
 
-To implement this functionality, define a [`series.visual`](/api/javascript/dataviz/ui/chart#configuration-series.visual) that draws the ranges dynamically. Note that the visual remains in use until the next [`render` event](/api/javascript/dataviz/ui/chart#events-render). This allows you to update it asynchronously or in real-time.
+To implement this functionality, define a [`series.visual`](/api/javascript/dataviz/ui/chart/configuration/series.visual) that draws the ranges dynamically. Note that the visual remains in use until the next [`render` event](/api/javascript/dataviz/ui/chart/events/render). This allows you to update it asynchronously or in real-time.
 
 The example below demonstrates how to implement color-coded ranges (stripes) in bars when working with Kendo UI Charts.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart" />
     <script>
       var WIDTH = 5;
@@ -33,7 +34,7 @@ The example below demonstrates how to implement color-coded ranges (stripes) in 
         series: [{
           type: "bar",
           data: [10, 20, 30],
-          // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.visual
+          // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/configuration/series.visual
           visual: function(e) {
             // http://docs.telerik.com/kendo-ui/api/javascript/geometry/rect
             var left = e.rect.topLeft();
@@ -70,8 +71,6 @@ The example below demonstrates how to implement color-coded ranges (stripes) in 
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
 * [How to Aggregate Data in Pie Charts]({% slug howto_aggregatedata_piecharts %})
@@ -84,4 +83,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the **How To** documentation folder.

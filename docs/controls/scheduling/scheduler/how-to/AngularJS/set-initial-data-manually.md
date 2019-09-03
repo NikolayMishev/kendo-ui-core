@@ -7,11 +7,11 @@ slug: howto_set_intial_data_manually_angularjs_scheduler
 
 # Set Initial Data Manually
 
-The example below demonstrates how to manually set initial data in the Kendo UI Scheduler widget when using AngularJS.
+The following example demonstrates how to manually set initial data in the Kendo UI Scheduler when using AngularJS.
 
 ###### Example
 
-```html
+```dojo
     <div id="example" ng-app="KendoDemos">
       <div ng-controller="MyCtrl">
         <div kendo-scheduler="sched" k-options="schedulerOptions"></div>
@@ -35,19 +35,19 @@ The example below demonstrates how to manually set initial data in the Kendo UI 
           batch: true,
           transport: {
             read: {
-              url: "http://demos.telerik.com/kendo-ui/service/tasks",
+              url: "https://demos.telerik.com/kendo-ui/service/tasks",
               dataType: "jsonp"
             },
             update: {
-              url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+              url: "https://demos.telerik.com/kendo-ui/service/tasks/update",
               dataType: "jsonp"
             },
             create: {
-              url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+              url: "https://demos.telerik.com/kendo-ui/service/tasks/create",
               dataType: "jsonp"
             },
             destroy: {
-              url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+              url: "https://demos.telerik.com/kendo-ui/service/tasks/destroy",
               dataType: "jsonp"
             },
             parameterMap: function(options, operation) {
@@ -116,7 +116,7 @@ The example below demonstrates how to manually set initial data in the Kendo UI 
         //set data
         ds.data(transformData(response));
 
-        //set another DataSource using widget setDataSource if like: http://docs.telerik.com/kendo-ui/api/javascript/ui/scheduler#methods-setDataSource
+        //set another DataSource using widget setDataSource if like: http://docs.telerik.com/kendo-ui/api/javascript/ui/scheduler/methods/setDataSource
       });
       }
 
@@ -129,7 +129,7 @@ The example below demonstrates how to manually set initial data in the Kendo UI 
 
           result.push(new kendo.data.SchedulerEvent({
             id: event.TaskID,
-            taksId: event.TaskID,
+            taskId: event.TaskID,
             start: kendo.parseDate(event.Start),
             end: kendo.parseDate(event.End),
             title: event.Title,
@@ -146,13 +146,8 @@ The example below demonstrates how to manually set initial data in the Kendo UI 
 
 ## See Also
 
-Other how-to examples on the Kendo UI Scheduler in AngularJS:
-
 * [How to Create and Set ObservableArray Events]({% slug howto_createand_set_observablearray_events_angularjs_scheduler %})
 * [How to Wrap Scheduler in Custom Directives]({% slug howto_wrap_schedulerin_custom_directives_angularjs_scheduler %})
-
-Other articles and how-to examples on the Kendo UI Scheduler:
-
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [How to Add Controls to Custom Editor]({% slug howto_add_controlsto_custom_event_editor_scheduler %})
 * [How to Create Custom Views Inheriting Built-In Views]({% slug howto_create_custom_view_inheriting_builtinview_scheduler %})
@@ -162,4 +157,4 @@ Other articles and how-to examples on the Kendo UI Scheduler:
 * [How to Nest Editors inside Event Templates]({% slug howto_nest_editorsinside_event_templates_scheduler %})
 * [How to Use Custom Event Template with Specific Background Color]({% slug howto_use_custom_event_templatewith_specific_background_color_scheduler %})
 
-For more runnable examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_add_controlsto_custom_event_editor_scheduler %}).
+For more runnable examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_customize_editand_events_templates_angularjs_scheduler %}).

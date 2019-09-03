@@ -10,29 +10,29 @@ position: 8
 
 As of the Kendo UI R3 2016 release and in addition to the **Insert Table** tool, the user is now able to add and configure tables by using the **Table Wizard** dialog.
 
-![](/controls/editors/editor/table-wizard.png)
+![Table Wizard](table-wizard.png)
 
 ## Getting Started
 
-### Insert Tables  
+### Insert Tables
 
 To insert a new table by using the **Table Wizard** dialog:
 
-1. Open the **Insert Table** tool.  
-1. To open the dialog, click the **Table Wizard** button.  
-1. Configure the table that is to be inserted.   
-1. Click the **OK** button.  
+1. Open the **Insert Table** tool.
+1. To open the dialog, click the **Table Wizard** button.
+1. Configure the table that is to be inserted.
+1. Click the **OK** button.
 
-![](/controls/editors/editor/table-wizard-open.png)
+![Table Wizard Open](table-wizard-open.png)
 
 ### Modify Tables
 
 To modify an existing table or a table cell:
 
-1. Select the table or the table cell to edit.  
-1. Click the **Table Wizard** tool in the toolbar.  
+1. Select the table or the table cell to edit.
+1. Click the **Table Wizard** tool in the toolbar.
 
-![](/controls/editors/editor/table-wizard-edit.png)
+![Table Wizard Edit](table-wizard-edit.png)
 
 
 > **Important**
@@ -93,8 +93,6 @@ The **Accessibility** tab provides the following options:
 
 ## See Also
 
-Other articles on the Kendo UI Editor:
-
 * [Overview of the Editor Widget]({% slug overview_kendoui_editor_widget %})
 * [Image Browser]({% slug image_browser_editor_widget %})
 * [Post-Process Content]({% slug post_process_content_editor_widget %})
@@ -102,5 +100,5 @@ Other articles on the Kendo UI Editor:
 * [Prevent Cross-Site Scripting]({% slug prevent_xss_editor_widget %})
 * [Troubleshooting]({% slug troubleshooting_editor_widget %})
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
-
-For how-to examples on the Kendo UI Editor widget, browse its [**How To** documentation folder]({% slug howto_add_max_length_validation_editor %}).
+* [How-To Examples]({% slug howto_handleblurandfocuseventsangular_editor %})
+* [Knowledge Base Section](/knowledge-base)

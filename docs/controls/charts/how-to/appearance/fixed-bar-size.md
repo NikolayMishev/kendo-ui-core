@@ -10,11 +10,11 @@ slug: howto_usefixedbarsize_charts
 
 You might need to set the size of the default drawing element of the bars to the same size.
 
-The example below demonstrates how to use the [`series.visual`](/api/javascript/dataviz/ui/chart#configuration-series.visual) function to scale the default drawing element of the bars and achieve this behavior.
+The example below demonstrates how to use the [`series.visual`](/api/javascript/dataviz/ui/chart/configuration/series.visual) function to scale the default drawing element of the bars and achieve this behavior.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
       var BAR_SIZE = 10;
@@ -24,20 +24,18 @@ The example below demonstrates how to use the [`series.visual`](/api/javascript/
           data: [1, 2],
           visual: function(e) {
             //create the default visual
-            var visual = e.createVisual();        
+            var visual = e.createVisual();
             //scale it so that it has the predefined size
             visual.transform(kendo.geometry.transform().scale(1, BAR_SIZE / e.rect.size.height, e.rect.center() ));
             return visual;
           }
-        }]            
+        }]
       });
     </script>
     </div>
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Charts:
 
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
@@ -51,4 +49,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["sr-Cyrl-BA"] = {
         name: "sr-Cyrl-BA",
         numberFormat: {
@@ -16,7 +16,7 @@
                 symbol: "%"
             },
             currency: {
-                name: "Convertible Mark",
+                name: "Bosnia-Herzegovina Convertible Mark",
                 abbr: "BAM",
                 pattern: ["-n $","n $"],
                 decimals: 2,

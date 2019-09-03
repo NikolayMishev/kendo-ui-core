@@ -1,9 +1,11 @@
 ---
 title: PDFOptions
 page_title: API reference for methods and fields of the PDF generation options
+res_type: api
 ---
 
 # kendo.drawing.PDFOptions
+
 PDF generation options.
 
 ## Fields
@@ -13,6 +15,10 @@ The creator of the PDF document.
 
 ### date `Date`
 The date when the PDF document is created. Defaults to `new Date()`.
+
+### imgDPI `Number`
+The forced resolution (in dpi) of the images in the exported PDF document.
+By default, the images are exported at their full resolution.
 
 ### keywords `String` *(default: null)*
 Specifies the keywords of the exported PDF file.

@@ -1,6 +1,6 @@
 ---
 title: Visual Basic Syntax
-page_title: Visual Basic Syntax | Telerik UI for ASP.NET MVC
+page_title: Visual Basic Syntax - Getting Started
 description: "Apply a proper Visual Basic syntax when using lamba expressions and anonymous types inside Kendo UI MVC wrapper declarations."
 slug: visualbasic_aspnetmvc
 previous_url: /vb
@@ -9,11 +9,9 @@ position: 9
 
 # Visual Basic Syntax
 
-The examples below demonstrate the correct Visual Basic (VB) syntax when using [lamba expressions](http://msdn.microsoft.com/en-us/library/bb531253.aspx) and [anonymous types](http://msdn.microsoft.com/en-us/library/bb384767.aspx) inside Kendo UI MVC wrapper declarations.
+This article demonstrates the correct Visual Basic (VB) syntax when you use [lamba expressions](http://msdn.microsoft.com/en-us/library/bb531253.aspx) and [anonymous types](http://msdn.microsoft.com/en-us/library/bb384767.aspx) inside the Kendo UI MVC wrapper declarations.
 
 ## Editor
-
-###### Example
 
     @Code
 
@@ -43,8 +41,6 @@ The examples below demonstrate the correct Visual Basic (VB) syntax when using [
     End Code
 
 ## TabStrip
-
-###### Example
 
     @Code
 
@@ -78,8 +74,6 @@ The examples below demonstrate the correct Visual Basic (VB) syntax when using [
 
 ### View
 
-###### Example
-
     @Code
         Html.Kendo().Grid(Of TelerikMvcAppVB.Person)() _
     .Name("Grid") _
@@ -104,9 +98,7 @@ The examples below demonstrate the correct Visual Basic (VB) syntax when using [
                         .Render()
     End Code
 
-The example below demonstrates alternative ToolBar configurations.
-
-###### Example
+The following example demonstrates alternative ToolBar configurations.
 
     ...
     .ToolBar(Function(t)
@@ -123,8 +115,6 @@ The example below demonstrates alternative ToolBar configurations.
     ...
 
 ### Controller
-
-###### Example
 
     Imports Kendo.Mvc.Extensions
     Imports Kendo.Mvc.UI
@@ -153,8 +143,6 @@ The example below demonstrates alternative ToolBar configurations.
 
 ### Model
 
-###### Example
-
     Public Class Person
         Public Property PersonID As Integer
         Public Property PersonName As String
@@ -162,8 +150,6 @@ The example below demonstrates alternative ToolBar configurations.
     End Class
 
 ## Editor Template
-
-###### Example
 
     @ModelType Nullable(Of Integer)
 

@@ -1,17 +1,17 @@
 ---
 title: Drag and Drop on Existing Shapes
 page_title: Drag and Drop on Existing Shapes | Kendo UI Diagram
-description: "Learn how to find a particular element from the shape visual and dynamically change it in a Kendo UI Diagram."
+description: "Learn how to enable the dropping only of new shapes on existing ones in the Kendo UI Diagram."
 slug: howto_draganddrop_onshapes_diagram
 ---
 
 # Drag and Drop on Existing Shapes
 
-The example below demonstrates how to allow the dropping of new shapes only on existing ones in the Kendo UI Diagram.
+The following example demonstrates how to enable the dropping only of new shapes on existing ones in the Diagram.
 
 ###### Example
 
-```html
+```dojo
 
     <script>
       $(function () {
@@ -170,7 +170,7 @@ The example below demonstrates how to allow the dropping of new shapes only on e
         display: inline-block;
         width: 60px;
         height: 60px;
-        background-image: url("http://demos.telerik.com/kendo-ui/content/integration/diagram/images/diagram-toolbox.png");
+        background-image: url("https://demos.telerik.com/kendo-ui/content/integration/diagram/images/diagram-toolbox.png");
         background-size: auto 100%;
       }
 
@@ -185,11 +185,9 @@ The example below demonstrates how to allow the dropping of new shapes only on e
 
 ## See Also
 
-Other articles on the Kendo UI Diagram:
-
 * [JavaScript API Reference](/api/javascript/dataviz/ui/diagram)
 * [How to Show Shapes Tooltip]({% slug howto_shapestooltip_diagram %})
 * [How to Use Scrollbars]({% slug howto_usescrollbar_diagram %})
 * [How to Wrap Text]({% slug howto_wraptext_diagram %})
 
-For more runnable examples on the Kendo UI Diagram, browse the [**How To** documentation folder]({% slug howto_changeshapevisualelements_dynamically_diagram %}).
+For more runnable examples on the Kendo UI Diagram, browse its [**How To** documentation folder]({% slug howto_adjustpathorigin_diagram %}).

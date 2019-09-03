@@ -3,53 +3,42 @@ title: Webpack
 page_title: Webpack | Kendo UI Third-Party Tools
 description: "Package Kendo UI with Webpack."
 slug: webpacksupport_integration_kendoui
-position: 9
 ---
 
 # Webpack
 
-## Use the Kendo UI NPM Package
+The recommended approach to include Kendo UI is by using the NPM package.
 
-The recommended approach to include Kendo UI is by using the NPM package. As of the Kendo UI 2016 Q2 SP1 release, both Kendo UI Core and Kendo UI Professional are distributed in an NPM format.
+## Using NPM
 
-For more details, check [the installation instructions]({% slug kendoui_npm_packages_kendoui_installation %}) and the [sample repository](https://github.com/telerik/kendo-ui-npm-example/tree/master/typescript-webpack).
+As of the Kendo UI 2016 Q2 SP1 release, both Kendo UI Core and Kendo UI Professional are distributed in an NPM format. For more details, refer to [the installation instructions]({% slug kendoui_npm_packages_kendoui_installation %}).
 
-> **Important**
 > * The typescript step is optional&mdash;the NPM package might be consumed from vanilla JavaScript or with the Babel transpiler.
 > * The Kendo UI [TypeScript typings are global](https://github.com/typings/typings/blob/master/docs/faq.md#what-are-global-dependencies). This means that TypeScript will complain if you try to import the `kendo` object. Use the global reference instead.
 
-###### Example
-
 ```typescript
 // This won't work
-import kendo from 'kendo-ui-core';
+import kendo from '@progress/kendo-ui-core';
 
 // This works
-
-import 'kendo-ui-core';
+import '@progress/kendo-ui-core';
 
 console.log(kendo);
 ```
 
-## Use CDN or Packaged Kendo UI Scripts
+## Using CDN or Packaged Scripts
 
-The Kendo UI packaged scripts are in an AMD-compatible format, which means that they can be used by [Webpack](http://webpack.github.io). This sections below demonstrate the necessary Webpack configuration for this setup.
+The Kendo UI packaged scripts are in an AMD-compatible format which means that they can be used by [Webpack](http://webpack.github.io). This sections below demonstrate the necessary Webpack configuration for this setup.
 
-## Obtain Packaged Kendo UI Script Files
+(For holders of the commercial Kendo UI Complete license) The commercial Kendo UI distribution `zip` file, available for download for the active customer subscriptions has the packaged scripts available in the `js` directory.
 
-This section is intended for holders of the commercial Kendo UI Complete license.
+## Using in JavaScript and TypeScript Applications
 
-The commercial Kendo UI distribution `zip` file, available for download for the active customer subscriptions has the packaged scripts available in the `js` directory.
+To see the runnable examples on how to use Kendo UI with Webpack in both JavaScript and TypeScript applications, refer to the following [sample repository](https://github.com/telerik/kendo-ui-npm-example).
 
-## Build AMD-Formatted Scripts
+## Building AMD-Formatted Scripts
 
-This section is intended for users of the Kendo UI Core open-source distribution.
-
-The instructions for obtaining and building the Kendo UI Core scripts are listed in the [README](https://github.com/telerik/kendo-ui-core#how-to-build-kendo-ui-core).
-
-Once the scripts are available and present in your project directory, the Webpack configuration demonstrated in the sections below will pick and bundle them in your project.
-
-###### Example
+(For users of the Kendo UI Core open-source distribution) The instructions for obtaining and building the Kendo UI Core scripts are listed in the [README](https://github.com/telerik/kendo-ui-core#how-to-build-kendo-ui-core). Once the scripts are available and present in your project directory, the Webpack configuration demonstrated in the sections below will pick and bundle them in your project. To test the configuration of the following example, run the `webpack-dev-server` executable in the directory.
 
 ```tab-index.html
     <!DOCTYPE html>
@@ -98,15 +87,11 @@ Once the scripts are available and present in your project directory, the Webpac
     }
 ```
 
-You might test the configuration from the previous example by running the `webpack-dev-server` executable in the directory.
-
 ## See Also
 
-Other articles on Kendo UI integration with third-party tools and frameworks:
-
-* [Angular 2.0]({% slug angular2support_integration_kendoui %})
+* [SharePoint Add-Ins]({% slug sharepoint_tutorials %})
 * [Twitter Bootstrap]({% slug twitterbootstrapintegration_integration_kendoui %})
-* [Web Components]({% slug webcomponents_integration_kendoui %})
+* [Angular 2.0]({% slug angular2support_integration_kendoui %})
 * [RequireJS]({% slug requirejs_integration_kendoui %})
 * [TypeScript]({% slug typescript_integration_kendoui %})
 * [Visual Studio IntelliSense]({% slug visualstudiointellisense_integration_kendoui %})

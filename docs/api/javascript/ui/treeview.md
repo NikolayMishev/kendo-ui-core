@@ -2,6 +2,8 @@
 title: TreeView
 page_title: Configuration, methods and events of Kendo UI TreeView
 description: Documentation guide that helps the developer configure TreeView UI widget in a few quick steps, apply methods and trigger events.
+res_type: api
+component: treeview
 ---
 
 # kendo.ui.TreeView
@@ -164,7 +166,7 @@ The supported effects are **"expandVertical"** and **"fadeIn"**.
 
 ### autoBind `Boolean` *(default: true)*
 
-If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource#events-change) event of the
+If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource/events/change) event of the
 data source is fired. By default the widget will bind to the data source specified in the configuration.
 
 > Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source does not make more than one request to the remote service.
@@ -191,24 +193,37 @@ If set to `true` the widget will auto-scroll the containing element when the mou
 
 #### Example - use autoScroll in a scrollable container
 
-    <div style="height: 200px; overflow: auto">
-        <div style="height:1500px">
-            <div id="treeview"></div>
-        </div>
+    <div style="height:100px; overflow: auto">
+      <div id="treeview"></div>
     </div>
-    <script>
-    var dataSource = new kendo.data.HierarchicalDataSource({
-      data: [ { text: "Jane Doe" }, { text: "John Doe" }]
-    });
 
-    $("#treeview").kendoTreeView({
-      autoScroll: true,
-      dataSource: dataSource
-    });
-    dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound
+    <script>
+      var dataSource = new kendo.data.HierarchicalDataSource({
+        data: [
+          { text: "Apple" },
+          { text: "Banana" },
+          { text: "Orange" },
+          { text: "Tomato" },
+          { text: "Melon" },
+          { text: "Ananas" },
+          { text: "Cucumber" }
+        ]
+      });
+
+      var treeView = $("#treeview").kendoTreeView({
+        autoScroll: true,
+        dragAndDrop: true,
+        dataSource: dataSource
+      });
     </script>
 
-### checkboxes `Boolean|Object`
+    <style>
+      .k-widget.k-treeview {
+        overflow: hidden;
+      }
+    </style>
+
+### checkboxes `Boolean|Object` *(default: false)*
 
 If `true` or an object, renders checkboxes beside each node.
 
@@ -269,7 +284,7 @@ Sets the name attribute of the checkbox inputs. That name will be posted to the 
 
 ### checkboxes.template `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) which renders the checkboxes. Can be used to allow posting of
+The [template](/api/javascript/kendo/methods/template) which renders the checkboxes. Can be used to allow posting of
 additional information along the TreeView checkboxes.
 
 The fields which can be used in the template are:
@@ -302,8 +317,8 @@ Sets the field of the data item that provides the image URL of the TreeView node
     <div id="treeview"></div>
     <script>
     var items = [
-      { text: "Mail", image: "http://demos.telerik.com/kendo-ui/content/web/treeview/mail.png" },
-      { text: "Search", image: "http://demos.telerik.com/kendo-ui/content/web/treeview/search.png" }
+      { text: "Mail", image: "https://demos.telerik.com/kendo-ui/content/web/treeview/mail.png" },
+      { text: "Search", image: "https://demos.telerik.com/kendo-ui/content/web/treeview/search.png" }
     ];
     $("#treeview").kendoTreeView({
       dataImageUrlField: "image",
@@ -354,7 +369,7 @@ If the `dataSource` option is an existing [kendo.data.HierarchicalDataSource](/a
     var dataSource = new kendo.data.HierarchicalDataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/Employees",
+          url: "https://demos.telerik.com/kendo-ui/service/Employees",
           dataType: "jsonp"
         }
       },
@@ -381,7 +396,7 @@ If an array, each level uses the field that is at the same index in the array, o
 
     <style>
       #treeview .k-sprite {
-        background-image: url("http://demos.telerik.com/kendo-ui/content/web/treeview/coloricons-sprite.png");
+        background-image: url("https://demos.telerik.com/kendo-ui/content/web/treeview/coloricons-sprite.png");
       }
 
       .folder { background-position: 0 -16px; }
@@ -737,7 +752,7 @@ A string, DOM element or jQuery object which represents the node. A string is tr
     console.log(dataItem.text); // displays "foo"
     </script>
 
-See also: [getting the node data in the select event handler](/web/treeview/overview#getting-the-node-data-in-the-select-event-handler)
+See also: [getting the node data in the select event handler](/web/treeview/overview#get-node-data-in-select-event-handler)
 
 ### destroy
 
@@ -798,9 +813,9 @@ Enables or disables nodes.
 
 #### Parameters
 
-##### nodes `jQuery|Element|String`
+##### nodes `jQuery|Element|String|Boolean`
 
-The nodes that are to be enabled/disabled.
+The nodes that are to be enabled/disabled. Or, if *Boolean* parameter is passed, all nodes will be enabled/disabled.
 
 ##### enable `Boolean` *(optional, default: true)*
 
@@ -825,6 +840,23 @@ Whether the nodes should be enabled or disabled.
     treeview.enable(".k-item");
     </script>
 
+#### Example - enable all nodes
+
+    <div id="treeview"></div>
+    <script>
+    $("#treeview").kendoTreeView({
+      dataSource: [
+        { text: "foo", enabled: false },
+        { text: "bar", enabled: false }
+      ]
+    });
+
+    var treeview = $("#treeview").data("kendoTreeView");
+
+    // enable all items
+    treeview.enable(true);
+    </script>
+
 ### expand
 
 Expands collapsed nodes.
@@ -844,7 +876,9 @@ The nodes that are to be expanded.
         { text: "foo", items: [
           { text: "bar" }
         ] },
-        { text: "baz" }
+        { text: "baz", items: [
+		  { text: "biz" }
+		] }
       ]
     });
 
@@ -900,7 +934,7 @@ Callback function that will be called once the path has been expanded.
       var datasource = new kendo.data.HierarchicalDataSource({
         transport: {
           read: {
-            url: "http://demos.telerik.com/kendo-ui/service/Employees",
+            url: "https://demos.telerik.com/kendo-ui/service/Employees",
             dataType: "jsonp"
           }
         },
@@ -1004,13 +1038,13 @@ If you want to find a node by its `id`, use the [dataSource.get()](/api/javascri
 
 #### Parameters
 
-##### text `String`
+##### uid `String`
 
-The text that is being searched for.
+The uid that is being searched for.
 
 #### Returns
 
-`jQuery` All nodes that have the text.
+`jQuery` The found node, wrapped in jQuery object.
 
 #### Example
 
@@ -1029,6 +1063,25 @@ The text that is being searched for.
     console.log(barElement);
     </script>
 
+### focus
+
+Sets the focus to the TreeView
+
+#### Example
+
+    <div id="treeview"></div>
+    <script>
+    $("#treeview").kendoTreeView({
+      dataSource: [
+        { text: "foo" },
+        { text: "bar" },
+      ]
+    });
+
+    var treeview = $("#treeview").data("kendoTreeView");
+    treeview.focus();
+    </script>
+
 ### insertAfter
 
 Inserts a node after a specified node.
@@ -1043,6 +1096,10 @@ A JSON-formatted string or selector that specifies the node to be inserted.
 ##### referenceNode `jQuery`
 
 The node that will precede the newly-appended node.
+
+#### Returns
+
+`jQuery` The inserted `<li>` element, wrapped in a jQuery object.
 
 #### Example
 
@@ -1078,6 +1135,10 @@ A JSON-formatted string or selector that specifies the node to be inserted.
 
 The node that follows the inserted node.
 
+#### Returns
+
+`jQuery` The inserted `<li>` element, wrapped in a jQuery object.
+
 #### Example
 
     <div id="treeview"></div>
@@ -1100,7 +1161,7 @@ The node that follows the inserted node.
 
 ### items
 
-Obtains an Array of the DOM elements, which correspond to the data items from the Kendo UI DataSource [view](/api/javascript/data/datasource#methods-view).
+Obtains an Array of the DOM elements, which correspond to the data items from the Kendo UI DataSource [view](/api/javascript/data/datasource/methods/view).
 
 #### Returns
 
@@ -1317,7 +1378,7 @@ The node that should be toggled.
 ### updateIndeterminate
 
 Updates the indeterminate state of the TreeView checkboxes.
-Call it after using the insert / remove API on TreeViews with [checkChildren: true](#configuration-checkboxes.checkChildren).
+Call it after using the insert / remove API on TreeViews with [checkChildren: true](/api/javascript/ui/treeview#configuration-checkboxes.checkChildren).
 Use to improve performance when checking multiple checkboxes through code.
 
 #### Parameters
@@ -1409,6 +1470,7 @@ The node whose the checkbox has been checked.
     <div id="treeview"></div>
     <script>
     $("#treeview").kendoTreeView({
+      checkboxes: true,
       dataSource: [
         { text: "foo", items: [
           { text: "bar" }
@@ -1428,6 +1490,7 @@ The node whose the checkbox has been checked.
       console.log("Checking", e.node);
     }
     $("#treeview").kendoTreeView({
+      checkboxes: true,
       dataSource: [
         { text: "foo", items: [
           { text: "bar" }
@@ -1524,6 +1587,14 @@ The node whose children have been changed. If the changes have occurred on the r
     });
     var treeview = $("#treeview").data("kendoTreeView");
     treeview.bind("dataBound", tree_dataBound);
+
+	treeview.setDataSource(new kendo.data.HierarchicalDataSource({
+      data: [
+        { text: "bar", items: [
+          { text: "baz" }
+        ] }
+      ]
+    }));
     </script>
 
 #### Example - show an empty message when no items have been loaded from the server
@@ -1586,8 +1657,8 @@ Pre-defined status classes are:
         - Indicates an invalid operation. Using this class will automatically
           make the drop operation invalid, so there will be no need to call
           `setValid(false)` in the `drop` event.
-		  
-> Please note that from version 2016.3.914 the naming convention for pre-defined status classes is k-i-className. 
+
+> Please note that from version 2016.3.914 the naming convention for pre-defined status classes is k-i-className. Since version 2017.1.118 the following status classes are used: `k-i-insert-up`, `k-i-insert-down`, `k-i-insert-middle`, `k-i-plus`, `k-i-cancel`.
 
 > Note that status classes are returned without the `k-` prefix by `e.statusClass`, but this prefix is required when setting a predefined status class via `e.setStatusClass`. A prefix is not required if setting a custom status CSS class.
 
@@ -1647,7 +1718,7 @@ Pre-defined status classes are:
       // if the current status is "insert-top/middle/bottom"
       if (e.statusClass.indexOf("insert") >= 0) {
         // deny the operation
-        e.setStatusClass("k-denied");
+        e.setStatusClass("k-i-cancel");
       }
     });
     </script>

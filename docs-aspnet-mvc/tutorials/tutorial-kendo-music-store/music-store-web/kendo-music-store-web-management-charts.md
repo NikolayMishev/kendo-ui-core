@@ -10,23 +10,19 @@ position: 11
 
 **Figure 1. A screenshot of the Kendo UI Music Store management charts**
 
-![kendo-manage-charts-screenshot](/tutorials/tutorial-kendo-music-store/music-store-web/images/kendo-manage-charts-screenshot.png)
+![kendo-manage-charts-screenshot](images/kendo-manage-charts-screenshot.png)
 
 When logged in the Music Store as an administrator, an additional button titled **Manage Store** is available in the upper-right corner. This opens the management graphs which can be used to monitor the sales status of the store. This page uses [Kendo UI widgets rendering data visualization](http://demos.telerik.com/kendo-ui/dataviz/overview/index.html) to display the graphs.
 
 This code is located in `Scripts/App/storemanager-graphs.js`.
 
-> **Important**
->
 > Log in the Music Store as an administrator by using the `Owner` username and the `p@ssword123` password.
 
 ## HTML Setup
 
 The page contains a date range selector that can be used to choose whether to view a day, week, month, or year of data. This selector is represented by a [Kendo UI ListView widget](http://demos.telerik.com/kendo-ui/web/listview/index.html). The main graph is represented by a [Kendo UI Chart widget](http://demos.telerik.com/kendo-ui/dataviz/overview/index.html).
 
-The example below demonstrates the HTML that is used.
-
-###### Example
+The following example demonstrates the HTML that is used.
 
     <ul id="date-range" class="selector" ></ul>
     <h3>Overall Sales</h3>
@@ -35,8 +31,6 @@ The example below demonstrates the HTML that is used.
 ## Widget Initialization
 
 Start by setting up the DataSource for the **Revenue/Orders** chart.
-
-###### Example
 
     var revenueChartDataSource = new kendo.data.DataSource({
         transport: {
@@ -51,13 +45,9 @@ Start by setting up the DataSource for the **Revenue/Orders** chart.
         }
     });
 
-> **Important**
->
 > The data represented by these charts is generated randomly on the server. It was unreasonable to backfill a year's worth of orders into the SQL Local DB on startup.
 
 The grid is now initialized with this data.
-
-###### Example
 
     var createOrderRevenueChart = function () {
         $("#revenue-chart").kendoChart({
@@ -84,8 +74,6 @@ The grid is now initialized with this data.
 ### Specify the Series
 
 The chart contains two series. One is the total revenue per day. The other is the number of orders per day. They are defined in the `series: []` array property.
-
-###### Example
 
     series: [
           {
@@ -117,13 +105,11 @@ Each series is defined by an object that contains the properties listed below:
 * The `name` property is the display name that will be shown in the legend of the chart, if the legend is displayed.
 * The `field` property is the name of the property on the data that contains the values you want to render on the chart.
 * The `color` property is the color used representing the series on the chart and in the legend.
-* The `tooltip` property defines what will be displayed if the user hovers over a data point or column. The format string follows the parameters for the [`kendo.format`](http:///api/framework/kendo#format) function.
+* The `tooltip` property defines what will be displayed if the user hovers over a data point or column. The format string follows the parameters for the [`kendo.format`](http://docs.telerik.com/kendo-ui/api/framework/kendo#format) function.
 
 ### Define the Axis
 
 The `valueAxis` property is set to an array of objects that represent the vertical axis on the chart. The number of items in the series and `valueAxis` arrays should be the same.
-
-###### Example
 
         valueAxis: [
             {
@@ -142,8 +128,6 @@ The `valueAxis` property is set to an array of objects that represent the vertic
 The `name` property is the display value that will be placed alongside the vertical axis.
 
 The `categoryAxis` property is set to a single item that represents the horizontal axis.
-
-###### Example
 
         categoryAxis: {
             field: "Day",
@@ -165,8 +149,6 @@ The `axisCrossingValue` is an array that specified where each of the vertical ax
 ## Date Range Updates
 
 To facilitate selecting a date range to display on the chart, the examples use a Kendo UI ListView widget to display the available date ranges. First, define an array of the date ranges, using `date.js` to get ranges appropriate date ranges. The default selected item is also saved to a separate variable.
-
-###### Example
 
     var dateRanges = [{
         name: "Day",
@@ -197,8 +179,6 @@ To facilitate selecting a date range to display on the chart, the examples use a
 
 When you query the server for data, add the start and end date of the selected date range as query string parameters. To do this, override the `transport.parameterMap` on the DataSource, referencing the `selectedDateRange` in a closure.
 
-###### Example
-
     var revenueChartDataSource = new kendo.data.DataSource({
         transport: {
             ...
@@ -216,8 +196,6 @@ In the `parameterMap` function, we return an object that has `start` and `end` p
 
 The HTML element to hold the date range selector also needs to be set to a ListView widget, and the currently selected value set to the default date range.
 
-###### Example
-
     var dateRangeSelector = $("#date-range");
     dateRangeSelector.kendoListView({
         dataSource: dateRanges,
@@ -228,8 +206,6 @@ The HTML element to hold the date range selector also needs to be set to a ListV
     dateRangeSelector.data("kendoListView").select(dateRangeSelector.children()[1]);
 
 The ListView has `selectable: "single"` defined in its configuration, which puts the ListView into a selection mode where one item can be selected at a time. On selection change, the `change` event is triggered. This calls the `dateRangeChanged` function.
-
-###### Example
 
     var dateRangeChanged = function (e) {
         var data = this.dataSource.view();
@@ -242,8 +218,6 @@ The ListView has `selectable: "single"` defined in its configuration, which puts
 In this function, take the selected date range item and update the `selectedDateRange` variable. Then the chart data is redrawn by updating its underlying data source, by calling its `.read()` method. The `baseUnit` for the chart is also changed based on the date range. For `Day`, `Week` and `Month`, the scale is set to a single day. For Year, the scale is set to one month. This is done by setting the `options.categoryAxis.baseUnit` property on the chart before it is redrawn.
 
 ## See Also
-
-Other articles on the Kendo UI Music Store Web Application sample project:
 
 * [Overview of the Kendo UI Music Store Sample Project]({% slug overview_muscistoretutorial_aspnetmvc %})
 * [Set Up the Kendo UI Music Store Web App]({% slug projectsetup_muscistorewebapp_aspnetmvc %})

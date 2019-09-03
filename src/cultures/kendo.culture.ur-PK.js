@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["ur-PK"] = {
         name: "ur-PK",
         numberFormat: {
@@ -8,7 +8,7 @@
             ".": ".",
             groupSize: [3],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -16,9 +16,9 @@
                 symbol: "%"
             },
             currency: {
-                name: "Pakistan Rupee",
+                name: "Pakistani Rupee",
                 abbr: "PKR",
-                pattern: ["$n-","$n"],
+                pattern: ["-$ n","$ n"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",

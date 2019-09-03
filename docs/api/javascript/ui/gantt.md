@@ -2,6 +2,8 @@
 title: Gantt
 page_title: Configuration, methods and events of Kendo UI Gantt
 description: Code examples for Gantt UI widget configuration, learn how to use methods and which events to set once the gantt UI widget detail is initialized.
+res_type: api
+component: gantt
 ---
 
 # kendo.ui.Gantt
@@ -212,7 +214,7 @@ The field of the assignment data item which represents the amount of the assigne
 
 ### autoBind `Boolean` *(default: true)*
 
-If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource#events-change) event of the
+If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource/events/change) event of the
 data source is fired. By default the widget will bind to the data source specified in the configuration.
 
 > Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn't make more than one request to the remote service.
@@ -262,7 +264,7 @@ Defines the width of the column resize handle in pixels. Apply a larger value fo
 ### columns `Array`
 
 The configuration of the Gantt columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
-[field](#configuration-columns.field) to which the column is bound. The Gantt will create a column for every item of the array.
+[field](/api/javascript/ui/gantt#configuration-columns.field) to which the column is bound. The Gantt will create a column for every item of the array.
 
 > If this setting is **not** specified the Gantt will create a single column for the task title.
 
@@ -303,7 +305,7 @@ The configuration of the Gantt columns. An array of JavaScript objects or string
 ### columns.field `String`
 
 The field to which the column is bound. The value of this field is displayed by the column during data binding.
-**The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.**
+**The field name should be a valid Javascript identifier and should contain only alphanumeric characters (or "$" or "_"), and may not start with a digit.**
 
 #### Example - three columns bound to the "title", "start" and "end" fields
 
@@ -341,7 +343,7 @@ The field to which the column is bound. The value of this field is displayed by 
 
 ### columns.title `String`
 
-The text that is displayed in the column header cell. If not set the [field](#configuration-columns.field) is used.
+The text that is displayed in the column header cell. If not set the [field](/api/javascript/ui/gantt#configuration-columns.field) is used.
 
 #### Example - set the title of a column
 
@@ -382,7 +384,7 @@ The text that is displayed in the column header cell. If not set the [field](#co
 The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a [standard number format](/api/javascript/kendo#standard-number-formats),
 [custom number format](/api/javascript/kendo#custom-number-formats), [standard date format](/api/javascript/kendo#standard-date-formats) or a [custom date format](/api/javascript/kendo#custom-date-formats).
 
-> The [kendo.format](/api/javascript/kendo#methods-format) function is used to format the value.
+> The [kendo.format](/api/javascript/kendo/methods/format) function is used to format the value.
 
 #### Example - set format for the start and end column
 
@@ -598,7 +600,7 @@ If set to `true` the user could sort this column by clicking its header cells. B
     });
     </script>
 
-### currentTimeMarker `Boolean|Object`
+### currentTimeMarker `Boolean|Object` *(default: true)*
 
 If set to `false` the "current time" marker of the Gantt would not be displayed.
 
@@ -661,7 +663,7 @@ If the `dataSource` option is an existing [kendo.data.GanttDataSource](/api/java
       dataSource: {
         transport: {
           read: {
-            url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+            url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
             dataType: "jsonp"
           }
         },
@@ -728,7 +730,7 @@ If the `dataSource` option is an existing [kendo.data.GanttDataSource](/api/java
     var dataSource = new kendo.data.GanttDataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+          url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
           dataType: "jsonp"
         }
       },
@@ -803,7 +805,7 @@ If the `dependencies` option is an existing [kendo.data.GanttDependencyDataSourc
       dataSource: {
         transport: {
           read: {
-            url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+            url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
             dataType: "jsonp"
           }
         },
@@ -827,7 +829,7 @@ If the `dependencies` option is an existing [kendo.data.GanttDependencyDataSourc
       dependencies: {
         transport: {
           read: {
-            url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+            url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies",
             dataType: "jsonp"
           }
         },
@@ -888,7 +890,7 @@ If the `dependencies` option is an existing [kendo.data.GanttDependencyDataSourc
     var dataSource = new kendo.data.GanttDataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+          url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
           dataType: "jsonp"
         }
       },
@@ -912,7 +914,7 @@ If the `dependencies` option is an existing [kendo.data.GanttDependencyDataSourc
     var dependencyDataSource = new kendo.data.GanttDependencyDataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+          url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies",
           dataType: "jsonp"
         }
       },
@@ -1091,7 +1093,7 @@ If set to `false` the user won't be able to create dependencies.
       }
     });
     </script>
-    
+
 ### editable.dependencyDestroy `Boolean` *(default: true)*
 
 If set to `false` the user won't be able to delete dependencies.
@@ -1334,7 +1336,7 @@ If set to `false` the user won't be able to resize tasks.
 
 ### editable.template `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) which renders the editor.
+The [template](/api/javascript/kendo/methods/template) which renders the editor.
 
 The template should contain elements whose `name` HTML attributes are set as the editable fields. This is how the Gantt will know
 which field to update. The other option is to use [MVVM](/framework/mvvm/overview) bindings in order to bind HTML elements to data item fields.
@@ -1536,7 +1538,7 @@ Sets the end of the work day.
 
 The start of working week (index based).
 
-> The `workWeekEnd` option is supported when [showWorkDays](#configuration-showWorkDays) is `true`.
+> The `workWeekEnd` option is supported when [showWorkDays](/api/javascript/ui/gantt#configuration-showWorkDays) is `true`.
 
 #### Example
 
@@ -1561,7 +1563,7 @@ The start of working week (index based).
 
 The end of working week (index based).
 
-> The `workWeekEnd` option is supported when [showWorkDays](#configuration-showWorkDays) is `true`.
+> The `workWeekEnd` option is supported when [showWorkDays](/api/javascript/ui/gantt#configuration-showWorkDays) is `true`.
 
 #### Example
 
@@ -2569,7 +2571,7 @@ Specifies the file name of the exported PDF file.
     </script>
 
 ### pdf.forceProxy `Boolean` *(default: false)*
-If set to true, the content will be forwarded to [proxyURL](#configuration-pdf.proxyURL) even if the browser supports saving files locally.
+If set to true, the content will be forwarded to [proxyURL](/api/javascript/ui/gantt#configuration-pdf.proxyURL) even if the browser supports saving files locally.
 
 ### pdf.keywords `String` *(default: null)*
 
@@ -2826,11 +2828,11 @@ Sets the title of the PDF file.
 Configures the Kendo UI Gantt range settings.
 
 ### range.start `Date`
- 
+
  If set to some date the timeline of all views will start from this date.
- 
+
 #### Example
- 
+
      <div id="gantt"></div>
      <script>
      $("#gantt").kendoGantt({
@@ -2852,13 +2854,13 @@ Configures the Kendo UI Gantt range settings.
        ]
      });
      </script>
-     
+
 ### range.end `Date`
- 
+
 If set to some date the timeline of all views will end to this date.
- 
+
 #### Example
- 
+
      <div id="gantt"></div>
      <script>
      $("#gantt").kendoGantt({
@@ -2879,12 +2881,12 @@ If set to some date the timeline of all views will end to this date.
          { type: "month" }
        ]
      });
-     </script>    
+     </script>
 
 
 ### resizable `Boolean` *(default: false)*
 
-If set to `true` allows users to resize columns by dragging their header borders. By default resizing is disabled.    
+If set to `true` allows users to resize columns by dragging their header borders. By default resizing is disabled.
 
 #### Example
 
@@ -2906,7 +2908,7 @@ If set to `true` allows users to resize columns by dragging their header borders
 
 ### selectable `Boolean` *(default: true)*
 
-If set to `false` the user won't be able to select tasks in the Gantt. By default selection is enabled and triggers the [change event](#events-change).
+If set to `false` the user won't be able to select tasks in the Gantt. By default selection is enabled and triggers the [change event](/api/javascript/ui/gantt/events/change).
 
 #### Example
 
@@ -2969,7 +2971,7 @@ If set to `false`, the day view will show all hours of the day. By default the v
 
 ### taskTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the gantt tasks.
+The [template](/api/javascript/kendo/methods/template) used to render the gantt tasks.
 
 The fields which can be used in the template are the [task fields](/api/javascript/data/gantttask)
 
@@ -3010,7 +3012,7 @@ The fields which can be used in the template are the [task fields](/api/javascri
 ### toolbar `String|Function|Array`
 
 If a `String` value is assigned to the `toolbar` configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
-and the string value will be passed as an argument to a [`kendo.template()`](/api/javascript/kendo#methods-template) function.
+and the string value will be passed as an argument to a [`kendo.template()`](/api/javascript/kendo/methods/template) function.
 
 If a `Function` value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.
 
@@ -3110,12 +3112,12 @@ This class can be used to obtain reference to the button after Gantt initializat
 
 ### toolbar.template `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) which renders the command. By default renders a button.
+The [template](/api/javascript/kendo/methods/template) which renders the command. By default renders a button.
 
 #### Example - set the template as a function
     <div id="gantt"></div>
     <script id="template" type="text/x-kendo-template">
-    <a class="k-button" href="\#" onclick="return toolbar_click()">Command</a>
+    <a class="k-button" href="" onclick="return toolbar_click()">Command</a>
     </script>
     <script>
     function toolbar_click() {
@@ -3149,7 +3151,7 @@ The [template](/api/javascript/kendo#methods-template) which renders the command
     $("#gantt").kendoGantt({
       toolbar: [
         {
-          template: '<a class="k-button" href="\\#" onclick="return toolbar_click()">Command</a>'
+          template: '<a class="k-button" href="" onclick="return toolbar_click()">Command</a>'
         }
       ],
       dataSource: [
@@ -3167,7 +3169,7 @@ The [template](/api/javascript/kendo#methods-template) which renders the command
 
 ### toolbar.text `String`
 
-The text displayed by the command button. If not set the [name](#configuration-toolbar.name)` option would be used as the button text instead.
+The text displayed by the command button. If not set the [name](/api/javascript/ui/gantt#configuration-toolbar.name)` option would be used as the button text instead.
 
 #### Example - set the text of the toolbar button
     <div id="gantt"></div>
@@ -3215,7 +3217,7 @@ The task tooltip configuration options.
 
 ### tooltip.template `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) which renders the tooltip.
+The [template](/api/javascript/kendo/methods/template) which renders the tooltip.
 
 The fields which can be used in the template are:
 
@@ -3275,7 +3277,7 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.
 
 If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.
 
-Overrides the [date](#configuration-date) option of the gantt.
+Overrides the [date](/api/javascript/ui/gantt#configuration-date) option of the gantt.
 
 #### Example
     <div id="gantt1"></div>
@@ -3307,13 +3309,13 @@ Overrides the [date](#configuration-date) option of the gantt.
 Configures the view range settings.
 
 ### views.range.start `Date`
- 
+
 If set to some date the timeline of the view will start from this date.
- 
-Overrides the [range.start](#configuration-range.start) option of the gantt.
- 
+
+Overrides the [range.start](/api/javascript/ui/gantt#configuration-range.start) option of the gantt.
+
 #### Example
- 
+
      <div id="gantt"></div>
      <script>
      $("#gantt").kendoGantt({
@@ -3335,15 +3337,15 @@ Overrides the [range.start](#configuration-range.start) option of the gantt.
        ]
      });
      </script>
-     
+
 ### views.range.end `Date`
- 
+
 If set to some date the timeline of the view will end to this date.
- 
-Overrides the [range.end](#configuration-range.end) option of the gantt.
- 
+
+Overrides the [range.end](/api/javascript/ui/gantt#configuration-range.end) option of the gantt.
+
 #### Example
- 
+
      <div id="gantt"></div>
      <script>
      $("#gantt").kendoGantt({
@@ -3424,7 +3426,7 @@ The size of the time slot headers. Values are treated as pixels.
 
 ### views.timeHeaderTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the time slots in "day" view
+The [template](/api/javascript/kendo/methods/template) used to render the time slots in "day" view
 
 #### Example
 
@@ -3449,7 +3451,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the time s
 
 ### views.dayHeaderTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the day slots in "day" and "week" views.
+The [template](/api/javascript/kendo/methods/template) used to render the day slots in "day" and "week" views.
 
 #### Example - dayHeaderTemplate set for "day" view.
 
@@ -3501,7 +3503,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the day sl
 
 ### views.weekHeaderTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the week slots in "week" and "month" views.
+The [template](/api/javascript/kendo/methods/template) used to render the week slots in "week" and "month" views.
 
 #### Example - weekHeaderTemplate set for "week" view
 
@@ -3554,7 +3556,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the week s
 
 ### views.monthHeaderTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the month slots in "month" and "year" views.
+The [template](/api/javascript/kendo/methods/template) used to render the month slots in "month" and "year" views.
 
 #### Example - monthHeaderTemplate set for "month" view
 
@@ -3609,7 +3611,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the month 
 
 ### views.yearHeaderTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the year slots in "year" view.
+The [template](/api/javascript/kendo/methods/template) used to render the year slots in "year" view.
 
 #### Example
 
@@ -3672,7 +3674,7 @@ with a gantt task.
 ### resources.dataFormatField `String` *(default: "format")*
 
 The field of the resource data item containing the format of the resource value, which could be assigned to a gantt task.
-The data item format value could be any valid [kendo format](/api/javascript/kendo#methods-format).
+The data item format value could be any valid [kendo format](/api/javascript/kendo/methods/format).
 
 #### Example - set the resource data format field
 
@@ -3883,11 +3885,11 @@ The height of the table rows. Numeric values are treated as pixels.
 
 ### dataSource `kendo.data.GanttDataSource`
 
-The [data source](/api/javascript/data/ganttdatasource) of the widget. Configured via the [dataSource](#configuration-dataSource) option.
+The [data source](/api/javascript/data/ganttdatasource) of the widget. Configured via the [datasource](/api/javascript/ui/gantt/configuration/datasource) option.
 
 > Changes of the data source will be reflected in the widget.
 
-> Assigning a new data source would have no effect. Use the [setDataSource](#methods-setDataSource) method instead.
+> Assigning a new data source would have no effect. Use the [setDataSource](/api/javascript/ui/gantt/methods/setdatasource) method instead.
 
 #### Example - add a Gantt task to the data source
 
@@ -3989,11 +3991,11 @@ The [data source](/api/javascript/data/ganttdatasource) of the widget. Configure
 
 ### dependencies `kendo.data.GanttDependencyDataSource`
 
-The [dependencies data source](/api/javascript/data/ganttdependencydatasource) of the widget. Configured via the [dependencies](#configuration-dependencies) option.
+The [dependencies data source](/api/javascript/data/ganttdependencydatasource) of the widget. Configured via the [dependencies](/api/javascript/ui/gantt/configuration/dependencies) option.
 
 > Changes of the data source will be reflected in the widget.
 
-> Assigning a new data source would have no effect. Use the [setDependenciesDataSource](#methods-setDependenciesDataSource) method instead.
+> Assigning a new data source would have no effect. Use the [setDependenciesDataSource](/api/javascript/ui/gantt/methods/setdependenciesdatasource) method instead.
 
 #### Example - add a dependency to the dependencies data source
 
@@ -4193,6 +4195,53 @@ Prepares the widget for safe removal from DOM. Detaches all event handlers and r
     gantt.destroy();
     </script>
 
+### editTask
+
+Opens the popup window to edit the GanttTask object which is received from the call.
+
+#### Parameters
+
+##### task `kendo.data.GanttTask`
+
+A kendo.data.GanttTask object which represents the currently selected task.
+
+#### Example - Edit the items from the Task Treelist.
+
+    <div id="gantt"></div>
+    <script>
+    $("#gantt").kendoGantt({
+      dataSource: {
+        transport: {
+          read: {
+            url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
+            dataType: "jsonp"
+          }
+        },
+        schema: {
+          model: {
+            id: "id",
+            fields: {
+              id: { from: "ID", type: "number" },
+              orderId: { from: "OrderID", type: "number", validation: { required: true } },
+              parentId: { from: "ParentID", type: "number", validation: { required: true } },
+              start: { from: "Start", type: "date" },
+              end: { from: "End", type: "date" },
+              title: { from: "Title", defaultValue: "", type: "string" },
+              percentComplete: { from: "PercentComplete", type: "number" },
+              summary: { from: "Summary" },
+              expanded: { from: "Expanded" }
+            }
+          }
+        }
+      }
+    });
+    $(".k-gantt").delegate(".k-gantt-treelist .k-grid-content tr", "click", function(e) {           
+      var gantt = $("#gantt").data("kendoGantt");
+      var task = gantt.dataItem(this);
+      gantt.editTask(task);
+    });
+    </script>
+
 ### range
 
 Sets range to the widget.
@@ -4209,7 +4258,7 @@ An Object that have start and end parameters of type Date.
 
 #### Example - set range to the widget
 
-      <div id="gantt"></div>
+    <div id="gantt"></div>
     <script>
     $("#gantt").kendoGantt({
       dataSource: [
@@ -4373,12 +4422,12 @@ The task which should be removed. Also accepts a string which is the `uid` of th
 
 ### saveAsPDF
 
-Initiates the PDF export and returns a promise. Also triggers the [pdfExport](#events-pdfExport) event.
+Initiates the PDF export and returns a promise. Also triggers the [pdfExport](/api/javascript/ui/gantt/events/pdfexport) event.
 
 > Calling this method may trip the built-in browser pop-up blocker. To avoid that, call this method as a response to an end-user action, e.g. a button click.
 
 #### Returns
-`Promise` A promise that will be resolved when the export completes. The same promise is available in the [pdfExport](#events-pdfExport) event arguments.
+`Promise` A promise that will be resolved when the export completes. The same promise is available in the [pdfExport](/api/javascript/ui/gantt/events/pdfexport) event arguments.
 
 #### Example - manually initiate PDF export
     <button id="export">Export to PDF</button>
@@ -5134,7 +5183,7 @@ The widget instance which fired the event.
     var gantt = $("#gantt").data("kendoGantt");
     gantt.bind("change", gantt_change);
     </script>
-       
+
 ### columnResize
 
 Fired when the user resizes a column.
@@ -5145,7 +5194,7 @@ The event handler function context (available via the `this` keyword) will be se
 
 ##### e.column `Object`
 
-A JavaScript object which represents the [column](#configuration-columns) configuration.
+A JavaScript object which represents the [column](/api/javascript/ui/gantt#configuration-columns) configuration.
 
 ##### e.newWidth `Number`
 

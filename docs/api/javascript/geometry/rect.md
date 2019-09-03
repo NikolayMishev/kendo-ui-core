@@ -1,6 +1,7 @@
 ---
 title: Rect
 page_title: API reference for methods and fields of Kendo UI Geometry Rectangle
+res_type: api
 ---
 
 # kendo.geometry.Rect
@@ -44,7 +45,7 @@ The origin (top-left corner) of the rectangle.
 The size of the rectangle.
 
 
-## Class methods
+## Class Methods
 
 ### fromPoints
 

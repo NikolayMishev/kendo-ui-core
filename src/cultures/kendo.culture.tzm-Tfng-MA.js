@@ -1,16 +1,16 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["tzm-Tfng-MA"] = {
         name: "tzm-Tfng-MA",
         numberFormat: {
             pattern: ["-n"],
             decimals: 2,
-            ",": " ",
+            ",": " ",
             ".": ",",
             groupSize: [3],
             percent: {
                 pattern: ["-n %","n %"],
                 decimals: 2,
-                ",": " ",
+                ",": " ",
                 ".": ",",
                 groupSize: [3],
                 symbol: "%"
@@ -20,7 +20,7 @@
                 abbr: "MAD",
                 pattern: ["-n $","n $"],
                 decimals: 2,
-                ",": " ",
+                ",": " ",
                 ".": ",",
                 groupSize: [3],
                 symbol: "ⴷⵔ"

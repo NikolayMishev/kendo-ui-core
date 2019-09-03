@@ -1,8 +1,13 @@
 # The public documentation URL, used for sitemap.xml
-url: "http://docs.telerik.com/aspnet-mvc"
+url: "https://docs.telerik.com/aspnet-mvc"
+
+all_pages_domain: "https://docs.telerik.com"
+
+capital_casing_redirects: true
 
 # Exclude files which should not be in the output
-exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb,SlugLog.log]
+exclude: [README.md, Gemfile, Gemfile.lock,api_sort.rb, Dockerfile, bs-config.js, build-docs.sh, copy_content.sh, copy_local.sh, docs-watcher/*, exclude_files.txt, install-npm.sh, start-docs.sh, watch.sh]
+exclude_navigation: [asp-net-mvc-3.html,asp-net-mvc-4.html,api/Kendo.Mvc/*,api/Kendo.Mvc.UI/*,api/Kendo.Mvc.UI.Fluent/*]
 navigation:
 ## List your directory names and order here, like this:
 
@@ -11,76 +16,159 @@ navigation:
         position: 0
      "getting-started":
         title: "Getting Started"
-        position: 3
-     "how-to":
-        title: "How To"
-        position: 4
+        position: 2
      "helpers":
-        title: "Widgets"
+        title: "HTML Helpers"
+        position: 3
+     "helpers/barcodes":
+        title: "Barcodes"
+     "helpers/charts":
+        title: "Charts"
+     "helpers/charts/stockchart":
+        title: "StockChart"
+        position: 4
+     "helpers/charts/treemap":
+        title: "TreeMap"
         position: 5
+     "helpers/conversational-ui":
+        title: "Conversational UI"
+     "helpers/data-management":
+        title: "Data Management"
+     "helpers/data-management/pivotgrid":
+        title: "PivotGrid"
+     "helpers/diagrams-and-maps":
+        title: "Diagrams and Maps"
+     "helpers/editors":
+        title: "Editors"
+     "helpers/editors/autocomplete/binding":
+        title: "Data Binding"
+        position: 2
+     "helpers/editors/combobox/binding":
+        title: "Data Binding"
+        position: 2
+     "helpers/editors/dropdownlist/binding":
+        title: "Data Binding"
+        position: 2
+     "helpers/editors/multicolumncombobox/binding":
+        title: "Data Binding"
+        position: 2
+     "helpers/editors/multiselect/binding":
+        title: "Data Binding"
+        position: 2
+     "helpers/gauges":
+        title: "Gauges"
+     "helpers/hybrid":
+        title: "Hybrid"
+     "helpers/interactivity":
+        title: "Interactivity and UX"
+     "helpers/layout":
+        title: "Layout"
+     "helpers/media":
+        title: "Media"
+     "helpers/navigation":
+        title: "Navigation"
+     "helpers/navigation/radiobutton":
+        title: "RadioButton"
+     "helpers/navigation/panelbar":
+        title: "PanelBar"
+     "helpers/pdf":
+        title: "PDF"
+     "helpers/scheduling":
+        title: "Scheduling"
+     "helpers/scheduling/multiviewcalendar":
+        title: "MultiViewCalendar"
      "vs-integration":
         title: "Visual Studio Integration"
-        position: 6
+        position: 4
      "migration":
         title: "Migration"
+        position: 5
+     "styles-and-layout":
+        title: "Styles and Appearance"
+        position: 6
+     "accessibility":
+        title: "Accessibility"
         position: 7
+     "how-to":
+        title: "How To"
+        position: 8
      "tutorials":
         title: "Tutorials"
-        position: 8
+        position: 9
      "troubleshoot":
         title: "Troubleshooting"
-        position: 9
+        position: 10
 
 ## List helpers directory names and order here, like this:
-     "helpers/autocomplete":
+     "*autocomplete":
         title: "AutoComplete"
-     "helpers/barcode":
+     "*barcode":
         title: "Barcode"
-     "helpers/button":
+     "*button":
         title: "Button"
-     "helpers/calendar":
+     "*buttongroup":
+        title: "ButtonGroup"
+     "*calendar":
         title: "Calendar"
-     "helpers/chart":
+     "*chart":
         title: "Chart"
-     "helpers/colorpalette":
+     "*chat":
+        title: "Chat"
+        isNew: true
+     "*colorpalette":
         title: "ColorPalette"
-     "helpers/colorpicker":
-        title: "ColorPicker"
-     "helpers/combobox":
-        title: "ComboBox"
-     "helpers/datepicker":
-        title: "DatePicker"
-     "helpers/datetimepicker":
-        title: "DateTimePicker"
-     "helpers/diagram":
-        title: "Diagram"
-     "helpers/dialog":
-        title: "Dialog"
-     "helpers/dropdownlist":
-        title: "DropDownList"
-     "helpers/editor":
-        title: "Editor"
-     "helpers/flatcolorpicker":
+     "*flatcolorpicker":
         title: "FlatColorPicker"
-     "helpers/gantt":
+     "*colorpicker":
+        title: "ColorPicker"
+     "*multicolumncombobox":
+        title: "MultiColumnComboBox"
+     "*combobox":
+        title: "ComboBox"
+     "*dateinput":
+        title: "DateInput"
+     "*datepicker":
+        title: "DatePicker"
+     "*daterangepicker":
+        title: "DateRangePicker"
+     "*datetimepicker":
+        title: "DateTimePicker"
+     "*diagram":
+        title: "Diagram"
+     "*dialog":
+        title: "Dialog"
+     "*dropdownlist":
+        title: "DropDownList"
+     "*dropdowntree":
+        isNew: true
+        title: "DropDownTree"
+     "*drawer":
+        isNew: true
+        title: "Drawer"
+     "*editor":
+        title: "Editor"
+     "*gantt":
         title: "Gantt"
-     "helpers/grid":
+     "*grid":
         title: "Grid"
-     "helpers/grid/binding":
-        title: "Binding"
-        position: 6
-     "helpers/grid/editing":
+     "helpers/data-management/grid/binding":
+        title: "Data Binding"
+        position: 4
+     "helpers/data-management/grid/editing":
         title: "Editing"
-        position: 7
-     "helpers/grid/templating":
+        position: 5
+     "helpers/data-management/grid/templating":
         title: "Templates"
-        position: 8
-     "helpers/grid/how-to":
+        position: 6
+     "helpers/data-management/grid/how-to":
         title: "How To"
-        position: 9
-     "helpers/grid/troubleshoot":
+        position: 30
+     "helpers/editors/upload/how-to":
+        title: "How To"
+        position: 30
+     "helpers/data-management/grid/troubleshoot":
         title: "Troubeshooting"
-        position: 10
+        position: 40
      "*appearance":
         title: "Appearance"
      "*binding":
@@ -101,67 +189,111 @@ navigation:
         title: "State Management"
      "*how-to":
         title: "How To"
-     "helpers/hybrid":
+     "*hybrid":
         title: "Hybrid"
-     "helpers/lineargauge":
-        title: "LinearGauge"
-     "helpers/listview":
+     "*mobileactionsheet":
+        title: "ActionSheet"
+     "*mobileapplication":
+        title: "Application"
+     "*mobilebutton":
+        title: "Button"
+     "*mobilebuttongroup":
+        title: "ButtonGroup"
+     "*mobiledrawer":
+        title: "Drawer"
+     "*mobilelayout":
+        title: "Layout"
+     "*mobilelistview":
         title: "ListView"
-     "helpers/map":
-        title: "Map"
-     "helpers/maskedtextbox":
-        title: "MaskedTextBox"
-     "helpers/mediaplayer":
-        title: "MediaPlayer"
-     "helpers/menu":
-        title: "Menu"
-     "helpers/multiselect":
-        title: "MultiSelect"
-     "helpers/notification":
-        title: "Notification"
-     "helpers/numerictextbox":
-        title: "NumericTextBox"
-     "helpers/panelbar":
-        title: "PanelBar"
-     "helpers/pivotgrid":
-        title: "PivotGrid"
-     "helpers/progressbar":
-        title: "ProgressBar"
-     "helpers/qrcode":
-        title: "QRCode"
-     "helpers/radialgauge":
-        title: "RadialGauge"
-     "helpers/radiobutton":
-        title: "RadioButton"
-     "helpers/scheduler":
-        title: "Scheduler"
-     "helpers/slider":
-        title: "Slider"
-     "helpers/sortable":
-        title: "Sortable"
-     "helpers/splitter":
-        title: "Splitter"
-     "helpers/spreadsheet":
-        title: "SpreadSheet"
-     "helpers/stockchart":
-        title: "StockChart"
-     "helpers/tabstrip":
+     "*mobilemodalview":
+        title: "ModalView"
+     "*mobilenavbar":
+        title: "NavBar"
+     "*mobilepopover":
+        title: "PopOver"
+     "*mobilescrollview":
+        title: "ScrollView"
+     "*mobilesplitview":
+        title: "SplitView"
+     "*mobileswitch":
+        title: "Switch"
+     "*mobiletabstrip":
         title: "TabStrip"
-     "helpers/timepicker":
+     "*mobileview":
+        title: "View"
+     "*lineargauge":
+        title: "LinearGauge"
+     "*listview":
+        title: "ListView"
+     "*listbox":
+        title: "ListBox"
+     "*map":
+        title: "Map"
+     "*maskedtextbox":
+        title: "MaskedTextBox"
+     "*mediaplayer":
+        title: "MediaPlayer"
+     "*menu":
+        title: "Menu"
+     "*multiselect":
+        title: "MultiSelect"
+     "*multiviewcalendar":
+        title: "MultiViewCalendar"
+     "*notification":
+        title: "Notification"
+     "*numerictextbox":
+        title: "NumericTextBox"
+     "*rating":
+        title: "Rating"
+     "*panelbar":
+        title: "PanelBar"
+     "*pdfviewer":
+        title: "PDFViewer"
+     "*pivotgrid":
+        title: "PivotGrid"
+     "*progressbar":
+        title: "ProgressBar"
+     "*qrcode":
+        title: "QRCode"
+     "*arcgauge":
+        title: "ArcGauge"
+     "*radialgauge":
+        title: "RadialGauge"
+     "*radiobutton":
+        title: "RadioButton"
+     "*scheduler":
+        title: "Scheduler"
+     "*scrollview":
+        title: "ScrollView"
+     "*slider":
+        title: "Slider"
+     "*sortable":
+        title: "Sortable"
+     "*splitter":
+        title: "Splitter"
+     "*spreadsheet":
+        title: "SpreadSheet"
+     "*stockchart":
+        title: "StockChart"
+     "*switch":
+        title: "Switch"
+     "*tabstrip":
+        title: "TabStrip"
+     "*timepicker":
         title: "TimePicker"
-     "helpers/toolbar":
+     "*toolbar":
         title: "ToolBar"
-     "helpers/tooltip":
+     "*tooltip":
         title: "Tooltip"
-     "helpers/treelist":
+     "*treelist":
         title: "TreeList"
-     "helpers/treemap":
+     "*treemap":
         title: "TreeMap"
-     "helpers/treeview":
+     "*treeview":
         title: "TreeView"
-     "helpers/upload":
+     "*upload":
         title: "Upload"
-     "helpers/window":
+     "*window":
         title: "Window"
 
 ## List migration directory names and order here, like this:
@@ -196,10 +328,16 @@ navigation:
 baseurl: /aspnet-mvc
 
 ## The Kendo UI version used
-cdnVersion: "2016.2.607"
+cdnVersion: "2019.1.115"
 
 ## The MVC Core version used
-mvcCoreVersion: "2016.2.616"
+mvcCoreVersion: "2019.1.115"
+
+ff-sheet-id: 17DDhsKyPUgO6GlvL8WEfCCN6tikyInp4qpRGCvvs794
+
+## Product
+product: "Telerik UI for ASP.NET MVC"
+platform: aspnet-mvc
 
 ## Assign layout and category per different paths
 defaults:
@@ -207,7 +345,7 @@ defaults:
     scope:
         path: ""
     values:
-        layout: "page"
+        layout: "documentation"
         category: "default"
         product: "aspnet-mvc"
         editable: true
@@ -216,6 +354,13 @@ defaults:
         path: "aspnet-mvc"
     values:
         product: "aspnet-mvc"
+
+    scope:
+        path: "api"
+    values:
+        editable: false
+        res_type: api
+        kind: api
 
 type_links:
     "kendo.Class": "/api/javascript/class"
@@ -236,7 +381,23 @@ type_links:
 
 # The google services configuration
 google_tag_manager: GTM-6X92
-google_custom_search: '001595215763381649090:rdwxfmavt8o'
+gcs_engine: '001595215763381649090:rdwxfmavt8o'
+gcs_api_key: 'AIzaSyDnvT29LoZiLUcywskEgTTum7j5pkx6s8I'
+
+has_web_api_index: true
+skip_tabbed_code: true
+code_lang: true
+api_columns_count: 2
+edit_repo_url: https://github.com/telerik/kendo-ui-core/edit/master/docs-aspnet-mvc
+
+download: http://www.telerik.com/download/aspnet-mvc
+
+footer_social:
+    facebook: https://www.facebook.com/Telerik/
+    youtube: https://www.youtube.com/user/TelerikInc
+    linkedin: https://www.linkedin.com/showcase/telerik/
+    twitter: https://twitter.com/Telerik/
+
 
 # Assets pipeline configuration
 assets:

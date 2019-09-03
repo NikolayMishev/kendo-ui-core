@@ -1,14 +1,14 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["ar-TN"] = {
         name: "ar-TN",
         numberFormat: {
-            pattern: ["n-"],
+            pattern: ["-n"],
             decimals: 3,
             ",": ",",
             ".": ".",
             groupSize: [3],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 3,
                 ",": ",",
                 ".": ".",
@@ -18,12 +18,12 @@
             currency: {
                 name: "Tunisian Dinar",
                 abbr: "TND",
-                pattern: ["$n-","$ n"],
+                pattern: ["-n $","n $"],
                 decimals: 3,
                 ",": ",",
                 ".": ".",
                 groupSize: [3],
-                symbol: "د.ت.‏‏"
+                symbol: "د.ت.‏"
             }
         },
         calendars: {

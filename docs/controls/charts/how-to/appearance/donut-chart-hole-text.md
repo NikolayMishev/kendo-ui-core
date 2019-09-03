@@ -12,14 +12,14 @@ In some scenarios, you might need to display some content in the center of a Ken
 
 To achieve this behavior:
 
-1. Locate the center point. For more information, refer to the [`series.visual`](/api/javascript/dataviz/ui/chart#configuration-series.visual) API call.    
-2. Plot `Text` or other `Shapes` to achieve this behavior by using the [`render` event](/api/javascript/dataviz/ui/chart#events-render).
+1. Locate the center point. For more information, refer to the [`series.visual`](/api/javascript/dataviz/ui/chart/configuration/series.visual) API call.
+2. Plot `Text` or other `Shapes` to achieve this behavior by using the [`render` event](/api/javascript/dataviz/ui/chart/events/render).
 
 The example below demonstrates how to place some text in the center of a Kendo UI Donut Chart.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
       function createChart() {
@@ -87,7 +87,7 @@ The example below demonstrates how to place some text in the center of a Kendo U
             // The center and radius are populated by now.
             // We can ask a circle geometry to calculate the bounding rectangle for us.
             //
-            // http://docs.telerik.com/kendo-ui/api/javascript/geometry/circle#methods-bbox
+            // http://docs.telerik.com/kendo-ui/api/javascript/geometry/circle/methods/bbox
             var circleGeometry = new geom.Circle(center, radius);
             var bbox = circleGeometry.bbox();
 
@@ -100,8 +100,8 @@ The example below demonstrates how to place some text in the center of a Kendo U
 
             // Align the text in the bounding box
             //
-            // http://docs.telerik.com/kendo-ui/api/javascript/drawing#methods-align
-            // http://docs.telerik.com/kendo-ui/api/javascript/drawing#methods-vAlign
+            // http://docs.telerik.com/kendo-ui/api/javascript/drawing/methods/align
+            // http://docs.telerik.com/kendo-ui/api/javascript/drawing/methods/vAlign
             draw.align([text], bbox, "center");
             draw.vAlign([text], bbox, "center");
 
@@ -120,7 +120,7 @@ As an alternative, we can position an overlay using CSS:
 
 #### Example - Overlay Donut Chart
 
-```html
+```dojo
     <div class="donut-wrapper">
       <div id="chart" class="donut-chart"></div>
       <div class="inner-content"></div>
@@ -206,8 +206,6 @@ As an alternative, we can position an overlay using CSS:
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
 * [How to Aggregate Data in Pie Charts]({% slug howto_aggregatedata_piecharts %})
@@ -219,4 +217,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

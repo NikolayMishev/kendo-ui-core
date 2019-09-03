@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.list", "./kendo.mobile.scroller" ], f);
+    define([ "./kendo.list", "./kendo.mobile.scroller", "./kendo.virtuallist" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -25,7 +25,7 @@ var __meta__ = { // jshint ignore:line
     var kendo = window.kendo,
         ui = kendo.ui,
         List = ui.List,
-        keys = kendo.keys,
+        keys = $.extend({ A: 65 }, kendo.keys),
         activeElement = kendo._activeElement,
         ObservableArray = kendo.data.ObservableArray,
         proxy = $.proxy,
@@ -42,11 +42,14 @@ var __meta__ = { // jshint ignore:line
         DESELECT = "deselect",
         ARIA_DISABLED = "aria-disabled",
         FOCUSEDCLASS = "k-state-focused",
-        HIDDENCLASS = "k-loading-hidden",
+        SELECTEDCLASS = "k-state-selected",
+        HIDDENCLASS = "k-hidden",
         HOVERCLASS = "k-state-hover",
         STATEDISABLED = "k-state-disabled",
+        NOCLICKCLASS = "k-no-click",
         DISABLED = "disabled",
         READONLY = "readonly",
+        AUTOCOMPLETEVALUE = kendo.support.browser.chrome ? "disabled" : "off",
         ns = ".kendoMultiSelect",
         CLICK = "click" + ns,
         KEYDOWN = "keydown" + ns,
@@ -97,9 +100,13 @@ var __meta__ = { // jshint ignore:line
 
                 id = id + "_taglist";
                 that.tagList.attr(ID, id);
+
+                that.input.attr("aria-describedby", id);
             }
 
-            that._aria(id);
+            that._initialOpen = true;
+            that._ariaLabel();
+            that._ariaSetLive();
             that._dataSource();
             that._ignoreCase();
             that._popup();
@@ -124,7 +131,10 @@ var __meta__ = { // jshint ignore:line
                 that.enable(false);
             }
 
+            that._ariaSetSize(that.value().length);
+
             kendo.notify(that);
+            that._toggleCloseVisibility();
         },
 
         options: {
@@ -139,6 +149,12 @@ var __meta__ = { // jshint ignore:line
             filter: "startswith",
             ignoreCase: true,
             minLength: 1,
+            messages: {
+                "singleTag": "item(s) selected",
+                "clear": "clear",
+                "deleteTag": "delete",
+                "noData": "No data found."
+            },
             enforceMinLength: false,
             delay: 100,
             value: null,
@@ -151,7 +167,9 @@ var __meta__ = { // jshint ignore:line
             tagTemplate: "",
             groupTemplate: "#:data#",
             fixedGroupTemplate: "#:data#",
-            clearButton: true
+            clearButton: true,
+            autoWidth: false,
+            popup: null
         },
 
         events: [
@@ -171,6 +189,7 @@ var __meta__ = { // jshint ignore:line
             this._state = "";
             this._dataSource();
 
+            this.persistTagList = false;
             this.listView.setDataSource(this.dataSource);
 
             if (this.options.autoBind) {
@@ -188,6 +207,8 @@ var __meta__ = { // jshint ignore:line
             this._accessors();
             this._aria(this.tagList.attr(ID));
             this._tagTemplate();
+            this._placeholder();
+            this._clearButton();
         },
 
         currentTag: function(candidate) {
@@ -199,14 +220,17 @@ var __meta__ = { // jshint ignore:line
                         .removeClass(FOCUSEDCLASS)
                         .removeAttr(ID);
 
+                    that._currentTag.find(".k-select").attr("aria-hidden", true);
+
                     that.input.removeAttr("aria-activedescendant");
                 }
 
                 if (candidate) {
                     candidate.addClass(FOCUSEDCLASS).attr(ID, that._tagID);
 
-                    that.input
-                        .attr("aria-activedescendant", that._tagID);
+                    candidate.find(".k-select").removeAttr("aria-hidden");
+
+                    that.input.attr("aria-activedescendant", that._tagID);
                 }
 
                 that._currentTag = candidate;
@@ -235,7 +259,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _activateItem: function() {
-            List.fn._activateItem.call(this);
+            if (this.popup.visible()) {
+                List.fn._activateItem.call(this);
+            }
             this.currentTag(null);
         },
 
@@ -302,7 +328,7 @@ var __meta__ = { // jshint ignore:line
                 closeButton = !target.closest(".k-select").children(".k-i-arrow-60-down").length;
             }
 
-            if (notInput && !(closeButton && kendo.support.mobileOS)) {
+            if (notInput && !(closeButton && kendo.support.mobileOS) && e.cancelable) {
                 e.preventDefault();
             }
 
@@ -338,10 +364,15 @@ var __meta__ = { // jshint ignore:line
                 that.listView.skipUpdate(true);
             }
 
+            if(that.listView.bound() && that.listView.isFiltered()) {
+                that.persistTagList = true;
+                that._clearFilter();
+            }
+
             that.element.blur();
         },
 
-        _removeTag: function(tag) {
+        _removeTag: function(tag, shouldTrigger) {
             var that = this;
             var state = that._state;
             var position = tag.index();
@@ -349,7 +380,9 @@ var __meta__ = { // jshint ignore:line
             var value = listView.value()[position];
             var dataItem = that.listView.selectedDataItems()[position];
             var customIndex = that._customOptions[value];
+            var listViewChildren = listView.element[0].children;
             var option;
+            var listViewChild;
 
             if (that.trigger(DESELECT, { dataItem: dataItem, item: tag })) {
                 that._close();
@@ -362,18 +395,31 @@ var __meta__ = { // jshint ignore:line
 
             var done = function() {
                 that.currentTag(null);
-                that._change();
+                if (shouldTrigger) {
+                    that._change();
+                }
                 that._close();
             };
 
-            if (customIndex === undefined) {
+            if (customIndex === undefined && listView.select().length) {
+                that.persistTagList = false;
                 listView.select(listView.select()[position]).done(done);
             } else {
                 option = that.element[0].children[customIndex];
-                option.selected = false;
+                if (option) {
+                    option.selected = false;
+                }
 
                 listView.removeAt(position);
-                tag.remove();
+                listViewChild = listViewChildren[customIndex];
+                if (listViewChild) {
+                    listViewChildren[customIndex].classList.remove("k-state-selected");
+                }
+                if (that.options.tagMode !== "single"){
+                    tag.remove();
+                } else {
+                    that._updateTagListHTML();
+                }
                 done();
             }
         },
@@ -382,13 +428,42 @@ var __meta__ = { // jshint ignore:line
             var target = $(e.currentTarget);
 
             if (!target.children(".k-i-arrow-60-down").length) {
-                this._removeTag(target.closest(LI));
+                this._removeTag(target.closest(LI), true);
             }
         },
 
         _clearClick: function() {
-            this.value(null);
-            this.trigger("change");
+            var that = this;
+
+            if (that.options.tagMode === "single"){
+                that._clearSingleTagValue();
+            } else{
+                that.tagList.children().each(function(index, tag) {
+                    that._removeTag($(tag), false);
+                });
+            }
+
+            that.input.val("");
+            that._search();
+            that._change();
+            that.focus();
+            that._hideClear();
+
+            if (that._state === FILTER) {
+                that._state = ACCEPT;
+            }
+        },
+
+        _clearSingleTagValue: function() {
+            var that = this;
+            var persistTagList = that.persistTagList;
+
+            if (persistTagList) {
+                that.persistTagList = false;
+            }
+
+            that.listView.value([]);
+            that.persistTagList = persistTagList;
         },
 
         _editable: function(options) {
@@ -407,10 +482,11 @@ var __meta__ = { // jshint ignore:line
 
                 that.input.on(KEYDOWN, proxy(that._keydown, that))
                     .on("paste" + ns, proxy(that._search, that))
+                    .on("input" + ns, proxy(that._search, that))
                     .on("focus" + ns, proxy(that._inputFocus, that))
                     .on("focusout" + ns, proxy(that._inputFocusout, that));
 
-                that._clear.on("click" + ns, proxy(that._clearClick, that));
+                that._clear.on(CLICK + ns + " touchend" + ns, proxy(that._clearClick, that));
                 input.removeAttr(DISABLED)
                      .removeAttr(READONLY)
                      .attr(ARIA_DISABLED, false);
@@ -420,11 +496,9 @@ var __meta__ = { // jshint ignore:line
                     .on(MOUSELEAVE, LI, function() { $(this).removeClass(HOVERCLASS); })
                     .on(CLICK, "li.k-button .k-select", proxy(that._tagListClick, that));
             } else {
-                if (disable) {
-                    wrapper.addClass(STATEDISABLED);
-                } else {
-                    wrapper.removeClass(STATEDISABLED);
-                }
+
+                wrapper.toggleClass(STATEDISABLED, disable)
+                       .toggleClass(NOCLICKCLASS, readonly);
 
                 input.attr(DISABLED, disable)
                      .attr(READONLY, readonly)
@@ -450,6 +524,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         close: function() {
+            this._activeItem = null;
+            this.input.removeAttr("aria-activedescendant");
+
             this.popup.close();
         },
 
@@ -466,8 +543,20 @@ var __meta__ = { // jshint ignore:line
 
                 that.listView.skipUpdate(true);
 
+                that.persistTagList = that._initialOpen && !that.listView.bound() ? false : true;
                 that._filterSource();
+                that._focusItem();
             } else if (that._allowOpening()) {
+
+                //selects values in autoBind false and non virtual scenario on initial load
+                if (that._initialOpen && !that.options.autoBind && !that.options.virtual && that.options.value && !$.isPlainObject(that.options.value[0])){
+                    that.value(that._initialValues);
+                }
+
+                // In some cases when the popup is opened resize is triggered which will cause it to close
+                // Setting the below flag will prevent this from happening
+                that.popup._hovered = true;
+                that._initialOpen = false;
                 that.popup.open();
                 that._focusItem();
             }
@@ -538,6 +627,7 @@ var __meta__ = { // jshint ignore:line
                 return oldValue;
             }
 
+            that.persistTagList = false;
             that.requireValueMapper(that.options, value);
 
             value = that._normalizeValues(value);
@@ -551,11 +641,15 @@ var __meta__ = { // jshint ignore:line
             }
 
             listView.value(value);
-            that._old = listView.value(); //get a new array reference
+            that._old = that._valueBeforeCascade = value.slice(); //get a new array reference
 
             if (!clearFilters) {
                 that._fetchData();
             }
+
+            that._ariaSetSize(that.value().length);
+
+            that._toggleCloseVisibility();
         },
 
         _preselect: function(data, value) {
@@ -680,6 +774,11 @@ var __meta__ = { // jshint ignore:line
                 // trigger the DOM change event so any subscriber gets notified
                 that.element.trigger(CHANGE);
             }
+            that.popup.position();
+
+            that._ariaSetSize(value.length);
+
+            that._toggleCloseVisibility();
         },
 
         _click: function(e) {
@@ -689,9 +788,18 @@ var __meta__ = { // jshint ignore:line
             e.preventDefault();
 
             that._select(item).done(function() {
+                that._activeItem = item;
                 that._change();
                 that._close();
             });
+        },
+
+        _getActiveItem: function() {
+            return this._activeItem || $(this.listView.items()[this._getSelectedIndices().length - 1]) || this.listView.focus();
+        },
+
+        _getSelectedIndices: function() {
+            return this.listView._selectedIndices || this.listView._selectedIndexes;
         },
 
         _keydown: function(e) {
@@ -699,39 +807,63 @@ var __meta__ = { // jshint ignore:line
             var key = e.keyCode;
             var tag = that._currentTag;
             var listView = that.listView;
-            var current = listView.focus();
             var hasValue = that.input.val();
             var isRtl = kendo.support.isRtl(that.wrapper);
             var visible = that.popup.visible();
+            var dir = 0;
+            var activeItemIdx;
 
-            if (key === keys.DOWN) {
+            if(key !== keys.ENTER) {
+                this._multipleSelection = false;
+            }
+
+             if (key === keys.DOWN) {
                 e.preventDefault();
 
                 if (!visible) {
                     that.open();
 
-                    if (!current) {
+                    if (!listView.focus()) {
                         listView.focusFirst();
                     }
                     return;
                 }
 
-                if (current) {
+                if (listView.focus()) {
+                    if (!that._activeItem && e.shiftKey) {
+                        that._activeItem = listView.focus();
+                        dir = -1;
+                    }
+                    activeItemIdx = listView.getElementIndex(that._getActiveItem().first());
+
                     listView.focusNext();
                     if (!listView.focus()) {
                         listView.focusLast();
+                    } else {
+                        if (e.shiftKey) {
+                            this._multipleSelection = true;
+                            that._selectRange(activeItemIdx, listView.getElementIndex(listView.focus().first()) + dir);
+                        }
                     }
                 } else {
                     listView.focusFirst();
                 }
+
             } else if (key === keys.UP) {
                 if (visible) {
-                    if (current) {
-                        listView.focusPrev();
+                    if (!that._activeItem && e.shiftKey) {
+                        that._activeItem = listView.focus();
+                        dir = 1;
                     }
-
+                    activeItemIdx = listView.getElementIndex(that._getActiveItem().first());
+                    listView.focusPrev();
                     if (!listView.focus()) {
                         that.close();
+                    } else {
+                        if (e.shiftKey) {
+                            this._multipleSelection = true;
+                            that._selectRange(activeItemIdx, listView.getElementIndex(listView.focus().first()) + dir);
+                        }
                     }
                 }
                 e.preventDefault();
@@ -747,23 +879,75 @@ var __meta__ = { // jshint ignore:line
                     tag = tag.next();
                     that.currentTag(tag[0] ? tag : null);
                 }
+            } else if (e.ctrlKey && !e.altKey && key === keys.A && visible && !that.options.virtual) {
+                this._multipleSelection = true;
+                if (this._getSelectedIndices().length === listView.items().length) {
+                    that._activeItem = null;
+                }
+
+                if (listView.items().length) {
+                    that._selectRange(0, listView.items().length -1);
+                }
             } else if (key === keys.ENTER && visible) {
-                that._select(current).done(function() {
+                if (!listView.focus()) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                if (this._multipleSelection) {
+                    this._multipleSelection = false;
+                     if (listView.focus().hasClass(SELECTEDCLASS)) {
+                        that._close();
+                        return;
+                    }
+                }
+
+                that._select(listView.focus()).done(function() {
                     that._change();
                     that._close();
                 });
+            } else if (key === keys.SPACEBAR && e.ctrlKey && visible) {
+                if (that._activeItem && listView.focus() && listView.focus()[0] === that._activeItem[0]) {
+                    that._activeItem = null;
+                }
+                if (!$(listView.focus()).hasClass(SELECTEDCLASS)) {
+                    that._activeItem = listView.focus();
+                }
+                that._select(listView.focus()).done(function () {
+                    that._change();
+                });
+                e.preventDefault();
+            } else if (key === keys.SPACEBAR && e.shiftKey && visible) {
+                var activeIndex = listView.getElementIndex(that._getActiveItem());
+                var currentIndex = listView.getElementIndex(listView.focus());
+
+                if (activeIndex !== undefined && currentIndex !== undefined) {
+                    that._selectRange(activeIndex, currentIndex);
+                }
+
                 e.preventDefault();
             } else if (key === keys.ESC) {
                 if (visible) {
                     e.preventDefault();
                 } else {
-                    that.currentTag(null);
+                    that.tagList.children().each(function(index, tag) {
+                        that._removeTag($(tag), false);
+                    });
+                    that._change();
                 }
 
                 that.close();
             } else if (key === keys.HOME) {
                 if (visible) {
-                    listView.focusFirst();
+                    if (!listView.focus()) {
+                        that.close();
+                    } else {
+                        if (e.ctrlKey && e.shiftKey && !that.options.virtual) {
+                            that._selectRange(listView.getElementIndex(listView.focus()[0]), 0);
+                        }
+                        listView.focusFirst();
+                    }
                 } else if (!hasValue) {
                     tag = that.tagList[0].firstChild;
 
@@ -773,7 +957,17 @@ var __meta__ = { // jshint ignore:line
                 }
             } else if (key === keys.END) {
                 if (visible) {
-                    listView.focusLast();
+                    if (!listView.focus()) {
+                        that.close();
+                    } else {
+                        if (e.ctrlKey && e.shiftKey && !that.options.virtual) {
+                            that._selectRange(
+                                listView.getElementIndex(listView.focus()[0]),
+                                listView.element.children().length - 1
+                            );
+                        }
+                        listView.focusLast();
+                    }
                 } else if (!hasValue) {
                     tag = that.tagList[0].lastChild;
 
@@ -782,8 +976,11 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
             } else if ((key === keys.DELETE || key === keys.BACKSPACE) && !hasValue) {
+                that._state = ACCEPT;
+
                 if (that.options.tagMode === "single") {
-                    listView.value([]);
+                    that._clearSingleTagValue();
+
                     that._change();
                     that._close();
                     return;
@@ -794,16 +991,18 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (tag && tag[0]) {
-                    that._removeTag(tag);
+                    that._removeTag(tag, true);
                 }
             } else if (that.popup.visible() && (key === keys.PAGEDOWN || key === keys.PAGEUP)) {
                 e.preventDefault();
 
-                var direction = key === keys.PAGEDOWN ? 1 : -1;
+                var direction = key === keys.PAGEDOWN ? 1: -1;
                 listView.scrollWith(direction * listView.screenHeight());
             } else {
                 clearTimeout(that._typingTimeout);
-                setTimeout(function() { that._scale(); });
+                setTimeout(function() {
+                    that._scale();
+                });
                 that._search();
             }
         },
@@ -815,7 +1014,8 @@ var __meta__ = { // jshint ignore:line
             that._loading.addClass(HIDDENCLASS);
             that._request = false;
             that._busy = null;
-            that._showClear();
+
+            that._toggleCloseVisibility();
         },
 
         _showBusyHandler: function() {
@@ -869,7 +1069,7 @@ var __meta__ = { // jshint ignore:line
 
         _scale: function() {
             var that = this,
-                wrapper = that.wrapper,
+                wrapper = that.wrapper.find(".k-multiselect-wrap"),
                 wrapperWidth = wrapper.width(),
                 span = that._span.text(that.input.val()),
                 textWidth;
@@ -993,13 +1193,24 @@ var __meta__ = { // jshint ignore:line
         _search: function() {
             var that = this;
 
+            clearTimeout(that._typingTimeout);
+
             that._typingTimeout = setTimeout(function() {
-                var value = that.input.val();
+                var value = that._inputValue();
                 if (that._prev !== value) {
                     that._prev = value;
                     that.search(value);
+                    that._toggleCloseVisibility();
                 }
             }, that.options.delay);
+        },
+
+        _toggleCloseVisibility: function() {
+            if (this.value().length || (this.input.val() && this.input.val() !== this.options.placeholder)) {
+                this._showClear();
+            } else {
+                this._hideClear();
+            }
         },
 
         _allowOpening: function() {
@@ -1024,9 +1235,23 @@ var __meta__ = { // jshint ignore:line
             });
         },
 
-        _selectValue: function(added, removed) {
+        updatePersistTagList: function(added, removed){
+            if(this.persistTagList.added &&
+                this.persistTagList.added.length === removed.length &&
+                this.persistTagList.removed &&
+                this.persistTagList.removed.length === added.length){
+                    this.persistTagList = false;
+             }else{
+                 this.listView._removedAddedIndexes = this._old.slice();
+                 this.persistTagList = {
+                     added: added,
+                     removed: removed
+                 };
+             }
+        },
+
+        _selectValue: function (added, removed) {
             var that = this;
-            var values = that.value();
             var total = that.dataSource.total();
             var tagList = that.tagList;
             var getter = that._value;
@@ -1034,15 +1259,22 @@ var __meta__ = { // jshint ignore:line
             var addedItem;
             var idx;
 
+            if(this.persistTagList){
+                this.updatePersistTagList(added, removed);
+
+                return;
+            }
+
             that._angularTagItems("cleanup");
 
             if (that.options.tagMode === "multiple") {
                 for (idx = removed.length - 1; idx > -1; idx--) {
                     removedItem = removed[idx];
 
-                    tagList[0].removeChild(tagList[0].children[removedItem.position]);
-
-                    that._setOption(getter(removedItem.dataItem), false);
+                    if (tagList.children().length) {
+                        tagList[0].removeChild(tagList[0].children[removedItem.position]);
+                        that._setOption(getter(removedItem.dataItem), false);
+                    }
                 }
 
                 for (idx = 0; idx < added.length; idx++) {
@@ -1057,16 +1289,7 @@ var __meta__ = { // jshint ignore:line
                     that._maxTotal = total;
                 }
 
-                tagList.html("");
-
-                if (values.length) {
-                    tagList.append(that.tagTemplate({
-                        values: values,
-                        dataItems: that.dataItems(),
-                        maxTotal: that._maxTotal,
-                        currentTotal: total
-                    }));
-                }
+                this._updateTagListHTML();
 
                 for (idx = removed.length - 1; idx > -1; idx--) {
                     that._setOption(getter(removed[idx].dataItem), false);
@@ -1079,6 +1302,24 @@ var __meta__ = { // jshint ignore:line
 
             that._angularTagItems("compile");
             that._placeholder();
+        },
+
+        _updateTagListHTML: function(){
+            var that = this;
+            var values = that.value();
+            var total = that.dataSource.total();
+            var tagList = that.tagList;
+
+            tagList.html("");
+
+            if (values.length) {
+                tagList.append(that.tagTemplate({
+                    values: values,
+                    dataItems: that.dataItems(),
+                    maxTotal: that._maxTotal,
+                    currentTotal: total
+                }));
+            }
         },
 
         _select: function(candidate) {
@@ -1097,7 +1338,7 @@ var __meta__ = { // jshint ignore:line
                 that._state = "";
             }
 
-            if (!that._allowSelection()) {
+            if (!that._allowSelection() && !isSelected) {
                 return resolved;
             }
 
@@ -1106,6 +1347,7 @@ var __meta__ = { // jshint ignore:line
                 return resolved;
             }
 
+            that.persistTagList = false;
             return listView.select(candidate).done(function() {
                 that._placeholder();
 
@@ -1114,6 +1356,63 @@ var __meta__ = { // jshint ignore:line
                     listView.skipUpdate(true);
                 }
             });
+        },
+
+        _selectRange: function (startIndex, endIndex) {
+            var that = this;
+            var listView = this.listView;
+            var maxSelectedItems = this.options.maxSelectedItems;
+            var indices = this._getSelectedIndices().slice();
+            var indicesToSelect = [];
+            var i;
+
+            var selectIndices = function(indices) {
+                listView.select(indices).done(function() {
+                    indices.forEach(function(index) {
+                        var dataItem  = listView.dataItemByIndex(index);
+                        var candidate = listView.element.children()[index];
+                        var isSelected = $(candidate).hasClass("k-state-selected");
+
+                        that.trigger(isSelected ? SELECT : DESELECT, {dataItem: dataItem, item: $(candidate)});
+                    });
+                    that._change();
+                });
+            };
+
+            if (indices.length - 1 === endIndex - startIndex) {
+                return selectIndices(indices);
+            }
+
+            if (startIndex < endIndex) {
+                for (i = startIndex; i <= endIndex; i++) {
+                    indicesToSelect.push(i);
+                }
+            } else {
+                for (i = startIndex; i >= endIndex; i--) {
+                    indicesToSelect.push(i);
+                }
+            }
+
+            if (maxSelectedItems !== null && indicesToSelect.length > maxSelectedItems) {
+                indicesToSelect = indicesToSelect.slice(0, maxSelectedItems);
+            }
+
+            for (i = 0; i < indicesToSelect.length; i++) {
+                var index = indicesToSelect[i];
+
+                if (this._getSelectedIndices().indexOf(index) == -1) {
+                    indices.push(index);
+                } else {
+                    indices.splice(indices.indexOf(index), 1);
+                }
+            }
+
+            if (!indices.length) {
+                return;
+            }
+
+            that.persistTagList = false;
+            return selectIndices(indices);
         },
 
         _input: function() {
@@ -1130,10 +1429,12 @@ var __meta__ = { // jshint ignore:line
 
             that._focused = that.input = input.attr({
                 "accesskey": accessKey,
-                "autocomplete": "off",
+                "autocomplete": AUTOCOMPLETEVALUE,
                 "role": "listbox",
                 "title": element[0].title,
-                "aria-expanded": false
+                "aria-expanded": false,
+                "aria-haspopup": "listbox",
+                "aria-autocomplete": "list"
             });
         },
 
@@ -1142,7 +1443,7 @@ var __meta__ = { // jshint ignore:line
                 tagList = that._innerWrapper.children("ul");
 
             if (!tagList[0]) {
-                tagList = $('<ul role="listbox" deselectable="on" class="k-reset"/>').appendTo(that._innerWrapper);
+                tagList = $('<ul unselectable="on" class="k-reset"/>').appendTo(that._innerWrapper);
             }
 
             that.tagList = tagList;
@@ -1154,6 +1455,7 @@ var __meta__ = { // jshint ignore:line
             var tagTemplate = options.tagTemplate;
             var hasDataSource = options.dataSource;
             var isMultiple = options.tagMode === "multiple";
+            var singleTag = options.messages.singleTag;
             var defaultTemplate;
 
             if (that.element[0].length && !hasDataSource) {
@@ -1161,15 +1463,15 @@ var __meta__ = { // jshint ignore:line
                 options.dataValueField = options.dataValueField || "value";
             }
 
-            defaultTemplate = isMultiple ? kendo.template("#:" + kendo.expr(options.dataTextField, "data") + "#", { useWithBlock: false }) : kendo.template("#:values.length# item(s) selected");
+            defaultTemplate = isMultiple ? kendo.template("#:" + kendo.expr(options.dataTextField, "data") + "#", { useWithBlock: false }) : kendo.template("#:values.length# " + singleTag);
 
             that.tagTextTemplate = tagTemplate = tagTemplate ? kendo.template(tagTemplate) : defaultTemplate;
 
             that.tagTemplate = function(data) {
-                return '<li class="k-button" deselectable="on"><span deselectable="on">' +
-                        tagTemplate(data) +
-                        '</span><span unselectable="on" aria-label="' +
-                        (isMultiple ? "delete" : "open") +
+                return '<li role="option" aria-selected="true" class="k-button" unselectable="on"><span unselectable="on">' +
+                        tagTemplate(data) + '</span>' +
+                        '<span aria-hidden="true" unselectable="on" aria-label="' +
+                        (isMultiple ? ('delete" title="' + that.options.messages.deleteTag + '" aria-label="' + that.options.messages.deleteTag) : 'open') +
                         '" class="k-select"><span class="k-icon ' +
                         (isMultiple ? "k-i-close" : "k-i-arrow-60-down") + '">' +
                         '</span></span></li>';
@@ -1181,12 +1483,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clearButton: function() {
-            this._clear = $('<span deselectable="on" class="k-icon k-clear-value k-i-close" title="clear"></span>').attr({
-                "role": "button",
-                "tabIndex": -1
-            });
+            List.fn._clearButton.call(this);
+
             if (this.options.clearButton) {
                 this._clear.insertAfter(this.input);
+                this.wrapper.addClass("k-multiselect-clearable");
             }
         },
 
@@ -1207,15 +1508,30 @@ var __meta__ = { // jshint ignore:line
                 wrapper = element.parent("span.k-multiselect");
 
             if (!wrapper[0]) {
-                wrapper = element.wrap('<div class="k-widget k-multiselect k-header" deselectable="on" />').parent();
+                wrapper = element.wrap('<div class="k-widget k-multiselect" unselectable="on" />').parent();
                 wrapper[0].style.cssText = element[0].style.cssText;
                 wrapper[0].title = element[0].title;
 
-                $('<div class="k-multiselect-wrap k-floatwrap" deselectable="on" />').insertBefore(element);
+                $('<div class="k-multiselect-wrap k-floatwrap" role="listbox" unselectable="on" />').insertBefore(element);
             }
 
             that.wrapper = wrapper.addClass(element[0].className).css("display", "");
             that._innerWrapper = $(wrapper[0].firstChild);
+        },
+
+        _ariaSetSize: function(value) {
+            var that = this;
+            var selectedItems = that.tagList.children();
+
+            if(value && selectedItems.length) {
+                selectedItems.attr("aria-setsize", value);
+            }
+        },
+
+        _ariaSetLive: function() {
+            var that = this;
+
+            that.ul.attr("aria-live", !that._isFilterEnabled() ? "off" : "polite");
         }
     });
 

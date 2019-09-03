@@ -3,6 +3,8 @@ title: Draggable
 page_title: Draggable UI Widget | Kendo UI API Documentation
 description: Configuration steps and types of events which are triggered in Kendo UI Draggable.
 previous_url: /api/framework/draggable
+res_type: api
+component: drag-and-drop
 ---
 
 # kendo.ui.Draggable
@@ -59,7 +61,7 @@ If set to `true` the widget will auto-scroll the container when the mouse/finger
       }
     </style>
 
-### container `jQuery`
+### container `String | jQuery`*(default: null)*
 
 If set, the hint movement is constrained to the container boundaries.
 
@@ -263,7 +265,7 @@ Suitable for touch oriented user interface, in order to avoid collision with the
 When set to `true`, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.
 
 The *draggable* will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.
-The activated mode can be canceled by calling [`cancelHold`](#methods-cancelHold).
+The activated mode can be canceled by calling [`cancelHold`](/api/javascript/ui/draggable/methods/cancelhold).
 
 #### Example - hold to drag
 
@@ -573,12 +575,12 @@ The `hold` event represents a jQuery `mousedown` event and contains all the even
       $("#draggable").kendoDraggable({
         holdToDrag: true,
         hold: function(e) {
-            $("draggable").css("background", "red");
+            $("#draggable").css("background", "red");
         },
         hint: function(element) {
           var hintElement = $("<div id='hint'></div>");
           hintElement.css({
-            "background-image": "url('http://demos.telerik.com/kendo-ui/content/web/combobox/tShirt.png')",
+            "background-image": "url('https://demos.telerik.com/kendo-ui/content/web/combobox/tShirt.png')",
         	"width": "248px",
         	"height": "289px"
           });

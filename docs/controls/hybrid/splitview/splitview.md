@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI SplitView
 description: "Learn about the jQuery-based Kendo UI tablet pane and customize the Hybrid UI SplitView component."
 slug: overview_hybridsplitview
 position: 1
+component: split-view
 ---
 
 # SplitView Overview
@@ -236,8 +237,6 @@ The example below demonstrates how to make the SplitView stack vertically.
 
 <!--_-->
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the SplitView:
 
 * [Hybrid UI SplitView JavaScript API Reference](/api/javascript/mobile/ui/splitview)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

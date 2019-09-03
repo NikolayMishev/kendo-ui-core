@@ -2,6 +2,7 @@
 title: SchedulerDataSource
 page_title: API Reference for Kendo UI SchedulerDataSource
 description: Learn more about the configuration of Kendo UI SchedulerDataSource, methods and events.
+res_type: api
 ---
 
 # kendo.data.SchedulerDataSource
@@ -30,19 +31,19 @@ The model configuration of the SchedulerDataSource. See [SchedulerEvent](/api/fr
     var dataSource = new kendo.data.SchedulerDataSource({
         transport: {
             read: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks",
                 dataType: "jsonp"
             },
             update: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/update",
                 dataType: "jsonp"
             },
             create: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/create",
                 dataType: "jsonp"
             },
             destroy: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/destroy",
                 dataType: "jsonp"
             }
         },
@@ -75,7 +76,7 @@ The model configuration of the SchedulerDataSource. See [SchedulerEvent](/api/fr
 ### schema.timezone `String`
 
 The timezone which the data source will use to convert the scheduler event dates. By default the current system timezone is used.
-If the data source is initialized by the scheduler, its [timezone](/api/javascript/ui/scheduler#configuration-timezone) option will be used.
+If the data source is initialized by the scheduler, its [timezone](/api/javascript/ui/scheduler/configuration/timezone) option will be used.
 
 The complete list of the supported timezones is available in the [List of IANA time zones](http://en.wikipedia.org/wiki/List_of_IANA_time_zones) Wikipedia page.
 
@@ -85,19 +86,19 @@ The complete list of the supported timezones is available in the [List of IANA t
     var dataSource = new kendo.data.SchedulerDataSource({
         transport: {
             read: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks",
                 dataType: "jsonp"
             },
             update: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/update",
                 dataType: "jsonp"
             },
             create: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/create",
                 dataType: "jsonp"
             },
             destroy: {
-                url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                url: "https://demos.telerik.com/kendo-ui/service/tasks/destroy",
                 dataType: "jsonp"
             }
         },

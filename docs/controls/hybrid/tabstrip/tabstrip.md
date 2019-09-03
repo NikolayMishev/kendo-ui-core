@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI TabStrip
 description: "Initialize the hybrid mobile Kendo UI TabStrip widget and create custom icons."
 slug: overview_hybridtabstrip
 position: 1
+component: mobile-tabstrip
 ---
 
 # TabStrip Overview
@@ -67,8 +68,6 @@ Kendo UI ships with several ready to use icons. The full list of predefined icon
 > For detailed information on how you can use custom icons, refer to the [article on Hybrid UI font icons]({% slug hybridiconfonts_hybridkendoui %}).
 
 ## See Also
-
-Other articles on the Hybrid UI TabStrip:
 
 * [Hybrid UI TabStrip JavaScript API Reference](/api/javascript/mobile/ui/tabstrip)
 * [How to Show Tab Text in Android Skin]({% slug howto_showtabtextandroidskin_hybridtabstrip %})

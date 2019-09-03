@@ -18,9 +18,9 @@ Pasting in the Editor requires permission to access **Clipboard** data.
 
 **Solution**
 
-Users with strict security settings might be required to apply either of the following approaches:   
+Users with strict security settings might be required to apply either of the following approaches:
 
-* Add the site in the trusted site zone.  
+* Add the site in the trusted site zone.
 * Adjust their Internet options so that the **Allow Programmatic Clipboard Access** setting is set to either **Allowed** or **Prompt**.
 
 ### Pasted MS Word Styles Are Not Retained
@@ -29,7 +29,7 @@ By design, the Editor strives to output a clean and XHTML-compatible markup. Tha
 
 **Solution**
 
-Ideally, the output of the Editor has to be styled via a stylesheet provided through the [stylesheets configuration option](/api/javascript/ui/editor#configuration-stylesheets). It allows for the whole pasted content to be consistently styled across your site.
+Ideally, the output of the Editor has to be styled via a stylesheet provided through the [stylesheets configuration option](/api/javascript/ui/editor/configuration/stylesheets). It allows for the whole pasted content to be consistently styled across your site.
 
 If wrong pasting removes semantics or actual content along with the styles:
 
@@ -56,7 +56,7 @@ Firefox cannot handle `iframe` elements properly when they are moved to the DOM.
 
 **Solution**
 
-When you use an Editor inside a popup, which moves elements to the DOM, either first initialize the popup (for example, a Kendo UI Window, a jQuery dialog, or other) or call the [`refresh`](/api/javascript/ui/editor#methods-refresh) method.
+When you use an Editor inside a popup, which moves elements to the DOM, either first initialize the popup (for example, a Kendo UI Window, a jQuery dialog, or other) or call the [`refresh`](/api/javascript/ui/editor/methods/refresh) method.
 
 ## Layout and Display
 
@@ -76,7 +76,7 @@ The reason for the issue is the functionalities of the browser.
 
 **Solution**
 
-Call the [`refresh`](/api/javascript/ui/editor#methods-refresh) method of the Editor after the widget becomes visible. Refreshing the widget recreates the `iframe`.
+Call the [`refresh`](/api/javascript/ui/editor/methods/refresh) method of the Editor after the widget becomes visible. Refreshing the widget recreates the `iframe`.
 
 Another possible approach is to use the inline mode of the Editor, that is, to create the Editor from a `div` element.
 
@@ -90,7 +90,7 @@ By default, the Editor stores its value encoded. When the page is retrieved from
 
 **Solution**
 
-Set the [`encoded`](/api/javascript/ui/editor#configuration-encoded) property to `false`. The value of the Editor is expected to be posted unencoded to the server.
+Set the [`encoded`](/api/javascript/ui/editor/configuration/encoded) property to `false`. The value of the Editor is expected to be posted unencoded to the server.
 
 If you are using ASP.NET, make sure that you either disable the ASP.NET security validation or set the `AllowHtml` attribute on the model field that will receive the HTML string. For more information, refer to the documentation on [requesting validation in ASP.NET](http://blogs.learnnowonline.com/blog/bid/199703/ASP-NET-MVC-Request-Validation-Protection-AllowHtml-Attribute).
 
@@ -141,8 +141,6 @@ To submit the value of the Editor along with the `form`, use the approach demons
 
 ## See Also
 
-Other articles on Kendo UI Editor:
-
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
 * [How to Add Max-Length Validation]({% slug howto_add_max_length_validation_editor %})
 * [How to Get Reference to Child Widgets]({% slug howto_get_referenceto_child_widgets_editor %})
@@ -155,9 +153,6 @@ Other articles on Kendo UI Editor:
 * [Prevent Cross-Site Scripting]({% slug prevent_xss_editor_widget %})
 * [Set Selections]({% slug set_selections_editor_widget %})
 * [Overview of the Editor Widget]({% slug overview_kendoui_editor_widget %})
-
-Other articles on troubleshooting:
-
 * [Common Issues in Kendo UI]({% slug troubleshooting_common_issues_kendoui %})
 * [Kendo UI JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
 * [Kendo UI Performance Issues]({% slug troubleshooting_system_memory_symptoms_kendoui %})
@@ -171,7 +166,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Scheduler]({% slug troubleshooting_scheduler_widget %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

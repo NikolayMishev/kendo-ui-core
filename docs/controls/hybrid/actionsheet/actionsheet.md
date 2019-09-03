@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI ActionSheet
 description: "Initiate the Hybrid UI ActionSheet to display a set of choices in Kendo UI."
 slug: overview_hybridactionsheet
 position: 1
+component: actionsheet_mobile
 ---
 
 # ActionSheet Overview
@@ -84,8 +85,6 @@ The example below demonstrates ActionSheet actions and context.
 
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the ActionSheet:
 
 * [Hybrid UI ActionSheet JavaScript API Reference](/api/javascript/mobile/ui/actionsheet)
 * [How to Change Options Dynamically in the ActionSheet]({% slug howto_changeoptiojnsdynamically_hybridactionsheet %})

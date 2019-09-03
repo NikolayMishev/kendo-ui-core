@@ -1,25 +1,25 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["fr-ML"] = {
         name: "fr-ML",
         numberFormat: {
             pattern: ["-n"],
-            decimals: 0,
+            decimals: 2,
             ",": " ",
             ".": ",",
             groupSize: [3],
             percent: {
-                pattern: ["-n%","%n"],
-                decimals: 0,
+                pattern: ["-n %","n %"],
+                decimals: 2,
                 ",": " ",
                 ".": ",",
                 groupSize: [3],
                 symbol: "%"
             },
             currency: {
-                name: "CFA Franc BCEAO",
+                name: "West African CFA Franc",
                 abbr: "XOF",
-                pattern: ["(n$)","n$"],
-                decimals: 2,
+                pattern: ["-n $","n $"],
+                decimals: 0,
                 ",": " ",
                 ".": ",",
                 groupSize: [3],

@@ -39,7 +39,7 @@ Make sure that jQuery is included only before the Kendo UI JavaScript files and 
 
 ### Widgets Are Unavailable or Undefined
 
-If jQuery is included more than once in the page all existing jQuery plugins (including Kendo UI) will be wiped out. Will also occur if the [required Kendo JavaScript files]({% slug javascript_prerequisites_kendoui_installation %}) are not included.
+If jQuery is included more than once in the page all existing jQuery plugins (including Kendo UI) will be wiped out. Will also occur if the [required jQuery file]({% slug jquerysupport_kendoui %}) is not included.
 
 Depending on the browser, the following JavaScript errors will be thrown:
 
@@ -54,7 +54,7 @@ Depending on the browser, the following JavaScript errors will be thrown:
 
 **Solution**
 
-Make sure jQuery is not included more than once in your page. Remove any duplicate `script` references to jQuery. Include all [required Kendo JavaScript files]({% slug javascript_prerequisites_kendoui_installation %}).
+Make sure jQuery is not included more than once in your page. Remove any duplicate `script` references to jQuery. Include all [required Kendo JavaScript files]({% slug jquerysupport_kendoui %}).
 
 ### Widgets Cannot Be Initialized in Internet Explorer Compatibility Mode
 
@@ -83,7 +83,7 @@ where more information can be found.
 
 The `Unknown DataSource transport type json` warning might be caused by either of the following reasons:
 
-* Invalid Kendo UI DataSource [`type`](/api/javascript/data/datasource#configuration-type) configuration is set. For example:
+* Invalid Kendo UI DataSource [`type`](/api/javascript/data/datasource/configuration/type) configuration is set. For example:
 
     ```
     dataSource: {
@@ -97,11 +97,46 @@ The `Unknown DataSource transport type json` warning might be caused by either o
 
 Use a valid `type` value, or remove the `type` property, or add the corresponding missing file&mdash;for example, `kendo.aspnetmvc.min.js` when using the Kendo UI MVC wrappers.
 
-Note that the [dataSource `type`](/api/javascript/data/datasource#configuration-type) differs from the [`type` of the transport actions](/api/javascript/data/datasource#configuration-transport.read.type).
+Note that the [dataSource `type`](/api/javascript/data/datasource/configuration/type) differs from the [`type` of the transport actions](/api/javascript/data/datasource/configuration/transport.read.type).
+
+### Widget Throws the e.slice is not a function Error
+
+The `Uncaught TypeError: e.slice is not a function` error indicates that the response which is received from the remote data source is not an array while the widget expects a simple array for its data source.
+
+Widgets like the TreeView or the MultiSelect need only a simple array while the Grid needs an envelope with additional information such as total, errors, and aggregates. For more information on what information each widget expects, review the demo of the respective control.
+
+The possible causes for the `e.slice is not a function` error can be any or a combination of the following:
+
+**Cause 1**
+
+The server does not return an actual list of objects but empty data, an error response, or a single item. In such cases, you get a single object or HTML instead of a serialized array.
+
+**Solution 1**
+
+Step through the server method that returns data and monitor the response in the browser dev toolbar to see what you get and ensure it is something like `[{"fieldName": 123, "otherField": "someValue"}, {"fieldName": 234, "otherField": "otherValue"}]`.
+
+**Cause 2**
+
+Under MVC, the server method (action) often uses `myData.ToDataSourceResult(request)` unnecessarily and wraps the data in an envelope similar to `{data: [the array from your data goes here], total: <the count goes here> }`. In such cases, the widget is not able to get the array at the root level as it expects.
+
+**Solution 2**
+
+Use either of the following suggestions:
+
+* Apply the same approach as the Kendo UI demos demonstrate&mdash;return the data array only. For example, in an MVC action, use the `return Json(myData, JsonRequestBehavior.AllowGet);` configuration without`.ToDataSourceResul()` as demonstrated in the [MVC TreeView Remote Binding](https://demos.telerik.com/aspnet-mvc/treeview/remote-data-binding) demo.
+* By configuring its data source `Schema`, indicate to the widget which fields you expect it look for.
+
+        // C#
+        .Schema(schema =>
+          {
+              schema.Data("Data")
+                 .Total("Total");
+          }
+
 
 ### Input Widgets Do Not Raise Change Event When API Is Used
 
-The change event of an input widget is triggered only by user action. DOM elements work in the same way. If you need to trigger an event manually use the [trigger method](/api/javascript/ui/widget#methods-trigger).
+The change event of an input widget is triggered only by user action. DOM elements work in the same way. If you need to trigger an event manually use the [trigger method](/api/javascript/ui/widget/methods/trigger).
 
 ### Creating Multiple Widgets Throws JavaScript Errors
 
@@ -131,7 +166,7 @@ Some third-party modal popups prevent access to focusable elements, which are re
 There are two ways to avoid this problem:
 
 * Disable the modal popup's modality, so that elements outside it can be focused.
-* Use a [modal](/api/javascript/ui/window#configuration-modal) [Kendo UI Window]({% slug overview_kendoui_window_widget %}) instead of a third-party popup.
+* Use a [modal](/api/javascript/ui/window/configuration/modal) [Kendo UI Window]({% slug overview_kendoui_window_widget %}) instead of a third-party popup.
 
 ### Widgets Do Not Work Correctly on Touch Devices
 
@@ -151,7 +186,7 @@ The reason for this issue is a bug in the aforementioned jQuery version. Accordi
 
 ### Incorrect Appearance or Errors Occur in Hidden Widgets
 
-If you display widgets that have been in an initially hidden container, call their [`resize()`](/api/javascript/ui/widget#methods-resize) method after you show them. Initializing widgets on elements with the `style="display: none;"` configuration might cause errors, such as inability to calculate dimensions and positions or even throw errors. The reason for this behavior is that such calculations are not available for elements that are not rendered by the browser.
+If you display widgets that have been in an initially hidden container, call their [`resize()`](/api/javascript/ui/widget/methods/resize) method after you show them. Initializing widgets on elements with the `style="display: none;"` configuration might cause errors, such as inability to calculate dimensions and positions or even throw errors. The reason for this behavior is that such calculations are not available for elements that are not rendered by the browser.
 
 **Solution**
 
@@ -216,7 +251,7 @@ The example below demonstrates the solution of the test issue above.
 
 ###### Example
 
-    $("#dialog").kendoWinodow({
+    $("#dialog").kendoWindow({
         // load complete page...
         content: "/foo",
         // ... and show it in an iframe
@@ -263,8 +298,6 @@ To provide for the backward compatibility of any custom icons you add to your pr
 
 ## See Also
 
-Other articles on troubleshooting:
-
 * [JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
 * [Performance Issues]({% slug troubleshooting_system_memory_symptoms_kendoui %})
 * [Content Security Policy]({% slug troubleshooting_content_security_policy_kendoui %})
@@ -278,7 +311,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Scheduler]({% slug troubleshooting_scheduler_widget %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

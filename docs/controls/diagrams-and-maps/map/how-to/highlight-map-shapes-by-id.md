@@ -7,11 +7,11 @@ slug: howto_highlightmapshapesbyid_map
 
 # Highlight Map Shapes by ID
 
-The example below demonstrates how to highlight Kendo UI Map shapes by a specified ID.
+The following example demonstrates how to highlight the Map shapes by a specified ID.
 
 ###### Example
 
-```html
+```dojo
     <div id="map"></div>
     <script>
       function createMap() {
@@ -72,8 +72,6 @@ The example below demonstrates how to highlight Kendo UI Map shapes by a specifi
 ```
 
 ## See Also
-
-Other articles on the Kendo UI Map:
 
 * [Map JavaScript API Reference](/api/javascript/dataviz/ui/map)
 * [How to Customize Markers on Map]({% slug howto_customizemarkersonmap_map %})

@@ -51,7 +51,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Slide
 
 ### Subscribe to Events
 
-You can subscribe to all [events exposed by Kendo UI ProgressBar](/api/javascript/ui/slider#events) by the handler name.
+You can subscribe to all [events exposed by Kendo UI Slider](/api/javascript/ui/slider#events) by the handler name.
 
 ###### Example
 
@@ -85,8 +85,6 @@ You are able to reference an existing Slider instance via [`jQuery.data()`](http
     </script>
 
 ## See Also
-
-Other articles on Telerik UI for JSP and on the Slider:
 
 * [Overview of the Kendo UI Slider Widget]({% slug overview_kendoui_slider_widget %})
 * [Telerik UI for JSP API Reference Folder](/api/jsp/autocomplete/animation)

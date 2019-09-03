@@ -2,6 +2,8 @@
 title: Map
 page_title: Configuration, methods and events of Kendo UI DataViz Map
 description: Learn how to configure Kendo UI Javascript chart widget in a few easy steps, use and change methods and events.
+res_type: api
+component: map
 ---
 
 # kendo.dataviz.ui.Map
@@ -241,7 +243,7 @@ The default marker shape for all marker layers. The following pre-defined marker
 * pin
 
 Marker shapes are implemented as CSS classes on the marker element (span.k-marker).
-For example "pinTarget" is rendered as "k-marker-pin-target".
+For example "pinTarget" is rendered as "k-i-marker-pin-target".
 
 #### Example - setting default marker shape
     <div id="map"></div>
@@ -599,7 +601,7 @@ versions, so it is advisable to always use the [iframe configuration option](#if
                 marker: {
                     tooltip: {
                           content: {
-                            url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                            url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                           },
                           width: 220,
                           height: 280
@@ -715,7 +717,7 @@ Explicitly states whether content iframe should be created.
                     tooltip: {
                           iframe: true,
                           content: {
-                            url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                            url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                           },
                           width: 220,
                           height: 280
@@ -1805,7 +1807,7 @@ The URL template for tile layers. Template variables:
 * x - X coordinate of the tile
 * y - Y coordinate of the tile
 * zoom - zoom level
-* subdomain - Subdomain for this tile. See [subdomains](#configuration-layers-tile-subdomains)
+* subdomain - Subdomain for this tile. See [subdomains](/api/javascript/dataviz/ui/map/configuration/layers.subdomains)
 
 #### Example - set default URL template for all tile layers
     <div id="map"></div>
@@ -2233,7 +2235,7 @@ The culture to be used for the bing map tiles.
 The data item field which contains the marker (symbol) location.
 The field should be an array with two numbers - latitude and longitude in decimal degrees.
 
-Requires the [dataSource](#configuration-layers-dataSource) option to be set.
+Requires the [dataSource](/api/javascript/dataviz/ui/map#configuration-layers-dataSource) option to be set.
 
 Only applicable to "marker" and "bubble" layers.
 
@@ -2288,7 +2290,7 @@ The size of the image tile in pixels.
 ### layers.titleField `String` *(default: "title")*
 
 The data item field which contains the marker title.
-Requires the [dataSource](#configuration-layers-dataSource) option to be set.
+Requires the [dataSource](/api/javascript/dataviz/ui/map#configuration-layers-dataSource) option to be set.
 
 #### Example - bind marker title
     <div id="map"></div>
@@ -2592,7 +2594,7 @@ versions, so it is advisable to always use the [iframe configuration option](#if
                 type: "marker",
                 tooltip: {
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -2694,7 +2696,7 @@ Explicitly states whether content iframe should be created.
                 tooltip: {
                       iframe: true,
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -2876,7 +2878,7 @@ The minimum symbol size for bubble layer symbols.
         });
     </script>
 
-### layers.maxZoom
+### layers.maxZoom `Number`
 
 The maximum zoom level at which to show this layer.
 
@@ -2900,7 +2902,7 @@ The maximum zoom level at which to show this layer.
         });
     </script>
 
-### layers.minZoom
+### layers.minZoom `Number`
 
 The minimum zoom level at which to show this layer.
 
@@ -3304,7 +3306,7 @@ The URL template for tile layers. Template variables:
 * x - X coordinate of the tile
 * y - Y coordinate of the tile
 * zoom - zoom level
-* subdomain - Subdomain for this tile. See [subdomains](#configuration-layers-tile-subdomains)
+* subdomain - Subdomain for this tile. See [subdomains](/api/javascript/dataviz/ui/map/configuration/layers.subdomains)
 
 #### Example - setting URL template for tile layer
     <div id="map"></div>
@@ -3761,7 +3763,7 @@ versions, so it is advisable to always use the [iframe configuration option](#if
             markerDefaults: {
                 tooltip: {
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -3852,7 +3854,7 @@ Explicitly states whether content iframe should be created.
                 tooltip: {
                       iframe: true,
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -4371,7 +4373,7 @@ versions, so it is advisable to always use the [iframe configuration option](#if
                 location: [42, 27],
                 tooltip: {
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -4450,7 +4452,7 @@ Explicitly states whether content iframe should be created.
                 tooltip: {
                       iframe: true,
                       content: {
-                        url: "http://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
+                        url: "https://demos.telerik.com/kendo-ui/content/web/tooltip/ajax/ajaxContent3.html"
                       },
                       width: 220,
                       height: 280
@@ -4580,7 +4582,7 @@ The event on which the tooltip will be shown. Predefined values are "mouseenter"
 The minimum zoom level.
 Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
 
-> The map [zoom](#configuration-zoom) is clamped to the [minZoom, maxZoom] interval.
+> The map [zoom](/api/javascript/dataviz/ui/map#configuration-zoom) is clamped to the [minZoom, maxZoom] interval.
 
 #### Example - limit zoom out to level 3
     <div id="map"></div>
@@ -4601,7 +4603,7 @@ Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features)
 The maximum zoom level.
 Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).
 
-> The map [zoom](#configuration-zoom) is clamped to the [minZoom, maxZoom] interval.
+> The map [zoom](/api/javascript/dataviz/ui/map#configuration-zoom) is clamped to the [minZoom, maxZoom] interval.
 
 #### Example - limit zoom in to level 10
     <div id="map"></div>
@@ -4874,7 +4876,7 @@ The DOM or jQuery mouse event.
 Retrieves relative (view) coordinates that correspond to this mouse event.
 Layer elements positioned on these coordinates will appear under the mouse cursor.
 
-View coordinates are no longer valid after a map [reset](#events-reset).
+View coordinates are no longer valid after a map [reset](/api/javascript/dataviz/ui/map/events/reset).
 
 #### Parameters
 
@@ -5284,7 +5286,7 @@ The setter is chainable, i.e. returns the map instance.
 ##### level `Number`
 
 The new zoom level. The value is clamped to the
- [[minZoom](#configuration-minZoom), [maxZoom](#configuration-maxZoom)] interval.
+ [[minZoom](/api/javascript/dataviz/ui/map#configuration-minZoom), [maxZoom](/api/javascript/dataviz/ui/map#configuration-maxZoom)] interval.
 
 #### Returns
 
@@ -5425,7 +5427,7 @@ The source widget instance.
 Fired when a marker has been created and is about to be displayed.
 Cancelling the event will prevent the marker from being shown.
 
-Use [markerActivate](#events-markerActivate) if you need to access the marker DOM element.
+Use [markerActivate](/api/javascript/dataviz/ui/map/events/markeractivate) if you need to access the marker DOM element.
 
 > Markers are automatically created for GeoJSON Point geometries. If the markerCreated event is cancelled a regular shape (circle) will be created instead.
 

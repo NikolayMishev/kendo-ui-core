@@ -1,15 +1,17 @@
 ---
 title: Element
 page_title: API reference for Kendo UI Drawing API Element
+res_type: api
 ---
 
 # kendo.drawing.Element : kendo.Class
+
 An abstract base class representing common members of all drawing elements.
 
 ## Constructor Parameters
 
 ### options `Object`
-The configuration of this Group.
+The configuration of this element.
 
 ## Configuration
 
@@ -17,7 +19,7 @@ The configuration of this Group.
 The clipping path for this element.
 
 The path instance will be monitored for changes.
-It can be replaced by calling the [clip](#methods-clip) method.
+It can be replaced by calling the [clip](/api/javascript/drawing/element/methods/clip) method.
 
 #### Example - setting clipping path on an element
     <div id="surface"></div>
@@ -158,7 +160,7 @@ The point that should be checked.
 ### opacity
 Gets or sets the element opacity.
 
-#### Example - setting transformation on an element
+#### Example - setting opacity on an element
     <div id="surface"></div>
     <script>
         var draw = kendo.drawing;

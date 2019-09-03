@@ -2,6 +2,8 @@
 title: TimePicker
 page_title: Configuration, methods and events of Kendo UI TimePicker
 description: What type of animations you can use in TimePicker UI widget, find supported methods and see which events are triggered once the value is changed.
+res_type: api
+component: date-time-pickers
 ---
 
 # kendo.ui.TimePicker
@@ -122,6 +124,19 @@ The duration of the open animation in milliseconds.
     });
     </script>
 
+### dateInput `Boolean`*(default: false)*
+
+ Specifies if the TimePicker will use DateInput for editing value
+
+#### Example
+
+    <input id="timepicker" />
+    <script>
+    $("#timepicker").kendoTimePicker({
+        dateInput: true
+    });
+    </script>
+
 ### dates `Array`
 
  Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.
@@ -142,6 +157,8 @@ The duration of the open animation in milliseconds.
 ### format `String`*(default: "h:mm tt")*
 
  Specifies the format, which is used to format the value of the TimePicker displayed in the input. The format also will be used to parse the input.
+
+ For more information on date and time formats please refer to [Date Formatting](/framework/globalization/dateformatting).
 
 #### Example - specify a custom time format
 
@@ -206,6 +223,110 @@ Specifies the start value in the popup list.
         parseFormats: ["HH:mm"] //format also will be added to parseFormats
     });
     </script>
+
+### popup `Object`
+
+The options that will be used for the popup initialization. For more details about the available options
+refer to [Popup](/api/javascript/ui/popup) documentation.
+
+#### Example - append the popup to a specific element
+
+    <div id="container">
+        <input id="timepicker" />
+    </div>
+    <script>
+    $("#timepicker").kendoTimePicker({
+      popup: {
+        appendTo: $("#container")
+      }
+    });
+    </script>
+
+### popup.appendTo `String`
+
+Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.
+
+#### Example - append the popup to a specific element
+
+    <div id="container">
+        <input id="timepicker" />
+    </div>
+    <script>
+    $("#timepicker").kendoTimePicker({
+      popup: {
+        appendTo: $("#container")
+      }
+    });
+    </script>
+
+### popup.origin `String`
+
+Specifies how to position the popup element based on anchor point. The value is
+space separated "y" plus "x" position.
+
+The available "y" positions are:
+- "bottom"
+- "center"
+- "top"
+
+The available "x" positions are:
+- "left"
+- "center"
+- "right"
+
+#### Example - append the popup to a specific element
+
+
+    <div id="container">
+        <input id="timepicker" />
+    </div>
+    <script>
+    $("#timepicker").kendoTimePicker({
+      popup: {
+        origin: "top left"
+      }
+    });
+    </script>
+
+### popup.position `String`
+
+Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.
+
+The available "y" positions are:
+- "bottom"
+- "center"
+- "top"
+
+The available "x" positions are:
+- "left"
+- "center"
+- "right"
+
+#### Example - append the popup to a specific element
+
+
+    <div id="container">
+        <input id="timepicker" />
+    </div>
+    <script>
+    $("#timepicker").kendoTimePicker({
+      popup: {
+        position: "top center"
+      }
+    });
+    </script>
+    <style>
+      #container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
 
 ### value `Date`*(default: null)*
 
@@ -474,9 +595,9 @@ The time value to set for a TimePicker, expressed as a Date object or as a strin
 
 `Date` The time value of a TimePicker.
 
-> * This method **does not trigger** [change](#events-change) event.
+> * This method **does not trigger** [change](/api/javascript/ui/timepicker/events/change) event.
 This could affect [MVVM value binding](/framework/mvvm/bindings/value). The model bound to the widget will not be updated.
-You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable#methods-trigger) method.
+You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable/methods/trigger) method.
 
     <input id="timepicker" />
     <script>

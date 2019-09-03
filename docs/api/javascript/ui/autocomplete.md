@@ -2,6 +2,8 @@
 title: AutoComplete
 page_title: Configuration, methods and events of Kendo UI AutoComplete
 description: How to configure and control methods in Autocomplete UI widget, which events to use to open, close, change, select.
+res_type: api
+component: autocomplete
 ---
 
 # kendo.ui.AutoComplete
@@ -132,7 +134,7 @@ If the `dataSource` option is an existing [kendo.data.DataSource](/api/javascrip
 
     <input id="autocomplete" />
     <script>
-    $("#autoComplete").kendoAutoComplete({
+    $("#autocomplete").kendoAutoComplete({
       dataSource: {
         data: ["One", "Two"]
       }
@@ -144,7 +146,7 @@ If the `dataSource` option is an existing [kendo.data.DataSource](/api/javascrip
     <input id="autocomplete" />
     <script>
     var data = ["One", "Two"];
-    $("#autoComplete").kendoAutoComplete({
+    $("#autocomplete").kendoAutoComplete({
       dataSource: data
     });
     </script>
@@ -156,7 +158,7 @@ If the `dataSource` option is an existing [kendo.data.DataSource](/api/javascrip
     var dataSource = new kendo.data.DataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/products",
+          url: "https://demos.telerik.com/kendo-ui/service/products",
           dataType: "jsonp"
         }
       }
@@ -226,7 +228,7 @@ If set to `false` the widget will be disabled and will not allow user input. The
 
 ### enforceMinLength `Boolean` *(default: false)*
 
-If set to `true` the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with [minLength](#configuration-minLength).
+If set to `true` the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with [minLength](/api/javascript/ui/autocomplete#configuration-minLength).
 
 #### Example - enforce minLength
 
@@ -236,7 +238,7 @@ If set to `true` the widget will not show all items when the text of the search 
         dataTextField: "ProductName",
         filter: "contains",
         minLength: 3,
-        enforceMinLength: false,
+        enforceMinLength: true,
         autoBind: false,
         dataSource: {
             type: "odata",
@@ -258,13 +260,16 @@ all data items which begin with the current widget value are displayed in the su
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      filter: "contains"
+      filter: "contains",
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
 ### fixedGroupTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the fixed header group. By default the widget displays only the value of the current group.
+The [template](/api/javascript/kendo/methods/template) used to render the fixed header group. By default the widget displays only the value of the current group.
 
     <input id="customers" style="width: 400px" />
     <script>
@@ -276,7 +281,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the fixed 
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                     },
                     group: { field: "Country" }
                 }
@@ -286,7 +291,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the fixed 
 
 ### footerTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+The [template](/api/javascript/kendo/methods/template) used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
 
 #### Parameters
 
@@ -310,7 +315,7 @@ The widget instance.
 
 ### groupTemplate `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the groups. By default the widget displays only the value of the group.
+The [template](/api/javascript/kendo/methods/template) used to render the groups. By default the widget displays only the value of the group.
 
     <input id="customers" style="width: 400px" />
     <script>
@@ -322,7 +327,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the groups
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                     },
                     group: { field: "Country" }
                 }
@@ -339,7 +344,10 @@ The height of the suggestion popup in pixels. The default value is 200 pixels.
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      height: 500
+      height: 100,
+	  dataSource: {
+        data: ["One", "Two", "Three", "Four", "Five", "Six", "Seven"]
+      }
     });
     </script>
 
@@ -352,7 +360,10 @@ If set to `true` the first suggestion will be automatically highlighted.
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      highlightFirst: false
+      highlightFirst: true,
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
@@ -365,33 +376,89 @@ If set to `false` case-sensitive search will be performed to find suggestions. T
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      ignoreCase: false
+      ignoreCase: false,
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
+    </script>
+
+### messages `Object`
+
+The text messages displayed in the widget. Use this option to customize or localize the messages.
+
+#### Example - customize AutoComplete messages
+
+    <input id="autocomplete" />
+    <script>
+        $("#autocomplete").kendoAutoComplete({
+            dataSource: [ "Apples", "Oranges" ],
+            messages: {
+                clear: "clear!",
+                noData: "There is no data!"
+            }
+        });
+    </script>
+
+### messages.clear `String` *(default: "clear")*
+
+The text message when hovering the input clear button.
+
+#### Example - customize clear message
+
+    <input id="autocomplete" />
+    <script>
+        $("#autocomplete").kendoAutoComplete({
+            dataSource: [ "Apples", "Oranges" ],
+            messages: {
+                clear: "clear!"
+            }
+        });
+    </script>
+
+### messages.noData `String` *(default: "No data found.")*
+
+The text message shown in the noDataTemplate when no data is available in the widget drop-down.
+
+#### Example - customize noData message
+
+    <input id="autocomplete" />
+    <script>
+        $("#autocomplete").kendoAutoComplete({
+            dataSource: [ ],
+            messages: {
+                noData: "There is no data!"
+            }
+        });
     </script>
 
 ### minLength `Number` *(default: 1)*
 
 The minimum number of characters the user must type before a search is performed. Set to higher value than `1` if the search could match a lot of items.
 
-> Widget will initiate a request when input value is cleared. If you would like to prevent this behavior please check the [filtering](#events-filtering) event for more details.
+> Widget will initiate a request when input value is cleared. If you would like to prevent this behavior please check the [filtering](/api/javascript/ui/autocomplete/events/filtering) event for more details.
 
 #### Example - set minLength
 
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      minLength: 3
+      minLength: 3,
+	  placeholder: "Type 'one'",
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
-### noDataTemplate `String|Function` *(default: "NO DATA FOUND.")*
+### noDataTemplate `String|Function|Boolean` *(default: true)*
 
-The [template](/api/javascript/kendo#methods-template) used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The [template](/api/javascript/kendo/methods/template) used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
 The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
 
 > **Important** The popup will open when 'noDataTemplate' is defined
 
-#### Example - specify headerTemplate as a string
+#### Example - specify noDataTemplate as a string
 
     <input id="autocomplete" />
     <script>
@@ -456,12 +523,17 @@ The character used to separate multiple values. Empty by default.
 
 > As of Q3 2016 the Autocomplete widget supports multiple separators listed in an array. All separators will be replaced with the first array item, which acts as a default separator.
 
+> Using the separator option will still bind the primitive stringe value of the input. In case you need to bind multiple data items, you can consider the [MultiSelect widget]({%slug overview_kendoui_multiselect_widget%}).
+
 #### Example - set separator to allow multiple values
 
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      separator: ", "
+      separator: ", ",
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
@@ -470,7 +542,10 @@ The character used to separate multiple values. Empty by default.
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      separator: [", ", "; "]
+      separator: [", ", "; "],
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
@@ -483,7 +558,10 @@ If set to `true` the widget will automatically use the first suggestion as its v
     <input id="autocomplete" />
     <script>
     $("#autocomplete").kendoAutoComplete({
-      suggest: true
+      suggest: true,
+	  dataSource: {
+        data: ["One", "Two"]
+      }
     });
     </script>
 
@@ -511,7 +589,7 @@ Specifies a static HTML content, which will be rendered as a header of the popup
 
 ### template `String|Function`
 
-The [template](/api/javascript/kendo#methods-template) used to render the suggestions. By default the widget displays only the text of the suggestion (configured via `dataTextField`).
+The [template](/api/javascript/kendo/methods/template) used to render the suggestions. By default the widget displays only the text of the suggestion (configured via `dataTextField`).
 
 #### Example - specify template as a function
 
@@ -609,7 +687,7 @@ For detailed information, refer to the [article on virtualization]({% slug virtu
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
                     schema: {
                         model: {
@@ -649,7 +727,7 @@ For detailed information, refer to the [article on virtualization]({% slug virtu
               source: new kendo.data.DataSource({
                 type: "odata",
                 transport: {
-                  read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                  read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                 },
                 schema: {
                   model: {
@@ -673,7 +751,7 @@ For detailed information, refer to the [article on virtualization]({% slug virtu
 
         function orderValueMapper(options) {
             $.ajax({
-              url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+              url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
               type: "GET",
               dataType: "jsonp",
               data: convertValues(options.value),
@@ -716,7 +794,7 @@ If the developer does not specify one, the framework will automatically set `ite
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
                     schema: {
                         model: {
@@ -761,7 +839,7 @@ For more information, refer to the [article on virtualization]({% slug virtualiz
                     itemHeight: 26,
                     valueMapper: function(options) {
                         $.ajax({
-                            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+                            url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
                             type: "GET",
                             dataType: "jsonp",
                             data: convertValues(options.value),
@@ -780,7 +858,7 @@ For more information, refer to the [article on virtualization]({% slug virtualiz
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
                     pageSize: 80,
                     serverPaging: true,
@@ -806,11 +884,11 @@ For more information, refer to the [article on virtualization]({% slug virtualiz
 
 ### dataSource `kendo.data.DataSource`
 
-The [data source](/api/javascript/data/datasource) of the widget. Configured via the [dataSource](#configuration-dataSource) option.
+The [data source](/api/javascript/data/datasource) of the widget. Configured via the [dataSource](/api/javascript/ui/autocomplete/configuration/datasource) option.
 
 > Changes of the data source will be reflected in the widget.
 
-> **Important:** Assigning a new data source would have no effect. Use the [setDataSource](#methods-setDataSource) method instead.
+> **Important:** Assigning a new data source would have no effect. Use the [setDataSource](/api/javascript/ui/autocomplete/methods/setdatasource) method instead.
 
 #### Example - add a data item to the data source
     <input id="autocomplete" />
@@ -838,10 +916,10 @@ An object, which holds the options of the widget.
     $("#autocomplete").kendoAutoComplete();
 
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
-
     var element = autocomplete.element;
-
     var options = autocomplete.options;
+
+    console.log(options);
     </script>
 
 ### list `jQuery`
@@ -854,8 +932,9 @@ A jQuery object of the drop-down list element.
     $("#autocomplete").kendoAutoComplete();
 
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
-
     var list = autocomplete.list;
+
+    console.log(list);
     </script>
 
 ### ul `jQuery`
@@ -868,8 +947,9 @@ A jQuery object of the `ul` element, which holds the available options.
     $("#autocomplete").kendoAutoComplete();
 
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
-
     var ul = autocomplete.ul;
+
+    console.log(ul);
     </script>
 
 ## Methods
@@ -979,7 +1059,7 @@ Focuses the widget.
 
 ### items
 
-Obtains an Array of the DOM elements, which correspond to the data items from the Kendo UI DataSource [view](/api/javascript/data/datasource#methods-view) (e.g. the ones that match the user's last filtering input).
+Obtains an Array of the DOM elements, which correspond to the data items from the Kendo UI DataSource [view](/api/javascript/data/datasource/methods/view) (e.g. the ones that match the user's last filtering input).
 
 #### Returns
 
@@ -1047,13 +1127,15 @@ Selects the item provided as an argument and updates the value of the widget.
 > **Important:** When **virtualization** is enabled, the method **does not support** selection with a *function predicate*. The predicate function looks only
 in the current datasource view, which represents only the active range/page. Hence it will not work properly.
 
-> **Important:** This method **does not trigger** [change](#events-change) event.
+> **Important:** This method **does not trigger** [change](/api/javascript/ui/autocomplete/events/change) event.
 This could affect [MVVM value binding](/framework/mvvm/bindings/value). The model bound to the widget will not be updated.
-You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable#methods-trigger) method.
+You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable/methods/trigger) method.
 
     <input id="autocomplete" />
     <script>
-    $("#autocomplete").kendoAutoComplete();
+    $("#autocomplete").kendoAutoComplete({
+        dataSource: [ "John", "Jane" ]
+	});
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
     autocomplete.search("J");
     autocomplete.select(autocomplete.ul.children().eq(1)); // Selects the second suggestion which is "Jane"
@@ -1128,9 +1210,9 @@ The value to set.
 
 Gets or sets the value of the widget.
 
-> **Important:** This method **does not trigger** [change](#events-change) event.
+> **Important:** This method **does not trigger** [change](/api/javascript/ui/autocomplete/events/change) event.
 This could affect [MVVM value binding](/framework/mvvm/bindings/value). The model bound to the widget will not be updated.
-You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable#methods-trigger) method.
+You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable/methods/trigger) method.
 
     <input id="autocomplete" />
     <script>
@@ -1186,6 +1268,7 @@ The widget instance which fired the event.
     $("#autocomplete").kendoAutoComplete({
       change: function(e) {
         var value = this.value();
+        console.log(value);
         // Use the value of the widget
       }
     });
@@ -1296,7 +1379,7 @@ The widget instance which fired the event.
 
 The filter descriptor that will be used to filter the data source.
 
-> The data source filters the data items client-side unless the [data source serverFiltering](/api/javascript/data/datasource#configuration-serverFiltering) option is set to `true`.
+> The data source filters the data items client-side unless the [data source serverFiltering](/api/javascript/data/datasource/configuration/serverfiltering) option is set to `true`.
 
 #### Example - subscribe to the "filtering" event during initialization
 
@@ -1307,6 +1390,7 @@ The filter descriptor that will be used to filter the data source.
       filtering: function(e) {
           //get filter descriptor
           var filter = e.filter;
+          console.log(filter);
 
           // handle the event
       }
@@ -1320,6 +1404,7 @@ The filter descriptor that will be used to filter the data source.
     function autocomplete_filtering(e) {
       //get filter descriptor
       var filter = e.filter;
+      console.log(filter);
 
       // handle the event
     }
@@ -1414,6 +1499,7 @@ The widget instance which fired the event.
       select: function(e) {
         var item = e.item;
         var text = item.text();
+        console.log(text);
         // Use the selected item or its text
       }
     });

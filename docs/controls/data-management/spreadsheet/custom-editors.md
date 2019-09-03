@@ -3,16 +3,16 @@ title: Custom Cell Editors
 page_title: Custom Cell Editors | Kendo UI Spreadsheet
 description: "Define custom cell editors in a Kendo UI Spreadsheet widget."
 slug: custom_editors_spreadsheet_widget
-position: 3
+position: 5
 ---
 
 # Custom Cell Editors
 
-Custom editors are helpers that make it easier for the user to enter a correct value.
+Custom editors are helpers that facilitate the user input of correct values.
 
 For example, a custom editor allows the user to enter a date in a cell by picking it from a calendar rather than typing it. This functionality is achieved by applying data validation with the `Date` criteria, and selecting the **Display button to show calendar** checkbox. Another built-in editor is for the `List` validation criterion&mdash;it displays a popup displaying the allowed values.
 
-## Definition  
+## Definition
 
 To define custom editors, use `kendo.spreadsheet.registerEditor(name, editor)`. The `name` is an ID of your choice, which you will later use to select this particular editor on a `Range`. The `editor` can be an object or a function. As an object, it should currently have an `edit` method, and an `icon` property, as explained below.
 
@@ -32,7 +32,7 @@ The following example demonstrates how to set up a color-picking custom editor.
 
 ###### Example
 
-```html
+```dojo
   <div id="spreadsheet" style="width: 100%;"></div>
   <script>
     kendo.spreadsheet.registerEditor("color", function(){
@@ -46,7 +46,7 @@ The following example demonstrates how to set up a color-picking custom editor.
                 context = options;
                 open();
             },
-            icon: "k-font-icon k-i-background"
+            icon: "k-icon k-i-background"
         };
 
         // This function actually creates the UI if not already there, and
@@ -127,8 +127,6 @@ select a color.
 The `edit` method provides a complete flexibility. As an example, you can use a Popup widget&mdash;you are not obliged, nor required to use a Window. If you know that no two instances will be displayed simultaneously, cache the UI or create a fresh instance each time the `edit` is invoked. Note that the example above refers to a modal dialog.
 
 ## See Also
-
-Other articles on the Kendo UI Spreadsheet:
 
 * [Overview]({% slug overview_spreadsheet_widget %})
 * [Custom Functions]({% slug custom_functions_spreadsheet_widget %})

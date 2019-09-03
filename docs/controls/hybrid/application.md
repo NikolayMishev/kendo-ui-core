@@ -5,6 +5,7 @@ description: "Initiate the Kendo UI Application for mobile and handle its naviga
 previous_url: /howto/universal-mobile-apps-html5
 slug: overview_hybridapplication
 position: 4
+component: application
 ---
 
 # Application
@@ -42,7 +43,7 @@ The mobile Application consists of a single HTML page with one or more mobile Vi
 
 When a mobile View is initialized, that is, the first time the user visits it, it initializes all Kendo UI web and hybrid mobile widgets, as well as the Kendo UI widgets for data visualization it contains.
 
-For more details on the declarative widget initialization, refer to the [article about setting data attributes]({% slug dataattributes_configuration_installation %}).
+For more details on the declarative widget initialization, refer to the [article about setting data attributes]({% slug mvvm_initialization_kendoui %}).
 
 The example below demonstrates a mobile view with a mobile Button widget.
 
@@ -339,7 +340,7 @@ The example below demonstrates how to switch the places of the header and the fo
 
 ### Stop the Link Highlighting in Windows Phone 8
 
-By default, Windows Phone 8 highlights all links when they are active (hold down). Stopping this behavior requires manually adding a meta tag to your application or web site, as shown in the example below. Note that the adding of the tag through JavaScript is ignored.
+By default, Windows Phone 8 highlights all links when they are active (hold down). Stopping this behavior requires manually adding a meta tag to your application or website, as shown in the example below. Note that the adding of the tag through JavaScript is ignored.
 
 ###### Example
 
@@ -385,5 +386,5 @@ Articles on Application and other Hybrid UI components in Kendo UI:
 * [Overview of the Hybrid UI Components in Kendo UI]({% slug overview_hybridkendoui %})
 * [Performance Tips and Tricks]({% slug performance_hybridkendoui %})
 * [Native Scrolling]({% slug nativescrolling_hybrid_kendoui %})
-
-For how-to examples on the Kendo UI hybrid Application, browse its [**How To** documentation folder]({% slug displa_validation_summary_hybridapplication %}).
+* [How-To Examples]({% slug displa_validation_summary_hybridapplication %})
+* [Knowledge Base Section](/knowledge-base)

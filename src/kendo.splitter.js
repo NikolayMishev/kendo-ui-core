@@ -84,7 +84,10 @@ var __meta__ = { // jshint ignore:line
 
             that.wrapper = that.element;
 
-            isHorizontal = that.options.orientation.toLowerCase() != VERTICAL;
+            if(that.options.orientation){
+                isHorizontal = that.options.orientation.toLowerCase() != VERTICAL;
+            }
+
             that.orientation = isHorizontal ? HORIZONTAL : VERTICAL;
             that._dimension = isHorizontal ? "width" : "height";
             that._keys = {
@@ -206,6 +209,12 @@ var __meta__ = { // jshint ignore:line
                 } else if (resizing) {
                     resizing.move((decrease ? -1 : 1) * that._resizeStep, target);
                 }
+                e.preventDefault();
+            } else if (key === keys.HOME) {
+                resizing.move(-resizing._maxPosition, target);
+                e.preventDefault();
+            } else if (key === keys.END) {
+                resizing.move(resizing._maxPosition, target);
                 e.preventDefault();
             } else if (key === keys.ENTER && resizing) {
                 resizing.end();
@@ -572,9 +581,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         remove: function(pane) {
-            pane = $(pane);
-
             var that = this;
+            pane = that.wrapper.find(pane);
 
             if (pane.length) {
                 kendo.destroy(pane);

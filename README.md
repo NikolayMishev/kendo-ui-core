@@ -24,9 +24,12 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | [Color Picker](http://demos.telerik.com/kendo-ui/colorpicker/index)   | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [ComboBox](http://demos.telerik.com/kendo-ui/combobox/index)          | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [DatePicker](http://demos.telerik.com/kendo-ui/datepicker/index)      | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
+| [DateRangePicker](http://demos.telerik.com/kendo-ui/daterangepicker/index)      | :x: | :white_check_mark: | :white_check_mark:           |
 | [DateTimePicker](http://demos.telerik.com/kendo-ui/datetimepicker/index) | :white_check_mark: | :white_check_mark: | :white_check_mark:        |
 | [DropDownList](http://demos.telerik.com/kendo-ui/dropdownlist/index)  | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
+| [DropDownTree](http://demos.telerik.com/kendo-ui/dropdowntree/index)  | :x: | :white_check_mark: | :white_check_mark:           |
 | [Editor](http://demos.telerik.com/kendo-ui/editor/index)              | :x:  | :white_check_mark: | :white_check_mark:           |
+| [ListBox](http://demos.telerik.com/kendo-ui/listbox/index)              | :white_check_mark:  | :white_check_mark: | :white_check_mark:           |
 | [MaskedTextBox](http://demos.telerik.com/kendo-ui/maskedtextbox/index)| :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [MultiSelect](http://demos.telerik.com/kendo-ui/multiselect/index)    | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [NumericTextBox](http://demos.telerik.com/kendo-ui/numerictextbox/index) | :white_check_mark: | :white_check_mark: | :white_check_mark:        |
@@ -35,6 +38,8 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | [TimePicker](http://demos.telerik.com/kendo-ui/timepicker/index)      | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Upload](http://demos.telerik.com/kendo-ui/upload/index)              | :x:  | :white_check_mark: | :white_check_mark:           |
 | [Validator](http://demos.telerik.com/kendo-ui/validator/index)        | :white_check_mark:  | :white_check_mark: | :white_check_mark:           |
+| **Conversational UI**                |
+| [Chat](http://demos.telerik.com/kendo-ui/chat/index)    | :x: | :white_check_mark: | :white_check_mark:            |
 | **Charts**                |
 | [Area Charts](http://demos.telerik.com/kendo-ui/area-charts/index)    | :x: | :white_check_mark: | :white_check_mark:            |
 | [Bar Charts](http://demos.telerik.com/kendo-ui/bar-charts/index)      | :x: | :white_check_mark: | :white_check_mark:            |
@@ -66,6 +71,7 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | **Scheduling**            |
 | [Calendar](http://demos.telerik.com/kendo-ui/calendar/index)          | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Gantt](http://demos.telerik.com/kendo-ui/gantt/index)                | :x:  | :white_check_mark: | :white_check_mark:           |
+| [MultiViewCalendar](http://demos.telerik.com/kendo-ui/multiviewcalendar/index)                | :x:  | :white_check_mark: | :white_check_mark:           |
 | [Scheduler](http://demos.telerik.com/kendo-ui/scheduler/index)        | :x:  | :white_check_mark: | :white_check_mark:           |
 | **Layout**                |
 | [Notification](http://demos.telerik.com/kendo-ui/notification/index)  | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
@@ -73,6 +79,9 @@ Kendo UI Core is a free and open-source subset of Kendo UI. The following table 
 | [Splitter](http://demos.telerik.com/kendo-ui/splitter/index)          | :white_check_mark:| :white_check_mark: | :white_check_mark:            |
 | [Tooltip](http://demos.telerik.com/kendo-ui/tooltip/index)            | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [Window](http://demos.telerik.com/kendo-ui/window/index)              | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
+| **Media**            |
+| [MediaPlayer](http://demos.telerik.com/kendo-ui/mediaplayer/index)              | :x: | :white_check_mark: | :white_check_mark:           |
+| [ScrollView](http://demos.telerik.com/kendo-ui/scrollview/index)    | :x: | :white_check_mark: | :white_check_mark:           |
 | **Navigation**            |
 | [Button](http://demos.telerik.com/kendo-ui/button/index)              | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
 | [ButtonGroup](http://demos.telerik.com/kendo-ui/buttongroup/index)    | :white_check_mark: | :white_check_mark: | :white_check_mark:           |
@@ -248,8 +257,6 @@ For change logs and release notes, see the [online release notes at Telerik.com]
 
 This project has been released under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html), the text of which is included below. This license applies ONLY to the source of this repository and does not extend to any other Kendo UI distribution or variant, or any other 3rd party libraries used in a repository. For licensing information about Kendo UI, see the [License Agreements page](https://www.kendoui.com/purchase/license-agreement.aspx) at [KendoUI.com](http://www.kendoui.com).
 
-> Copyright © 2014-2016 Telerik
-
 > Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -261,3 +268,7 @@ This project has been released under the [Apache License, version 2.0](http://ww
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+*Copyright © 2018 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.*
+
+*Progress, Telerik, and certain product names used herein are trademarks or registered trademarks of Progress Software Corporation and/or one of its subsidiaries or affiliates in the U.S. and/or other countries.*

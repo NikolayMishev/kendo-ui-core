@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["km-KH"] = {
         name: "km-KH",
         numberFormat: {
@@ -6,17 +6,17 @@
             decimals: 2,
             ",": ",",
             ".": ".",
-            groupSize: [3,0],
+            groupSize: [3],
             percent: {
                 pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
-                groupSize: [3,0],
+                groupSize: [3],
                 symbol: "%"
             },
             currency: {
-                name: "Riel",
+                name: "Cambodian Riel",
                 abbr: "KHR",
                 pattern: ["-n$","n$"],
                 decimals: 2,

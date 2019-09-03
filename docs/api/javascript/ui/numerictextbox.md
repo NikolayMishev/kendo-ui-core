@@ -2,6 +2,8 @@
 title: NumericTextBox
 page_title: Configuration, methods and events of Kendo UI NumericTextBox
 description: Code examples and tips how to configure NumericTextBox widget, use available methods and events.
+res_type: api
+component: numeric-textbox
 ---
 
 # kendo.ui.NumericTextBox
@@ -37,7 +39,7 @@ Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/javas
 
 Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used. If the user enters a number with a greater precision than is currently configured, the widget value will be rounded. For example, if `decimals` is `2` and the user inputs `12.346`, the value will become `12.35`. If the user inputs `12.99`, the value will become `13.00`.
 
-Compare with the [`format`](#configuration-format) property.
+Compare with the [`format`](/api/javascript/ui/numerictextbox#configuration-format) property.
 
 #### Example
 
@@ -61,11 +63,28 @@ Specifies the text of the tooltip on the down arrow.
     });
     </script>
 
+### factor `Number`*(default: "1")*
+
+Specifies the factor by which the value is multiplied. The obtained result is used as edit value. So, if `15` as string is entered in the **NumericTextBox** and the factor value is set to `100` the visual value will be `1500`. On blur the visual value will be divided by `100` thus scaling the widget value to the original proportion.
+
+#### Example
+
+    <input id="numerictextbox" />
+    <script>
+    $("#numerictextbox").kendoNumericTextBox({
+       format: "p0",
+       factor: 100,
+       min: 0,
+       max: 1,
+       step: 0.01
+    });
+    </script>
+
 ### format `String`*(default: "n")*
 
 Specifies the number format used when the widget is not focused. Any [valid number format](/framework/globalization/numberformatting) is allowed.
 
-Compare with the [`decimals`](#configuration-decimals) property.
+Compare with the [`decimals`](/api/javascript/ui/numerictextbox#configuration-decimals) property.
 
 #### Example
 

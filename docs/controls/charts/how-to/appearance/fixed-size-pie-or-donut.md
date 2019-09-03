@@ -10,15 +10,15 @@ slug: howto_fixedsizepiedonut_charts
 
 Normally, the plot area size is determined by the free space left by other Chart elements such as the title, the legend, and others. This means that it is hard to produce Pie or Donut Charts that have the same diameter.
 
-To work around this issue, remove the legend from the normal element flow by setting the [legend position](/api/javascript/dataviz/ui/chart#configuration-legend.position) to `"custom"`.
+To work around this issue, remove the legend from the normal element flow by setting the [legend position](/api/javascript/dataviz/ui/chart/configuration/legend.position) to `"custom"`.
 
-To make room for the legend, set a fixed `plotArea.height` for all charts and position it by using the [`offsetX`/`offsetY`](/api/javascript/dataviz/ui/chart#configuration-legend.offsetX) configuration options.
+To make room for the legend, set a fixed `plotArea.height` for all charts and position it by using the [`offsetX`/`offsetY`](/api/javascript/dataviz/ui/chart/configuration/legend.offsetx) configuration options.
 
-The example below demonstrates how to store and load the axis range. The changes are detected in the [`drag`](/api/javascript/dataviz/ui/chart#events-drag) and [`zoom`](/api/javascript/dataviz/ui/chart#events-zoom) events. The axis range is restored in the [`dataBound` event](/api/javascript/dataviz/ui/chart#events-dataBound).
+The example below demonstrates how to store and load the axis range. The changes are detected in the [`drag`](/api/javascript/dataviz/ui/chart/events/drag) and [`zoom`](/api/javascript/dataviz/ui/chart/events/zoom) events. The axis range is restored in the [`dataBound` event](/api/javascript/dataviz/ui/chart/events/databound).
 
 ###### Example
 
-```html
+```dojo
     <style>
         .k-chart {
             width: 300px;
@@ -109,8 +109,6 @@ The example below demonstrates how to store and load the axis range. The changes
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
 * [How to Aggregate Data in Pie Charts]({% slug howto_aggregatedata_piecharts %})
@@ -122,4 +120,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

@@ -331,6 +331,7 @@ var __meta__ = { // jshint ignore:line
                     preventDragEvent: true,
                     captureUpIfMoved: true,
                     multiTouch: that.options.zoom,
+                    supportDoubleTap: that.options.supportDoubleTap,
                     start: function(e) {
                         dimensions.refresh();
 
@@ -416,6 +417,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         _wheelScroll: function(e) {
+            if (e.ctrlKey) {
+                return;
+            }
+
             if (!this._wheel) {
                 this._wheel = true;
                 this._wheelY = 0;

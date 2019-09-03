@@ -2,6 +2,8 @@
 title: Splitter
 page_title: Configuration, methods and events of Kendo UI Splitter
 description: Step by step guide and code examples for successful configuration of Splitter UI widget, supported methods and events types.
+res_type: api
+component: splitter
 ---
 
 # kendo.ui.Splitter
@@ -729,7 +731,7 @@ The expanding pane of the Splitter.
 
 ### layoutChange
 
-**This event is now obsolete and will be removed in the future. Please use the [`resize`](#events-resize) event instead.**
+**This event is now obsolete and will be removed in the future. Please use the [`resize`](/api/javascript/ui/splitter/events/resize) event instead.**
 
 Fires when the splitter layout has changed
 

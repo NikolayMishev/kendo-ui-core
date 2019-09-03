@@ -44,6 +44,7 @@ var __meta__ = { // jshint ignore:line
         Class = kendo.Class,
         STRING = "string",
         FUNCTION = "function",
+        ASCENDING = "asc",
         CREATE = "create",
         READ = "read",
         UPDATE = "update",
@@ -259,22 +260,24 @@ var __meta__ = { // jshint ignore:line
             return -1;
         },
 
-        forEach: function(callback) {
-            var idx = 0,
-                length = this.length;
+        forEach: function(callback, thisArg) {
+            var idx = 0;
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
-                callback(this[idx], idx, this);
+                callback.call(context, this[idx], idx, this);
             }
         },
 
-        map: function(callback) {
-            var idx = 0,
-                result = [],
-                length = this.length;
+        map: function(callback, thisArg) {
+            var idx = 0;
+            var result = [];
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
-                result[idx] = callback(this[idx], idx, this);
+                result[idx] = callback.call(context, this[idx], idx, this);
             }
 
             return result;
@@ -315,15 +318,16 @@ var __meta__ = { // jshint ignore:line
             return result;
         },
 
-        filter: function(callback) {
-            var idx = 0,
-                result = [],
-                item,
-                length = this.length;
+        filter: function(callback, thisArg) {
+            var idx = 0;
+            var result = [];
+            var item;
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
                 item = this[idx];
-                if (callback(item, idx, this)) {
+                if (callback.call(context, item, idx, this)) {
                     result[result.length] = item;
                 }
             }
@@ -331,27 +335,29 @@ var __meta__ = { // jshint ignore:line
             return result;
         },
 
-        find: function(callback) {
-            var idx = 0,
-                item,
-                length = this.length;
+        find: function(callback, thisArg) {
+            var idx = 0;
+            var item;
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
                 item = this[idx];
-                if (callback(item, idx, this)) {
+                if (callback.call(context, item, idx, this)) {
                     return item;
                 }
             }
         },
 
-        every: function(callback) {
-            var idx = 0,
-                item,
-                length = this.length;
+        every: function(callback, thisArg) {
+            var idx = 0;
+            var item;
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
                 item = this[idx];
-                if (!callback(item, idx, this)) {
+                if (!callback.call(context, item, idx, this)) {
                     return false;
                 }
             }
@@ -359,14 +365,15 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
-        some: function(callback) {
-            var idx = 0,
-                item,
-                length = this.length;
+        some: function(callback, thisArg) {
+            var idx = 0;
+            var item;
+            var length = this.length;
+            var context = thisArg || window;
 
             for (; idx < length; idx++) {
                 item = this[idx];
-                if (callback(item, idx, this)) {
+                if (callback.call(context, item, idx, this)) {
                     return true;
                 }
             }
@@ -394,10 +401,14 @@ var __meta__ = { // jshint ignore:line
     }
 
     var LazyObservableArray = ObservableArray.extend({
-        init: function(data, type) {
+        init: function (data, type, events) {
             Observable.fn.init.call(this);
 
             this.type = type || ObservableObject;
+
+            if (events) {
+                this._events = events;
+            }
 
             for (var idx = 0; idx < data.length; idx++) {
                 this[idx] = data[idx];
@@ -636,21 +647,34 @@ var __meta__ = { // jshint ignore:line
 
     var parsers = {
         "number": function(value) {
+            if (typeof value === STRING && value.toLowerCase() === "null") {
+                return null;
+            }
             return kendo.parseFloat(value);
         },
 
         "date": function(value) {
+            if (typeof value === STRING && value.toLowerCase() === "null") {
+                return null;
+            }
             return kendo.parseDate(value);
         },
 
         "boolean": function(value) {
             if (typeof value === STRING) {
-                return value.toLowerCase() === "true";
+                if (value.toLowerCase() === "null") {
+                    return null;
+                } else {
+                    return value.toLowerCase() === "true";
+                }
             }
             return value != null ? !!value : value;
         },
 
         "string": function(value) {
+            if (typeof value === STRING && value.toLowerCase() === "null") {
+                return null;
+            }
             return value != null ? (value + "") : value;
         },
 
@@ -700,6 +724,7 @@ var __meta__ = { // jshint ignore:line
             ObservableObject.fn.init.call(that, data);
 
             that.dirty = false;
+            that.dirtyFields = {};
 
             if (that.idField) {
                 that.id = that.get(that.idField);
@@ -711,7 +736,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         shouldSerialize: function(field) {
-            return ObservableObject.fn.shouldSerialize.call(this, field) && field !== "uid" && !(this.idField !== "id" && field === "id") && field !== "dirty" && field !== "_accessors";
+            return ObservableObject.fn.shouldSerialize.call(this, field) &&
+                field !== "uid" && !(this.idField !== "id" && field === "id") &&
+                field !== "dirty" &&  field !== "dirtyFields" && field !== "_accessors";
         },
 
         _parse: function(field, value) {
@@ -739,6 +766,7 @@ var __meta__ = { // jshint ignore:line
 
             if (action == "add" || action == "remove") {
                 this.dirty = true;
+                this.dirtyFields[e.field] = true;
             }
         },
 
@@ -756,10 +784,17 @@ var __meta__ = { // jshint ignore:line
 
                 if (!equal(value, that.get(field))) {
                     that.dirty = true;
+                    that.dirtyFields[field] = true;
 
                     if (ObservableObject.fn.set.call(that, field, value, initiator) && !dirty) {
                         that.dirty = dirty;
+
+                        if (!that.dirty) {
+                            that.dirtyFields[field] = false;
+                        }
                     }
+                } else {
+                    that.trigger("equalSet", { field: field, value: value });
                 }
             }
         },
@@ -784,6 +819,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             that.dirty = false;
+            that.dirtyFields = {};
         },
 
         isNew: function() {
@@ -1021,25 +1057,25 @@ var __meta__ = { // jshint ignore:line
         }
 
         function textOp(impl) {
-            return function(a, b, ignore) {
+            return function(a, b, ignore, accentFoldingFiltering) {
                 b += "";
                 if (ignore) {
-                    a = "(" + a + " || '').toLowerCase()";
-                    b = b.toLowerCase();
+                    a = "(" + a + " + '').toString()" + ((accentFoldingFiltering) ? ".toLocaleLowerCase('" + accentFoldingFiltering  +"')" : ".toLowerCase()");
+                    b = ((accentFoldingFiltering) ? b.toLocaleLowerCase(accentFoldingFiltering) : b.toLowerCase());
                 }
                 return impl(a, quote(b), ignore);
             };
         }
 
-        function operator(op, a, b, ignore) {
+        function operator(op, a, b, ignore, accentFoldingFiltering) {
             if (b != null) {
                 if (typeof b === STRING) {
                     var date = dateRegExp.exec(b);
                     if (date) {
                         b = new Date(+date[1]);
                     } else if (ignore) {
-                        b = quote(b.toLowerCase());
-                        a = "((" + a + " || '')+'').toLowerCase()";
+                        b = quote(((accentFoldingFiltering) ? b.toLocaleLowerCase(accentFoldingFiltering) : b.toLowerCase()));
+                        a = "((" + a + " || '')+'')" + ((accentFoldingFiltering) ? ".toLocaleLowerCase('" + accentFoldingFiltering  +"')" : ".toLowerCase()");
                     } else {
                         b = quote(b);
                     }
@@ -1092,11 +1128,11 @@ var __meta__ = { // jshint ignore:line
                 }
                 return quote(value);
             },
-            eq: function(a, b, ignore) {
-                return operator("==", a, b, ignore);
+            eq: function(a, b, ignore, accentFoldingFiltering) {
+                return operator("==", a, b, ignore, accentFoldingFiltering);
             },
-            neq: function(a, b, ignore) {
-                return operator("!=", a, b, ignore);
+            neq: function(a, b, ignore, accentFoldingFiltering) {
+                return operator("!=", a, b, ignore, accentFoldingFiltering);
             },
             gt: function(a, b, ignore) {
                 return operator(">", a, b, ignore);
@@ -1149,6 +1185,12 @@ var __meta__ = { // jshint ignore:line
             },
             isnotnull: function(a) {
                 return "(" + a + " != null)";
+            },
+            isnullorempty: function(a) {
+                return "(" + a + " === null) || (" + a + " === '')";
+            },
+            isnotnullorempty: function(a) {
+                return "(" + a + " !== null) && (" + a + " !== '')";
             }
         };
     })();
@@ -1202,7 +1244,7 @@ var __meta__ = { // jshint ignore:line
                     filter = "__o[" + operatorFunctions.length + "](" + expr + ", " + operators.quote(filter.value) + ")";
                     operatorFunctions.push(operator);
                 } else {
-                    filter = operators[(operator || "eq").toLowerCase()](expr, filter.value, filter.ignoreCase !== undefined? filter.ignoreCase : true);
+                    filter = operators[(operator || "eq").toLowerCase()](expr, filter.value, filter.ignoreCase !== undefined? filter.ignoreCase : true, expression.accentFoldingFiltering);
                 }
             }
 
@@ -1362,11 +1404,41 @@ var __meta__ = { // jshint ignore:line
         return isArray(expressions) ? expressions : [expressions];
     }
 
-    function normalizeGroup(field, dir) {
-        var descriptor = typeof field === STRING ? { field: field, dir: dir } : field,
+    function normalizeGroup(field, dir, compare, skipItemSorting) {
+        var descriptor = typeof field === STRING ? { field: field, dir: dir, compare: compare, skipItemSorting : skipItemSorting } : field,
         descriptors = isArray(descriptor) ? descriptor : (descriptor !== undefined ? [descriptor] : []);
 
-        return map(descriptors, function(d) { return { field: d.field, dir: d.dir || "asc", aggregates: d.aggregates }; });
+        return map(descriptors, function(d) {
+            return {
+                field: d.field,
+                dir: d.dir || "asc",
+                aggregates: d.aggregates,
+                compare: d.compare,
+                skipItemSorting: d.skipItemSorting
+            };
+        });
+    }
+
+    function normalizeGroupWithoutCompare(field, dir, compare) {
+        var descriptors = normalizeGroup(field, dir, compare);
+
+        for (var i = 0; i < descriptors.length; i++) {
+            delete descriptors[i].compare;
+        }
+
+        return descriptors;
+    }
+
+    function anyGroupDescriptorHasCompare(groupDescriptors) {
+        var descriptors = isArray(groupDescriptors) ? groupDescriptors : [groupDescriptors];
+
+        for (var i = 0; i < descriptors.length; i++) {
+            if (descriptors[i] && isFunction(descriptors[i].compare)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     Query.prototype = {
@@ -1385,7 +1457,7 @@ var __meta__ = { // jshint ignore:line
         select: function (selector) {
             return new Query(map(this.data, selector));
         },
-        order: function(selector, dir) {
+        order: function(selector, dir, inPlace) {
             var sort = { dir: dir };
 
             if (selector) {
@@ -1396,15 +1468,19 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            if (inPlace) {
+                return new Query(this.data.sort(Comparer.create(sort)));
+            }
+
             return new Query(this.data.slice(0).sort(Comparer.create(sort)));
         },
-        orderBy: function(selector) {
-            return this.order(selector, "asc");
+        orderBy: function(selector, inPlace) {
+            return this.order(selector, "asc", inPlace);
         },
-        orderByDescending: function(selector) {
-            return this.order(selector, "desc");
+        orderByDescending: function(selector, inPlace) {
+            return this.order(selector, "desc", inPlace);
         },
-        sort: function(field, dir, comparer) {
+        sort: function(field, dir, comparer, inPlace) {
             var idx,
             length,
             descriptors = normalizeSort(field, dir),
@@ -1417,7 +1493,7 @@ var __meta__ = { // jshint ignore:line
                     comparers.push(comparer.create(descriptors[idx]));
                 }
 
-                return this.orderBy({ compare: comparer.combine(comparers) });
+                return this.orderBy({ compare: comparer.combine(comparers) }, inPlace);
             }
 
             return this;
@@ -1490,12 +1566,14 @@ var __meta__ = { // jshint ignore:line
         },
 
         groupBy: function(descriptor) {
+            var that = this;
+
             if (isEmptyObject(descriptor) || !this.data.length) {
                 return new Query([]);
             }
 
             var field = descriptor.field,
-                sorted = this._sortForGrouping(field, descriptor.dir || "asc"),
+                sorted = descriptor.skipItemSorting ? this.data : this._sortForGrouping(field, descriptor.dir || "asc"),
                 accessor = kendo.accessor(field),
                 item,
                 groupValue = accessor.get(sorted[0], field),
@@ -1523,6 +1601,9 @@ var __meta__ = { // jshint ignore:line
                 }
                 group.items.push(item);
             }
+
+            result = that._sortGroups(result, descriptor);
+
             return new Query(result);
         },
 
@@ -1542,7 +1623,18 @@ var __meta__ = { // jshint ignore:line
                 }
                 return data;
             }
+
             return this.sort(field, dir).toArray();
+        },
+
+        _sortGroups: function(groups, descriptor) {
+            var result = groups;
+
+            if (descriptor && isFunction(descriptor.compare)) {
+                result = new Query(result).order({ compare: descriptor.compare }, descriptor.dir || ASCENDING).toArray();
+            }
+
+            return result;
         },
 
         aggregate: function (aggregates) {
@@ -1666,17 +1758,28 @@ var __meta__ = { // jshint ignore:line
         return result;
     }
 
-    Query.process = function(data, options) {
+    Query.normalizeGroup = normalizeGroup;
+    Query.normalizeSort = normalizeSort;
+
+    Query.process = function(data, options, inPlace) {
         options = options || {};
 
+        var group = options.group;
+        var customGroupSort = anyGroupDescriptorHasCompare(normalizeGroup(group || []));
         var query = new Query(data),
-            group = options.group,
-            sort = normalizeGroup(group || []).concat(normalizeSort(options.sort || [])),
+            groupDescriptorsWithoutCompare = normalizeGroupWithoutCompare(group || []),
+            normalizedSort = normalizeSort(options.sort || []),
+            sort = customGroupSort ? normalizedSort : groupDescriptorsWithoutCompare.concat(normalizedSort),
+            groupDescriptorsWithoutSort,
             total,
             filterCallback = options.filterCallback,
             filter = options.filter,
             skip = options.skip,
             take = options.take;
+
+        if (sort && inPlace) {
+            query = query.sort(sort, undefined, undefined, inPlace);
+        }
 
         if (filter) {
             query = query.filter(filter);
@@ -1688,7 +1791,7 @@ var __meta__ = { // jshint ignore:line
             total = query.toArray().length;
         }
 
-        if (sort) {
+        if (sort && !inPlace) {
             query = query.sort(sort);
 
             if (group) {
@@ -1696,12 +1799,28 @@ var __meta__ = { // jshint ignore:line
             }
         }
 
-        if (skip !== undefined && take !== undefined) {
-            query = query.range(skip, take);
-        }
-
-        if (group) {
+        if (customGroupSort) {
             query = query.group(group, data);
+
+            if (skip !== undefined && take !== undefined) {
+                query = new Query(flatGroups(query.toArray())).range(skip, take);
+
+                groupDescriptorsWithoutSort = map(groupDescriptorsWithoutCompare, function(groupDescriptor) {
+                    return extend({}, groupDescriptor, {
+                        skipItemSorting: true
+                    });
+                });
+
+                query = query.group(groupDescriptorsWithoutSort, data);
+            }
+        } else {
+            if (skip !== undefined && take !== undefined) {
+                query = query.range(skip, take);
+            }
+
+            if (group) {
+                query = query.group(group, data);
+            }
         }
 
         return {
@@ -1749,6 +1868,10 @@ var __meta__ = { // jshint ignore:line
             };
 
             parameterMap = options.parameterMap;
+
+            if (options.submit) {
+                that.submit = options.submit;
+            }
 
             if (isFunction(options.push)) {
                 that.push = options.push;
@@ -1949,6 +2072,13 @@ var __meta__ = { // jshint ignore:line
         return function(data) {
             data = originalFunction(data);
 
+            return wrapDataAccessBase(model, converter, getters, originalFieldNames, fieldNames)(data);
+        };
+    }
+
+    function wrapDataAccessBase(model, converter, getters, originalFieldNames, fieldNames) {
+        return function(data) {
+
             if (data && !isEmptyObject(getters)) {
                 if (toString.call(data) !== "[object Array]" && !(data instanceof ObservableArray)) {
                     data = [data];
@@ -1991,7 +2121,8 @@ var __meta__ = { // jshint ignore:line
                     serializeGetters = {},
                     fieldNames = {},
                     shouldSerialize = false,
-                    fieldName;
+                    fieldName,
+                    name;
 
                 model = that.model;
 
@@ -2012,8 +2143,8 @@ var __meta__ = { // jshint ignore:line
                         }
 
                         shouldSerialize = shouldSerialize || (fromName && fromName !== field) || fieldName !== field;
-
-                        getters[field] = getter(fromName || fieldName);
+                        name = fromName || fieldName;
+                        getters[field] = name.indexOf(".") !== -1 ? getter(name, true) : getter(name);
                         serializeGetters[field] = getter(field);
                         originalFieldNames[fromName || fieldName] = field;
                         fieldNames[field] = fromName || fieldName;
@@ -2025,6 +2156,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 that._dataAccessFunction = dataFunction;
+                that._wrapDataAccessBase = wrapDataAccessBase(model, convertRecords, getters, originalFieldNames, fieldNames);
                 that.data = wrapDataAccess(dataFunction, model, convertRecords, getters, originalFieldNames, fieldNames);
                 that.groups = wrapDataAccess(groupsFunction, model, convertGroup, getters, originalFieldNames, fieldNames);
             }
@@ -2046,6 +2178,28 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
+    function fillLastGroup(originalGroup, newGroup) {
+        var currOriginal;
+        var currentNew;
+
+        if (newGroup.items && newGroup.items.length) {
+            for (var i = 0; i < newGroup.items.length; i++) {
+                currOriginal = originalGroup.items[i];
+                currentNew = newGroup.items[i];
+                if (currOriginal && currentNew) {
+                    if (currOriginal.hasSubgroups) {
+                        fillLastGroup(currOriginal, currentNew);
+                    } else if (currOriginal.field && currOriginal.value == currentNew.value) {
+                        currOriginal.items.push.apply(currOriginal.items, currentNew.items);
+                    } else {
+                        originalGroup.items.push.apply(originalGroup.items, [currentNew]);
+                    }
+                } else if (currentNew) {
+                    originalGroup.items.push.apply(originalGroup.items, [currentNew]);
+                }
+            }
+        }
+    }
     function mergeGroups(target, dest, skip, take) {
         var group,
             idx = 0,
@@ -2096,6 +2250,31 @@ var __meta__ = { // jshint ignore:line
         }
     }
 
+    function flatGroups(groups, indexFunction) {
+        var result = [];
+        var groupsLength = (groups || []).length;
+        var group;
+        var items;
+        var indexFn = isFunction(indexFunction) ? indexFunction : function(array, index) {
+            return array[index];
+        };
+
+        for (var groupIndex = 0; groupIndex < groupsLength; groupIndex++) {
+            group = indexFn(groups, groupIndex);
+
+            if (group.hasSubgroups) {
+                result = result.concat(flatGroups(group.items));
+            } else {
+                items = group.items;
+
+                for (var itemIndex = 0; itemIndex < items.length; itemIndex++) {
+                    result.push(indexFn(items, itemIndex));
+                }
+            }
+        }
+        return result;
+    }
+
     function flattenGroups(data) {
         var idx,
             result = [],
@@ -2126,14 +2305,14 @@ var __meta__ = { // jshint ignore:line
                 if (group.hasSubgroups) {
                     wrapGroupItems(group.items, model);
                 } else {
-                    group.items = new LazyObservableArray(group.items, model);
+                    group.items = new LazyObservableArray(group.items, model, group.items._events);
                 }
             }
         }
     }
 
     function eachGroupItems(data, func) {
-        for (var idx = 0, length = data.length; idx < length; idx++) {
+        for (var idx = 0; idx < data.length; idx++) {
             if (data[idx].hasSubgroups) {
                 if (eachGroupItems(data[idx].items, func)) {
                     return true;
@@ -2189,11 +2368,14 @@ var __meta__ = { // jshint ignore:line
     }
 
     function removeModel(data, model) {
-        var idx, length;
+        var length = data.length;
+        var dataItem;
+        var idx;
 
-        for (idx = 0, length = data.length; idx < length; idx++) {
-            var dataItem = data.at(idx);
-            if (dataItem.uid == model.uid) {
+        for (idx = 0; idx < length; idx++) {
+            dataItem = data[idx];
+
+            if (dataItem.uid && dataItem.uid == model.uid) {
                 data.splice(idx, 1);
                 return dataItem;
             }
@@ -2377,7 +2559,8 @@ var __meta__ = { // jshint ignore:line
             serverFiltering: false,
             serverGrouping: false,
             serverAggregates: false,
-            batch: false
+            batch: false,
+            inPlaceSort: false
         },
 
         clone: function() {
@@ -2459,7 +2642,7 @@ var __meta__ = { // jshint ignore:line
         parent: noop,
 
         get: function(id) {
-            var idx, length, data = this._flatData(this._data);
+            var idx, length, data = this._flatData(this._data, this.options.useRanges);
 
             for (idx = 0, length = data.length; idx < length; idx++) {
                 if (data[idx].id == id) {
@@ -2469,7 +2652,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         getByUid: function(id) {
-            var idx, length, data = this._flatData(this._data);
+            return this._getByUid(id, this._data);
+        },
+
+        _getByUid: function(id, dataItems) {
+            var idx, length, data = this._flatData(dataItems, this.options.useRanges);
 
             if (!data) {
                 return;
@@ -2578,10 +2765,20 @@ var __meta__ = { // jshint ignore:line
                 this._data.splice(index, 0, model);
             }
 
+            this._insertModelInRange(index, model);
+
             return model;
         },
 
-        pushCreate: function(items) {
+        pushInsert: function(index, items) {
+            var that = this;
+            var rangeSpan = that._getCurrentRangeSpan();
+
+            if (!items) {
+                items = index;
+                index = 0;
+            }
+
             if (!isArray(items)) {
                 items = [items];
             }
@@ -2594,7 +2791,7 @@ var __meta__ = { // jshint ignore:line
                 for (var idx = 0; idx < items.length; idx ++) {
                     var item = items[idx];
 
-                    var result = this.add(item);
+                    var result = this.insert(index, item);
 
                     pushed.push(result);
 
@@ -2605,6 +2802,12 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     this._pristineData.push(pristine);
+
+                    if (rangeSpan && rangeSpan.length) {
+                        $(rangeSpan).last()[0].pristineData.push(pristine);
+                    }
+
+                    index++;
                 }
             } finally {
                 this.options.autoSync = autoSync;
@@ -2616,6 +2819,10 @@ var __meta__ = { // jshint ignore:line
                     items: pushed
                 });
             }
+        },
+
+        pushCreate: function(items) {
+            this.pushInsert(this._data.length, items);
         },
 
         pushUpdate: function(items) {
@@ -2663,10 +2870,12 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _removeItems: function(items) {
+        _removeItems: function(items, removePristine) {
             if (!isArray(items)) {
                 items = [items];
             }
+
+            var shouldRemovePristine = typeof removePristine !== "undefined" ? removePristine : true;
 
             var destroyed = [];
             var autoSync = this.options.autoSync;
@@ -2689,7 +2898,7 @@ var __meta__ = { // jshint ignore:line
                         }
                     });
 
-                    if (found) {
+                    if (found && shouldRemovePristine) {
                         this._removePristineForModel(model);
                         this._destroyed.pop();
                     }
@@ -2708,6 +2917,7 @@ var __meta__ = { // jshint ignore:line
 
             this._eachItem(that._data, function(items) {
                 result = removeModel(items, model);
+
                 if (result && hasGroups) {
                     if (!result.isNew || !result.isNew()) {
                         that._destroyed.push(result);
@@ -2717,8 +2927,6 @@ var __meta__ = { // jshint ignore:line
             });
 
             this._removeModelFromRanges(model);
-
-            this._updateRangesLength();
 
             return model;
         },
@@ -2731,7 +2939,7 @@ var __meta__ = { // jshint ignore:line
             var idx,
                 length,
                 result = [],
-                data = this._flatData(this._data);
+                data = this._flatData(this._data, this.options.useRanges);
 
             for (idx = 0, length = data.length; idx < length; idx++) {
                 if (data[idx].isNew && data[idx].isNew()) {
@@ -2745,7 +2953,7 @@ var __meta__ = { // jshint ignore:line
             var idx,
                 length,
                 result = [],
-                data = this._flatData(this._data);
+                data = this._flatData(this._data, this.options.useRanges);
 
             for (idx = 0, length = data.length; idx < length; idx++) {
                 if ((data[idx].isNew && !data[idx].isNew()) && data[idx].dirty) {
@@ -2795,6 +3003,8 @@ var __meta__ = { // jshint ignore:line
 
                     that._storeData(true);
 
+                    that._syncEnd();
+
                     that._change({ action: "sync" });
 
                     that.trigger(SYNC);
@@ -2802,11 +3012,15 @@ var __meta__ = { // jshint ignore:line
             } else {
                 that._storeData(true);
 
+                that._syncEnd();
+
                 that._change({ action: "sync" });
             }
 
             return promise;
         },
+
+        _syncEnd: noop,
 
         cancelChanges: function(model) {
             var that = this;
@@ -2822,13 +3036,17 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 that._ranges = [];
-                that._addRange(that._data);
+                that._addRange(that._data, 0);
+
+                that._changesCanceled();
 
                 that._change();
 
                 that._markOfflineUpdatesAsDirty();
             }
         },
+
+        _changesCanceled: noop,
 
         _markOfflineUpdatesAsDirty: function() {
             var that = this;
@@ -2848,7 +3066,7 @@ var __meta__ = { // jshint ignore:line
         hasChanges: function() {
             var idx,
                 length,
-                data = this._flatData(this._data);
+                data = this._flatData(this._data, this.options.useRanges);
 
             if (this._destroyed.length) {
                 return true;
@@ -2900,7 +3118,7 @@ var __meta__ = { // jshint ignore:line
                     models[idx].accept(response[idx]);
 
                     if (type === "create") {
-                        pristine.push(serverGroup ? that._wrapInEmptyGroup(models[idx]) : response[idx]);
+                        pristine.push(serverGroup ? that._wrapInEmptyGroup(models[idx].toJSON()) : response[idx]);
                     } else if (type === "update") {
                         that._updatePristineForModel(models[idx], response[idx]);
                     }
@@ -2939,7 +3157,17 @@ var __meta__ = { // jshint ignore:line
         },
 
         _eachPristineItem: function(callback) {
-            this._eachItem(this._pristineData, callback);
+            var that = this;
+            var options = that.options;
+            var rangeSpan = that._getCurrentRangeSpan();
+
+            that._eachItem(that._pristineData, callback);
+
+            if (options.serverPaging && options.useRanges) {
+                each(rangeSpan, function(i, range) {
+                    that._eachItem(range.pristineData, callback);
+                });
+            }
         },
 
        _eachItem: function(data, callback) {
@@ -2969,6 +3197,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _cancelModel: function(model) {
+            var that = this;
             var pristine = this._pristineForModel(model);
 
             this._eachItem(this._data, function(items) {
@@ -2982,16 +3211,24 @@ var __meta__ = { // jshint ignore:line
                         }
 
                     } else {
+                        that._modelCanceled(model);
+
                         items.splice(idx, 1);
+
+                        that._removeModelFromRanges(model);
                     }
                 }
             });
         },
 
+        _modelCanceled: noop,
+
         _submit: function(promises, data) {
             var that = this;
 
             that.trigger(REQUESTSTART, { type: "submit" });
+
+            that.trigger(PROGRESS);
 
             that.transport.submit(extend({
                 success: function(response, type) {
@@ -3060,6 +3297,8 @@ var __meta__ = { // jshint ignore:line
 
             return $.Deferred(function(deferred) {
                 that.trigger(REQUESTSTART, { type: type });
+
+                that.trigger(PROGRESS);
 
                 that.transport[type].call(that.transport, extend({
                     success: function(response) {
@@ -3146,7 +3385,9 @@ var __meta__ = { // jshint ignore:line
 
         success: function(data) {
             var that = this,
-                options = that.options;
+                options = that.options,
+                items,
+                replaceSubset;
 
             that.trigger(REQUESTEND, { response: data, type: "read" });
 
@@ -3159,17 +3400,24 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 that._total = that.reader.total(data);
+                if (that._pageSize > that._total) {
+                    that._pageSize = that._total;
+                    if (that.options.pageSize && that.options.pageSize > that._pageSize) {
+                        that._pageSize = that.options.pageSize;
+                    }
+                }
 
                 if (that._aggregate && options.serverAggregates) {
                     that._aggregateResult = that._readAggregates(data);
                 }
 
                 data = that._readData(data);
+
                 that._destroyed = [];
             } else {
                 data = that._readData(data);
 
-                var items = [];
+                items = [];
                 var itemIds = {};
                 var model = that.reader.model;
                 var idField = model ? model.idField : "id";
@@ -3198,12 +3446,41 @@ var __meta__ = { // jshint ignore:line
             }
 
             that._pristineTotal = that._total;
+            replaceSubset = that._skip && that._data.length && that._skip < that._data.length;
 
-            that._pristineData = data.slice(0);
+            if (that.options.endless) {
+                if (replaceSubset) {
+                    that._pristineData.splice(that._skip, that._pristineData.length);
+                }
+                items = data.slice(0);
+                for (var j = 0; j < items.length; j++) {
+                    that._pristineData.push(items[j]);
+                }
+            } else {
+                that._pristineData = data.slice(0);
+            }
 
             that._detachObservableParents();
 
-            that._data = that._observe(data);
+            if (that.options.endless) {
+                that._data.unbind(CHANGE, that._changeHandler);
+
+                if (that._isServerGrouped() && that._data[that._data.length - 1].value === data[0].value) {
+                    fillLastGroup(that._data[that._data.length - 1], data[0]);
+                    data.shift();
+                }
+
+                data = that._observe(data);
+                if (replaceSubset) {
+                    that._data.splice(that._skip, that._data.length);
+                }
+                for (var i = 0; i < data.length; i++) {
+                    that._data.push(data[i]);
+                }
+                that._data.bind(CHANGE, that._changeHandler);
+            } else {
+                that._data = that._observe(data);
+            }
 
             that._markOfflineUpdatesAsDirty();
 
@@ -3270,18 +3547,31 @@ var __meta__ = { // jshint ignore:line
                 this.offlineData(state.concat(destroyed));
 
                 if (updatePristine) {
-                    this._pristineData = this._readData(state);
+                    this._pristineData = this.reader.reader ? this.reader.reader._wrapDataAccessBase(state) : this.reader._wrapDataAccessBase(state);
                 }
             }
         },
 
-        _addRange: function(data) {
+        _addRange: function(data, skip) {
             var that = this,
-                start = that._skip || 0,
+                start = typeof(skip) !== "undefined" ? skip : (that._skip || 0),
                 end = start + that._flatData(data, true).length;
 
-            that._ranges.push({ start: start, end: end, data: data, timestamp: new Date().getTime() });
-            that._ranges.sort( function(x, y) { return x.start - y.start; } );
+            that._ranges.push({
+                start: start,
+                end: end,
+                data: data,
+                pristineData: data.toJSON(),
+                timestamp: that._timeStamp()
+            });
+
+            that._sortRanges();
+        },
+
+        _sortRanges: function() {
+            this._ranges.sort(function(x, y) {
+                return x.start - y.start;
+            });
         },
 
         error: function(xhr, status, errorThrown) {
@@ -3399,7 +3689,8 @@ var __meta__ = { // jshint ignore:line
                 wrapGroupItems(data, model);
             }
 
-            if (that._changeHandler && that._data && that._data instanceof ObservableArray) {
+            if (that._changeHandler && that._data && that._data instanceof ObservableArray &&
+                !(that.options.useRanges && that.options.serverPaging)) {
                 that._data.unbind(CHANGE, that._changeHandler);
             } else {
                 that._changeHandler = proxy(that._change, that);
@@ -3486,6 +3777,10 @@ var __meta__ = { // jshint ignore:line
                 if(options.skip === undefined && that._page !== undefined && that._pageSize !== undefined) {
                     options.skip = (that._page - 1) * that._pageSize;
                 }
+
+                if (that.options.useRanges) {
+                    options.skip = that.currentRangeStart();
+                }
             }
 
             if (that.options.serverSorting !== true) {
@@ -3502,16 +3797,23 @@ var __meta__ = { // jshint ignore:line
 
             if (that.options.serverAggregates !== true) {
                 options.aggregate = that._aggregate;
-                that._aggregateResult = that._calculateAggregates(data, options);
+            }
+
+            if (that.options.serverGrouping) {
+                that._clearEmptyGroups(data);
             }
 
             result = that._queryProcess(data, options);
 
+            if (that.options.serverAggregates !== true) {
+                // for performance reasons, calculate aggregates for part of the data only after query process
+                // this is necessary in the TreeList when paging
+                that._aggregateResult = that._calculateAggregates(result.dataToAggregate || data, options);
+            }
+
             that.view(result.data);
 
-            if (result.total !== undefined && !that.options.serverFiltering) {
-                that._total = result.total;
-            }
+            that._setFilterTotal(result.total, false);
 
             e = e || {};
 
@@ -3520,8 +3822,26 @@ var __meta__ = { // jshint ignore:line
             that.trigger(CHANGE, e);
         },
 
+        _clearEmptyGroups: function(data) {
+            for (var idx = data.length - 1; idx >=0; idx--) {
+                var group = data[idx];
+                if (group.hasSubgroups) {
+                    this._clearEmptyGroups(group.items);
+                } else {
+                    if (group.items && !group.items.length) {
+                        splice.apply(group.parent(), [idx, 1]);
+                    }
+                }
+            }
+        },
+
         _queryProcess: function(data, options) {
-            return Query.process(data, options);
+            if (this.options.inPlaceSort) {
+                return Query.process(data, options, this.options.inPlaceSort);
+            }
+            else {
+                return Query.process(data, options);
+            }
         },
 
         _mergeState: function(options) {
@@ -3552,7 +3872,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (options.filter) {
-                    that._filter = options.filter = normalizeFilter(options.filter);
+                    that._filter = options.filter = (that.options.accentFoldingFiltering && !$.isEmptyObject(options.filter)) ? $.extend({}, normalizeFilter(options.filter), { accentFoldingFiltering: that.options.accentFoldingFiltering}) : normalizeFilter(options.filter);
                 }
 
                 if (options.group) {
@@ -3570,6 +3890,17 @@ var __meta__ = { // jshint ignore:line
             var remote = this.options.serverSorting || this.options.serverPaging || this.options.serverFiltering || this.options.serverGrouping || this.options.serverAggregates;
 
             if (remote || ((this._data === undefined || this._data.length === 0) && !this._destroyed.length)) {
+                if (this.options.endless) {
+                    var moreItemsCount = options.pageSize - this.pageSize();
+                    if (moreItemsCount > 0) {
+                        moreItemsCount = this.pageSize();
+                        options.page = options.pageSize / moreItemsCount;
+                        options.pageSize = moreItemsCount;
+                    } else {
+                        options.page = 1;
+                        this.options.endless = false;
+                    }
+                }
                 return this.read(this._mergeState(options));
             }
 
@@ -3579,21 +3910,27 @@ var __meta__ = { // jshint ignore:line
 
                 result = this._queryProcess(this._data, this._mergeState(options));
 
-                if (!this.options.serverFiltering) {
-                    if (result.total !== undefined) {
-                        this._total = result.total;
-                    } else {
-                        this._total = this._data.length;
-                    }
-                }
+                this._setFilterTotal(result.total, true);
 
-                this._aggregateResult = this._calculateAggregates(this._data, options);
+                this._aggregateResult = this._calculateAggregates(result.dataToAggregate || this._data, options);
                 this.view(result.data);
                 this.trigger(REQUESTEND, { type: "read" });
                 this.trigger(CHANGE, { items: result.data });
             }
 
             return $.Deferred().resolve(isPrevented).promise();
+        },
+
+        _setFilterTotal: function(filterTotal, setDefaultValue) {
+            var that = this;
+
+            if (!that.options.serverFiltering) {
+                if (filterTotal !== undefined) {
+                    that._total = filterTotal;
+                } else if (setDefaultValue) {
+                    that._total = that._data.length;
+                }
+            }
         },
 
         fetch: function(callback) {
@@ -3604,7 +3941,7 @@ var __meta__ = { // jshint ignore:line
                 }
             };
 
-            return this._query().then(fn);
+            return this._query().done(fn);
         },
 
         _query: function(options) {
@@ -3667,7 +4004,7 @@ var __meta__ = { // jshint ignore:line
 
             if(val !== undefined) {
                 val = math.max(math.min(math.max(val, 1), that.totalPages()), 1);
-                that._query({ page: val });
+                that._query(that._pageableQueryOptions({ page: val }));
                 return;
             }
             skip = that.skip();
@@ -3678,8 +4015,8 @@ var __meta__ = { // jshint ignore:line
         pageSize: function(val) {
             var that = this;
 
-            if(val !== undefined) {
-                that._query({ pageSize: val, page: 1 });
+            if (val !== undefined) {
+                that._query(that._pageableQueryOptions({ pageSize: val, page: 1 }));
                 return;
             }
 
@@ -3763,6 +4100,10 @@ var __meta__ = { // jshint ignore:line
             return result;
         },
 
+        _pageableQueryOptions: function(options) {
+            return options;
+        },
+
         _wrapInEmptyGroup: function(model) {
             var groups = this.group(),
                 parent,
@@ -3773,7 +4114,7 @@ var __meta__ = { // jshint ignore:line
             for (idx = groups.length-1, length = 0; idx >= length; idx--) {
                 group = groups[idx];
                 parent = {
-                    value: model.get(group.field),
+                    value: model.get ? model.get(group.field) : model[group.field],
                     field: group.field,
                     items: parent ? [parent] : [model],
                     hasSubgroups: !!parent,
@@ -3820,11 +4161,12 @@ var __meta__ = { // jshint ignore:line
             return new Date().getTime();
         },
 
-        range: function(skip, take) {
+        range: function(skip, take, callback) {
             this._currentRequestTimeStamp = this._timeStamp();
             this._skipRequestsInProgress = true;
 
             skip = math.min(skip || 0, this.total());
+            callback = isFunction(callback) ? callback : noop;
 
             var that = this,
                 pageSkip = math.max(math.floor(skip / take), 0) * take,
@@ -3833,41 +4175,9 @@ var __meta__ = { // jshint ignore:line
 
             data = that._findRange(skip, math.min(skip + take, that.total()));
 
-            if (data.length) {
-
-                that._pending = undefined;
-
-                that._skip = skip > that.skip() ? math.min(size, (that.totalPages() - 1) * that.take()) : pageSkip;
-
-                that._currentRangeStart = skip;
-
-                that._take = take;
-
-                var paging = that.options.serverPaging;
-                var sorting = that.options.serverSorting;
-                var filtering = that.options.serverFiltering;
-                var aggregates = that.options.serverAggregates;
-                try {
-                    that.options.serverPaging = true;
-                    if (!that._isServerGrouped() && !(that.group() && that.group().length)) {
-                        that.options.serverSorting = true;
-                    }
-                    that.options.serverFiltering = true;
-                    that.options.serverPaging = true;
-                    that.options.serverAggregates = true;
-
-                    if (paging) {
-                        that._detachObservableParents();
-                        that._data = data = that._observe(data);
-                    }
-                    that._process(data);
-                } finally {
-                    that.options.serverPaging = paging;
-                    that.options.serverSorting = sorting;
-                    that.options.serverFiltering = filtering;
-                    that.options.serverAggregates = aggregates;
-                }
-
+            if (data.length || that.total() === 0) {
+                that._processRangeData(data, skip, take, pageSkip, size);
+                callback();
                 return;
             }
 
@@ -3876,15 +4186,15 @@ var __meta__ = { // jshint ignore:line
                     that.prefetch(pageSkip, take, function() {
                         if (skip > pageSkip && size < that.total() && !that._rangeExists(size, math.min(size + take, that.total()))) {
                             that.prefetch(size, take, function() {
-                                that.range(skip, take);
+                                that.range(skip, take, callback );
                             });
                         } else {
-                            that.range(skip, take);
+                            that.range(skip, take, callback);
                         }
                     });
                 } else if (pageSkip < skip) {
                     that.prefetch(size, take, function() {
-                        that.range(skip, take);
+                        that.range(skip, take, callback );
                     });
                 }
             }
@@ -3922,8 +4232,12 @@ var __meta__ = { // jshint ignore:line
                             rangeEnd = range.end;
 
                             if (!remote) {
-                                var sort = normalizeGroup(that.group() || []).concat(normalizeSort(that.sort() || []));
-                                processed = that._queryProcess(range.data, { sort: sort, filter: that.filter() });
+                                if (options.inPlaceSort) {
+                                    processed = that._queryProcess(range.data, { filter: that.filter() });
+                                } else {
+                                    var sort = normalizeGroupWithoutCompare(that.group() || []).concat(normalizeSort(that.sort() || []));
+                                    processed = that._queryProcess(range.data, { sort: sort, filter: that.filter() });
+                                }
                                 flatData = rangeData = processed.data;
 
                                 if (processed.total !== undefined) {
@@ -3969,6 +4283,43 @@ var __meta__ = { // jshint ignore:line
             return data.concat(range.slice(skip, take));
         },
 
+        _processRangeData: function(data, skip, take, pageSkip, size) {
+            var that = this;
+
+            that._pending = undefined;
+
+            that._skip = skip > that.skip() ? math.min(size, (that.totalPages() - 1) * that.take()) : pageSkip;
+
+            that._currentRangeStart = skip;
+
+            that._take = take;
+
+            var paging = that.options.serverPaging;
+            var sorting = that.options.serverSorting;
+            var filtering = that.options.serverFiltering;
+            var aggregates = that.options.serverAggregates;
+            try {
+                that.options.serverPaging = true;
+                if (!that._isServerGrouped() && !(that.group() && that.group().length)) {
+                    that.options.serverSorting = true;
+                }
+                that.options.serverFiltering = true;
+                that.options.serverPaging = true;
+                that.options.serverAggregates = true;
+
+                if (paging) {
+                    that._detachObservableParents();
+                    that._data = data = that._observe(data);
+                }
+                that._process(data);
+            } finally {
+                that.options.serverPaging = paging;
+                that.options.serverSorting = sorting;
+                that.options.serverFiltering = filtering;
+                that.options.serverAggregates = aggregates;
+            }
+        },
+
         skip: function() {
             var that = this;
 
@@ -4006,22 +4357,25 @@ var __meta__ = { // jshint ignore:line
                 temp = that._readData(data);
 
                 if (temp.length) {
-
                     for (idx = 0, length = that._ranges.length; idx < length; idx++) {
                         if (that._ranges[idx].start === skip) {
                             found = true;
                             range = that._ranges[idx];
+
+                            range.pristineData = temp;
+                            range.data = that._observe(temp);
+                            range.end = range.start + that._flatData(range.data, true).length;
+                            that._sortRanges();
+
                             break;
                         }
                     }
+
                     if (!found) {
-                        that._ranges.push(range);
+                        that._addRange(that._observe(temp), skip);
                     }
                 }
 
-                range.data = that._observe(temp);
-                range.end = range.start + that._flatData(range.data, true).length;
-                that._ranges.sort( function(x, y) { return x.start - y.start; } );
                 that._total = that.reader.total(data);
 
                 if (force || (timestamp >= that._currentRequestTimeStamp || !that._skipRequestsInProgress)) {
@@ -4109,42 +4463,108 @@ var __meta__ = { // jshint ignore:line
                     return true;
                 }
             }
+
             return false;
         },
 
+        _getCurrentRangeSpan: function() {
+            var that = this;
+            var ranges = that._ranges;
+            var start = that.currentRangeStart();
+            var end = start + (that.take() || 0);
+            var rangeSpan = [];
+            var range;
+            var idx;
+            var length = ranges.length;
+
+            for (idx = 0; idx < length; idx++) {
+                range = ranges[idx];
+
+                if ((range.start <= start && range.end >= start) || (range.start >= start && range.start <= end)) {
+                    rangeSpan.push(range);
+                }
+            }
+
+            return rangeSpan;
+        },
+
         _removeModelFromRanges: function(model) {
-            var result,
-                found,
-                range;
+            var that = this;
+            var range;
 
             for (var idx = 0, length = this._ranges.length; idx < length; idx++) {
                 range = this._ranges[idx];
 
-                this._eachItem(range.data, function(items) {
-                    result = removeModel(items, model);
-                    if (result) {
-                        found = true;
-                    }
-                });
+                that._removeModelFromRange(range, model);
+            }
 
-                if (found) {
+            that._updateRangesLength();
+        },
+
+        _removeModelFromRange: function(range, model) {
+            this._eachItem(range.data, function(data) {
+                for (var idx = 0; idx < data.length; idx++) {
+                    var dataItem = data[idx];
+
+                    if (dataItem.uid && dataItem.uid == model.uid) {
+                        [].splice.call(data, idx, 1);
+                        break;
+                    }
+                }
+            });
+        },
+
+        _insertModelInRange: function(index, model) {
+            var that = this;
+            var ranges = that._ranges || [];
+            var rangesLength = ranges.length;
+            var range;
+            var i;
+
+            for (i = 0; i < rangesLength; i++) {
+                range = ranges[i];
+
+                if (range.start <= index && range.end >= index) {
+                    if (!that._getByUid(model.uid, range.data)) {
+                        if (that._isServerGrouped()) {
+                            range.data.splice(index, 0, that._wrapInEmptyGroup(model));
+                        } else {
+                            range.data.splice(index, 0, model);
+                        }
+                    }
+
                     break;
                 }
             }
+
+            that._updateRangesLength();
         },
 
         _updateRangesLength: function() {
-            var startOffset = 0,
-                range,
-                rangeLength;
+            var that = this;
+            var ranges = that._ranges || [];
+            var rangesLength = ranges.length;
+            var mismatchFound = false;
+            var mismatchLength = 0;
+            var lengthDifference = 0;
+            var range;
+            var i;
 
-            for (var idx = 0, length = this._ranges.length; idx < length; idx++) {
-                range = this._ranges[idx];
-                range.start = range.start - startOffset;
+            for (i = 0; i < rangesLength; i++) {
+                range = ranges[i];
+                lengthDifference = that._flatData(range.data, true).length - math.abs(range.end - range.start);
 
-                rangeLength = this._flatData(range.data, true).length;
-                startOffset = range.end - rangeLength;
-                range.end = range.start + rangeLength;
+                if (!mismatchFound && lengthDifference !== 0) {
+                    mismatchFound = true;
+                    mismatchLength = lengthDifference;
+                    range.end += mismatchLength;
+                    continue;
+                }
+
+                if (mismatchFound) {
+                    range.start += mismatchLength;
+                    range.end += mismatchLength;
+                }
             }
         }
     });
@@ -4358,7 +4778,13 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (isFunction(hasChildren)) {
-                that.hasChildren = !!hasChildren.call(that, that);
+                var hasChildrenObject = hasChildren.call(that, that);
+
+                if(hasChildrenObject && hasChildrenObject.length === 0){
+                    that.hasChildren = false;
+                } else{
+                    that.hasChildren = !!hasChildrenObject;
+                }
             }
 
             that._childrenOptions = childrenOptions;
@@ -4463,6 +4889,10 @@ var __meta__ = { // jshint ignore:line
 
                 children.one(CHANGE, proxy(this._childrenLoaded, this));
 
+                if(this._matchFilter){
+                    options.filter = { field: '_matchFilter', operator: 'eq', value: true };
+                }
+
                 promise = children[method](options);
             } else {
                 this.loaded(true);
@@ -4513,6 +4943,11 @@ var __meta__ = { // jshint ignore:line
                 children: options
             });
 
+            if(options.filter && !options.serverFiltering){
+                this._hierarchicalFilter = options.filter;
+                options.filter = null;
+            }
+
             DataSource.fn.init.call(this, extend(true, {}, { schema: { modelBase: node, model: node } }, options));
 
             this._attachBubbleHandlers();
@@ -4524,6 +4959,22 @@ var __meta__ = { // jshint ignore:line
             that._data.bind(ERROR, function(e) {
                 that.trigger(ERROR, e);
             });
+        },
+
+        read: function(data) {
+            var result = DataSource.fn.read.call(this, data);
+
+            if(this._hierarchicalFilter){
+                if(this._data && this._data.length > 0){
+                    this.filter(this._hierarchicalFilter);
+                }else{
+                    this.options.filter = this._hierarchicalFilter;
+                    this._filter = normalizeFilter(this.options.filter);
+                    this._hierarchicalFilter = null;
+                }
+            }
+
+            return result;
         },
 
         remove: function(node){
@@ -4557,6 +5008,74 @@ var __meta__ = { // jshint ignore:line
             }
 
             return DataSource.fn.insert.call(this, index, model);
+        },
+
+        filter: function(val) {
+            if (val === undefined) {
+                 return this._filter;
+            }
+
+            if(!this.options.serverFiltering && this._markHierarchicalQuery(val)){
+                val = { logic: "or", filters: [val, {field:'_matchFilter', operator: 'equals', value: true }]};
+            }
+
+            this.trigger("reset");
+            this._query({ filter: val, page: 1 });
+        },
+
+        _markHierarchicalQuery: function(expressions){
+            var compiled;
+            var predicate;
+            var fields;
+            var operators;
+            var filter;
+            var accentFoldingFiltering = this.options.accentFoldingFiltering;
+
+            expressions = accentFoldingFiltering ? $.extend({}, normalizeFilter(expressions), { accentFoldingFiltering: accentFoldingFiltering}) : normalizeFilter(expressions);
+
+            if (!expressions || expressions.filters.length === 0) {
+                this._updateHierarchicalFilter(function(){return true;});
+                return false;
+            }
+
+            compiled = Query.filterExpr(expressions);
+            fields = compiled.fields;
+            operators = compiled.operators;
+
+            predicate = filter = new Function("d, __f, __o", "return " + compiled.expression);
+
+            if (fields.length || operators.length) {
+                filter = function(d) {
+                    return predicate(d, fields, operators);
+                };
+            }
+
+            this._updateHierarchicalFilter(filter);
+            return true;
+        },
+
+         _updateHierarchicalFilter: function(filter){
+            var current;
+            var data = this._data;
+            var result = false;
+
+            for (var idx = 0; idx < data.length; idx++) {
+                 current = data[idx];
+
+                 if(current.hasChildren){
+                     current._matchFilter = current.children._updateHierarchicalFilter(filter);
+                    if(!current._matchFilter){
+                        current._matchFilter = filter(current);
+                    }
+                }else{
+                    current._matchFilter = filter(current);
+                }
+
+                if(current._matchFilter){
+                    result = true;
+                }
+            }
+            return result;
         },
 
         _find: function(method, value) {

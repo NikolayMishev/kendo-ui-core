@@ -2,7 +2,7 @@
 title: Bind Charts to Spreadsheet Data
 page_title: Bind Charts to Spreadsheet Data | Kendo UI Charts
 description: "Learn how to bind a Kendo UI Chart to the data of a Kendo UI Spreadsheet widget."
-previous_url: /controls/data-management/spreadsheet/how-to/bind-chart-to-range
+previous_url: /controls/charts/how-to/bind-chart-to-spreadsheet-data
 slug: howto_bindcharttospreadsheetdata_charts
 ---
 
@@ -13,8 +13,6 @@ Your project might require you to extract Kendo UI Spreadsheet data and populate
 To see the example on how to handle the scenario, refer to [this how-to article]({% slug howto_bindcharttosheet_spreadsheet_widget %}).
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Charts:
 
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
@@ -28,4 +26,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on the Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on the Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

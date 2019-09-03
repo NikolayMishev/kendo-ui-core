@@ -9,19 +9,16 @@ position: 1
 
 # Hybrid TabStrip HtmlHelper Overview
 
-The hybrid TabStrip HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI TabStrip](http://demos.telerik.com/kendo-ui/m/index#mobile-tabstrip/index) widget. It allows you to configure the hybrid Kendo UI TabStrip from server-side code.
+The hybrid TabStrip HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI TabStrip](http://demos.telerik.com/kendo-ui/m/index#mobile-tabstrip/index) widget.
 
-## Getting Started
+It allows you to configure the hybrid Kendo UI TabStrip from server-side code.
 
-### Configuration
+## Configuration
 
 Below are listed the steps for you to follow when configuring the hybrid Kendo UI TabStrip for ASP.NET MVC.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
@@ -30,35 +27,31 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
             return View();
         }
 
-**Step 3** Add a Kendo UI TabStrip to the `Index` view. Like most hybrid Kendo UI widgets, the TabStrip must be initialized within the hybrid View content.
+1. Add a Kendo UI TabStrip to the `Index` view. Like most hybrid Kendo UI widgets, the TabStrip must be initialized within the hybrid View content.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <% Html.Kendo().MobileView()
-                .Name("tabstrip-view")
-                .Title("Inbox")
-                .Footer(() =>
-                {
-                    %>
+            .Name("tabstrip-view")
+            .Title("Inbox")
+            .Footer(() =>
+            {
+                %>
 
-                    <%: Html.Kendo().MobileTabStrip()
-                            .Items(items =>
-                            {
-                                items.Add().Icon("contacts").Text("Profile");
-                                items.Add().Icon("history").Text("Sales");
-                                items.Add().Icon("favorites").Text("Rating");
-                                items.Add().Icon("settings").Text("Settings");
-                            })
-                    %>
-                    <%
-                })
-                .Render();
+                <%: Html.Kendo().MobileTabStrip()
+                    .Items(items =>
+                    {
+                        items.Add().Icon("contacts").Text("Profile");
+                        items.Add().Icon("history").Text("Sales");
+                        items.Add().Icon("favorites").Text("Rating");
+                        items.Add().Icon("settings").Text("Settings");
+                    })
+                %>
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileView()
             .Name("tabstrip-view")
             .Title("Inbox")
@@ -77,63 +70,33 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
 
             </text>)
         )
-```
+    ```
 
-**Step 4** Initialize the mobile application.
+1. Initialize the mobile application.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileApplication()
-                .ServerNavigation(true)
+            .ServerNavigation(true)
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 5** Build and run the application.
+1. Build and run the application.
 
 ## Event Handling
 
-You can subscribe to all hybrid TabStrip [events](../../../../kendo-ui/api/javascript/mobile/ui/tabstrip#events).
+You can subscribe to all hybrid TabStrip [events](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/tabstrip#events).
 
 ### By Handler Name
 
-The examples below demonstrates how to subscribe to events by a handler name.
+The following example demonstrates how to subscribe to events by a handler name.
 
-###### Example
-
-```tab-ASPX
-
-        <%: Html.Kendo().MobileTabStrip()
-                .Name("tabstrip")
-                .Items(items =>
-                {
-                    items.Add().Icon("contacts").Text("Profile");
-                    items.Add().Icon("history").Text("Sales");
-                    items.Add().Icon("favorites").Text("Rating");
-                    items.Add().Icon("settings").Text("Settings");
-                })
-                .Events(events => events
-                    .Select("onSelect")
-                )
-
-        %>
-
-        <script>
-        function onSelect() {
-            //Handle the select event.
-        }
-        </script>
-```
-```tab-Razor
-
-        @(Html.Kendo().MobileTabStrip()
+```ASPX
+    <%: Html.Kendo().MobileTabStrip()
             .Name("tabstrip")
             .Items(items =>
             {
@@ -145,45 +108,62 @@ The examples below demonstrates how to subscribe to events by a handler name.
             .Events(events => events
                 .Select("onSelect")
             )
-        )
+    %>
 
-        <script>
+    <script>
         function onSelect() {
-            //Handle the select event.
+            // Handle the select event.
         }
-        </script>
+    </script>
+```
+```Razor
+    @(Html.Kendo().MobileTabStrip()
+        .Name("tabstrip")
+        .Items(items =>
+        {
+            items.Add().Icon("contacts").Text("Profile");
+            items.Add().Icon("history").Text("Sales");
+            items.Add().Icon("favorites").Text("Rating");
+            items.Add().Icon("settings").Text("Settings");
+        })
+        .Events(events => events
+            .Select("onSelect")
+        )
+    )
+
+    <script>
+        function onSelect() {
+            // Handle the select event.
+        }
+    </script>
 ```
 
 ## Reference
 
 ### Instances
 
-You can reference a hybrid TabStrip instance by using the [jQuery.data()](http://api.jquery.com/jQuery.data/) method and the value specified via the `Name()` method. Once a reference is established, use the [hybrid TabStrip API](../../../../kendo-ui/api/javascript/mobile/ui/tabstrip#methods) to control its behavior.
+You can reference a hybrid TabStrip instance by using the [jQuery.data()](http://api.jquery.com/jQuery.data/) method and the value specified through the `Name()` method. Once a reference is established, use the [hybrid TabStrip API](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/tabstrip#methods) to control its behavior.
 
-###### Example
-
-        @(Html.Kendo().MobileTabStrip()
-            .Name("tabstrip")
-            .Items(items =>
-            {
-                items.Add().Icon("contacts").Text("Profile");
-                items.Add().Icon("history").Text("Sales");
-                items.Add().Icon("favorites").Text("Rating");
-                items.Add().Icon("settings").Text("Settings");
-            })
-        )
-        <script>
+    @(Html.Kendo().MobileTabStrip()
+        .Name("tabstrip")
+        .Items(items =>
+        {
+            items.Add().Icon("contacts").Text("Profile");
+            items.Add().Icon("history").Text("Sales");
+            items.Add().Icon("favorites").Text("Rating");
+            items.Add().Icon("settings").Text("Settings");
+        })
+    )
+    <script>
         $(function() {
-            //Notice that the Name() of the TabStrip is used to get its client-side instance.
+            // The Name() of the TabStrip is used to get its client-side instance.
             var tabstrip = $("#tabstrip").data("kendoMobileTabStrip");
         });
-        </script>
+    </script>
 
 ## See Also
 
-Other articles on Telerik UI for ASP.NET MVC and on the TabStrip:
-
-* [ASP.NET MVC API Reference: TabStripBuilder](/api/Kendo.Mvc.UI.Fluent/MobileTabStripBuilder)
+* [Telerik UI for ASP.NET MVC API Reference: TabStripBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/MobileTabStripBuilder)
 * [Overview of the Hybrid UI TabStrip Widget](http://docs.telerik.com/kendo-ui/controls/hybrid/tabstrip/tabstrip)
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})

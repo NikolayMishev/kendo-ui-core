@@ -13,33 +13,33 @@ This article demonstrates the ASP.NET MVC server-side API for the Kendo UI DateT
 
 ### Min Date
 
-```tab-Previous
+```Previous
 
     Html.Telerik().Calendar().Name("Calendar").MinDate(DateTime.Now)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().Calendar().Name("Calendar").Min(DateTime.Now)
 ```
 
 ### Max Date
 
-```tab-Previous
+```Previous
 
     Html.Telerik().Calendar().Name("Calendar").MaxDate(DateTime.Now)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().Calendar().Name("Calendar").Max(DateTime.Now)
 ```
 
 ### Footer
 
-```tab-Previous
+```Previous
 
     Html.Telerik().Calendar().Name("Calendar").TodayButton(“d”)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().Calendar().Name("Calendar").Footer(“#= kendo.toString(data, ‘MM/dd/yyyy’)”)
 ```
@@ -58,12 +58,12 @@ None of the widgets features the `OnLoad` event anymore. Use the `$(document).re
 
 ### Disable
 
-```tab-Previous
+```Previous
 
     var datePicker = $("#DatePicker").data("tDateTimePicker");
     datePicker.disable();
 ```
-```tab-Current
+```Current
 
     var datePicker = $("#datepicker").data("kendoDateTimePicker");
     datePicker.enable(false);
@@ -71,10 +71,8 @@ None of the widgets features the `OnLoad` event anymore. Use the `$(document).re
 
 ## See Also
 
-Other articles on migrating from Telerik Extensions:
-
 * [Migrate the AutoComplete]({% slug autocomplete_migrationextensions_aspnetmvc %})
 * [Migrate the Calendar]({% slug calendar_migrationextensions_aspnetmvc %})
 * [Migrate the Chart]({% slug chart_migrationextensions_aspnetmvc %})
 
-To see the articles on migrating Kendo UI controls from Telerik Extensions, browse [this section]({% slug combobox_migrationextensions_aspnetmvc %}).
+To see the articles on migrating Kendo UI controls from Telerik Extensions, browse the [**Widgets** folder]({% slug autocomplete_migrationextensions_aspnetmvc %}).

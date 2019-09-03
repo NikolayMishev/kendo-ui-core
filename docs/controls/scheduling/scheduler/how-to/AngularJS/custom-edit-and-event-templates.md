@@ -3,15 +3,16 @@ title: Customize Edit and Events Templates
 page_title: Customize Edit and Events Templates | Kendo UI Scheduler
 description: "Learn how to create and use custom templates for the events and edit window of the Kendo UI Scheduler widget in AngularJS."
 slug: howto_customize_editand_events_templates_angularjs_scheduler
+position: 1
 ---
 
 # Customize Edit and Events Templates
 
-The example below demonstrates how to create and use custom templates for the events and edit window of the Kendo UI Scheduler widget in AngularJS.
+The following example demonstrates how to create custom templates for the **Events** and **Edit** windows of the Scheduler in AngularJS.
 
 ###### Example
 
-```html
+```dojo
 <div id="example" ng-app="KendoDemos">
     <div ng-controller="MyCtrl">
         <div kendo-scheduler k-options="schedulerOptions">
@@ -44,19 +45,19 @@ The example below demonstrates how to create and use custom templates for the ev
                 batch: true,
                 transport: {
                     read: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                        url: "https://demos.telerik.com/kendo-ui/service/tasks",
                         dataType: "jsonp"
                     },
                     update: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                        url: "https://demos.telerik.com/kendo-ui/service/tasks/update",
                         dataType: "jsonp"
                     },
                     create: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                        url: "https://demos.telerik.com/kendo-ui/service/tasks/create",
                         dataType: "jsonp"
                     },
                     destroy: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                        url: "https://demos.telerik.com/kendo-ui/service/tasks/destroy",
                         dataType: "jsonp"
                     },
                     parameterMap: function(options, operation) {
@@ -109,7 +110,7 @@ The example below demonstrates how to create and use custom templates for the ev
   <script id="customEditorTemplate" type="text/x-kendo-template">
     <div class="k-edit-label"><label for="title">Title</label></div>
     <div data-container-for="title" class="k-edit-field">
-        <input type="text" class="k-input k-textbox" name="title" required="required" data-bind="value:title">
+        <input type="text" class="k-textbox" name="title" required="required" data-bind="value:title">
       </div>
     <div class="k-edit-label">
         <label for="start">Start</label>
@@ -199,13 +200,8 @@ The example below demonstrates how to create and use custom templates for the ev
 
 ## See Also
 
-Other how-to examples on the Kendo UI Scheduler in AngularJS:
-
 * [How to Create and Set ObservableArray Events]({% slug howto_createand_set_observablearray_events_angularjs_scheduler %})
 * [How to Show Тooltip on hover]({% slug howto_show_tooltipon_hover_angularjs_scheduler %})
-
-Other articles and how-to examples on the Kendo UI Scheduler:
-
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [How to Add Events Programmatically]({% slug howto_add_events_programatically_scheduler %})
 * [How to Calculate Scheduler Height Dynamically on Mobile]({% slug howto_calculate_scheduler_height_dunamically_onmobile_scheduler %})
@@ -216,4 +212,4 @@ Other articles and how-to examples on the Kendo UI Scheduler:
 * [How to Hide Edit Buttons]({% slug howto_hidethe_editbutons_scheduler %})
 * [How to Nest Editors inside Event Templates]({% slug howto_nest_editorsinside_event_templates_scheduler %})
 
-For more runnable examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_add_controlsto_custom_event_editor_scheduler %}).
+For more runnable examples on the Kendo UI Scheduler, browse its **How To** documentation folder.

@@ -2,6 +2,8 @@
 title: Validator
 page_title: Validator configuration and methods | Kendo UI Framework
 description: How to configure the Validator in Kendo UI Framework, get error messages and ensure the validation of the input elements in supported methods.
+res_type: api
+component: validation
 ---
 
 # kendo.ui.Validator
@@ -10,7 +12,7 @@ description: How to configure the Validator in Kendo UI Framework, get error mes
 
 ### errorTemplate `String`
 
-The [template](/api/javascript/kendo#methods-template) which renders the validation message.
+The [template](/api/javascript/kendo/methods/template) which renders the validation message.
 
 > The `errorTemplate` content must be enclosed in a single DOM element parent. There are no restrictions with regard to nested child elements.
 

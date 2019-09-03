@@ -1,17 +1,17 @@
 ---
 title: Wrap Scheduler in Custom Directives
 page_title: Wrap Scheduler in Custom Directives | Kendo UI Scheduler
-description: "Learn how to render Kendo UI Scheduler using a custom AngularJS directive."
+description: "Learn how to render the Kendo UI Scheduler by using a custom AngularJS directive."
 slug: howto_wrap_schedulerin_custom_directives_angularjs_scheduler
 ---
 
 # Wrap Scheduler in Custom Directives
 
-The example below demonstrates how to render Kendo UI Scheduler using a custom AngularJS directive.
+The following example demonstrates how to render a Kendo UI Scheduler by using a custom AngularJS directive.
 
 ###### Example
 
-```html
+```dojo
 <div id="example" ng-app="KendoDemos">
   <div class="demo-section k-content" ng-controller="MyCtrl">
     <h4>Select product</h4>
@@ -60,13 +60,8 @@ The example below demonstrates how to render Kendo UI Scheduler using a custom A
 
 ## See Also
 
-Other how-to examples on the Kendo UI Scheduler in AngularJS:
-
 * [How to Edit Using ContextMenu]({% slug howto_edit_using_contectmenu_angularjs_scheduler %})
 * [How to Show Тooltip on hover]({% slug howto_show_tooltipon_hover_angularjs_scheduler %})
-
-Other articles and how-to examples on the Kendo UI Scheduler:
-
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [How to Add Controls to Custom Editor]({% slug howto_add_controlsto_custom_event_editor_scheduler %})
 * [How to Create External Editor Form]({% slug howto_create_external_editor_form_scheduler %})
@@ -75,4 +70,4 @@ Other articles and how-to examples on the Kendo UI Scheduler:
 * [How to Hide Edit Buttons]({% slug howto_hidethe_editbutons_scheduler %})
 * [How to Nest Editors inside Event Templates]({% slug howto_nest_editorsinside_event_templates_scheduler %})
 
-For more runnable examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_add_controlsto_custom_event_editor_scheduler %}).
+For more runnable examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_customize_editand_events_templates_angularjs_scheduler %}).

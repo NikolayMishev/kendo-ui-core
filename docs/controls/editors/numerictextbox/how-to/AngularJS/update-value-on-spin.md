@@ -7,11 +7,11 @@ slug: howto_update_valueon_spin_angularjs_numerictextbox
 
 # Update Value on Spin
 
-The example below demonstrates how to update the NumericTextBox widget value on spin.
+The following example demonstrates how to update the value of the NumericTextBox on `spin`.
 
 ###### Example
 
-```html
+```dojo
     <div id="example" ng-app="app">
         <div class="demo-section k-content" ng-controller="mainCtrl">
             <div>
@@ -25,7 +25,7 @@ The example below demonstrates how to update the NumericTextBox widget value on 
             </div>
             <div>
                 <h4>Result</h4>
-                Value: {{ value }}
+                Value: {% raw %}{{ value }}{% endraw %}
             </div>
         </div>
         <script>
@@ -41,8 +41,6 @@ The example below demonstrates how to update the NumericTextBox widget value on 
 ```
 
 ## See Also
-
-Other articles on the Kendo UI NumericTextBox:
 
 * [NumericTextBox JavaScript API Reference](/api/javascript/ui/numerictextbox)
 * [How to Change Text Color]({% slug howto_change_text_color_numerictextbox %})

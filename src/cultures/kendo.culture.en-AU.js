@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["en-AU"] = {
         name: "en-AU",
         numberFormat: {
@@ -45,8 +45,8 @@
                     F: "dddd, d MMMM yyyy h:mm:ss tt",
                     g: "d/MM/yyyy h:mm tt",
                     G: "d/MM/yyyy h:mm:ss tt",
-                    m: "MMMM d",
-                    M: "MMMM d",
+                    m: "d MMMM",
+                    M: "d MMMM",
                     s: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
                     t: "h:mm tt",
                     T: "h:mm:ss tt",

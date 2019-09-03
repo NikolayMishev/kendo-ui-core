@@ -8,7 +8,9 @@ position: 2
 
 # Resources
 
-[Kendo UI Scheduler](http://demos.telerik.com/kendo-ui/scheduler/index) allows you to assign Scheduler events to a set of predefined resources. The widget supports multiple resources. Multiple instances of the same resource type can be assigned to a single Scheduler event. The Scheduler provides you with the option to assign resources via the Scheduler event edit form.
+The [Kendo UI Scheduler](http://demos.telerik.com/kendo-ui/scheduler/index) allows you to assign events to a set of predefined resources.
+
+The widget supports multiple resources. Multiple instances of the same resource type can be assigned to a single Scheduler event. The Scheduler provides you with the option to assign resources via the Scheduler event edit form.
 
 ## Instance Resources
 
@@ -30,24 +32,24 @@ The example below demonstrates how to use a single instance resource.
           start: new Date("2013/6/6 11:00 AM"),
           end: new Date("2013/6/6 1:00 PM"),
           title: "Meeting with investors",
-          roomId: 1 // The unique identifier of the first room (Meeting Room 101)
+          roomId: 1 // The unique identifier of the first room (Meeting Room 101).
         },
         {
           id: 2,
           start: new Date("2013/6/6 10:15 AM"),
           end: new Date("2013/6/6 12:30 PM"),
           title: "Job Interview",
-          roomId: 2 // The unique identifier of the second room (Meeting Room 102)
+          roomId: 2 // The unique identifier of the second room (Meeting Room 102).
         }
       ],
       resources: [
         {
-          field: "roomId", // The field of the scheduler event which contains the resource identifier
-          title: "Room", // The label displayed in the scheduler edit form for this resource
+          field: "roomId", // The field of the Scheduler event which contains the resource identifier.
+          title: "Room", // The label displayed in the Scheduler edit form for this resource.
           dataSource: [
              {
                 text: "Meeting Room 101", // Text of the resource instance
-                value: 1, // Identifier of the resource instance, use that value to assign an event to this instance.
+                value: 1, // The identifier of the resource instance. Use that value to assign an event to this instance.
                 color: "#1c9ec4" // Used as the background of events assigned to this resource.
              },
              { text: "Meeting Room 102", value: 2, color: "#ff7663" }
@@ -89,18 +91,18 @@ The example below demonstrates how to use multiple instance resources.
       ],
       resources: [
         {
-          field: "attendees", // The field of the scheduler event which contains the resource identifier
-          title: "Attendees", // The label displayed in the scheduler edit form for this resource
+          field: "attendees", // The field of the Scheduler event which contains the resource identifier.
+          title: "Attendees", // The label displayed in the Scheduler edit form for this resource.
           dataSource: [
             {
-                text: "Alex", // Text of the resource instance
-                value: 1, // Identifier of the resource instance, use that value to assign an event to this instance.
+                text: "Alex", // Text of the resource instance.
+                value: 1, // The identifier of the resource instance. Use that value to assign an event to this instance.
                 color: "#ef701d" // Used as the background of events assigned to this resource.
             },
             { text: "Bob", value: 2, color: "#5fb1f7" },
             { text: "Charlie", value: 3, color: "#35a964" }
           ],
-          multiple: true // Indicate the this is a multiple instance resource
+          multiple: true // Indicate that this is a multiple instance resource.
          }
       ]
     });
@@ -141,12 +143,12 @@ Kendo UI Scheduler supports unlimited resource types. For instance, you are able
       resources: [
         // First resource type definition
         {
-          field: "roomId", // The field of the scheduler event which contains the resource identifier
-          title: "Room", // The label displayed in the scheduler edit form for this resource
+          field: "roomId", // The field of the Scheduler event which contains the resource identifier.
+          title: "Room", // The label displayed in the Scheduler edit form for this resource.
           dataSource: [
              {
-                text: "Meeting Room 101", // Text of the resource instance
-                value: 1, // Identifier of the resource instance, use that value to assign an event to this instance.
+                text: "Meeting Room 101", // The text of the resource instance.
+                value: 1, // The identifier of the resource instance. Use that value to assign an event to this instance.
                 color: "#1c9ec4" // Used as the background of events assigned to this resource.
              },
              { text: "Meeting Room 102", value: 2, color: "#ff7663" }
@@ -154,18 +156,18 @@ Kendo UI Scheduler supports unlimited resource types. For instance, you are able
         },
         // Second resource type definition
         {
-          field: "attendees", // The field of the scheduler event which contains the resource identifier
-          title: "Attendees", // The label displayed in the scheduler edit form for this resource
+          field: "attendees", // The field of the Scheduler event which contains the resource identifier
+          title: "Attendees", // The label displayed in the Scheduler edit form for this resource
           dataSource: [
             {
-                text: "Alex", // Text of the resource instance
-                value: 1, // Identifier of the resource instance, use that value to assign an event to this instance.
+                text: "Alex", // The text of the resource instance.
+                value: 1, // The identifier of the resource instance. Use that value to assign an event to this instance.
                 color: "#ef701d" // Used as the background of events assigned to this resource.
             },
             { text: "Bob", value: 2, color: "#5fb1f7" },
             { text: "Charlie", value: 3, color: "#35a964" }
           ],
-          multiple: true // Indicate the this is a multiple instance resource
+          multiple: true // Indicate that this is a multiple instance resource.
          }
       ]
     });
@@ -179,12 +181,11 @@ To build a better understanding of resources, see the [online demo](http://demos
 
 ## See  Also
 
-Other articles and how-to examples on the Kendo UI Scheduler:
-
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [Overview of the Scheduler Widget]({% slug overview_kendoui_scheduler_widget %})
 * [Timezones]({% slug timezones_kendoui_scheduler_widget %})
+* [Adaptive Rendering]({% slug adaptiverendering_kendoui_scheduler_widget %})
 * [How to Filter Events by Resource Using MultiSelect]({% slug howto_filter_eventsby_resourceusing_multiselect_scheduler %})
 * [How to Persist Resource Values on `move`]({% slug howto_persistresourcevalues_onamoveevent_scheduler %})
-
-For how-to examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_add_controlsto_custom_event_editor_scheduler %}).
+* [How-To Examples]({% slug howto_add_controlsto_custom_event_editor_scheduler %})
+* [Knowledge Base Section](/knowledge-base)

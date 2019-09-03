@@ -1,6 +1,6 @@
 ---
 title: Scaffolding
-page_title: Scaffolding | UI for ASP.NET MVC Troubleshooting
+page_title: Scaffolding | Telerik UI for ASP.NET MVC Troubleshooting
 description: "Learn about the solutions of issues that may occur while using the Kendo UI Scaffolder Visual Studio Extension."
 slug: troubleshooting_scaffolding_aspnetmvc
 position: 2
@@ -34,8 +34,6 @@ The most probable reason for this error is that the selected **Model Class** is 
 Make sure that a valid entity is selected.
 
 ## See Also
-
-Other articles on troubleshooting:
 
 * [Common Issues in Telerik UI for ASP.NET MVC]({% slug troubleshooting_aspnetmvc %})
 * [Validation Issues in Telerik UI for ASP.NET MVC]({% slug troubleshooting_validation_aspnetmvc %})

@@ -7,11 +7,11 @@ slug: howto_select_additional_metadata_upload
 
 # Upload Files and Select Additional Metadata
 
-The example demonstrates how to upload files and select additional metadata using the Kendo UI Upload widget.
+The following example demonstrates how to upload files and select additional metadata by using the Kendo UI Upload.
 
 ###### Example
 
-```html
+```dojo
 <div id="example">
           <h3>Upload files and select additional metadata</h3>
             <div class="demo-section k-header">
@@ -130,8 +130,8 @@ The example demonstrates how to upload files and select additional metadata usin
 
 ## See Also
 
-* [Upload JavaScript API Reference](/api/javascript/ui/upload)
+* [JavaScript API Reference of the Upload](/api/javascript/ui/upload)
 * [Modes of Operation]({% slug modes_upload_widget %})
 * [Metadata]({% slug metadata_upload_widget %})
 
-For more runnable examples on the Kendo UI Upload widget, browse its [**How To** documentation folder]({% slug howto_remove_files_with_errors %}).
+For more runnable examples on the Kendo UI Upload widget, browse its [**How To** documentation folder]({% slug howto_add_image_preview %}).

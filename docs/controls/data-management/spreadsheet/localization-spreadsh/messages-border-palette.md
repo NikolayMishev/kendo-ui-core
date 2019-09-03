@@ -7,7 +7,9 @@ slug: localization_borderpalette_messages_spreadsheet_widget
 
 # List of borderPalette Messages
 
-Below is the list of the messages and their namespaces under the `borderPalette` category. These are used to [localize the Kendo UI Spreadsheet widget via JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
+The following list provides the messages and their namespaces under the `borderPalette` category.
+
+The `borderPalette` messages are used to [localize the Spreadsheet through JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
 
     if (kendo.spreadsheet && kendo.spreadsheet.messages.borderPalette) {
         kendo.spreadsheet.messages.borderPalette =
@@ -28,6 +30,7 @@ Below is the list of the messages and their namespaces under the `borderPalette`
 
 ## See Also
 
+* [List of `colorpicker` Messages]({% slug localization_colorpicker_messages_spreadsheet_widget %})
 * [List of `dialogs` Messages]({% slug localization_dialogs_messages_spreadsheet_widget %})
 * [List of `filterMenu` Messages]({% slug localization_filter_menu_messages_spreadsheet_widget %})
 * [List of `toolbar` Messages]({% slug localization_toolbar_messages_spreadsheet_widget%})

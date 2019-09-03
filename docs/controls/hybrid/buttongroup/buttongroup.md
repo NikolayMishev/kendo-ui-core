@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI ButtonGroup
 description: "Visualize a linear set of grouped buttons in your app by using the hybrid mobile Kendo UI ButtonGroup widget and customize its appearance."
 slug: overview_hybridbuttongroup
 position: 1
+component: button-group
 ---
 
 # ButtonGroup Overview
@@ -148,8 +149,6 @@ To achieve this outcome do not set text to the ButtonGroup.
     </ul>
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the ButtonGroup:
 
 * [Hybrid UI ButtonGroup JavaScript API Reference](/api/javascript/mobile/ui/buttongroup)
 * [Hybrid UI Button JavaScript API Reference](/api/javascript/mobile/ui/button)

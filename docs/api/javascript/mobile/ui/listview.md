@@ -2,6 +2,8 @@
 title: ListView
 page_title: Configuration, methods and events of Kendo UI Mobile ListView
 description: How to display flat or grouped list of items with Kendo UI Mobile ListView widget and use events to handle button clicks and access dataItem.
+res_type: api
+component: mobile-listview
 ---
 
 # kendo.mobile.ui.ListView

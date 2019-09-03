@@ -21,8 +21,9 @@ var __meta__ = { // jshint ignore:line
         SELECTABLE = "k-selectable",
         CHANGE = "change",
         NS = ".kendoSelectable",
+        UNSELECT = "unselect",
         UNSELECTING = "k-state-unselecting",
-        INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,.k-button>span,.k-button>img,span.k-icon.k-i-arrow-60-down,span.k-icon.k-i-arrow-60-up",
+        INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,.k-button>span,.k-button>img,span.k-icon.k-i-arrow-60-down,span.k-icon.k-i-arrow-60-up,label.k-checkbox-label.k-no-text,.k-icon.k-i-collapse,.k-icon.k-i-expand,span.k-numeric-wrap",
         msie = kendo.support.browser.msie,
         supportEventDelegation = false;
 
@@ -33,7 +34,7 @@ var __meta__ = { // jshint ignore:line
                     supportEventDelegation = true;
                 })
                 .find("span")
-                .click()
+                .trigger("click")
                 .end()
                 .off();
             })();
@@ -62,7 +63,8 @@ var __meta__ = { // jshint ignore:line
                 global: true,
                 allowSelection: true,
                 filter: (!supportEventDelegation ? "." + SELECTABLE + " " : "") + that.options.filter,
-                tap: proxy(that._tap, that)
+                tap: proxy(that._tap, that),
+                touchAction: multiple ? "none" : "pan-x pan-y"
             });
 
             if (multiple) {
@@ -74,11 +76,12 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        events: [CHANGE],
+        events: [CHANGE, UNSELECT],
 
         options: {
             name: "Selectable",
             filter: ">*",
+            inputSelectors: INPUTSELECTOR,
             multiple: false,
             relatedTarget: $.noop
         },
@@ -126,13 +129,13 @@ var __meta__ = { // jshint ignore:line
             target = target.add(that.relatedTarget(target));
 
             if (shiftKey) {
-                that.selectRange(that._firstSelectee(), target);
+                that.selectRange(that._firstSelectee(), target, e);
             } else {
                 if (selected && ctrlKey) {
                     that._unselect(target);
-                    that._notify(CHANGE);
+                    that._notify(CHANGE, e);
                 } else {
-                    that.value(target);
+                    that.value(target, e);
                 }
 
                 that._lastActive = that._downTarget = target;
@@ -205,7 +208,7 @@ var __meta__ = { // jshint ignore:line
             e.preventDefault();
         },
 
-        _end: function() {
+        _end: function(e) {
             var that = this;
 
             that._marquee.remove();
@@ -218,7 +221,7 @@ var __meta__ = { // jshint ignore:line
             var target = that.element.find(that.options.filter + "." + ACTIVE);
             target = target.add(that.relatedTarget(target));
 
-            that.value(target);
+            that.value(target, e);
             that._lastActive = that._downTarget;
             that._items = null;
         },
@@ -253,7 +256,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        value: function(val) {
+        value: function(val, e) {
             var that = this,
                 selectElement = proxy(that._selectElement, that);
 
@@ -262,7 +265,7 @@ var __meta__ = { // jshint ignore:line
                     selectElement(this);
                 });
 
-                that._notify(CHANGE);
+                that._notify(CHANGE, e);
                 return;
             }
 
@@ -303,6 +306,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         _unselect: function(element) {
+            if (this.trigger(UNSELECT, { element: element})) {
+                return;
+            }
+
             element.removeClass(SELECTED);
 
             if (this.options.aria) {
@@ -314,14 +321,14 @@ var __meta__ = { // jshint ignore:line
 
         _select: function(e) {
             if (this._allowSelection(e.event.target)) {
-                if (!msie || (msie && !$(kendo._activeElement()).is(INPUTSELECTOR))) {
+                if (!msie || (msie && !$(kendo._activeElement()).is(this.options.inputSelectors))) {
                     e.preventDefault();
                 }
             }
         },
 
         _allowSelection: function(target) {
-            if ($(target).is(INPUTSELECTOR)) {
+            if ($(target).is(this.options.inputSelectors)) {
                 this.userEvents.cancel();
                 this._downTarget = null;
                 return false;
@@ -339,7 +346,7 @@ var __meta__ = { // jshint ignore:line
             this._unselect(items);
         },
 
-        selectRange: function(start, end) {
+        selectRange: function(start, end, e) {
             var that = this,
                 idx,
                 tmp,
@@ -372,7 +379,7 @@ var __meta__ = { // jshint ignore:line
                 that._selectElement(items[idx]);
             }
 
-            that._notify(CHANGE);
+            that._notify(CHANGE, e);
         },
 
         destroy: function() {

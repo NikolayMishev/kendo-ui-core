@@ -8,27 +8,37 @@ position: 3
 
 # Virtualization
 
-The [Kendo UI AutoComplete](http://demos.telerik.com/kendo-ui/autocomplete/index), the [ComboBox](http://demos.telerik.com/kendo-ui/combobox/index), the [DropDownList](http://demos.telerik.com/kendo-ui/dropdownlist/index) and the [MultiSelect](http://demos.telerik.com/kendo-ui/multiselect/index) widgets support UI and data virtualization, which is useful for displaying large data sets.
+The [Kendo UI AutoComplete](http://demos.telerik.com/kendo-ui/autocomplete/index), the [ComboBox](http://demos.telerik.com/kendo-ui/combobox/index), the [DropDownList](http://demos.telerik.com/kendo-ui/dropdownlist/index) and the [MultiSelect](http://demos.telerik.com/kendo-ui/multiselect/index) widgets support UI and data virtualization and you can apply the demonstrated approaches in this article to any of those widgets.
 
-The UI virtualization technique uses a fixed amount of list items in the pop-up list of the widget regardless of the data set size. When the list is scrolled, the widget reuses the existing items to display the relevant data instead of creating new ones.
+For more information, refer to:
+* [Virtualization in the ComboBox (demo)](https://demos.telerik.com/kendo-ui/combobox/virtualization)
+* [Virtualization in the AutoComplete (demo)](https://demos.telerik.com/kendo-ui/autocomplete/virtualization)
+* [Virtualization in the DropDownList (demo)](https://demos.telerik.com/kendo-ui/dropdownlist/virtualization)
+* [Virtualization in the MultiSelect (demo)](https://demos.telerik.com/kendo-ui/multiselect/virtualization)
+
+Virtualization is useful for displaying large data sets. The UI virtualization technique uses a fixed amount of list items in the pop-up list of the widget regardless of the dataset size. When the list is scrolled, the widget reuses the existing items to display the relevant data instead of creating new ones.
 
 ## Data and UI Virtualization
 
-To be able to retrieve and display only a subset of the whole data set, the virtualization feature combines data and User Interface (UI) virtualization.
+To retrieve and display only a subset of the whole dataset, the virtualization feature combines data and User Interface (UI) virtualization.
 
 ### Data
 
-In the context of the widget, data virtualization is accomplished by using the `DataSource` paging functionality and remote data retrieval. In this way, the widget retrieves only a specified data page instead of requesting the whole data set at once. You must configure the `DataSource` paging correctly to ensure the proper functioning of the widgets. For more information, see the [server paging](/api/javascript/data/datasource#configuration-serverPaging) configuration.
+In the context of the widget, data virtualization is accomplished by using the `DataSource` paging functionality and remote data retrieval. In this way, the widget retrieves only a specified data page instead of requesting the whole dataset at once. To ensure the proper functioning of the widgets, you need to configure the `DataSource` paging correctly. For more information, see the [server paging](/api/javascript/data/datasource/configuration/serverpaging) configuration.
+
+> **Important**
+>
+> Enabling the paging functionality and setting `pageSize` in the ComboBox is efficient only when these configurations are used with virtualization.
 
 ### UI
 
-The widget uses a specific strategy of reusing a list of DOM elements for displaying the corresponding data chunk. The number of these elements is determined based on the [`height`](/api/javascript/ui/combobox#configuration-height) and [`itemHeight`](#itemheight) options. Once the number is calculated, the widget creates those elements and starts reusing them to display the current data source page.
+The widget uses a specific strategy of reusing a list of DOM elements for displaying the corresponding data chunk. The number of these elements is determined based on the [`height`](/api/javascript/ui/combobox/configuration/height) and [`itemHeight`](#itemheight) options. Once the number is calculated, the widget creates those elements and starts reusing them to display the current data source page.
 
 ### Data and UI Combined
 
-To ensure the correct work of the widget, the DataSource `pageSize` value is calculated automatically based on the (([`height`](/api/javascript/ui/combobox#configuration-height) / [`itemHeight`](#itemheight)) * 4) formula. The calculation is done by the widget itself and the defined `pageSize` value is overridden if it does not match the calculated one.
+To ensure the correct work of the widget, the DataSource `pageSize` value is calculated automatically based on the (([`height`](/api/javascript/ui/combobox/configuration/height) / [`itemHeight`](#itemheight)) * 4) formula. The ComboBox iteself does the calculation and the defined `pageSize` value is overridden if it does not match the calculated one.
 
-> **Important**  
+> **Important**
 >
 > To avoid multiple initial requests, define a correct `pageSize` value.
 
@@ -40,7 +50,7 @@ To enable the virtualization in a ComboBox, follow the example below. It demonst
 
 ###### Example
 
-```html
+```dojo
     <input id="orders" style="width: 400px" />
     <script>
         $(document).ready(function() {
@@ -52,7 +62,7 @@ To enable the virtualization in a ComboBox, follow the example below. It demonst
                     itemHeight: 26,
                     valueMapper: function(options) {
                         $.ajax({
-                            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+                            url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
                             type: "GET",
                             dataType: "jsonp",
                             data: convertValues(options.value),
@@ -66,7 +76,7 @@ To enable the virtualization in a ComboBox, follow the example below. It demonst
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
                     pageSize: 80,
                     serverPaging: true,
@@ -95,7 +105,7 @@ To enable the virtualization in a ComboBox, follow the example below. It demonst
 
 All items in the virtualized list must have the same height. If you do not specify a height value, the framework automatically sets the `itemHeight` in the way they are set in the current theme and font size.
 
-> **Important**  
+> **Important**
 >
 > If you do not specify an `itemHeight` option, the widget performs an extra DataSource request. This, however, rarely causes any critical issues.
 
@@ -105,35 +115,50 @@ The virtualized list container must have a `height` option set in pixels. If you
 
 ### Set Page Size
 
-The virtualized widget calculates the `pageSize` value automatically based on the (([`height`](/api/javascript/ui/combobox#configuration-height) / [`itemHeight`](#itemheight)) * 4) formula and overrides the custom `pageSize` value. This is done to ensure the proper work of the virtualized list.
+To ensure the proper work of the virtualized list, the widget calculates the `pageSize` value automatically based on the (([`height`](/api/javascript/ui/combobox/configuration/height) / [`itemHeight`](#itemheight)) * 4) formula and overrides the custom `pageSize` value. Enabling the paging functionality and setting `pageSize` in the ComboBox is efficient only when these configurations are used with virtualization.
 
 Consider the following scenario about a widget:
 - The `height` is `520px`
 - The `itemHeight` is `26`
 In this case, the `pageSize` will be set to `80`, because ((520 / 26) * 4) is equal to `80`.
 
-> **Important**  
+> **Important**
 >
 > To prevent the DataSource from making multiple requests for the same data, set the correct `pageSize` value using the aforementioned formula.
 
-## Value Mapping
+### Return Appropriate Data
 
-### Overview of the Function
+The response for each virtualization request must contain the following fields:
+
+* An array with the specified page of data.
+* The total count of all items that are present in the dataset of the `Total` field.
+
+You can specify the fields that contain the array of [data](/api/javascript/data/datasource/configuration/schema#schemadata) and the [total](/api/javascript/data/datasource/configuration/schema#schematotal) in the configuration of the data source schema of the ComboBox.
+
+Once a page of data is received on the client, it will be cached, and if the user scrolls up through the list, no new requests will be made for earlier pages of data and the virtualization will happen on the client only.
+
+> **Important**
+>
+> To prevent infinite requests for the last page of data, ensure that the `Total` count is reached. If it is not, the widget will make requests until it receives the denoted total amount of unique items.
+
+## Value Mapping
 
 > **Important**
 >
 > As of the Kendo UI R3 2016 release, the implementation of the `valueMapper` function is optional. It is required only if the widget contains an initial value or if the `value` method is used.
 
-Unlike simple Data and UI virtualization, the `valueMapper` was introduced because the ComboBox needs to maintain the selected item and to display the selected data item based on the value alone. To display the selected text, the widget needs to retrieve the selected data item which is part of a particular data page that is unknown to you. The required information is gathered with the `valueMapper` callback. It passes the selected value and requests the corresponding `row` index or `dataItem` of that value depending on the `mapValueTo` configuration option.
+Unlike simple Data and UI virtualization, the `valueMapper` was introduced because the ComboBox needs to maintain the selected item and to display the selected data item based on the value alone. To display the selected text, the widget needs to retrieve the selected data item which is part of a particular data page that is unknown to you. The required information is gathered with the `valueMapper` callback. It passes the selected value and requests the corresponding row `index` or `dataItem` of that value depending on the `mapValueTo` configuration option.
 
-The widget calls the `valueMapper` function when it receives a value which is not fetched from the remote server yet. The widget then passes the selected values in the `valueMapper` function. If the `mapValueTo` is not explicitly set to `dataItem`, the `valueMapper` implementation is expected to return the respective data item index. From this index the widget calculates the page number and in this way pre-fetches only that particular page by sending an additional Ajax request. If the value does not exist, the `valueMapper` is expected to return `null`, `[]`, or `-1` and the widget deselects the currently selected items.
+### Mapping index Values
+
+When the widget receives a value which is not fetched from the remote server yet, it calls the `valueMapper` function and passes the selected values in that function. If the `mapValueTo` is not explicitly set to `dataItem`, the `valueMapper` implementation is expected to return the respective data item index. From this index the widget calculates the page number and in this way pre-fetches only that particular page by sending an additional Ajax request. If the value does not exist, the `valueMapper` is expected to return `null`, `[]`, or `-1` and the widget will deselect the currently selected items.
 
 ###### Example
 
 ```javascript
     valueMapper: function(options) {
         $.ajax({
-            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+            url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
             type: "GET",
             data: options.value, //send value to the server
             success: function (data) {
@@ -143,9 +168,9 @@ The widget calls the `valueMapper` function when it receives a value which is no
     }
 ```
 
-### Recent Updates
+### Mapping dataItem Values
 
-The changes introduced with the Kendo UI R3 2016 release enable you to determine if the `valueMapper` must resolve a *value to an `index`* or a *value to a `dataItem`*. This is configured through the `mapValueTo` option that accepts two possible values&mdash;`"index"` or `"dataItem"`. By default, the `mapValueTo` is set to `"index"`, which does not affect the current behavior of the virtualization process.
+The changes introduced with the Kendo UI R3 2016 release enable you to determine if the `valueMapper` must resolve a value to an `index` or a value to a `dataItem`. This is configured through the `mapValueTo` option that accepts two possible values&mdash;`"index"` or `"dataItem"`. By default, the `mapValueTo` is set to `"index"`, which does not affect the current behavior of the virtualization process.
 
 If you implement the `mapValueTo: "dataItem"` configuration, the `valueMapper` is expected to return the `dataItems` that corresponds to the selected values. The widget will use the returned `dataItems` to render the selected values but will not scroll the list to the selected values. When the user opens the list, the widget will display the options from the first data page instead, no matter whether the selected value is a part of the first page or not. This is the main limitation of the `mapValueTo: dataItem` configuration.
 
@@ -155,7 +180,7 @@ If you implement the `mapValueTo: "dataItem"` configuration, the `valueMapper` i
     mapValueTo: "dataItem",
     valueMapper: function(options) {
         $.ajax({
-            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+            url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
             type: "GET",
             data: options.value, //send value to the server
             success: function (dataItems) {
@@ -171,9 +196,7 @@ If you implement the `mapValueTo: "dataItem"` configuration, the `valueMapper` i
 
 The `mapValueTo: "index"` configuration is set by default. The `valueMapper` is called when you want to select a data item that is not present in the data source.
 
-The exemplary case below demonstrates the process.
-
-The widget is configured as follows:
+To see the process in action, use the sample case with the following widget configuration:
 - The `pageSize` is set to `50`.
 - The selected value is `foo`.
 
@@ -188,19 +211,21 @@ On initial load, the widget checks whether the selected value is present in the 
 7. The `service 2` returns the corresponding 25th page.
 8. The `dataSource` changes the page to `25` and displays the items showing the selected item too.
 
-![Virtualization process](/controls/editors/combobox/mapValueTo-index.png)
+**Figure 1: The virtualization process**
+
+![Virtualization process](../mapValueTo-index.png)
 
 **Function result**
 
 The `valueMapper` is expected to return a row index or a list of indices when a multiple selection is available. That being said, the service is expected to return either an index (number) or a list of indices. If the value does not exist, the `valueMapper` returns `null`, `[]`, or `-1`, and the widget deselects the currently selected items.
 
-For an example, look into the result of [the test service](https://demos.telerik.com/kendo-ui/combobox/virtualization) used in the online demos.
+For an example, look into the result of [the test service](https://demos.telerik.com/kendo-ui/combobox/virtualization) that is used in the online demos.
 
 ###### Example
 
 ```javascript
 $.ajax({
-    url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+    url: "https://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
     type: "GET",
     dataType: "jsonp",
     data: { "values[0]": "10661" }
@@ -211,7 +236,7 @@ $.ajax({
 })
 ```
 
-The Ajax method calls URLs like so:
+The Ajax method calls URLs similar to:
 
     http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper?values[0]=10661
 
@@ -221,15 +246,13 @@ The result is:
 
 **Function implementation**
 
-As mentioned in the previous section, the service maps the selected value to a particular row index. The implementation of this functionality is completely under your control. However, the most simplified implementation includes the iteration of all items counting the index of the rows. A more optimized solution still is to use a dedicated SQL method that handles this action internally. You can do this by using the [`ROW_NUMBER()`](https://msdn.microsoft.com/en-us/library/ms186734.aspx) function.
+The service maps the selected value to a particular row index. The implementation of this functionality is completely under your control. However, the most simplified implementation includes the iteration of all items counting the index of the rows. A more optimized solution still is to use a dedicated SQL method that handles this action internally. You can do this by using the [`ROW_NUMBER()`](https://msdn.microsoft.com/en-us/library/ms186734.aspx) function.
 
 #### Map Values to dataItem
 
 The `mapValueTo: "dataItem"` configuration is available as of the Kendo UI R3 2016. The `valueMapper` is called when you want to select a data item that is not present in the data source.
 
-The exemplary case below demonstrates the process.
-
-The widget is configured as follows:
+To see the process in action, use the sample case with the following widget configuration:
 - The `pageSize` is set to `50`.
 - The selected value is `foo`.
 
@@ -244,7 +267,7 @@ On initial load, the widget checks whether the selected value is present in the 
 7. The `service 2` returns the first data page.
 8. The widget list displays the items from the first page no matter if the selected items are part of it or not.
 
-![Virtualization process](/controls/editors/combobox/mapValueTo-dataItem.png)
+![Virtualization process](../mapValueTo-dataItem.png)
 
 **Function result**
 
@@ -258,16 +281,9 @@ The `valueMapper` is expected to return a data item or a list of data items when
 
 ## See Also
 
-Other articles on the Kendo UI ComboBox:
-
-* [Virtual Setup](/api/javascript/ui/combobox#configuration-virtual)
-* [How to Configure Deferred Value Binding]({% slug howto_configure_deffered_value_binding_combobox %})
-* [How to Implement Cascading with Local Data]({% slug howto_implement_cascading_local_data_combobox %})
-* [How to Select Items on Tab]({% slug howto_select_items_ontab_combobox %})
-* [How to Disable Child Cascading ComboBoxes]({% slug howto_disable_child_cascading_combobox %})
-* [JavaScript API Reference](/api/javascript/ui/combobox)
-
-Articles on the Kendo UI DataSource:
-
-* [DataSource Overview](/framework/datasource/overview)
-* [JavaScript DataSource API Reference](/api/javascript/data/datasource)
+* [Virtualization in the ComboBox (Demo)](https://demos.telerik.com/kendo-ui/combobox/virtualization)
+* [Virtualization in the AutoComplete (Demo)](https://demos.telerik.com/kendo-ui/autocomplete/virtualization)
+* [Virtualization in the DropDownList (Demo)](https://demos.telerik.com/kendo-ui/dropdownlist/virtualization)
+* [Virtualization in the MultiSelect (Demo)](https://demos.telerik.com/kendo-ui/multiselect/virtualization)
+* [JavaScript API Reference of the ComboBox](/api/javascript/ui/combobox)
+* [JavaScript API Reference of the DataSource](/api/javascript/data/datasource)

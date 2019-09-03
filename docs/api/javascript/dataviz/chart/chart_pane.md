@@ -1,6 +1,7 @@
 ---
 title: ChartPane
 page_title: API reference for Kendo UI ChartPane
+res_type: api
 ---
 
 # kendo.dataviz.ChartPane
@@ -18,6 +19,20 @@ The group holding the charts drawing elements.
 The drawing group used to draw the pane.
 
 ## Methods
+
+### findAxisByName
+
+Returns an [axis](/api/javascript/dataviz/chart/chart_axis) from the pane with the specified name.
+
+#### Parameters
+
+##### name `String`
+
+The axis name.
+
+#### Returns
+
+`kendo.dataviz.ChartAxis` The chart axis.
 
 ### series
 

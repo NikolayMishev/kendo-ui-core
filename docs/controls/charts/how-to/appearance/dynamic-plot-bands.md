@@ -14,7 +14,7 @@ The example below demonstrates how to achieve this behavior.
 
 ###### Example
 
-```html
+```dojo
    <div id="chart"></div>
    <button>Change plot band</button>
 
@@ -59,8 +59,6 @@ The example below demonstrates how to achieve this behavior.
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Charts:
 
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})

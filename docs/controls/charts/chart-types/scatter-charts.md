@@ -60,9 +60,9 @@ The example below demonstrates how to create a Scatter Line Chart.
     });
 
 
-**Figure 1. A sample Scatter Line Chart.**
+**Figure 1: A sample Scatter Line Chart.**
 
- ![Scatter Line Chart](/controls/charts/chart-types/chart-scatter-line.png)
+ ![Scatter Line Chart](chart-scatter-line.png)
 
 ## Configuration
 
@@ -79,21 +79,19 @@ The default line type is solid. However, dash styles are also available through 
       dashType: "dot"
   }]
 
-**Figure 2. Dash line types**
+**Figure 2: Dash line types**
 
-![Dash Type](/controls/charts/chart-types/chart-dash-types.png)
+![Dash Type](chart-dash-types.png)
 
 ### Removal of Connecting Lines
 
 To remove the connecting lines, specify `"scatter"` instead of `"scatterLine"`, which results in the Scatter Chart below.
 
-**Figure 3. A Scatter Chart with removed connecting lines**
+**Figure 3: A Scatter Chart with removed connecting lines**
 
-![Scatter Chart](/controls/charts/chart-types/chart-scatter.png)
+![Scatter Chart](chart-scatter.png)
 
 ## See Also
-
-Other articles on Kendo UI Charts and chart types:
 
 * [Overview of the Chart Widgets]({% slug overview_kendoui_charts_widget %})
 * [Data Series Charts]({% slug seriestypeofcharts_widget %})

@@ -12,11 +12,9 @@ This article is an overview of the Kendo UI Music Store sample project. The Kend
 
 ## The Web Application
 
-**Figure 1. The final look of the Kendo UI Music Store web application**
+![The final look of the Kendo UI Music Store web application](images/kendo-music-store-intro-web-screenshot.png)
 
-![kendo-music-store-intro-web-screenshot](/tutorials/tutorial-kendo-music-store/images/kendo-music-store-intro-web-screenshot.png)
-
-This sample project is based on the [MVC Music Store from Microsoft](http://mvcmusicstore.codeplex.com/), so much of the server-side processing and the data structure are reused in this project.
+This sample project is based on the [MVC Music Store from Microsoft](https://archive.codeplex.com/?p=mvcmusicstore), so much of the server-side processing and the data structure are reused in this project.
 
 The UI of the Music Store, however, is completely redesigned with Kendo UI. It focuses on [Kendo UI Professional](http://www.telerik.com/kendo-ui), the way it is used and interacts with ASP.NET MVC, WebAPI, and WCF Data Services.
 
@@ -34,9 +32,7 @@ Use the navigation tree to your left to navigate through the chapters of this tu
 
 ## The Dashboard
 
-**Figure 2. The final look of the Kendo UI Music Store Dashboard**
-
-![kendo-music-store-intro-dashboard-screenshot](/tutorial-kendo-music-store/images/kendo-music-store-intro-dashboard-screenshot.png)
+![The final look of the Kendo UI Music Store Dashboard](images/kendo-music-store-intro-dashboard-screenshot.png)
 
 The Dashboard builds upon the music store theme, adding a conceptual management dashboard to track the album performance. It focuses on [Kendo UI widgets rendering data visualization](http://www.telerik.com/kendo-ui) and the way Kendo UI and Sammy.js are used to create a visually rich single-page application.
 

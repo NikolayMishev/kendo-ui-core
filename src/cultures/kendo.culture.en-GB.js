@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["en-GB"] = {
         name: "en-GB",
         numberFormat: {
@@ -16,7 +16,7 @@
                 symbol: "%"
             },
             currency: {
-                name: "Pound Sterling",
+                name: "British Pound",
                 abbr: "GBP",
                 pattern: ["-$n","$n"],
                 decimals: 2,

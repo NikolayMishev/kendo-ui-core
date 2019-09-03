@@ -8,7 +8,15 @@ position: 1
 
 # Scheduler Overview
 
-The [Kendo UI Scheduler widget](http://demos.telerik.com/kendo-ui/scheduler/index) displays a set of events&mdash;appointments or tasks. It can display scheduled events in different views&mdash;a single day, a whole week, or month and as a list of tasks which need to be accomplished.
+The [Kendo UI Scheduler widget](http://demos.telerik.com/kendo-ui/scheduler/index) displays a set of events&mdash;appointments or tasks.
+
+It can display scheduled events in different views&mdash;a single day, a whole week, or month and as a list of tasks which need to be accomplished.
+
+As of the Kendo UI 2016 Q2 (2016.2.504) release:
+* The Scheduler substitutes the semicolon (`;`) as the delimiter type for recurrence exception with the comma (`,`).
+* The Scheduler no longer adds a trailing delimiter to a recurrence exception.
+
+The change was driven by the [RFC 5545](http://tools.ietf.org/html/rfc5545#page-120) specification. Note that the previously demonstrated behavior had been incorrect.
 
 ## Getting Started
 
@@ -76,19 +84,19 @@ The example below demonstrates how to bind the Scheduler to a remote service.
             batch: true, // Enable batch updates
             transport: {
                 read: {
-                    url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                    url: "https://demos.telerik.com/kendo-ui/service/tasks",
                     dataType: "jsonp"
                 },
                 update: {
-                    url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                    url: "https://demos.telerik.com/kendo-ui/service/tasks/update",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                    url: "https://demos.telerik.com/kendo-ui/service/tasks/create",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                    url: "https://demos.telerik.com/kendo-ui/service/tasks/destroy",
                     dataType: "jsonp"
                 },
                 parameterMap: function(options, operation) {
@@ -194,6 +202,12 @@ When binding to a remote service, it is advisable, while not mandatory, to do th
             }
         }
 3. Store the Scheduler event date fields (start and end) in UTC format as well. This allows for the easier migration of your data between servers in different timezones.
+
+## Reset Series
+
+As of the R1 2017 release, exceptions are no longer automatically removed when the user edits a series. Changes that are made to specific occurrences are persisted during series editing.
+
+If a series contains an exception, the Scheduler renders a **Reset Series** button within the **Edit** dialog of the series which allows the user to reset the series by removing existing exceptions.
 
 ## Configuration
 
@@ -310,31 +324,6 @@ In addition, the Scheduler needs a fixed pixel width for itself or some of its a
 > **Important**
 >
 > Due to an Internet Explorer bug, related to absolutely positioned elements inside tables, the Scheduler events will be printed over their correct time slots only if the widget fits on one page.
-
-### Adaptive Rendering Mode
-
-Kendo UI Scheduler supports adaptive enhancements like changes in styling and behavior in order to remain consistent with the specific user device experience. For instance, when editing on a mobile device, Kendo UI will slide in a new screen for the user, which is a departure from the more desktop-like popup behaviors.
-
-To enable the adaptive rendering feature, set the [`mobile`](/api/javascript/ui/scheduler#configuration-mobile) property to `true`, `"phone"` or `"tablet"`.
-
-The Kendo UI adaptive mode requires scripts, which are normally part of the Kendo UI Mobile (Hybrid) library (`kendo.mobile.min.js`). However, these scripts are also included in `kendo.web.min.js` and `kendo.all.min.js`. If you are using [individual widget scripts]({% slug include_only_what_you_need_kendoui_installation %}#individual-widget-scripts) or a [custom combined script]({% slug include_only_what_you_need_kendoui_installation %}#employ-download-builder), make sure the relevant scripts are included.
-
-Each adaptive Scheduler is rendered inside a separate Kendo UI Mobile Pane. Since the panes are absolutely positioned, they can overlap with other content on the page. To avoid this, wrap the Scheduler inside a `<div>` container that has a `position:relative` style and a set `height`. The `height` must be consistent with the Scheduler's height. Note that the absolute position is required for the transitions between the main and editing views to work correctly.
-
-The example below demonstrates how to configure the adaptive rendering mode of the Scheduler.
-
-###### Example
-
-    <style>
-        .adaptive-scheduler-wrapper {
-            position: relative;
-            height: 400px;
-        }
-    </style>
-
-    <div class="adaptive-scheduler-wrapper">
-        <div id="scheduler1"></div>
-    </div>
 
 ## Scheduler API
 
@@ -458,13 +447,11 @@ For more information on how to create custom views, refer to [this how-to exampl
 
 ## See Also
 
-Other articles on the Kendo UI Scheduler:
-
 * [Scheduler JavaScript API Reference](/api/javascript/ui/scheduler)
 * [Resources]({% slug resources_kendoui_scheduler_widget %})
 * [Timezones]({% slug timezones_kendoui_scheduler_widget %})
-* [Overview of the ASP.NET MVC HtmlHelper Extension for the Scheduler Widget](/aspnet-mvc/helpers/scheduler/mvc-scheduler-overview)
+* [Adaptive Rendering]({% slug adaptiverendering_kendoui_scheduler_widget %})
+* [Get Familiar with Common Editing Concepts]({% slug kendoui_editing_gettingstarted %})
+* [Overview of the ASP.NET MVC HtmlHelper Extension for the Scheduler Widget](/aspnet-mvc/helpers/scheduler/overview)
 * [Overview of the Scheduler JSP Tag]({% slug overview_scheduler_uiforjsp %})
 * [Overview of the Scheduler PHP Class](/php/widgets/scheduler/overview)
-
-For how-to examples on the Kendo UI Scheduler, browse its [**How To** documentation folder]({% slug howto_add_controlsto_custom_event_editor_scheduler %}).

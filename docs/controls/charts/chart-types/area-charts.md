@@ -49,9 +49,9 @@ Axes are configured through `categoryAxis` and `valueAxis`. Multiple value axes 
 
 This configuration results in the Area Chart below.
 
-**Figure 1. A sample Area Chart**
+**Figure 1: A sample Area Chart**
 
-![Area Chart](/controls/charts/chart-types/chart-area.png)
+![Area Chart](chart-area.png)
 
 ### Line Styles
 
@@ -61,17 +61,15 @@ Kendo UI Area Charts support the rendering of lines between the points with diff
 * Step&mdash;The style renders the connection between data points through vertical and horizontal lines. It is suitable for indicating that the value is constant between the changes.
 * Smooth&mdash;This style causes the Area Chart to display a fitted curve through data points. It is suitable when the data requires to be displayed with a curve, or when you wish to connect the points with smooth instead of straight lines.
 
-**Figure 2. A step-line Area Chart**
+**Figure 2: A step-line Area Chart**
 
-![Step Line Chart](/controls/charts/chart-types/chart-step-area.png)
+![Step Line Chart](chart-step-area.png)
 
-**Figure 3. A smooth-line Area Chart**
+**Figure 3: A smooth-line Area Chart**
 
-![Smooth Line Chart](/controls/charts/chart-types/chart-smooth-area.png)
+![Smooth Line Chart](chart-smooth-area.png)
 
 ## See Also
-
-Other articles on Kendo UI Charts and chart types:
 
 * [Overview of the Chart Widgets]({% slug overview_kendoui_charts_widget %})
 * [Data Series Charts]({% slug seriestypeofcharts_widget %})

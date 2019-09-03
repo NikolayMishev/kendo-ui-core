@@ -7,7 +7,9 @@ slug: localization_toolbar_messages_spreadsheet_widget
 
 # List of toolbar Messages
 
-Below is the list of the messages and their namespaces under the `toolbar` category. These are used to [localize the Kendo UI Spreadsheet widget via JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
+The following list provides the messages and their namespaces under the `toolbar` category.
+
+The `toolbar` messages are used to [localize the Spreadsheet through JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
 
     if (kendo.spreadsheet && kendo.spreadsheet.messages.toolbar) {
         kendo.spreadsheet.messages.toolbar =
@@ -34,7 +36,7 @@ Below is the list of the messages and their namespaces under the `toolbar` categ
           "cut": "Cut",
           "deleteColumn": "Delete column",
           "deleteRow": "Delete row",
-          "excelExport": "Export to Excel...",
+          "exportAs": "Export",
           "filter": "Filter",
           "fontFamily": "Font",
           "fontSize": "Font size",
@@ -73,11 +75,8 @@ Below is the list of the messages and their namespaces under the `toolbar` categ
             "redo": "Redo",
             "undo": "Undo"
           },
-          "sortAsc": "Sort ascending",
-          "sortDesc": "Sort descending",
+          "sort": "Sort",
           "sortButtons": {
-            "sortSheetAsc": "Sort sheet A to Z",
-            "sortSheetDesc": "Sort sheet Z to A",
             "sortRangeAsc": "Sort range A to Z",
             "sortRangeDesc": "Sort range Z to A"
           },
@@ -90,6 +89,7 @@ Below is the list of the messages and their namespaces under the `toolbar` categ
 
 ## See Also
 
+* [List of `colorpicker` Messages]({% slug localization_colorpicker_messages_spreadsheet_widget %})
 * [List of `borderpalette` Messages]({% slug localization_borderpalette_messages_spreadsheet_widget %})
 * [List of `dialogs` Messages]({% slug localization_dialogs_messages_spreadsheet_widget %})
 * [List of `filterMenu` Messages]({% slug localization_filter_menu_messages_spreadsheet_widget %})

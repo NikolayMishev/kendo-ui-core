@@ -9,63 +9,56 @@ position: 1
 
 # Hybrid ActionSheet HtmlHelper Overview
 
-The hybrid ActionSheet HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ActionSheet](http://demos.telerik.com/kendo-ui/m/index#actionsheet/index) widget. It allows you to configure the hybrid Kendo UI ActionSheet from server-side code.
+The hybrid ActionSheet HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ActionSheet](http://demos.telerik.com/kendo-ui/m/index#actionsheet/index) widget.
 
-## Getting Started
+It allows you to configure the hybrid Kendo UI ActionSheet from server-side code.
 
-### Configuration
+## Configuration
 
 Below are listed the steps for you to follow when configuring the hybrid Kendo UI ActionSheet for ASP.NET MVC.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
             return View();
         }
 
-**Step 3** Add a hybrid Kendo UI ActionSheet to the `Index` view. Like most hybrid Kendo UI widgets, the ActionSheet must be initialized within the hybrid View content.
+1. Add a hybrid Kendo UI ActionSheet to the `Index` view. Like most hybrid Kendo UI widgets, the ActionSheet must be initialized within the hybrid View content.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <% Html.Kendo().MobileView()
-                .Name("actionsheet-view")
-                .Title("Inbox")
-                .Content(() =>
-                {
-                    %>
-                    <!-- Add button to open the actionsheet widget -->
-                    <%: Html.Kendo().MobileButton()
-                            .Name("button")
-                            .Rel(MobileButtonRel.ActionSheet)
-                            .Text("Reply")
-                            .Url("#inboxActions")
-                    %>
+            .Name("actionsheet-view")
+            .Title("Inbox")
+            .Content(() =>
+            {
+                %>
+                <!-- Add button to open the actionsheet widget -->
+                <%: Html.Kendo().MobileButton()
+                        .Name("button")
+                        .Rel(MobileButtonRel.ActionSheet)
+                        .Text("Reply")
+                        .Url("#inboxActions")
+                %>
 
-                    <% Html.Kendo().MobileActionSheet()
-                        .Name("inboxActions")
-                        .Popup(popup => popup.Direction(MobilePopupDirection.Left))
-                        .Title("Monday Meeting:")
-                        .Items(items => {
-                            items.Add().Text("Reply");
-                            items.Add().Text("Reply All");
-                            items.Add().Text("Archive");
-                        })
-                        .Render();
-                    %>
-                    <%
-                })
-                .Render();
+                <% Html.Kendo().MobileActionSheet()
+                    .Name("inboxActions")
+                    .Popup(popup => popup.Direction(MobilePopupDirection.Left))
+                    .Title("Monday Meeting:")
+                    .Items(items => {
+                        items.Add().Text("Reply");
+                        items.Add().Text("Reply All");
+                        items.Add().Text("Archive");
+                    })
+                    .Render();
+                %>
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileView()
             .Name("actionsheet-view")
             .Title("Inbox")
@@ -91,111 +84,99 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
 
             </text>)
         )
-```
+    ```
 
-**Step 3** Initialize the mobile application.
+1. Initialize the mobile application.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileApplication()
                 .ServerNavigation(true)
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 4** Build and run the application.
+1. Build and run the application.
 
 ## Event Handling
 
-You can subscribe to all hybrid ActionSheet [events](../../../../kendo-ui/api/javascript/mobile/ui/actionsheet#events).
+You can subscribe to all hybrid ActionSheet [events](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/actionsheet#events).
 
 ### By Handler Name
 
-The examples below demonstrates how to subscribe to events by a handler name.
+The following example demonstrates how to subscribe to events by a handler name.
 
-###### Example
+```ASPX
+    <%: Html.Kendo().MobileActionSheet()
+            .Name("MobileActionSheet")
+            .Items(items => {
+                items.Add().Text("Reply").Action("replay");
+            }))
+            .Events(events => events
+                .Open("onOpen")
+            )
+    %>
 
-```tab-ASPX
-
-        <%: Html.Kendo().MobileActionSheet()
-                .Name("MobileActionSheet")
-                .Items(items => {
-                    items.Add().Text("Reply").Action("replay");
-                }))
-                .Events(events => events
-                    .Open("onOpen")
-                )
-        %>
-
-        <script>
+    <script>
         function onOpen() {
-            //Handle the open event.
+            // Handle the open event.
         }
 
         function replay() {
             //Will execute when item with `Reply` title is clicked.
         }
-        </script>
+    </script>
 ```
-```tab-Razor
-
-        @(Html.Kendo().MobileActionSheet()
-                .Name("MobileActionSheet")
-                .Items(items => {
-                    items.Add().Text("Reply").Action("replay");
-                }))
-                .Events(events => events
-                    .Open("onOpen")
-                )
+```Razor
+    @(Html.Kendo().MobileActionSheet()
+        .Name("MobileActionSheet")
+        .Items(items => {
+            items.Add().Text("Reply").Action("replay");
+        }))
+        .Events(events => events
+            .Open("onOpen")
         )
+    )
 
-        <script>
+    <script>
         function onOpen() {
-            //Handle the open event.
+            // Handle the open event.
         }
 
         function replay() {
             //Will execute when item with `Reply` title is clicked.
         }
-        </script>
+    </script>
 ```
 
 ## Reference
 
 ### Instances
 
-You can reference a hybrid ActionSheet instance by using the code from the example below. Once a reference is established, use the [hybrid ActionSheet API](../../../../kendo-ui/api/javascript/mobile/ui/actionsheet#methods) to control its behavior.
+You can reference a hybrid ActionSheet instance by using the code from the following example. Once a reference is established, use the [hybrid ActionSheet API](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/actionsheet#methods) to control its behavior.
 
-###### Example
-
-        @(Html.Kendo().MobileActionSheet()
-            .Name("inboxActions")
-            .Popup(popup => popup.Direction(MobilePopupDirection.Left))
-            .Title("Monday Meeting:")
-            .Items(items => {
-                items.Add().Text("Reply");
-                items.Add().Text("Reply All");
-                items.Add().Text("Archive");
-            }))
-        <script>
+    @(Html.Kendo().MobileActionSheet()
+        .Name("inboxActions")
+        .Popup(popup => popup.Direction(MobilePopupDirection.Left))
+        .Title("Monday Meeting:")
+        .Items(items => {
+            items.Add().Text("Reply");
+            items.Add().Text("Reply All");
+            items.Add().Text("Archive");
+        }))
+    <script>
         $(function() {
-            //Notice that the Name() of the ActionSheet is used to get its client-side instance.
+            // The Name() of the ActionSheet is used to get its client-side instance.
             var actionsheet = $("#inboxActions").data("kendoMobileActionSheet");
         });
-        </script>
+    </script>
 
 ## See Also
 
-Other articles on Telerik UI for ASP.NET MVC and on the ActionSheet:
-
-* [ASP.NET MVC API Reference: ActionSheetBuilder](/api/Kendo.Mvc.UI.Fluent/MobileActionSheetBuilder)
+* [Telerik UI for ASP.NET MVC API Reference: ActionSheetBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/MobileActionSheetBuilder)
 * [Overview of the Hybrid UI ActionSheet Widget](http://docs.telerik.com/kendo-ui/controls/hybrid/actionsheet/actionsheet)
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})

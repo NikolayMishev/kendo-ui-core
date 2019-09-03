@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["moh-CA"] = {
         name: "moh-CA",
         numberFormat: {
@@ -18,7 +18,7 @@
             currency: {
                 name: "Canadian Dollar",
                 abbr: "CAD",
-                pattern: ["($n)","$n"],
+                pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",

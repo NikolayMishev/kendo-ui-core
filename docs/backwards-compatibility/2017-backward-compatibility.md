@@ -3,40 +3,44 @@ title: 2017 Releases
 page_title: 2017 Releases | Kendo UI Backwards Compatibility
 description: "Learn about the breaking changes and backwards compatibility released by Kendo UI in 2017."
 slug: breakingchanges2017_kendoui
-position: 1
+position: 3
 ---
 
 # 2017 Releases
 
+This article lists the breaking changes in the Kendo UI 2017 releases.
+
+## Kendo UI 2017 R1 SP1
+
+**DropDownList**
+
+The widget will not select the focused item on click outside (on `blur`).
+
 ## Kendo UI 2017 R1
 
-### Changes from 2016 R3 SP2
+**Icons**
 
-#### Breaking Changes
+All icons are now font icons. Raster images and images sprites are no longer used. The implications are as follows:
 
-* **Icons**: **All icons are now font icons**, raster images and images sprites are no longer used. The implications are as follows:
-	* **Icon classes are changed** in order to be unified around semantic meaning. If your code depends on them (e.g., for DOM traversal), you may need to update it according to the **Table 1** below. You can find the full list of available icons and classes in the latest release in the [Web Font Icons]({% slug webfonticons_kendoui_desktopwidgets %}) article.
-	* The **font-size: 0;** rule is **no longer applied** to elements using Kendo icons. Thus, if they have **text**, it will now show up and obscure the icon. You should move it to a **title** attribute.
+* To be unified around the semantic meaning, icon classes are changed. If your code depends on them, for example, for DOM traversal, you might need to update it according to the following **Table 1**. For the full list of available icons and classes in the latest release, refer to the article on [web font icons]({% slug webfonticons_kendoui_desktopwidgets %}).
 
-		###### Example
+* The `font-size: 0;` rule is no longer applied to elements using Kendo UI icons. In this way, if they have text, it will now show up and obscure the icon. You have to move it to a `title` attribute.
 
-		```tab-Old
-		<span class="k-icon k-i-close">Hide</span>
-		```
-		```tab-New
-		<span class="k-icon k-i-close" title="Hide"></span>
-		```
+	```tab-Old
+			<span class="k-icon k-i-close">Hide</span>
+	```
+	```tab-New
+			<span class="k-icon k-i-close" title="Hide"></span>
+	```
 
-		###### Example
+	```tab-Old
+			<a href=""><span class="k-icon k-i-close">Hide</span></a>
+	```
+	```tab-New
+			<a href="" title="Hide"><span class="k-icon k-i-close"></span>
+	```
 
-		```tab-Old
-		<a href=""><span class="k-icon k-i-close">Hide</span></a>
-		```
-		```tab-New
-		<a href="" title="Hide"><span class="k-icon k-i-close"></span>
-		```
-
-**Table 1. Changed Icon CSS Classes**
+**Table 1. Changed icon CSS classes**
 
 <!--
 stylesheet in _assets/stylesheets/icon-font.css
@@ -148,10 +152,10 @@ fonts in fonts/
 
 ## See Also
 
-Other articles on Kendo UI breaking changes and backwards compatibility:
-
-* [Kendo UI 2016 Breaking Changes]({% slug breakingchanges2016_kendoui %})
-* [Kendo UI 2015 Breaking Changes]({% slug breakingchanges2015_kendoui %})
-* [Kendo UI 2014 Breaking Changes]({% slug breakingchanges2014_kendoui %})
-* [Kendo UI 2013 Breaking Changes]({% slug breakingchanges2013_kendoui %})
-* [Kendo UI 2012 Breaking Changes]({% slug breakingchanges2012_kendoui %})
+* [2019 Breaking Changes]({% slug breakingchanges2019_kendoui %})
+* [2018 Breaking Changes]({% slug breakingchanges2018_kendoui %})
+* [2016 Breaking Changes]({% slug breakingchanges2016_kendoui %})
+* [2015 Breaking Changes]({% slug breakingchanges2015_kendoui %})
+* [2014 Breaking Changes]({% slug breakingchanges2014_kendoui %})
+* [2013 Breaking Changes]({% slug breakingchanges2013_kendoui %})
+* [2012 Breaking Changes]({% slug breakingchanges2012_kendoui %})

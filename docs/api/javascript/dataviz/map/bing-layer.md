@@ -1,9 +1,11 @@
 ---
 title: BingLayer
 page_title: API reference for Kendo UI Map Layer
+res_type: api
 ---
 
 # kendo.dataviz.map.BingLayer : kendo.dataviz.map.TileLayer
+
 A tile layer backed by Bing Maps.
 
 ## Constructor Parameters
@@ -24,7 +26,6 @@ The owner Map widget.
 ### baseUrl `String` *(default: "//dev.virtualearth.net/REST/v1/Imagery/Metadata/")*
 
 The Bing API end-point.
-The creator of the workbook.
 
 ### imagerySet `String` *(default: "road")*
 The default imagery set of the map.

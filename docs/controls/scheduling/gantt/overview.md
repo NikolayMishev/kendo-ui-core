@@ -76,19 +76,19 @@ The example below demonstrates how to bind the widget to a remote service.
           batch: true, // Enable batch updates
           transport: {
             read: {
-              url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+              url: "https://demos.telerik.com/kendo-ui/service/gantttasks",
               dataType: "jsonp"
             },
             update: {
-              url: "http://demos.telerik.com/kendo-ui/service/gantttasks/update",
+              url: "https://demos.telerik.com/kendo-ui/service/gantttasks/update",
               dataType: "jsonp"
             },
             create: {
-              url: "http://demos.telerik.com/kendo-ui/service/gantttasks/create",
+              url: "https://demos.telerik.com/kendo-ui/service/gantttasks/create",
               dataType: "jsonp"
             },
             destroy: {
-              url: "http://demos.telerik.com/kendo-ui/service/gantttasks/destroy",
+              url: "https://demos.telerik.com/kendo-ui/service/gantttasks/destroy",
               dataType: "jsonp"
             },
             parameterMap: function(options, operation) {
@@ -121,19 +121,19 @@ The example below demonstrates how to bind the widget to a remote service.
         dependencies: {
           transport: {
             read: {
-              url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+              url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies",
               dataType: "jsonp"
             },
             update: {
-              url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Update",
+              url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies/Update",
               dataType: "jsonp"
             },
             destroy: {
-              url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Destroy",
+              url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies/Destroy",
               dataType: "jsonp"
             },
             create: {
-              url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Create",
+              url: "https://demos.telerik.com/kendo-ui/service/ganttdependencies/Create",
               dataType: "jsonp"
             },
             parameterMap: function(options, operation) {
@@ -277,7 +277,7 @@ The columns in the TreeList section of the Kendo UI Gantt can be individually co
 - `width` - the width of the column.
 - `format` - the format in which the data in the column is represented.
 
-To configure individual columns use the [views](/api/web/gantt#configuration-columns) option.
+To configure individual columns use the [columns](/api/web/gantt#configuration-columns) option.
 
 The example below demonstrates how to configure Gantt columns.
 
@@ -470,11 +470,10 @@ The example below demonstrates how to subscribe to a Gantt event using the `bind
 
 ## See Also
 
-Other articles on Kendo UI Gantt:
-
 * [Gantt JavaScript API Reference](/api/javascript/ui/gantt)
 * [How to Create Custom Views]({% slug howto_create_custom_views_gantt %})
 * [How to Colorize Tasks]({% slug howto_colorize_tasks_gantt %})
+* [Get Familiar with Common Editing Concepts]({% slug kendoui_editing_gettingstarted %})
 * [Overview of the ASP.NET MVC HtmlHelper Extension for the Gantt Widget](/aspnet-mvc/helpers/gantt/overview)
 * [Overview of the Gantt JSP Tag]({% slug overview_gantt_uiforjsp %})
 * [Overview of the Gantt PHP Class](/php/widgets/gantt/overview)

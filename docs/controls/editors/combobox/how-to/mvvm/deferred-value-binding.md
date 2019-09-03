@@ -12,7 +12,7 @@ The following example demonstrates how to configure a deferred value binding in 
 
 ###### Example
 
-```html
+```dojo
   <h2>Combobox Server Side Filter</h2>
 
 	<input id="productID" name="productID"
@@ -81,7 +81,7 @@ The following example demonstrates how to configure a deferred value binding in 
           serverFiltering: true,
           transport: {
               read: {
-                  url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                  url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
               }
           }
         });
@@ -100,8 +100,6 @@ The following example demonstrates how to configure a deferred value binding in 
 
 ## See Also
 
-Other articles on the Kendo UI ComboBox:
-
 * [ComboBox JavaScript API Reference](/api/javascript/ui/combobox)
 * [How to Bypass Boundary Detection]({% slug howto_bypass_boudary_detection_combobox %})
 * [How to Expand ComboBox Located in Bootstrap Layout]({% slug howto_expand_widget_bootstrap_widget_combobox %})
@@ -112,4 +110,4 @@ Other articles on the Kendo UI ComboBox:
 * [How to Select Items on Tab]({% slug howto_select_items_ontab_combobox %})
 * [How to Underline Matched Search]({% slug howto_underline_matched_search_combobox %})
 
-For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_define_virtual_option_combobox %}).
+For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_bindobjectstongmodel_combobox %}).

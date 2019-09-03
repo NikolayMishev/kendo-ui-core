@@ -26,7 +26,7 @@ The example below demonstrates how to configure Canvas rendering.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
         $(function() {
@@ -53,7 +53,7 @@ In this case you can use [inline binding]({% slug databinding_charts_widget %}),
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
     $("#chart").kendoChart({
@@ -77,7 +77,7 @@ The example below demonstrates how to do inline binding with objects.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
     var seriesData = [
@@ -115,7 +115,7 @@ The example below demonstrates how to implement this approach.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
         $(function() {
@@ -134,7 +134,7 @@ The example below demonstrates how to turn off the initial animation only.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
       $(function() {
@@ -171,7 +171,7 @@ The example below demonstrates how to disable gradients.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
         $(function() {
@@ -191,15 +191,47 @@ The example below demonstrates how to disable gradients.
     </script>
 ```
 
-## See Also
+### Reduce the Number of Rendered Elements
 
-Other articles on styling, appearance, and rendering of Kendo UI widgets:
+When you have a lot of data points and categories, having all of them render will not only slow the chart down, but will also make the chart unreadable for the end user.
+
+You can hide certain elements from the chart to improve both aspects:
+
+* hide minor and major grid lines on the x-axis where many categories exist
+* set a step for the category axis labels so only ever n-th label renders
+* use a shorter format string for date axis labels
+* hide labels for series and/or axes entirely
+
+###### Example
+
+```dojo
+    <div id="chart"></div>
+    <script>
+        $(function() {
+            $("#chart").kendoChart({
+               categoryAxis: {
+                  minorGridLines: {visible: false},//hide unnecessary elements
+                  majorGridLines: {visible: false},//hide unnecessary elements
+                  labels: {
+                    step: 60,//every hourly label so they don't overlap
+                    rotation: 90,//rotate so they take up less horizontal space and also reduce overlap
+                    //visible: false,//hide labels altogether, you can set that for the series/seriesDefaults as well
+                    dateFormats: {
+                      days: "HH:mm" //use shorter format for the labels
+                    }
+                  },
+                  baseUnit: "minutes" //set up a date axis, choose an appropriate range for your data
+                },
+                transitions: false
+            });
+        });
+    </script>
+```
+
+## See Also
 
 * [Themes and Appearance of the Kendo UI Widgets]({% slug themesandappearnce_kendoui_desktopwidgets %})
 * [Rendering Modes for Data Visualization]({% slug renderingmodesfor_datavisualization_kendouistyling %})
-
-Other articles on troubleshooting:
-
 * [Common Issues in Kendo UI Charts]({% slug troubleshooting_chart_widget %})
 * [Common Issues in Kendo UI]({% slug troubleshooting_common_issues_kendoui %})
 * [Kendo UI JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
@@ -213,7 +245,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Scheduler]({% slug troubleshooting_scheduler_widget %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

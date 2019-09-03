@@ -1,15 +1,15 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["fr-CD"] = {
         name: "fr-CD",
         numberFormat: {
             pattern: ["-n"],
-            decimals: 0,
+            decimals: 2,
             ",": " ",
             ".": ",",
             groupSize: [3],
             percent: {
-                pattern: ["-n%","%n"],
-                decimals: 0,
+                pattern: ["-n %","n %"],
+                decimals: 2,
                 ",": " ",
                 ".": ",",
                 groupSize: [3],
@@ -18,7 +18,7 @@
             currency: {
                 name: "Congolese Franc",
                 abbr: "CDF",
-                pattern: ["(n$)","n$"],
+                pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",
                 ".": ",",

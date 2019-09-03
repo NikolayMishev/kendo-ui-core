@@ -7,7 +7,9 @@ slug: localization_dialogs_messages_spreadsheet_widget
 
 # List of dialogs Messages
 
-Below is the list of the messages and their namespaces under the `dialogs` category. These are used to [localize the Kendo UI Spreadsheet widget via JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
+The following list provides the messages and their namespaces under the `dialogs` category.
+
+The `dialogs` messages are used to [localize the Spreadsheet through JavaScript]({% slug localization_ofmessages_spreadsheet_widget %}).
 
     if (kendo.spreadsheet && kendo.spreadsheet.messages.dialogs) {
         kendo.spreadsheet.messages.dialogs =
@@ -117,15 +119,12 @@ Below is the list of the messages and their namespaces under the `dialogs` categ
               "typeMessage": "Type message"
             }
           },
-          "saveAsDialog": {
+          "exportAsDialog": {
             "title": "Save As...",
             "labels": {
               "fileName": "File name",
               "saveAsType": "Save as type"
             }
-          },
-          "excelExportDialog": {
-            "title": "Export to Excel..."
           },
           "modifyMergedDialog": {
             "errorMessage": "Cannot change part of a merged cell."
@@ -147,6 +146,7 @@ Below is the list of the messages and their namespaces under the `dialogs` categ
 
 ## See Also
 
+* [List of `colorpicker` Messages]({% slug localization_colorpicker_messages_spreadsheet_widget %})
 * [List of `borderpalette` Messages]({% slug localization_borderpalette_messages_spreadsheet_widget %})
 * [List of `filterMenu` Messages]({% slug localization_filter_menu_messages_spreadsheet_widget %})
 * [List of `toolbar` Messages]({% slug localization_toolbar_messages_spreadsheet_widget%})

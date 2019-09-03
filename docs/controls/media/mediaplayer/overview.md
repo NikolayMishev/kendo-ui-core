@@ -9,7 +9,7 @@ position: 1
 
 # MediaPlayer Overview
 
-The [Kendo UI MediaPlayer widget](http://demos.telerik.com/kendo-ui/mediaplayer/index) plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 `<video>` element and brings powerful media capabilities to your applications without the necessity of installing additional plug-ins.
+The [Kendo UI MediaPlayer widget](http://demos.telerik.com/kendo-ui/mediaplayer/index) plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 `<video>` element and brings powerful media capabilities to your applications without the necessity of installing additional plugins.
 
 The MediaPlayer also offers tight integration with the YouTube media provider. The MediaPlayer comes with the familiar and straightforward way to use Kendo UI widgets and delivers rich media web experience for websites, blogs, online TV channels, e-commerce pages, and others. In addition to the consistent and elegant built-in skins, this new addition to the bundle possesses the main feature of every Kendo UI widget&mdash;it is a useful and convenient tool designed for achieving fascinating results in a sharp time frame.
 
@@ -44,7 +44,7 @@ Once the video files are ready, initialize the MediaPlayer by using the `div` el
 
 ###### Example
 
-```html
+```dojo
 <div id="mediaplayer1" style="width:640px; height: 360px;"></div>
 <script>
     $("#mediaplayer1").kendoMediaPlayer({
@@ -73,7 +73,7 @@ When you add multiple sources for the video, an **HD** button is automatically d
 
 ###### Example
 
-```html
+```dojo
 <div id="mediaplayer1" style="width:640px; height: 360px;"></div>
 <script>
     $("#mediaplayer1").kendoMediaPlayer({
@@ -104,7 +104,7 @@ The example below demonstrates how to access an existing MediaPlayer instance.
 
 ###### Example
 
-```html
+```dojo
 <button onclick="buttonClick();">Pause Video</button>
 <div id="mediaplayer1" style="width:640px; height: 360px;"></div>
 <script>
@@ -142,7 +142,7 @@ function buttonClick() {
 
 ## Keyboard Navigation
 
-The MediaPlayer supports keyboard navigation. To enable it, use the [`navigatable`](/api/javascript/ui/mediaplayer#configuration-navigatable) property.
+The MediaPlayer supports keyboard navigation. To enable it, use the [`navigatable`](/api/javascript/ui/mediaplayer/configuration/navigatable) property.
 
 The following list provides the built-in keyboard commands of the MediaPlayer:
 
@@ -157,7 +157,7 @@ To localize the tooltip texts from the interface, use the configuration options 
 
 ###### Example
 
-```html
+```dojo
 <div id="mediaplayer1" style="width:640px; height: 360px;"></div>
 <script>
     $("#mediaplayer1").kendoMediaPlayer({
@@ -174,7 +174,7 @@ To localize the tooltip texts from the interface, use the configuration options 
 </script>
 ```
 
-For a complete list of [localizable messages](/api/javascript/ui/mediaplayer#configuration-messages), refer to the [MediaPlayer API documentation](/api/javascript/ui/mediaplayer).
+For a complete list of [localizable messages](/api/javascript/ui/mediaplayer/configuration/messages), refer to the [MediaPlayer API documentation](/api/javascript/ui/mediaplayer).
 
 All Kendo UI widgets, including the MediaPlayer, also allow you to add script files and implement [global localization]({% slug overview_localization_kendoui %}) for your application.
 

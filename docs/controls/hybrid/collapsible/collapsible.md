@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI Collapsible
 description: "Create collapsible blocks of content by using the hybrid mobile Kendo UI Collapsible widget and learn how to nest widgets inside it."
 slug: overview_hybridcollapsible
 position: 1
+component: collapsible
 ---
 
 # Overview Collapsible
@@ -49,7 +50,7 @@ To create some scrollable collapsible content, wrap the content in a `div` eleme
 
 ###### Example
 
-```html
+```dojo
     <div id="home" data-role="view">
         <div id="collapsible" data-role="collapsible">
             <h2>Header</h2>
@@ -89,7 +90,7 @@ Collapsible widgets can be nested inside each other, as demonstrated in the exam
 
 ###### Example
 
-```html
+```dojo
     <div id="home" data-role="view" data-init="onInit">
         <div id="collapsible" data-role="collapsible" data-animation="false" data-collapsed="false">
             <h2>Header</h2>
@@ -143,8 +144,6 @@ Collapsible widgets can be nested inside each other, as demonstrated in the exam
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the Collapsible:
 
 * [Hybrid UI Collapsible JavaScript API Reference](/api/javascript/mobile/ui/collapsible)
 * [How to Use DataSource to Render Content]({% slug howto_usedatasourcetorebdercontent_hybridcollapsible %})

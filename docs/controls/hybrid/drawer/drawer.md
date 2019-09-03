@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI Drawer
 description: "Initialize and use a Hybrid UI Drawer component in Kendo UI framework."
 slug: overview_hybriddrawer
 position: 1
+component: drawer
 ---
 
 # Drawer Overview
@@ -126,17 +127,17 @@ The example below demonstrates a button revealing a Drawer.
 
 ### Nested ListView
 
-**Figure 1. Nested ListView with different color schemes**
+**Figure 1: Nested ListView with different color schemes**
 
-![Nested ListView with different color scheme](/controls/hybrid/drawer/ListView-in-Drawer.png)
+![Nested ListView with different color scheme](ListView-in-Drawer.png)
 
 The ListView has different styling when placed in a Drawer.
 
 ### Nested TabStrip
 
-**Figure 2. Nested vertical TabStrip**
+**Figure 2: Nested vertical TabStrip**
 
-![Nested Vertical TabStrip](/controls/hybrid/drawer/TabStrip-in-Drawer.png)
+![Nested Vertical TabStrip](TabStrip-in-Drawer.png)
 
 To activate this feature, set the `km-vertical-tabstrip` class to the TabStrip placed in a Drawer, as demonstrated in the example below.
 
@@ -149,8 +150,6 @@ To activate this feature, set the `km-vertical-tabstrip` class to the TabStrip p
     </div>
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the Drawer:
 
 * [Hybrid UI Drawer JavaScript API Reference](/api/javascript/mobile/ui/drawer)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

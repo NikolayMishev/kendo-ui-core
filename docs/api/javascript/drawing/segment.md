@@ -1,9 +1,11 @@
 ---
 title: Segment
 page_title: API reference for Kendo UI Drawing API Segment
+res_type: api
 ---
 
 # kendo.drawing.Segment : kendo.Class
+
 Defines a path segment with an anchor point and optional curve control points.
 
 Segments are created implicitly by the [Path](path) lineTo and curveTo commands.

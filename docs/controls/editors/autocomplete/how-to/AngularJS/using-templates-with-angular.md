@@ -7,11 +7,11 @@ slug: howto_use_custom_angularjs_templates_autocomplete
 
 # Use Custom Templates
 
-The example below demonstrates how to use AngularJS templates inside the Kendo UI templates of the AutoComplete widget.
+The following example demonstrates how to use AngularJS templates inside the Kendo UI templates of the AutoComplete widget.
 
 ###### Example
 
-```html
+```dojo
     <div id="example" ng-app="KendoDemos">
       <div class="demo-section k-content" ng-controller="MyCtrl">
         <div class="box-col">
@@ -95,7 +95,7 @@ The example below demonstrates how to use AngularJS templates inside the Kendo U
           transport: {
             read: {
               dataType: "jsonp",
-              url: "http://demos.telerik.com/kendo-ui/service/Customers",
+              url: "https://demos.telerik.com/kendo-ui/service/Customers",
             }
           }
         };
@@ -110,7 +110,7 @@ The example below demonstrates how to use AngularJS templates inside the Kendo U
           '</div>',
 
           // using {{angular}} templates:
-          template: '<span class="k-state-default"><img src=\"http://demos.telerik.com/kendo-ui/content/web/Customers/{{dataItem.CustomerID}}.jpg\" alt=\"{{dataItem.CustomerID}}\" /></span>' +
+          template: '<span class="k-state-default"><img src=\"https://demos.telerik.com/kendo-ui/content/web/Customers/{{dataItem.CustomerID}}.jpg\" alt=\"{{dataItem.CustomerID}}\" /></span>' +
           '<span class="k-state-default"><h3>{{dataItem.ContactName}}</h3><p>{{dataItem.CompanyName}}</p></span>',
         };
       });
@@ -120,11 +120,9 @@ The example below demonstrates how to use AngularJS templates inside the Kendo U
 
 ## See Also
 
-Other articles on the Kendo UI AutoComplete:
-
 * [AutoComplete JavaScript API Reference](/api/javascript/ui/autocomplete)
 * [How to Dynamically Change DataSource Based on User Selections]({% slug howto_change_datasource_dynamically_autocomplete %})
 * [How to Highlight Matched Values]({% slug howto_highlight_matched_values_autocomplete %})
 * [How to Restrict Other Users]({% slug howto_restrict_user_input_autocomplete %})
 
-For more runnable examples on the Kendo UI AutoComplete, browse its [**How To** documentation folder]({% slug howto_add_customized_templates_autocomplete %}).
+For more runnable examples on the Kendo UI AutoComplete, browse its [**How To** documentation folder]({% slug howto_bindobjectstongmodel_autocomplete %}).

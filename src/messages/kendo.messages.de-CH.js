@@ -22,8 +22,8 @@
         },
         "number": {
           "eq": "gleich ist",
-          "gt": "größer ist als",
-          "gte": "größer als oder gleich ist",
+          "gt": "grösser ist als",
+          "gte": "grösser als oder gleich ist",
           "lt": "kleiner ist",
           "lte": "kleiner als oder gleich ist",
           "neq": "nicht gleich ist",
@@ -68,8 +68,8 @@
         },
         "number": {
           "eq": "gleich ist",
-          "gt": "größer ist als",
-          "gte": "größer als oder gleich ist",
+          "gt": "grösser ist als",
+          "gte": "grösser als oder gleich ist",
           "lt": "kleiner ist als",
           "lte": "kleiner als oder gleich ist",
           "neq": "nicht gleich ist",
@@ -113,6 +113,7 @@
         "clear": "Löschen",
         "filter": "Filtern",
         "info": "Zeilen mit Wert anzeigen, der",
+        "title": "Zeilen mit Wert anzeigen, der",
         "isFalse": "falsch",
         "isTrue": "richtig",
         "or": "oder",
@@ -224,15 +225,15 @@
         "emptyFolder": "Leeres Verzeichnis",
         "fontName": "Schriftfamilie",
         "fontNameInherit": "(Schrift übernehmen)",
-        "fontSize": "Größe",
-        "fontSizeInherit": "(Größe übernehmen)",
+        "fontSize": "Grösse",
+        "fontSizeInherit": "(Grösse übernehmen)",
         "foreColor": "Farbe",
         "formatBlock": "Absatzstil",
         "imageAltText": "Abwechselnder Text",
         "imageWebAddress": "Web-Adresse",
         "imageWidth": "Breite (px)",
         "imageHeight": "Höhe (px)",
-        "indent": "Einzug vergrößern",
+        "indent": "Einzug vergrössern",
         "insertHtml": "HTML einfügen",
         "insertImage": "Bild einfügen",
         "insertOrderedList": "Numerierte Liste",
@@ -249,7 +250,7 @@
         "linkWebAddress": "Web-Adresse",
         "orderBy": "Sortiert nach:",
         "orderByName": "Name",
-        "orderBySize": "Größe",
+        "orderBySize": "Grösse",
         "outdent": "Einzug verkleinern",
         "overwriteFile": "Eine Datei mit dem Namen \"{0}\" existiert bereits im aktuellen Verzeichnis. Wollen Sie diese überschreiben?",
         "search": "Suchen",
@@ -318,7 +319,7 @@
     "uploadFile": "Hochladen",
     "orderBy": "Sortieren nach",
     "orderByName": "Name",
-    "orderBySize": "Größe",
+    "orderBySize": "Grösse",
     "directoryNotFound": "Das Verzeichnis wurde nicht gefunden.",
     "emptyFolder": "Leeres Verzeichnis",
     "deleteFile": 'Sind Sie sicher, dass Sie "{0}" wirklich löschen wollen?',
@@ -418,7 +419,7 @@
           "update": "Aktualisieren",
           "canceledit": "Abbrechen",
           "create": "Neuen Datensatz hinzufügen",
-          "createchild": "Neuen untergeordneten Datensatz hinzufügen",
+          "createchild": "Kind-Datensatz hinzufügen",
           "destroy": "Löschen",
           "excel": "Exportieren als Excel",
           "pdf": "Exportieren als PDF"
@@ -450,6 +451,26 @@
   if (kendo.ui.Pager) {
     kendo.ui.Pager.prototype.options.messages =
       $.extend(true, kendo.ui.Pager.prototype.options.messages, {
+        "allPages": "Alle",
+        "display": "Einträge {0} - {1} von {2}",
+        "empty": "keine Daten",
+        "first": "Zur ersten Seite",
+        "itemsPerPage": "Elemente pro Seite",
+        "last": "Zur letzten Seite",
+        "next": "Zur nächsten Seite",
+        "of": "von {0}",
+        "page": "Seite",
+        "previous": "Zur vorherigen Seite",
+        "refresh": "Aktualisieren",
+        "morePages": "Weitere Seiten"
+      });
+  }
+
+  /* TreeListPager messages */
+
+  if (kendo.ui.TreeListPager) {
+    kendo.ui.TreeListPager.prototype.options.messages =
+      $.extend(true, kendo.ui.TreeListPager.prototype.options.messages, {
         "allPages": "Alle",
         "display": "Einträge {0} - {1} von {2}",
         "empty": "keine Daten",
@@ -556,7 +577,7 @@
       $.extend(true, kendo.ui.Validator.prototype.options.messages, {
         "required": "{0} ist notwendig",
         "pattern": "{0} ist ungültig",
-        "min": "{0} muss größer oder gleich sein als {1}",
+        "min": "{0} muss grösser oder gleich sein als {1}",
         "max": "{0} muss kleiner oder gleich sein als {1}",
         "step": "{0} ist ungültig",
         "email": "{0} ist keine gültige E-Mail",
@@ -570,7 +591,7 @@
   if (kendo.ui.Dialog) {
     kendo.ui.Dialog.prototype.options.messages =
       $.extend(true, kendo.ui.Dialog.prototype.options.localization, {
-        "close": "Schließen"
+        "close": "Schliessen"
       });
   }
 

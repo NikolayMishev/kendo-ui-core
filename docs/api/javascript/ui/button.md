@@ -1,6 +1,8 @@
 ---
 title: Button
 description: Configuration, methods and events of the Kendo UI Button
+res_type: api
+component: button
 ---
 
 # kendo.ui.Button
@@ -46,6 +48,21 @@ For a list of available icon names, please refer to the [Icons demo](http://demo
 	});
 	</script>
 
+
+### iconClass `String`
+
+Defines a CSS class - or multiple classes separated by spaced - which are applied to a `span` element inside the **Button**. Allows the usage of custom icons.
+
+#### Example
+
+	<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+	<button id="button" type="button">Cancel</button>
+	<script>
+	$("#button").kendoButton({
+		iconClass: "fa fa-male"
+	});
+	</script>
+
 ### imageUrl `String`
 
 Defines a URL, which will be used for an `img` element inside the Button. The URL can be relative or absolute. In case it is relative, it will be evaluated with relation to the web page URL.
@@ -75,7 +92,7 @@ The `img` element can be added automatically by the widget, or an existing eleme
 ### spriteCssClass `String`
 
 Defines a CSS class (or multiple classes separated by spaces), which will be used for applying a background image to a `span` element inside the **Button**.
-In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the [`icon` property](#configuration-icon).
+In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the [`icon` property](/api/javascript/ui/button#configuration-icon).
 
 The `span` element can be added automatically by the widget, or an existing element can be used, if it has a `k-sprite` CSS class applied.
 
@@ -154,5 +171,5 @@ The original DOM event.
 	var button = $("#button").data("kendoButton");
 	button.bind("click", function(e) {
 		alert(e.event.target.tagName);
-	});	
+	});
 	</script>

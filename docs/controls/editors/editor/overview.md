@@ -36,7 +36,7 @@ Depending on the element from which the Editor is created, it assumes 2 mode typ
 
 If you initialize the Editor from a `<textarea>` element, it assumes its classic mode. The `textarea` is not visible and is used to hold the value of the widget. You can type in the `contenteditable iframe` that is created. In the past, `iframes` used to be the only element that allowed for the content to be editable in most browsers.
 
-The classic Editor posts its value automatically because it is based on a `form` element. The tools of the Editor are always visible. Its content does not reside on the main web page and the styling of the page does not influence the editable content. To apply custom styles to the editable content, [inject them through the configuration of the Editor](/api/javascript/ui/editor#configuration-stylesheets).
+The classic Editor posts its value automatically because it is based on a `form` element. The tools of the Editor are always visible. Its content does not reside on the main web page and the styling of the page does not influence the editable content. To apply custom styles to the editable content, [inject them through the configuration of the Editor](/api/javascript/ui/editor/configuration/stylesheets).
 
 [Demo of the Classic Mode Editor](http://demos.telerik.com/kendo-ui/web/editor/index.html)
 
@@ -52,7 +52,7 @@ The inline Editor does not post its value. Posting the value of an inline Editor
 
 [Demo of the Inline Mode Editor](http://demos.telerik.com/kendo-ui/web/editor/inline-editing.html)
 
-> **Important**  
+> **Important**
 >
 > Because of the limited `iframe` support provided by the iOS Safari browser, it is recommended to use the inline Editor mode on iOS devices.
 
@@ -141,7 +141,7 @@ To set a height that is smaller than 200px, use the approach demonstrated in the
 
 ###### Example
 
-```html
+```dojo
 <style>
 
     table.small-editor
@@ -279,8 +279,6 @@ You can also use custom styles with [higher specificity](https://developer.mozil
 
 ## See Also
 
-Other articles on the Kendo UI Editor:
-
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
 * [Image Browser]({% slug image_browser_editor_widget %})
 * [Post-Process Content]({% slug post_process_content_editor_widget %})
@@ -291,5 +289,5 @@ Other articles on the Kendo UI Editor:
 * [Overview of the ASP.NET MVC HtmlHelper Extension of the Editor Widget](/aspnet-mvc/helpers/editor/overview)
 * [Overview of the Editor JSP Tag]({% slug overview_editor_uiforjsp %})
 * [Overview of the Editor PHP Class](/php/widgets/editor/overview)
-
-For how-to examples on the Kendo UI Editor widget, browse its [**How To** documentation folder]({% slug howto_add_max_length_validation_editor %}).
+* [How-To Examples]({% slug howto_handleblurandfocuseventsangular_editor %})
+* [Knowledge Base Section](/knowledge-base)

@@ -90,7 +90,46 @@ First, decide what the best way to get the additional data is. The possible ways
 
 This is the live example of the representation above:
 
-<a class="jsbin-embed" href="http://jsbin.com/ituVUTE/3/embed?live">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
+```dojo
+<div data-role="view" data-layout="default" data-init="viewInit">
+  <ul id="listView"></ul>
+</div>
+
+<section data-role="layout" data-id="default">
+  <header data-role="header">
+    <div data-role="navbar">My App</div>
+  </header>
+</section>
+
+<script>
+  function getData() {
+    var data = [], idx = 0;
+
+    for (; idx < 1000; idx++) {
+      data.push({
+        name: "Name" + idx
+      });
+    }
+
+    return data;
+  }
+
+  var dataSource = new kendo.data.DataSource({
+    data: getData()
+  });
+
+  function viewInit() {
+    $("#listView").kendoMobileListView({
+      dataSource: dataSource,
+      template: "#: name #",
+      endlessScroll: true,
+      virtualViewSize: 50
+    });
+  }
+
+  var app = new kendo.mobile.Application(document.body);
+</script>
+```
 
 ### Bind to Remote Data
 
@@ -118,7 +157,7 @@ This is the live example of the representation above:
       type: "odata",
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+          url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
         }
       },
       schema: {
@@ -136,11 +175,48 @@ This is the live example of the representation above:
 <!--__-->
 This is the live example of the representation above:
 
-<a class="jsbin-embed" href="http://jsbin.com/eHocUTI/2/embed?live">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
+```dojo
+<div data-role="view" data-init="viewInit">
+  <header data-role="header">
+    <div data-role="navbar">My App</div>
+  </header>
+
+  <ul id="remoteListView" data-source="dataSource" data-role="listview" data-template="template" data-endless-scroll="true"></ul>
+</div>
+
+<script id="template" type="text/x-kendo-template">
+#: ProductName #
+</script>
+
+<section data-role="layout" data-id="default">
+
+</section>
+
+<script>
+  var dataSource = new kendo.data.DataSource({
+    type: "odata",
+    transport: {
+      read: {
+        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+      }
+    },
+    schema: {
+      total: "d.__count"
+    },
+    sort: {
+      field: "ProductID",
+      dir: "desc"
+    },
+    serverPaging: true,
+    serverSorting: true,
+    pageSize: 50
+  });
+
+  var app = new kendo.mobile.Application(document.body);
+</script>
+```
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI ListView:
 
 * [Hybrid UI ListView JavaScript API Reference](/api/javascript/mobile/ui/listview)
 * [Overview of the Hybrid UI ListView]({% slug overview_hybridlistview %})

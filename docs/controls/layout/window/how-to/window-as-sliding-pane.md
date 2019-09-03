@@ -7,13 +7,13 @@ slug: howto_windowasslidingpane_window
 
 # Use Windows as Sliding Panes
 
-You can configure the Kendo UI Window so it acquires the visual effect of a sliding UI component.  
+You can configure the Kendo UI Window so it acquires the visual effect of a sliding UI component.
 
 The following example demonstrates how to make the Window behave as a sliding pane.
 
 ###### Example
 
-```html
+```dojo
 <div id="dialog">
   <p>Some content</p>
 </div>
@@ -55,8 +55,6 @@ The following example demonstrates how to make the Window behave as a sliding pa
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Window:
 
 * [Window JavaScript API Reference](/api/javascript/ui/window)
 * [How to Add Auto-Resizing Splitter]({% slug howto_addautoresizingsplitter_window %})

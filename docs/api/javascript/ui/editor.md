@@ -2,6 +2,8 @@
 title: Editor
 page_title: Configuration, methods and events of Kendo UI Editor
 description: Help guide for proper configuration of Editor UI widget, and how to use methods and events.
+res_type: api
+component: editor
 ---
 
 # kendo.ui.Editor
@@ -285,7 +287,7 @@ The title of the tool that aligns the cell text.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
-        
+
       messages: {
         alignCenter: "Align Center"
       }
@@ -1192,6 +1194,21 @@ The title of the tool that makes text italicized.
     });
     </script>
 
+### messages.overflowAnchor `String` *(default: "More tools")*
+
+The title of the tool that shows the overflow tools.
+
+#### Example
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      messages: {
+        overflowAnchor: "More tools"
+      }
+    });
+    </script>
+
 ### messages.justifyCenter `String` *(default: "Center text")*
 
 The title of the tool that aligns text in the center.
@@ -1473,6 +1490,21 @@ The title of the tool that underlines text.
     $("#editor").kendoEditor({
       messages: {
         underline: "Underline"
+      }
+    });
+    </script>
+
+### messages.units `String` *(default: "Units")*
+
+The label of the Units dropdowns in TableWizard dialog.
+
+#### Example
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      messages: {
+        units: "Units"
       }
     });
     </script>
@@ -1773,7 +1805,7 @@ Specifies the file name of the exported PDF file.
     </script>
 
 ### pdf.forceProxy `Boolean` *(default: false)*
-If set to true, the content will be forwarded to [proxyURL](#configuration-pdf.proxyURL) even if the browser supports saving files locally.
+If set to true, the content will be forwarded to [proxyURL](/api/javascript/ui/editor#configuration-pdf.proxyURL) even if the browser supports saving files locally.
 
 ### pdf.keywords `String` *(default: null)*
 
@@ -1946,6 +1978,22 @@ Sets the title of the PDF file.
             pdf: {
                 title : "Overview"
             }
+        });
+    </script>
+
+### placeholder `String` *(default: "")*
+
+The hint displayed by the widget when it is empty. Not set by default.
+
+> **Important**
+>
+> The options is only available in [Classic Mode](/controls/editors/editor/overview#classic-mode).
+
+#### Example - specify the placeholder option
+    <textarea id="editor"></textarea>
+    <script>
+        $("#editor").kendoEditor({
+            placeholder: "Type here..."
         });
     </script>
 
@@ -2136,7 +2184,7 @@ The available editor commands are:
 *   Links, images and files
         - **createLink**, **unlink**, **insertImage**, **insertFile**
 *   Table editing
-        - **createTable**, **addColumnLeft**, **addColumnRight**, **addRowAbove**, **addRowBelow**, **deleteRow**, **deleteColumn**
+        - **tableWizard**, **createTable**, **addColumnLeft**, **addColumnRight**, **addRowAbove**, **addRowBelow**, **deleteRow**, **deleteColumn**
 *   Structural markup and styles
         - **formatting**, **cleanFormatting**
 *   Snippets
@@ -2297,7 +2345,7 @@ Only applicable for the formatting tool. Specifies the context in which the opti
 
 ### tools.palette `String|Array` *(default: null)*
 
-Specifies the [color palette](/api/javascript/ui/colorpicker#configuration-palette) for "foreColor" and "backColor" tools.
+Specifies the [color palette](/api/javascript/ui/colorpicker/configuration/palette) for "foreColor" and "backColor" tools.
 
 #### Example - "websafe" palette
 
@@ -2319,6 +2367,23 @@ Specifies the [color palette](/api/javascript/ui/colorpicker#configuration-palet
         tools: [{
             name: "backColor",
             palette: ["#f0d0c9", "#e2a293", "#d4735e", "#65281a"]
+        }]
+    });
+    </script>
+
+### tools.columns `Number`
+
+Specifies the [colors columns](/api/javascript/ui/colorpicker/configuration/columns) for "foreColor" and "backColor" tools when list of colors are defined.
+
+#### Example - specified columns of the colors
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+        tools: [{
+            name: "foreColor",
+            palette: ["#f0d0c9", "#e2a293", "#d4735e", "#65281a"],
+            columns: 2
         }]
     });
     </script>
@@ -2355,7 +2420,7 @@ The code below shows how to use a template and pass variables to it. This allows
       tools: [
         {
           name: "custom",
-          myText: "Button Text"
+          myText: "Button Text",
           template: $("#toolTemplate").html()
         }
       ]
@@ -3234,6 +3299,9 @@ Configuration for file browser dialog.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: "filebrowser/read",
@@ -3256,6 +3324,9 @@ Defines the allowed file extensions.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         /* omitted for brevity */
         fileTypes: "*.zip"
@@ -3272,6 +3343,9 @@ Defines the initial folder to display, relative to the root.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         /* omitted for brevity */
         path: "/uploads/"
@@ -3294,6 +3368,9 @@ Options or URL for remote file retrieval.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: "/filebrowser/read"
@@ -3307,6 +3384,9 @@ Options or URL for remote file retrieval.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: function(options) {
@@ -3331,6 +3411,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3352,6 +3435,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3370,6 +3456,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3392,6 +3481,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3412,6 +3504,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3432,6 +3527,9 @@ The remote url to call when fetching list of items.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3447,6 +3545,9 @@ The remote url to call when fetching list of items.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           read: {
@@ -3469,6 +3570,9 @@ The URL which will handle the upload of the new files. If not specified the Uplo
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           uploadUrl: "/upload"
@@ -3486,6 +3590,9 @@ The URL responsible for serving the original file. A file name placeholder shoul
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           fileUrl: "/content/files/{0}" //the placeholder will be replaced with the current virtual path and selected file name
@@ -3499,6 +3606,9 @@ The URL responsible for serving the original file. A file name placeholder shoul
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           fileUrl: function (e) {
@@ -3519,6 +3629,9 @@ Options or URL which will handle the file and directory deletion. If not specifi
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: "/destroy"
@@ -3537,6 +3650,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3557,6 +3673,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3575,6 +3694,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3600,6 +3722,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3620,6 +3745,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3639,6 +3767,9 @@ The remote url to call when creating a new record.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3654,6 +3785,9 @@ The remote url to call when creating a new record.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           destroy: {
@@ -3678,6 +3812,9 @@ Options or URL which will handle the directory creation. If not specified that c
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: "/create"
@@ -3696,6 +3833,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3716,6 +3856,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3734,6 +3877,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3759,6 +3905,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3779,6 +3928,9 @@ Refer to the [jQuery.ajax](http://api.jquery.com/jQuery.ajax) documentation for 
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3798,6 +3950,9 @@ The remote url to call when creating a new record.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3813,6 +3968,9 @@ The remote url to call when creating a new record.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         transport: {
           create: {
@@ -3890,6 +4048,9 @@ Defines text for upload button.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           uploadFile: "Upload a file"
@@ -3907,6 +4068,9 @@ Defines text for order by label.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           orderBy: "Order by"
@@ -3924,6 +4088,9 @@ Defines text for Name item of order by drop down list.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           orderByName: "Filename"
@@ -3941,6 +4108,9 @@ Defines text for Size item of order by drop down list.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           orderBySize: "File size"
@@ -3958,6 +4128,9 @@ Defines text for dialog shown when the directory not found error occurs.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           directoryNotFound: "Directory not found!"
@@ -3975,6 +4148,9 @@ Defines text displayed when folder does not contain items.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           emptyFolder: "Folder is empty"
@@ -3992,6 +4168,9 @@ Defines text for dialog shown when the file or directory is deleted.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           deleteFile: "Are you sure? This action cannot be undone."
@@ -4009,6 +4188,9 @@ Defines text for dialog shown when an invalid file is set for upload.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           invalidFileType: "Supported file types are {1}. Please retry your upload."
@@ -4026,6 +4208,9 @@ Defines text for dialog shown when an already existing file is set for upload.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           overwriteFile: "Do you want to overwrite the file with name '{0}'?"
@@ -4043,6 +4228,9 @@ Defines text for search box placeholder.
     <textarea id="editor"></textarea>
     <script>
     $("#editor").kendoEditor({
+	  tools: [
+		"insertFile"
+	  ],
       fileBrowser: {
         messages: {
           search: "Find"
@@ -4061,9 +4249,22 @@ The HTML element which represents the editor content area. In the [classic Edito
 
     <textarea id="editor"></textarea>
     <script>
-    $("#editor").kendoEditor();
-    var editor = $("#editor").data("kendoEditor");
-    editor.body.style.backgroundColor = "#f00";
+      $("#editor").kendoEditor();
+      var editor = $("#editor").data("kendoEditor");
+      editor.body.style.backgroundColor = "#f00";
+    </script>
+
+### toolbar `Object`
+
+The toolbar instance of the Kendo Editor.
+
+#### Example
+
+    <div id="editor"></div>
+    <script>
+      $("#editor").kendoEditor();
+      var editor = $("#editor").data("kendoEditor");
+      editor.toolbar.window.open();
     </script>
 
 ## Methods
@@ -4109,6 +4310,10 @@ Prepares the widget for safe removal from DOM. Detaches all event handlers and r
 
 Gets the HTML encoded value of the editor.
 
+#### Returns
+
+`String` The value of the Editor as HTML encoded string.
+
 #### Example
 
     <textarea id="editor"></textarea>
@@ -4126,7 +4331,7 @@ Executes an editor command on the currently selected text.
 
 ##### name `String`
 
-The name of the command to be executed. The available names match the list of [tools](#configuration-tools), plus `"undo"` and `"redo"`.
+The name of the command to be executed. The available names match the list of [tools](/api/javascript/ui/editor#configuration-tools), plus `"undo"` and `"redo"`.
 
 ##### params `String|Object` *(optional)*
 
@@ -4272,12 +4477,12 @@ Reinitializes the editing area iframe. Should be used after moving the editor in
 
 ### saveAsPDF
 
-Initiates the PDF export and returns a promise. Also triggers the [pdfExport](#events-pdfExport) event.
+Initiates the PDF export and returns a promise. Also triggers the [pdfExport](/api/javascript/ui/editor/events/pdfexport) event.
 
 > Calling this method may trip the built-in browser pop-up blocker. To avoid that, call this method as a response to an end-user action, e.g. a button click.
 
 #### Returns
-`Promise` A promise that will be resolved when the export completes. The same promise is available in the [pdfExport](#events-pdfExport) event arguments.
+`Promise` A promise that will be resolved when the export completes. The same promise is available in the [pdfExport](/api/javascript/ui/editor/events/pdfexport) event arguments.
 
 #### Example - manually initiate PDF export
 

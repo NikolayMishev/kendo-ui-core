@@ -11,8 +11,8 @@ The example below demonstrates how to include custom [FontAwesome](http://fortaw
 
 ###### Example
 
-```html
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+```dojo
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <h3>Menu with font awesome icons</h3>
     <div id="menu"></div>
     <script>
@@ -41,8 +41,6 @@ The example below demonstrates how to include custom [FontAwesome](http://fortaw
 ```
 
 ## See Also
-
-Other articles on the Kendo UI Menu:
 
 * [Menu JavaScript API Reference](/api/javascript/ui/menu)
 * [How to Create Split Button]({% slug howto_createa_split_button_menu %})

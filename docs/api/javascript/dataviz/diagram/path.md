@@ -1,5 +1,6 @@
 ---
 title: Path
+res_type: api
 ---
 
 # kendo.dataviz.diagram.Path
@@ -16,7 +17,7 @@ The SVG Path data. The format follows the standard [SVG format](http://www.w3.or
 
     <div id="diagram"></div>
     <script>
-      $("#diagram").kendoDiagram({ 
+      $("#diagram").kendoDiagram({
         shapes: [{
           visual: function() {
             var group = new kendo.dataviz.diagram.Group();
@@ -27,7 +28,7 @@ The SVG Path data. The format follows the standard [SVG format](http://www.w3.or
             return group;
           }
         }]
-      });       
+      });
     </script>
 
 ### endCap `String|Object`
@@ -38,7 +39,7 @@ The end cap configuration or type name.
 
     <div id="diagram"></div>
     <script>
-      $("#diagram").kendoDiagram({ 
+      $("#diagram").kendoDiagram({
         shapes: [{
           visual: function() {
             var group = new kendo.dataviz.diagram.Group();
@@ -52,7 +53,7 @@ The end cap configuration or type name.
             return group;
           }
         }]
-      });       
+      });
     </script>
 
 ### endCap.fill `String|Object`
@@ -170,7 +171,7 @@ The start cap configuration or type name.
 
     <div id="diagram"></div>
     <script>
-      $("#diagram").kendoDiagram({ 
+      $("#diagram").kendoDiagram({
         shapes: [{
           visual: function() {
             var group = new kendo.dataviz.diagram.Group();
@@ -184,7 +185,7 @@ The start cap configuration or type name.
             return group;
           }
         }]
-      });       
+      });
     </script>
 
 ### startCap.fill `String|Object`

@@ -1,9 +1,11 @@
 ---
 title: ShapeLayer
 page_title: API reference for Kendo UI Map Layer
+res_type: api
 ---
 
 # kendo.dataviz.map.ShapeLayer : kendo.dataviz.map.Layer
+
 Represents a data-bound shape layer.
 
 ## Constructor Parameters

@@ -2,6 +2,7 @@
 title: Query
 page_title: Configuration and methods of the Kendo Query component.
 description: Easy to follow steps for Query component configuration and examples of supported methods.
+res_type: api
 ---
 
 # kendo.data.Query
@@ -110,7 +111,7 @@ Returns a copy of the list filtered according to the expression
 
 ##### expression `Object`
 
-The filter configuration. Accepts the same values as the [filter](datasource#configuration-filter) option (**check there for more examples**).
+The filter configuration. Accepts the same values as the [filter](/api/javascript/data/datasource/configuration/filter) option (**check there for more examples**).
 
 #### Returns
 
@@ -124,13 +125,13 @@ Returns a copy of the list grouped according to the descriptor
 
 ##### descriptor `Object`
 
-The grouping configuration. Accepts the same values as the [group](datasource#configuration-group) option.
+The grouping configuration. Accepts the same values as the [group](/api/javascript/data/datasource/configuration/group) option.
 
 #### Returns
 
 `kendo.data.Query` Returns a new instance of kendo.data.Query containing the grouped collection
 
-## Class methods
+## Class Methods
 
 ### process
 
@@ -144,7 +145,7 @@ The data items collection
 
 ##### options `Object`
 
-Accepts the same values as the [DataSource query](datasource#methods-query) method.
+Accepts the same values as the [DataSource query](/api/javascript/data/datasource/methods/query) method.
 
 #### Returns
 

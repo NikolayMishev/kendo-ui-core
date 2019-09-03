@@ -45,9 +45,9 @@ The Kendo UI Chart widget is rendered by selecting the `div` with a jQuery selec
 
 This results in the chart below.
 
-**Figure 1. An empty chart**
+**Figure 1: An empty chart**
 
-![Empty Chart](/controls/charts/chart-empty.png)</img>
+![Empty Chart](chart-empty.png)
 
 ## Configuration
 
@@ -84,9 +84,9 @@ Start by creating a series that displays inline data.
 
 This results in the chart below.
 
-**Figure 2. A chart without categories**
+**Figure 2: A chart without categories**
 
-![Column Chart without categories](/controls/charts/chart-column-no-categories.png)</img>
+![Column Chart without categories](chart-column-no-categories.png)
 
 Notice that the columns have no label across the category axis. Specify the labeling for the series in the [`categoryAxis` property](/api/dataviz/chart#categoryAxis), as demonstrated in the example below.
 
@@ -107,9 +107,9 @@ Notice that the columns have no label across the category axis. Specify the labe
 
 This results in the chart below.
 
-**Figure 3. A chart with categories**
+**Figure 3: A chart with categories**
 
-![Column Chart with categories](/controls/charts/chart-column-categories.png)</img>
+![Column Chart with categories](chart-column-categories.png)
 
 ## Categorical Charts
 
@@ -155,6 +155,32 @@ The category name can also be bound to a field of the data item, as demonstrated
         }],
         categoryAxis: {
             field: "year"
+        }
+    });
+
+#### Label Positioning for the Categorical Chart Axes
+
+The category and value axes provide options for displaying their labels either next to the axis or at the outer edges of the plot area. By default, the labels are positioned next to the axis.
+
+To change the label position, set the [`position`](/api/javascript/dataviz/ui/chart#configuration-categoryAxis.labels.position) option of the axis labels which provides the following available options:
+* (Default) When `position` is set to `"onAxis"` or `undefined`, the labels are positioned next to the axis.
+* When `position` is set to `"end"`, the labels are placed at the end of the crossing axis. Typically, this configuration positions the labels at the top or right end of the Chart unless the crossing axis was reversed.
+* When `position` is set to `"start"`, the labels are placed at the start of the crossing axis. Typically, this configuration positions the labels at the left or bottom end of the Chart unless the crossing axis was reversed.
+
+###### Example
+
+    $("#container").kendoChart({
+        title: {
+            text: "Average temperature"
+        },
+        series: [{
+            data: [2, -5, 8]
+        }],
+        categoryAxis: {
+            categories: ["Aug", "Sep", "Oct"],
+            labels: {
+                position: 'start'
+            }
         }
     });
 
@@ -222,9 +248,9 @@ The example below demonstrates how to define the `temperature` and `humidity` ax
 
 This results in the chart below.
 
-**Figure 4. A chart with multiple axes**
+**Figure 4: A chart with multiple axes**
 
-![Chart with multiple axes](/controls/charts/chart-multiple-axes.png)
+![Chart with multiple axes](chart-multiple-axes.png)
 
 ### Arrangement of Value Axes
 
@@ -240,9 +266,9 @@ You are able to control the arrangement of the value axes by specifying the valu
 
 The first value axis crosses the category axis at the first category (leftmost). The second value axis crosses it at the last category.
 
-**Figure 5. A chart with customized axis-crossing values**
+**Figure 5: A chart with customized axis-crossing values**
 
-![Bar chart with customized axis crossing values](/controls/charts/chart-axis-crossing-values.png)
+![Bar chart with customized axis crossing values](chart-axis-crossing-values.png)
 
 ## Scatter Charts
 
@@ -263,6 +289,28 @@ XY Kendo UI Charts, such as [Scatter](http://demos.telerik.com/kendo-ui/scatter-
         },
         yAxis: {
             min: 80
+        }
+    });
+
+### Label Positioning for the Scatter Chart Axes
+
+The X and Y axes provide options for displaying their labels either next to the axis or at the outer edges of the plot area. By default, the labels are positioned next to the axis.
+
+To change the label position, set the [`position`](/api/javascript/dataviz/ui/chart#configuration-xAxis.labels.position) option of the axis labels which provides the following available options:
+* (Default) When `position` is set to `"onAxis"` or `undefined`, the labels are positioned next to the axis.
+* When `position` is set to `"end"`, the labels are placed at the end of the crossing axis. Typically, this configuration positions the labels at the top or right end of the Chart unless the crossing axis was reversed.
+* When `position` is set to `"start"`, the labels are placed at the start of the crossing axis. Typically, this configuration positions the labels at the left or bottom end of the Chart unless the crossing axis was reversed.
+
+###### Example
+
+    $("#container").kendoChart({
+        series: [{
+            data: [[0, 2], [1, -5], [2, 8]]
+        }],
+        xAxis: {
+            labels: {
+                position: 'start'
+            }
         }
     });
 
@@ -312,9 +360,9 @@ You are also able to define more X and Y axes in addition to the primary axes, a
 
 The first series is associated with the default Y axis, as no axis name is specified. The `torque` series are plotted on the `torque` Y axis.
 
-**Figure 6. A Scatter chart with multiple axes**
+**Figure 6: A Scatter chart with multiple axes**
 
-![Scatter chart with multiple axes](/controls/charts/chart-scatter-line-multiple-axes.png)
+![Scatter chart with multiple axes](chart-scatter-line-multiple-axes.png)
 
 ### Arrangement of X/Y Axes
 
@@ -330,9 +378,9 @@ You are able to control the arrangement of the X and Y axes by specifying the va
 
 The primary Y axis crosses the X axis at 0 (leftmost). The second, `torque` Y axis crosses the X axis at the 2500 mark or at its right end, whichever comes first.
 
-**Figure 7. A Scatter chart with customized axis-crossing values**
+**Figure 7: A Scatter chart with customized axis-crossing values**
 
-![Scatter line chart with customized axis crossing value](/controls/charts/chart-scatter-line-axis-crossing-value.png)
+![Scatter line chart with customized axis crossing value](chart-scatter-line-axis-crossing-value.png)
 
 ## Axis Features
 
@@ -375,9 +423,9 @@ You can add a title to clearly indicate the role of the axis, as demonstrated be
         }]
     });
 
-**Figure 8. A chart with axis titles**
+**Figure 8: A chart with axis titles**
 
-![Chart with axis titles](/controls/charts/chart-axis-titles.png)
+![Chart with axis titles](chart-axis-titles.png)
 
 ### Plot Bands
 
@@ -403,9 +451,9 @@ Each axis can be configured to display bands with different colors for predefine
     }]
 
 
-**Figure 9. A chart with axis plot bands**
+**Figure 9: A chart with axis plot bands**
 
-![Chart with axis plot bands](/controls/charts/chart-plot-bands.png)
+![Chart with axis plot bands](chart-plot-bands.png)
 
 ### Global Settings
 
@@ -427,8 +475,6 @@ Sometimes you need to apply settings to all axes. In such cases it is convenient
     });
 
 ## See Also
-
-Other articles on Kendo UI Charts:
 
 * [Data Binding of the Chart Widgets]({% slug databinding_charts_widget %})
 * [Date Series]({% slug dateseries_charts_widget %})

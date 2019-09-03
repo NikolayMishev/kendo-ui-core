@@ -124,9 +124,9 @@ To activate this feature, set the `km-required` class to the `label`. This class
 
 ### Inline Fields
 
-**Figure 1. Inline fields in the Nova theme**
+**Figure 1: Inline fields in the Nova theme**
 
-![Inline fields](/controls/hybrid/styles/inline.png)
+![Inline fields](inline.png)
 
 There could be more than one input in a row. This outcome requires explicit width and the `km-inline-field` class set to the label.
 
@@ -146,9 +146,9 @@ There could be more than one input in a row. This outcome requires explicit widt
 
 ### Button as Legend
 
-**Figure 2. Nova theme showing a button as a legend**
+**Figure 2: Nova theme showing a button as a legend**
 
-![Button as Legend](/controls/hybrid/styles/button-as-legend.png)
+![Button as Legend](button-as-legend.png)
 
 Legend tags can have buttons inside. To achieve this outcome set the `km-legend-button` class.
 
@@ -161,9 +161,9 @@ Legend tags can have buttons inside. To achieve this outcome set the `km-legend-
 
 ### Fieldset and Legend
 
-**Figure 3. Nova theme showing a fieldset with a legend**
+**Figure 3: Nova theme showing a fieldset with a legend**
 
-![Fieldset + Legend](/controls/hybrid/styles/fieldset-legend.png)
+![Fieldset + Legend](fieldset-legend.png)
 
 Legend can also be used as a first level Label.
 
@@ -176,9 +176,9 @@ Legend can also be used as a first level Label.
 
 ### Label Icons
 
-**Figure 4. Nova theme showing label icons**
+**Figure 4: Nova theme showing label icons**
 
-![Label icons](/controls/hybrid/styles/label-icons.png)
+![Label icons](label-icons.png)
 
 Labels can only be icons. To get this outcome set the `km-icon-label` and `.km- + data-icon name` classes to the label.
 
@@ -190,9 +190,9 @@ Labels can only be icons. To get this outcome set the `km-icon-label` and `.km- 
 
 ### Labels above fields
 
-**Figure 5. Nova theme showing labels above fields**
+**Figure 5: Nova theme showing labels above fields**
 
-![Labels above fields](/controls/hybrid/styles/labels-above.png)
+![Labels above fields](labels-above.png)
 
 Labels can be positioned above the fields. To achieve this outcome set the `km-label-above` class to the label.
 
@@ -204,9 +204,9 @@ Labels can be positioned above the fields. To achieve this outcome set the `km-l
 
 ### Standalone Checkboxes and Radio Buttons
 
-**Figure 6. Nova theme showing standalone checkboxes and radio buttons**
+**Figure 6: Nova theme showing standalone checkboxes and radio buttons**
 
-![Standalone Checkboxes and RadioButtons](/controls/hybrid/styles/standalone-checksandradios.png)
+![Standalone Checkboxes and RadioButtons](standalone-checksandradios.png)
 
 The Nova theme provides customized presentation for standalone checkboxes and radio buttons via the `km-checkbox` and `km-radio` classes. Currently, these two types of input cannot be styled with CSS only. Therefore, the appearance of the standalone checkboxes and radio buttons relies on whether the `<input>` element is immediately followed by a `<label>` element with the respective `km-checkbox-label` and `km-radio-label` classes.
 
@@ -229,8 +229,6 @@ The example below demonstrates how to show a standalone radio button in the Nova
     <label class="km-radio-label" class="km-label" for="sex2">Female</label>
 
 ## See Also
-
-Other articles related to the appearance and styling of Kendo UI hybrid distribution:
 
 * [Apply CSS]({% slug styling_hybridkendoui %})
 * [Define the Layout]({% slug layout_hybridkendoui %})

@@ -7,11 +7,11 @@ slug: howto_add_title_attribute_numerictextbox
 
 # Add Title Attribute
 
-The example below demonstrates how to add a title attribute to the input element of Kendo UI NumericTextBox.
+The following example demonstrates how to add a `title` attribute to the input element of the NumericTextBox.
 
 ###### Example
 
-```html
+```dojo
 <input id="numerictextbox" value="10" title="this is the numerictextbox title"/>
 <script>
   $(function() {
@@ -25,8 +25,6 @@ The example below demonstrates how to add a title attribute to the input element
 ```
 
 ## See Also
-
-Other articles on the Kendo UI NumericTextBox:
 
 * [NumericTextBox JavaScript API Reference](/api/javascript/ui/numerictextbox)
 * [How to Change Text Color]({% slug howto_change_text_color_numerictextbox %})

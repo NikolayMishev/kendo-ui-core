@@ -130,7 +130,7 @@ An `img` tag should be placed inside the **Button** content. The image should ha
                 ->imageUrl('/images/myIcon.gif')
                 ->content('<img alt="image" class="k-image" />');
 
-    echo $imageButton->render();    
+    echo $imageButton->render();
 
 ### Buttons without Text
 
@@ -162,7 +162,7 @@ The example below demonstrates how to use the `enable` method.
 
     echo $disabledButton->render();
 
-For more information on the [`enable` method of the Button](/api/javascript/ui/button#methods-enable), refer to the [Button API](/api/javascript/ui/button).
+For more information on the [`enable` method of the Button](/api/javascript/ui/button/methods/enable), refer to the [Button API](/api/javascript/ui/button).
 
 ## Reference
 
@@ -171,8 +171,6 @@ For more information on the [`enable` method of the Button](/api/javascript/ui/b
 To reference an existing Button instance, refer to the [introductory article on the Button]({% slug overview_kendoui_button_widget %}#reference).
 
 ## See Also
-
-Other articles on Telerik UI for PHP and on the Button:
 
 * [Overview of the Kendo UI Button Widget]({% slug overview_kendoui_button_widget %})
 * [Telerik UI for PHP API Reference Folder](/api/php/Kendo/UI/AutoComplete)

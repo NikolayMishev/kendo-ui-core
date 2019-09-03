@@ -57,8 +57,6 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.init.call(that, element, options);
 
             options = that.options;
-
-            that._distance = round(options.max - options.min);
             that._isHorizontal = options.orientation == "horizontal";
             that._isRtl = that._isHorizontal && kendo.support.isRtl(element);
             that._position = that._isHorizontal ? "left" : "bottom";
@@ -118,6 +116,10 @@ var __meta__ = { // jshint ignore:line
             tooltip: { enabled: true, format: "{0}" }
         },
 
+        _distance: function(){
+            return round(this.options.max - this.options.min);
+        },
+
         _resize: function() {
             this._setTrackDivWidth();
             this.wrapper.find(".k-slider-items").remove();
@@ -136,10 +138,11 @@ var __meta__ = { // jshint ignore:line
                 options = that.options;
 
             var sizeBetweenTicks = that._maxSelection / ((options.max - options.min) / options.smallStep);
-            var pixelWidths = that._calculateItemsWidth(math.floor(that._distance / options.smallStep));
+            var pixelWidths = that._calculateItemsWidth(math.floor(that._distance() / options.smallStep));
 
             if (options.tickPlacement != "none" && sizeBetweenTicks >= 2) {
-                that._trackDiv.before(createSliderItems(options, that._distance));
+                $(this.element).parent().find(".k-slider-items").remove();
+                that._trackDiv.before(createSliderItems(options, that._distance()));
                 that._setItemsWidth(pixelWidths);
                 that._setItemsTitle();
             }
@@ -187,7 +190,7 @@ var __meta__ = { // jshint ignore:line
                 $(items[first]).addClass("k-last")[that._sizeFn](pixelWidths[last - 1]);
             }
 
-            if (that._distance % options.smallStep !== 0 && !that._isHorizontal) {
+            if (that._distance() % options.smallStep !== 0 && !that._isHorizontal) {
                 for (i = 0; i < pixelWidths.length; i++) {
                     selection += pixelWidths[i];
                 }
@@ -221,7 +224,7 @@ var __meta__ = { // jshint ignore:line
                 items = that.wrapper.find(TICK_SELECTOR),
                 i = 0, item, value;
 
-            if (removeFraction(options.largeStep) % removeFraction(options.smallStep) === 0 || that._distance / options.largeStep >= 3) {
+            if (removeFraction(options.largeStep) % removeFraction(options.smallStep) === 0 || that._distance() / options.largeStep >= 3) {
                 if (!that._isHorizontal && !that._isRtl) {
                     items = $.makeArray(items).reverse();
                 }
@@ -246,13 +249,14 @@ var __meta__ = { // jshint ignore:line
             var that = this,
                 options = that.options,
                 trackDivSize = parseFloat(that._trackDiv.css(that._sizeFn)) + 1,
-                pixelStep = trackDivSize / that._distance,
+                distance = that._distance(),
+                pixelStep = trackDivSize / distance,
                 itemWidth,
                 pixelWidths,
                 i;
 
-            if ((that._distance / options.smallStep) - math.floor(that._distance / options.smallStep) > 0) {
-                trackDivSize -= ((that._distance % options.smallStep) * pixelStep);
+            if ((distance / options.smallStep) - math.floor(distance / options.smallStep) > 0) {
+                trackDivSize -= ((distance % options.smallStep) * pixelStep);
             }
 
             itemWidth = trackDivSize / itemsCount;
@@ -302,11 +306,12 @@ var __meta__ = { // jshint ignore:line
                 options = that.options,
                 val = options.min,
                 selection = 0,
-                itemsCount = math.ceil(that._distance / options.smallStep),
+                distance = that._distance(),
+                itemsCount = math.ceil(distance / options.smallStep),
                 i = 1,
                 lastItem;
 
-            itemsCount += (that._distance / options.smallStep) % 1 === 0 ? 1 : 0;
+            itemsCount += (distance / options.smallStep) % 1 === 0 ? 1 : 0;
             pixelWidths.splice(0, 0, pixelWidths[itemsCount - 2] * 2);
             pixelWidths.splice(itemsCount -1, 1, pixelWidths.pop() * 2);
 
@@ -326,7 +331,7 @@ var __meta__ = { // jshint ignore:line
                 i++;
             }
 
-            lastItem = that._distance % options.smallStep === 0 ? itemsCount - 1 : itemsCount;
+            lastItem = distance % options.smallStep === 0 ? itemsCount - 1 : itemsCount;
 
             that._pixelSteps[lastItem] = that._maxSelection;
             that._values[lastItem] = options.max;
@@ -340,7 +345,7 @@ var __meta__ = { // jshint ignore:line
         _getValueFromPosition: function(mousePosition, dragableArea) {
             var that = this,
                 options = that.options,
-                step = math.max(options.smallStep * (that._maxSelection / that._distance), 0),
+                step = math.max(options.smallStep * (that._maxSelection / that._distance()), 0),
                 position = 0,
                 halfStep = (step / 2),
                 i;
@@ -535,6 +540,26 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        min: function(value){
+            if(!value){
+                return this.options.min;
+            }
+            this.setOptions({"min":value});
+        },
+
+        max: function(value){
+            if(!value){
+                return this.options.max;
+            }
+            this.setOptions({"max":value});
+        },
+
+        setOptions: function(options) {
+            Widget.fn.setOptions.call(this, options);
+            this._sliderItemsInit();
+            this._refresh();
+        },
+
         destroy: function () {
             if (this._form) {
                 this._form.off("reset", this._formResetHandler);
@@ -604,8 +629,8 @@ var __meta__ = { // jshint ignore:line
             firstDragHandleTitle = dragHandleCount == 2 ? options.leftDragHandleTitle : options.dragHandleTitle;
 
         return "<div class='k-slider-track'><div class='k-slider-selection'><!-- --></div>" +
-               "<a href='#' class='k-draghandle' title='" + firstDragHandleTitle + "' role='slider' aria-valuemin='" + options.min + "' aria-valuemax='" + options.max + "' aria-valuenow='" + (dragHandleCount > 1 ? (options.selectionStart || options.min) : options.value || options.min) + "'>Drag</a>" +
-               (dragHandleCount > 1 ? "<a href='#' class='k-draghandle' title='" + options.rightDragHandleTitle + "'role='slider' aria-valuemin='" + options.min + "' aria-valuemax='" + options.max + "' aria-valuenow='" + (options.selectionEnd || options.max) + "'>Drag</a>" : "") +
+               "<a href='#' class='k-draghandle' title='" + firstDragHandleTitle + "' role='slider' aria-valuemin='" + options.min + "' aria-valuemax='" + options.max + "' aria-valuenow='" + (dragHandleCount > 1 ? (options.selectionStart || options.min) : options.value || options.min) + "'></a>" +
+               (dragHandleCount > 1 ? "<a href='#' class='k-draghandle' title='" + options.rightDragHandleTitle + "'role='slider' aria-valuemin='" + options.min + "' aria-valuemax='" + options.max + "' aria-valuenow='" + (options.selectionEnd || options.max) + "'></a>" : "") +
                "</div>";
     }
 
@@ -838,9 +863,15 @@ var __meta__ = { // jshint ignore:line
             that.wrapper
                 .find(".k-button")
                 .off(MOUSE_DOWN)
-                .on(MOUSE_DOWN, kendo.preventDefault)
+                .on(MOUSE_DOWN, function(e) {
+                    e.preventDefault();
+                    $(this).addClass("k-state-active");
+                })
                 .off(MOUSE_UP)
-                .on(MOUSE_UP, kendo.preventDefault)
+                .on(MOUSE_UP, function(e) {
+                    e.preventDefault();
+                    $(this).removeClass("k-state-active");
+                })
                 .off("mouseleave" + NS)
                 .on("mouseleave" + NS, kendo.preventDefault)
                 .off(MOUSE_OVER)
@@ -1015,6 +1046,11 @@ var __meta__ = { // jshint ignore:line
         });
 
         element.click(false);
+
+        // Disable link dragging
+        element.on("dragstart", function(e){
+            e.preventDefault();
+        });
     };
 
     Slider.Drag.prototype = {
@@ -1046,7 +1082,7 @@ var __meta__ = { // jshint ignore:line
             $(document.documentElement).css("cursor", "pointer");
 
             that.dragableArea = owner._getDraggableArea();
-            that.step = math.max(options.smallStep * (owner._maxSelection / owner._distance), 0);
+            that.step = math.max(options.smallStep * (owner._maxSelection / owner._distance()), 0);
 
             if (that.type) {
                 that.selectionStart = options.selectionStart;
@@ -1259,10 +1295,10 @@ var __meta__ = { // jshint ignore:line
 
             if (owner._isHorizontal) {
                 left -= parseInt((width - owner._outerSize(element)) / 2, 10);
-                top -= height + callout.height() + margin;
+                top -= height + margin + (callout.length ? callout.height() : 0);
             } else {
                 top -= parseInt((height - owner._outerSize(element)) / 2, 10);
-                left -= width + callout.width() + margin;
+                left -= width + margin + (callout.length ? callout.width() : 0);
             }
 
             if (owner._isHorizontal) {

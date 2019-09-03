@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI Button
 description: "Initialize the Hybrid UI Button, customize its appearance, and set a button icon in Kendo UI."
 slug: overview_hybridbutton
 position: 1
+component: mobile-button
 ---
 
 # Hybrid UI Button Overview
@@ -123,8 +124,6 @@ To achieve this outcome do not set text to the button.
     <a data-role="button" data-icon="home"></a>
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the Button:
 
 * [Hybrid UI Button JavaScript API Reference](/api/javascript/mobile/ui/button)
 * [Hybrid UI ButtonGroup JavaScript API Reference](/api/javascript/mobile/ui/buttongroup)

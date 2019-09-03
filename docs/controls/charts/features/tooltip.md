@@ -11,9 +11,9 @@ position: 1
 
 The Kendo UI Charts can display details about the data point the mouse is currently hovering. The border of this tooltip matches the color of the series.
 
-**Figure 1. Tooltip in a Kendo UI Chart widget**
+**Figure 1: Tooltip in a Kendo UI Chart widget**
 
-![](/controls/charts/chart-tooltip.png)
+![Chart Tooltip](../chart-tooltip.png)
 
 ## Configuration
 
@@ -61,7 +61,7 @@ The point value can be formatted using the `format` property, as demonstrated in
         format: "Value: {0:N0}"
     }
 
-The format string supports a subset of the syntax available in Java and C#. Here "N0" indicates that the value should be rounded to a whole number and should have a thousands separator.
+Here "N0" indicates that the value should be rounded to a whole number and should have a thousands separator. You can learn more about the number and date formats supported by Kendo UI from the [Number Formatting](/framework/globalization/numberformatting) and [Date Formatting](/framework/globalization/dateformatting) articles.
 
 > **Important**
 >
@@ -96,8 +96,6 @@ When you desire a higher level of flexibility, define the content of a tooltip v
     });
 
 ## See Also
-
-Other articles on Kendo UI Charts:
 
 * [Overview of the Chart Widgets]({% slug overview_kendoui_charts_widget %})
 * [Data Binding]({% slug databinding_charts_widget %})

@@ -2,18 +2,19 @@
 title: Render External Content in Shapes
 page_title: Render External Content in Shapes | Kendo UI Diagram
 description: "Learn how to render HTML content in Kendo UI Diagram shapes."
+previous_url: /kendo-mvc/dataviz/diagram/how-to/external-content-in-shapes
 slug: howto_renderexternalcontent_inshapes_diagram
 ---
 
 # Render External Content in Shapes
 
-The Kendo UI Diagram is rendered by using the [Drawing API](http://docs.telerik.com/kendo-ui/framework/drawing/overview). The shape visual templates allow you to override the rendering entirely, as illustrated in the [Basic Usage](http://demos.telerik.com/kendo-ui/diagram/index) demo.
+The Diagram is rendered through the [Drawing API](http://docs.telerik.com/kendo-ui/framework/drawing/overview).
 
-In addition to manually drawing the shapes, you are able to use the [HTML Drawing](/framework/drawing/drawing-dom) feature to convert existing document content into static drawings.
+The shape visual templates allow you to override the rendering entirely as demonstrated in the [Basic Usage](http://demos.telerik.com/kendo-ui/diagram/index) demo. In addition to the manual drawing of the shapes, you can use the [HTML Drawing](/framework/drawing/drawing-dom) feature to convert existing document content into static drawings.
 
 ###### Example
 
-```html
+```dojo
     <style>
       .container {
         /* Move rendering container off-screen */
@@ -57,13 +58,22 @@ In addition to manually drawing the shapes, you are able to use the [HTML Drawin
       function visualTemplate(options) {
         // Render template and bind it to the current data item
         var dataItem = options.dataItem;
-        var renderElement = $("<div />").appendTo("body");
+        var renderElement = $("<div style='display:inline-block' />").appendTo("body");
         renderElement.html(contentTemplate(dataItem));
 
         // Create a new group that will hold the rendered content
         var output = new kendo.drawing.Group();
+        var width = renderElement.width();
+        var height = renderElement.height();
+        // Create a rectangle using the renderElement dimensions to expand the group while waiting for its actual content
+        var geom = new kendo.geometry.Rect([0, 0], [width, height]);
+        output.append(new kendo.drawing.Rect(geom, { stroke: { width: 0 }}));
+
         draw.drawDOM(renderElement)
-        .then(function(group) {
+          .then(function(group) {
+          /* Remove helper rectangle */
+          output.clear();
+
           output.append(group);
 
           /* Clean-up */
@@ -105,11 +115,9 @@ In addition to manually drawing the shapes, you are able to use the [HTML Drawin
 
 ## See Also
 
-Other articles on the Kendo UI Diagram:
-
 * [JavaScript API Reference](/api/javascript/dataviz/ui/diagram)
 * [How to Drag and Drop on Shapes]({% slug howto_draganddrop_onshapes_diagram %})
 * [How to Show Shapes Tooltip]({% slug howto_shapestooltip_diagram %})
 * [How to Use Scrollbars]({% slug howto_usescrollbar_diagram %})
 
-For more runnable examples on the Kendo UI Diagram, browse the [**How To** documentation folder]({% slug howto_changeshapevisualelements_dynamically_diagram %}).
+For more runnable examples on the Kendo UI Diagram, browse its [**How To** documentation folder]({% slug howto_adjustpathorigin_diagram %}).

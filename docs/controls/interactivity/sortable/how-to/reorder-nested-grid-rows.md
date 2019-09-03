@@ -12,7 +12,7 @@ The example below demonstrates how to reorder rows in a child Grid using the Ken
 
 ###### Example
 
-```html
+```dojo
     <div id="example">
       <div id="grid"></div>
       <script>
@@ -21,7 +21,7 @@ The example below demonstrates how to reorder rows in a child Grid using the Ken
             dataSource: {
               type: "odata",
               transport: {
-                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
+                read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
               },
               pageSize: 6,
               serverPaging: true,
@@ -98,7 +98,7 @@ The example below demonstrates how to reorder rows in a child Grid using the Ken
             dataSource: {
               type: "odata",
               transport: {
-                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
               },
               serverPaging: true,
               serverSorting: true,
@@ -148,12 +148,10 @@ The example below demonstrates how to reorder rows in a child Grid using the Ken
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Sortable:
-
 * [Sortable JavaScript API Reference](/api/javascript/ui/sortable)
 * [How to Nest Sortables]({% slug howto_nestsortables_sortable %})
 * [How to Reorder Multiple Items]({% slug howto_reordermultipleitems_sortable %})
 * [How to Transfer Grid Rows]({% slug howto_transfergridrows_sortable %})
 * [How to Use Sortable in AngularJS with Grid in Batch Editing Mode]({% slug howto_usesortablewith_gridinbatcheditablemode_angular_sortable %})
 
-For more runnable examples on the Kendo UI Sortable, browse its [**How To** documentation folder]({% slug howto_usesortablewithgrid_inincellediting_sortable %}).
+For more runnable examples on the Kendo UI Sortable, browse its [**How To** documentation folder]({% slug howto_usesortablewith_gridinbatcheditablemode_angular_sortable %}).

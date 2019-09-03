@@ -3,6 +3,7 @@ title: AutoComplete
 page_title: AutoComplete | Migrate from Telerik Extensions
 description: "Handle ASP.NET MVC server-side API for the Kendo UI AutoComplete widget."
 slug: autocomplete_migrationextensions_aspnetmvc
+position: 0
 ---
 
 # AutoComplete Migration
@@ -15,20 +16,18 @@ To bind the AutoComplete to any collection, define the `DataTextField`. Note tha
 
 ### Separator
 
-```tab-Previous
+```Previous
 
     Html.Telerik().AutoComplete().Name(“AutoComplete”).Multiple(m => m.Separator(“, “))
 ```
-```tab-Current
+```Current
 
     Html.Kendo().AutoComplete().Name(“AutoComplete”).Separator(“, “)
 ```
 
 ## See Also
 
-Other articles on migrating from Telerik Extensions:
-
 * [Migrate the Calendar]({% slug calendar_migrationextensions_aspnetmvc %})
 * [Migrate the Chart]({% slug chart_migrationextensions_aspnetmvc %})
 
-To see the articles on migrating Kendo UI controls from Telerik Extensions, browse [this section]({% slug combobox_migrationextensions_aspnetmvc %}).
+To see the articles on migrating Kendo UI controls from Telerik Extensions, browse the **Widgets** folder. 

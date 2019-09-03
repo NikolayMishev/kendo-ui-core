@@ -2,9 +2,11 @@
 title: Layer
 page_title: API reference for Kendo UI Map Layer
 previous_url: /api/javascript/dataviz/map/layer/shape
+res_type: api
 ---
 
 # kendo.dataviz.map.Layer : kendo.Class
+
 Represents an individual map layer.
 
 ## Constructor Parameters

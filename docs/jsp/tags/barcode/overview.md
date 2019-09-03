@@ -27,7 +27,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Barco
             return "/dataviz/barcode/index";
         }
 
-**Step 3** Add a barcode with the default [`type`](/api/javascript/dataviz/ui/barcode#configuration-type) (Code39).
+**Step 3** Add a barcode with the default [`type`](/api/javascript/dataviz/ui/barcode/configuration/type) (Code39).
 
 ###### Example
 
@@ -60,8 +60,6 @@ You are able to reference an existing Barcode instance via [`jQuery.data()`](htt
         </script>
 
 ## See Also
-
-Other articles on Telerik UI for JSP and on the Barcode:
 
 * [Overview of the Kendo UI Barcode Widget]({% slug overview_kendoui_barcode_widget %})
 * [Telerik UI for JSP API Reference Folder](/api/jsp/autocomplete/animation)

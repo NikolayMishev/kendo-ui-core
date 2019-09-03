@@ -1,24 +1,24 @@
 (function() {
 
-var tabstrip;
-var mobileOs = false;
+    var tabstrip;
+    var mobileOs = false;
 
-function createTabStrip(options) {
-    tabstrip = new kendo.ui.TabStrip("#tabstrip", $.extend({
-        animation: false
-    }, options));
-}
+    function createTabStrip(options) {
+        tabstrip = new kendo.ui.TabStrip("#tabstrip", $.extend({
+            animation: false
+        }, options));
+    }
 
-function createNonScrollableTabStrip(options) {
-    tabstrip = new kendo.ui.TabStrip("#tabstrip-nonscrollable", $.extend({
-        animation: false
-    }, options));
-}
+    function createNonScrollableTabStrip(options) {
+        tabstrip = new kendo.ui.TabStrip("#tabstrip-nonscrollable", $.extend({
+            animation: false
+        }, options));
+    }
 
-function setupDom() {
-        kendo.effects.disable();
+    function setupDom() {
 
-        QUnit.fixture.append(
+
+        Mocha.fixture.append(
             '<div id="tabstrip" style="width:200px;">' +
             '    <ul>' +
             '        <li class="k-state-active">some item text 1</li>' +
@@ -45,7 +45,7 @@ function setupDom() {
             '</div>'
         );
 
-        QUnit.fixture.append(
+        Mocha.fixture.append(
             '<div id="tabstrip-nonscrollable" style="width:400px;">' +
             '    <ul>' +
             '        <li class="k-state-active">1</li>' +
@@ -55,189 +55,211 @@ function setupDom() {
             '    <div>content 2</div>' +
             '</div>'
         );
-}
-
-module('tabstrip scrolling', {
-    setup: function() {
-        setupDom();
-    },
-
-    teardown: function () {
-        kendo.effects.enable();
-        tabstrip.destroy();
     }
-});
 
-test('scrolling is enabled by default with distance configured', 2, function () {
-    createTabStrip();
+    describe('tabstrip scrolling', function() {
+        beforeEach(function() {
+            setupDom();
+        });
 
-    ok(tabstrip.options.scrollable !== false);
-    ok(!isNaN(tabstrip.options.scrollable.distance));
-});
+        afterEach(function() {
 
-test('scrolling CSS class is applied to TabStrip if tabPosition is top', 1, function () {
-    createTabStrip({tabPosition:"top"});
+            tabstrip.destroy();
+        });
 
-    ok(tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling is enabled by default with distance configured', function() {
+            createTabStrip();
 
-test('scrolling CSS class is applied to TabStrip if tabPosition is bottom', 1, function () {
-    createTabStrip({ tabPosition: "bottom" });
+            assert.isOk(tabstrip.options.scrollable !== false);
+            assert.isOk(!isNaN(tabstrip.options.scrollable.distance));
+        });
 
-    ok(tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling is enabled when scrollable is true with distance configured', function() {
+            createTabStrip({ scrollable: true });
 
-test('scrolling CSS class is not applied to TabStrip if tabPosition is left', 1, function () {
-    createTabStrip({ tabPosition: "left" });
+            assert.isOk(tabstrip.options.scrollable !== false);
+            assert.isOk(!isNaN(tabstrip.options.scrollable.distance));
+            assert.isOk(tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    ok(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling CSS class is applied to TabStrip if tabPosition is top', function() {
+            createTabStrip({ tabPosition: "top" });
 
-test('scrolling CSS class is not applied to TabStrip if tabPosition is right', 1, function () {
-    createTabStrip({ tabPosition: "right" });
+            assert.isOk(tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    ok(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling CSS class is applied to TabStrip if tabPosition is bottom', function() {
+            createTabStrip({ tabPosition: "bottom" });
 
-test('scrolling CSS class is not applied to TabStrip if not needed and tabPosition is top', 1, function () {
-    createNonScrollableTabStrip({ tabPosition: "top" });
+            assert.isOk(tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    ok(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling CSS class is not applied to TabStrip if tabPosition is left', function() {
+            createTabStrip({ tabPosition: "left" });
 
-test('scrolling CSS class is not applied to TabStrip if not needed and tabPosition is bottom', 1, function () {
-    createNonScrollableTabStrip({ tabPosition: "bottom" });
+            assert.isOk(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    ok(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
-});
+        it('scrolling CSS class is not applied to TabStrip if tabPosition is right', function() {
+            createTabStrip({ tabPosition: "right" });
 
-test('scrolling buttons are rendered if tabs do not fit', 3, function () {
-    createTabStrip();
+            assert.isOk(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    var buttons = tabstrip.wrapper.children(".k-button.k-button-icon.k-button-bare");
+        it('scrolling CSS class is not applied to TabStrip if not needed and tabPosition is top', function() {
+            createNonScrollableTabStrip({ tabPosition: "top" });
 
-    equal(buttons.length, 2);
-    ok(buttons.eq(0).is(".k-tabstrip-prev"));
-    ok(buttons.eq(1).is(".k-tabstrip-next"));
-});
+            assert.isOk(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-test('scrolling buttons are not rendered if tabs fit', 1, function () {
-    createNonScrollableTabStrip();
+        it('scrolling CSS class is not applied to TabStrip if not needed and tabPosition is bottom', function() {
+            createNonScrollableTabStrip({ tabPosition: "bottom" });
 
-    var buttons = tabstrip.wrapper.children(".k-button.k-button-icon.k-button-bare");
+            assert.isOk(!tabstrip.wrapper.hasClass("k-tabstrip-scrollable"));
+        });
 
-    equal(buttons.length, 0);
-});
+        it('scrolling buttons are rendered if tabs do not fit', function() {
+            createTabStrip();
 
-test('right scrolling button scrolls to the right by delta when clicked', 1, function () {
-    createTabStrip();
+            var buttons = tabstrip.wrapper.children(".k-button.k-button-icon.k-bare");
 
-    tabstrip.tabGroup.scrollLeft(0);
-    tabstrip.wrapper.children(".k-tabstrip-next").trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
-    
-    equal(tabstrip.tabGroup.scrollLeft(), tabstrip.options.scrollable.distance);
-});
+            assert.equal(buttons.length, 2);
+            assert.isOk(buttons.eq(0).is(".k-tabstrip-prev"));
+            assert.isOk(buttons.eq(1).is(".k-tabstrip-next"));
+        });
 
-test('left scrolling button scrolls to the left by delta when clicked', 1, function () {
-    createTabStrip();
+        it('scrolling buttons are not rendered if tabs fit', function() {
+            createNonScrollableTabStrip();
 
-    tabstrip.tabGroup.scrollLeft(999);
-    var initialScrollPosition = tabstrip.tabGroup.scrollLeft();
-    tabstrip.wrapper.children(".k-tabstrip-prev").trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            var buttons = tabstrip.wrapper.children(".k-button.k-button-icon.k-bare");
 
-    equal(tabstrip.tabGroup.scrollLeft(), initialScrollPosition - tabstrip.options.scrollable.distance);
-});
+            assert.equal(buttons.length, 0);
+        });
 
-test('left scrolling button disappears and appears when (not) needed', 2, function () {
-    createTabStrip();
+        it('right scrolling button scrolls to the right by delta when clicked', function() {
+            createTabStrip();
 
-    var buttonPrev = tabstrip.wrapper.children(".k-tabstrip-prev");
-    var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
+            tabstrip.tabGroup.scrollLeft(0);
+            tabstrip.wrapper.children(".k-tabstrip-next").trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    tabstrip.tabGroup.scrollLeft(0);
-    buttonPrev.trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            assert.equal(tabstrip.tabGroup.scrollLeft(), tabstrip.options.scrollable.distance);
+        });
 
-    ok(!buttonPrev.is(":visible"));
+        it('left scrolling button scrolls to the left by delta when clicked', function() {
+            createTabStrip();
 
-    buttonNext.trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            tabstrip.tabGroup.scrollLeft(999);
+            var initialScrollPosition = tabstrip.tabGroup.scrollLeft();
+            tabstrip.wrapper.children(".k-tabstrip-prev").trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    ok(buttonPrev.is(":visible"));
-});
+            assert.equal(tabstrip.tabGroup.scrollLeft(), initialScrollPosition - tabstrip.options.scrollable.distance);
+        });
 
-test('right scrolling button disappears and appears when (not) needed', 2, function () {
-    createTabStrip();
+        it('left scrolling button disappears and appears when (not) needed', function() {
+            createTabStrip();
 
-    var buttonPrev = tabstrip.wrapper.children(".k-tabstrip-prev");
-    var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
+            var buttonPrev = tabstrip.wrapper.children(".k-tabstrip-prev");
+            var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
 
-    tabstrip.tabGroup.scrollLeft(tabstrip.tabGroup[0].scrollWidth + 100);
-    buttonNext.trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            tabstrip.tabGroup.scrollLeft(0);
+            buttonPrev.trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    ok(!buttonNext.is(":visible"));
+            assert.isOk(!buttonPrev.is(":visible"));
 
-    buttonPrev.trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            buttonNext.trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    ok(buttonNext.is(":visible"));
-});
+            assert.isOk(buttonPrev.is(":visible"));
+        });
 
-test('right scrolling button appears if browser window width is reduced', 2, function () {
-    createTabStrip();
+        it('right scrolling button disappears and appears when (not) needed', function() {
+            createTabStrip();
 
-    var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
+            var buttonPrev = tabstrip.wrapper.children(".k-tabstrip-prev");
+            var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
 
-    tabstrip.tabGroup.scrollLeft(tabstrip.tabGroup[0].scrollWidth + 100);
-    buttonNext.trigger("mousedown").trigger("mouseup");
-    tabstrip.tabGroup.finish();
+            tabstrip.tabGroup.scrollLeft(tabstrip.tabGroup[0].scrollWidth + 100);
+            buttonNext.trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    ok(!buttonNext.is(":visible"));
+            assert.isOk(!buttonNext.is(":visible"));
 
-    tabstrip.wrapper.width(tabstrip.wrapper.width() - 50);
+            buttonPrev.trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-    tabstrip.resize();
+            assert.isOk(buttonNext.is(":visible"));
+        });
 
-    ok(buttonNext.is(":visible"));
-});
+        it('right scrolling button appears if browser window width is reduced', function() {
+            createTabStrip();
 
-module('tabstrip mobile scrolling', {
-    setup: function() {
-        setupDom();
-        mobileOs = kendo.support.mobileOS;
-        kendo.support.mobileOS = true;
-    },
+            var buttonNext = tabstrip.wrapper.children(".k-tabstrip-next");
 
-    teardown: function () {
-        kendo.effects.enable();
-        tabstrip.destroy();
-        kendo.support.mobileOS = mobileOs;
-    }
-});
+            tabstrip.tabGroup.scrollLeft(tabstrip.tabGroup[0].scrollWidth + 100);
+            buttonNext.trigger("mousedown").trigger("mouseup");
+            tabstrip.tabGroup.finish();
 
-test('right scrolling button scrolls to the right by delta when clicked', 1, function () {
-    createTabStrip();
+            assert.isOk(!buttonNext.is(":visible"));
 
-    tabstrip.tabGroup.scrollLeft(0);
-    tabstrip.wrapper.children(".k-tabstrip-next").trigger("touchstart").trigger("touchend");
-    tabstrip.tabGroup.finish();
+            tabstrip.wrapper.width(tabstrip.wrapper.width() - 50);
 
-    equal(tabstrip.tabGroup.scrollLeft(), tabstrip.options.scrollable.distance);
-});
+            tabstrip.resize();
 
-test('left scrolling button scrolls to the left by delta when clicked', 1, function () {
-    createTabStrip();
+            assert.isOk(buttonNext.is(":visible"));
+        });
+    });
 
-    tabstrip.tabGroup.scrollLeft(999);
-    var initialScrollPosition = tabstrip.tabGroup.scrollLeft();
-    tabstrip.wrapper.children(".k-tabstrip-prev").trigger("touchstart").trigger("touchend");
-    tabstrip.tabGroup.finish();
+    describe('tabstrip mobile scrolling', function() {
+        beforeEach(function() {
+            setupDom();
+            mobileOs = kendo.support.mobileOS;
+            kendo.support.mobileOS = true;
+        });
 
-    equal(tabstrip.tabGroup.scrollLeft(), initialScrollPosition - tabstrip.options.scrollable.distance);
-});
+        afterEach(function() {
+
+            tabstrip.destroy();
+            kendo.support.mobileOS = mobileOs;
+        });
+
+        it('right scrolling button scrolls to the right by delta when clicked', function() {
+            createTabStrip();
+
+            tabstrip.tabGroup.scrollLeft(0);
+            tabstrip.wrapper.children(".k-tabstrip-next").trigger("touchstart").trigger("touchend");
+            tabstrip.tabGroup.finish();
+
+            assert.equal(tabstrip.tabGroup.scrollLeft(), tabstrip.options.scrollable.distance);
+        });
+
+        it('left scrolling button scrolls to the left by delta when clicked', function() {
+            createTabStrip();
+
+            tabstrip.tabGroup.scrollLeft(999);
+            var initialScrollPosition = tabstrip.tabGroup.scrollLeft();
+            tabstrip.wrapper.children(".k-tabstrip-prev").trigger("touchstart").trigger("touchend");
+            tabstrip.tabGroup.finish();
+
+            assert.equal(tabstrip.tabGroup.scrollLeft(), initialScrollPosition - tabstrip.options.scrollable.distance);
+        });
+
+        it('scrolling succeeds when jQuert.fx is off', function() {
+            createTabStrip();
+            jQuery.fx.off = true;
+
+            tabstrip.tabGroup.scrollLeft(999);
+            var initialScrollPosition = tabstrip.tabGroup.scrollLeft();
+            tabstrip.wrapper.children(".k-tabstrip-prev").trigger("touchstart").trigger("touchend");
+            tabstrip.tabGroup.finish();
+
+            assert.equal(tabstrip.tabGroup.scrollLeft(), initialScrollPosition - tabstrip.options.scrollable.distance);
+
+            jQuery.fx.off = false;
+        });
 
 
-})();
+    });
+}());

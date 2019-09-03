@@ -32,6 +32,7 @@ $.extend(true, kendo.ui.ColumnMenu.prototype.options.messages,{
   "sortDescending": "Sort Descending",
   "filter": "Filter",
   "columns": "Columns",
+  "columnVisibility": "Column Visibility",
   "done": "Done",
   "settings": "Column Settings",
   "lock": "Lock",
@@ -75,6 +76,7 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "style": "Styles",
   "emptyFolder": "Empty Folder",
   "uploadFile": "Upload",
+  "overflowAnchor": "More tools",
   "orderBy": "Arrange by:",
   "orderBySize": "Size",
   "orderByName": "Name",
@@ -113,6 +115,7 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "summary": "Summary",
   "width": "Width",
   "height": "Height",
+  "units": "Units",
   "cellSpacing": "Cell Spacing",
   "cellPadding": "Cell Padding",
   "cellMargin": "Cell Margin",
@@ -228,6 +231,7 @@ if (kendo.ui.FilterMenu) {
 kendo.ui.FilterMenu.prototype.options.messages =
 $.extend(true, kendo.ui.FilterMenu.prototype.options.messages,{
   "info": "Show items with value that:",
+  "title": "Show items with value that",
   "isTrue": "is true",
   "isFalse": "is false",
   "filter": "Filter",
@@ -404,6 +408,26 @@ $.extend(true, kendo.ui.Pager.prototype.options.messages,{
 });
 }
 
+/* TreeListPager messages */
+
+if (kendo.ui.TreeListPager) {
+kendo.ui.TreeListPager.prototype.options.messages =
+$.extend(true, kendo.ui.TreeListPager.prototype.options.messages,{
+  "allPages": "All",
+  "display": "{0} - {1} of {2} items",
+  "empty": "No items to display",
+  "page": "Page",
+  "of": "of {0}",
+  "itemsPerPage": "items per page",
+  "first": "Go to the first page",
+  "previous": "Go to the previous page",
+  "next": "Go to the next page",
+  "last": "Go to the last page",
+  "refresh": "Refresh",
+  "morePages": "More pages"
+});
+}
+
 /* PivotGrid messages */
 
 if (kendo.ui.PivotGrid) {
@@ -515,6 +539,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
   "save": "Save",
   "cancel": "Cancel",
   "destroy": "Delete",
+  "resetSeries": "Reset Series",
   "deleteWindowTitle": "Delete event",
   "ariaSlotLabel": "Selected from {0:t} to {1:t}",
   "ariaEventLabel": "{0} on {1:D} at {2:t}",
@@ -530,6 +555,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
   },
   "recurrenceMessages": {
     "deleteWindowTitle": "Delete Recurring Item",
+    "resetSeriesWindowTitle": "Reset Series",
     "deleteWindowOccurrence": "Delete current occurrence",
     "deleteWindowSeries": "Delete the series",
     "editWindowTitle": "Edit Recurring Item",
@@ -689,13 +715,6 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
     "placeholders": {
       "typeTitle": "Type title",
       "typeMessage": "Type message"
-    }
-  },
-  "saveAsDialog": {
-    "title": "Save As...",
-    "labels": {
-      "fileName": "File name",
-      "saveAsType": "Save as type"
     }
   },
   "exportAsDialog": {
@@ -904,18 +923,6 @@ $.extend(true, kendo.ui.TreeList.prototype.options.messages,{
 });
 }
 
-if (kendo.ui.TreeList) {
-kendo.ui.TreeList.prototype.options.columnMenu =
-$.extend(true, kendo.ui.TreeList.prototype.options.columnMenu, {
-    "messages": {
-        "columns": "Choose columns",
-        "filter": "Apply filter",
-        "sortAscending": "Sort (asc)",
-        "sortDescending": "Sort (desc)"
-    }
-});
-}
-
 /* TreeView messages */
 
 if (kendo.ui.TreeView) {
@@ -999,6 +1006,68 @@ $.extend(true, kendo.ui.Prompt.prototype.options.localization, {
   "okText": "OK",
   "cancel": "Cancel"
 });
+}
+
+/* List messages */
+
+if (kendo.ui.List) {
+    kendo.ui.List.prototype.options.messages =
+    $.extend(true, kendo.ui.List.prototype.options.messages,{
+      "clear": "clear",
+      "noData": "No data found."
+    });
+}
+
+/* DropDownList messages */
+
+if (kendo.ui.DropDownList) {
+    kendo.ui.DropDownList.prototype.options.messages =
+    $.extend(true, kendo.ui.DropDownList.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* ComboBox messages */
+
+if (kendo.ui.ComboBox) {
+    kendo.ui.ComboBox.prototype.options.messages =
+    $.extend(true, kendo.ui.ComboBox.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* AutoComplete messages */
+
+if (kendo.ui.AutoComplete) {
+    kendo.ui.AutoComplete.prototype.options.messages =
+    $.extend(true, kendo.ui.AutoComplete.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* MultiColumnComboBox messages */
+
+if (kendo.ui.MultiColumnComboBox) {
+    kendo.ui.MultiColumnComboBox.prototype.options.messages =
+    $.extend(true, kendo.ui.MultiColumnComboBox.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* DropDownTree messages */
+
+if (kendo.ui.DropDownTree) {
+    kendo.ui.DropDownTree.prototype.options.messages =
+    $.extend(true, kendo.ui.DropDownTree.prototype.options.messages,{
+        "singleTag": "item(s) selected",
+        "clear": "clear",
+        "deleteTag": "delete",
+        "noData": "No data found."
+    });
+}
+
+/* MultiSelect messages */
+
+if (kendo.ui.MultiSelect) {
+    kendo.ui.MultiSelect.prototype.options.messages =
+    $.extend(true, kendo.ui.MultiSelect.prototype.options.messages,{
+        "singleTag": "item(s) selected",
+        "clear": "clear",
+        "deleteTag": "delete",
+        "noData": "No data found."
+    });
 }
 
 })(window.kendo.jQuery);

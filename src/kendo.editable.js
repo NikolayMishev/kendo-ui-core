@@ -20,11 +20,14 @@ var __meta__ = { // jshint ignore:line
         isFunction = kendo.isFunction,
         isPlainObject = $.isPlainObject,
         inArray = $.inArray,
+        POINT = ".",
+        support = kendo.support,
+        AUTOCOMPLETEVALUE = support.browser.chrome ? "disabled" : "off",
         nameSpecialCharRegExp = /("|\%|'|\[|\]|\$|\.|\,|\:|\;|\+|\*|\&|\!|\#|\(|\)|<|>|\=|\?|\@|\^|\{|\}|\~|\/|\||`)/g,
         ERRORTEMPLATE = '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-i-warning"> </span>' +
                     '#=message#<div class="k-callout k-callout-n"></div></div>',
         CHANGE = "change";
-
+    var EQUAL_SET = "equalSet";
     var specialRules = ["url", "email", "number", "date", "boolean"];
 
     function fieldType(field) {
@@ -33,10 +36,10 @@ var __meta__ = { // jshint ignore:line
     }
 
     function convertToValueBinding(container) {
-        container.find(":input:not(:button, [" + kendo.attr("role") + "=upload], [" + kendo.attr("skip") + "], [type=file]), select").each(function() {
+        container.find(":input:not(:button, .k-combobox .k-input, [" + kendo.attr("role") + "=listbox], [" + kendo.attr("role") + "=upload], [" + kendo.attr("skip") + "], [type=file])").each(function() {
             var bindAttr = kendo.attr("bind"),
                 binding = this.getAttribute(bindAttr) || "",
-                bindingName = this.type === "checkbox" ||  this.type === "radio" ? "checked:" : "value:",
+                bindingName = this.type === "checkbox" || this.type === "radio" ? "checked:" : "value:",
                 fieldName = this.name;
 
             if (binding.indexOf(bindingName) === -1 && fieldName) {
@@ -56,7 +59,8 @@ var __meta__ = { // jshint ignore:line
             BINDING = kendo.attr("bind"),
             rule,
             attr = {
-                name: options.field
+                name: options.field,
+                title: options.title ? options.title : options.field
             };
 
         for (ruleName in validation) {
@@ -65,10 +69,22 @@ var __meta__ = { // jshint ignore:line
             if (inArray(ruleName, specialRules) >= 0) {
                 attr[DATATYPE] = ruleName;
             } else if (!isFunction(rule)) {
-                attr[ruleName] = isPlainObject(rule) ? rule.value || ruleName : rule;
+                var culture = kendo.getCulture();
+
+                if (typeof rule === "number" && culture.name.length) {
+                    var numberFormat = culture.numberFormat;
+                    var stringRule = rule.toString()
+                        .replace(POINT, numberFormat[POINT]);
+
+                    attr[ruleName] = stringRule;
+                } else {
+                    attr[ruleName] = isPlainObject(rule) ? rule.value || ruleName : rule;
+                }
             }
 
             attr[kendo.attr(ruleName + "-msg")] = rule.message;
+
+            attr.autocomplete = AUTOCOMPLETEVALUE;
         }
 
         if (inArray(type, specialRules) >= 0) {
@@ -76,6 +92,17 @@ var __meta__ = { // jshint ignore:line
         }
 
         attr[BINDING] = (type === "boolean" ? "checked:" : "value:") + options.field;
+
+        return attr;
+    }
+
+    function addIdAttribute(container, attr) {
+        var id = container.attr("id");
+
+        if (id) {
+            attr.id = id;
+            container.removeAttr("id");
+        }
 
         return attr;
     }
@@ -123,7 +150,7 @@ var __meta__ = { // jshint ignore:line
         "string": function(container, options) {
             var attr = createAttributes(options);
 
-            $('<input type="text" class="k-input k-textbox"/>').attr(attr).appendTo(container);
+            $('<input type="text" class="k-textbox"/>').attr(attr).appendTo(container);
         },
         "boolean": function(container, options) {
             var attr = createAttributes(options);
@@ -136,6 +163,46 @@ var __meta__ = { // jshint ignore:line
                 kendo.attr("source") + "=\'" + (items ? items.replace(/\'/g,"&apos;") : items) +
                 "\'" + kendo.attr("role") + '="dropdownlist"/>') .attr(attr).appendTo(container);
             $('<span ' + kendo.attr("for") + '="' + options.field + '" class="k-invalid-msg"/>').hide().appendTo(container);
+        }
+    };
+
+    var mobileEditors = {
+        "number": function (container, options) {
+            var attr = createAttributes(options);
+            attr = addIdAttribute(container, attr);
+
+            $('<input type="number"/>').attr(attr).appendTo(container);
+        },
+        "date": function (container, options) {
+            var attr = createAttributes(options);
+            attr = addIdAttribute(container, attr);
+
+            $('<input type="date"/>').attr(attr).appendTo(container);
+        },
+        "string": function (container, options) {
+            var attr = createAttributes(options);
+            attr = addIdAttribute(container, attr);
+
+            $('<input type="text" />').attr(attr).appendTo(container);
+        },
+        "boolean": function (container, options) {
+            var attr = createAttributes(options);
+            attr = addIdAttribute(container, attr);
+
+            $('<input type="checkbox" />').attr(attr).appendTo(container);
+        },
+        "values": function (container, options) {
+            var attr = createAttributes(options);
+            var items = options.values;
+            var select = $('<select />');
+
+            attr = addIdAttribute(container, attr);
+
+            for (var index in items) {
+                $('<option value="' + items[index].value + '">' + items[index].text + '</option>').appendTo(select);
+            }
+
+            select.attr(attr).appendTo(container);
         }
     };
 
@@ -163,6 +230,10 @@ var __meta__ = { // jshint ignore:line
 
             if (options.target) {
                 options.$angular = options.target.options.$angular;
+
+                if (options.target.pane) {
+                    that._isMobile = true;
+                }
             }
             Widget.fn.init.call(that, element, options);
             that._validateProxy = $.proxy(that._validate, that);
@@ -174,13 +245,15 @@ var __meta__ = { // jshint ignore:line
         options: {
             name: "Editable",
             editors: editors,
+            mobileEditors: mobileEditors,
             clearContainer: true,
-            errorTemplate: ERRORTEMPLATE
+            errorTemplate: ERRORTEMPLATE,
+            skipFocus: false
         },
 
         editor: function(field, modelField) {
             var that = this,
-                editors = that.options.editors,
+                editors = that._isMobile ? mobileEditors : that.options.editors,
                 isObject = isPlainObject(field),
                 fieldName = isObject ? field.field : field,
                 model = that.options.model || {},
@@ -251,6 +324,7 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.destroy.call(that);
 
             that.options.model.unbind("set", that._validateProxy);
+            that.options.model.unbind(EQUAL_SET, that._validateProxy);
 
             kendo.unbind(that.element);
 
@@ -322,14 +396,19 @@ var __meta__ = { // jshint ignore:line
             that.options.model.unbind("set", that._validateProxy);
             that.options.model.bind("set", that._validateProxy);
 
+            that.options.model.unbind(EQUAL_SET, that._validateProxy);
+            that.options.model.bind(EQUAL_SET, that._validateProxy);
+
             that.validatable = new kendo.ui.Validator(container, {
                 validateOnBlur: false,
                 errorTemplate: that.options.errorTemplate || undefined,
                 rules: rules });
 
-            var focusable = container.find(":kendoFocusable").eq(0).focus();
-            if (oldIE) {
-                focusable.focus();
+            if (!that.options.skipFocus) {
+                var focusable = container.find(":kendoFocusable").eq(0).focus();
+                if (oldIE) {
+                    focusable.focus();
+                }
             }
         }
    });

@@ -1,279 +1,354 @@
+/* globals createInput, updateInputAt, updateInput, createMasked, stub, deleteContent */
 (function() {
     var MaskedTextBox = kendo.ui.MaskedTextBox,
+        caret = kendo.caret,
         input;
 
-    module("kendo.ui.MaskedTextBox interaction", {
-        setup: function() {
-            input = $("<input />").appendTo(QUnit.fixture);
-        },
-        teardown: function() {
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    function caret(element, start, end) {
-        var range;
-        var isPosition = start !== undefined;
-
-        if (end === undefined) {
-            end = start;
-        }
-
-        if (element.selectionStart !== undefined) {
-            if (isPosition) {
-                element.focus();
-                element.setSelectionRange(start, end);
-            } else {
-                start = [element.selectionStart, element.selectionEnd];
-            }
-        } else if (document.selection) {
-            if ($(element).is(":visible")) {
-                element.focus();
-            }
-            range = document.selection.createRange();
-            if (isPosition) {
-                range.collapse(true);
-                range.moveStart("character", start);
-                range.moveEnd("character", end - start);
-                range.select();
-            } else {
-                var rangeElement = element.createTextRange(),
-                    rangeDuplicated = rangeElement.duplicate(),
-                    selectionStart, selectionEnd;
-
-                    rangeElement.moveToBookmark(range.getBookmark());
-                    rangeDuplicated.setEndPoint('EndToStart', rangeElement);
-                    selectionStart = rangeDuplicated.text.length;
-                    selectionEnd = selectionStart + rangeElement.text.length;
-
-                start = [selectionStart, selectionEnd];
-            }
-        }
-
-        return start;
-    }
-
-    asyncTest("MaskedTextBox shows empty mask on focus", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
+    describe("kendo.ui.MaskedTextBox interaction", function() {
+        beforeEach(function() {
+            input = createInput();
+        });
+        afterEach(function() {
+            kendo.destroy(Mocha.fixture);
         });
 
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            equal(input.val(), "_-_");
-        });
-    });
-
-    asyncTest("MaskedTextBox positions caret in the beginning", 2, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            equal(caret(input[0])[0], 0);
-            equal(caret(input[0])[1], 0);
-        });
-    });
-
-    asyncTest("MaskedTextBox selects whole text if value", 3, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        maskedtextbox.value("1-1");
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            equal(input.val(), "1-1");
-            equal(caret(input[0])[0], 0);
-            equal(caret(input[0])[1], 3);
-        });
-    });
-
-    asyncTest("MaskedTextBox does not remove input value on blur", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        maskedtextbox.value("1-1");
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            input.blur();
-            equal(input.val(), "1-1");
-        });
-    });
-
-    asyncTest("MaskedTextBox removes empty mask on blur", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            input.blur();
-            equal(input.val(), "");
-        });
-    });
-
-    asyncTest("MaskedTextBox does not remove widget value if an empty symbol is left", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "0-0"
-        });
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            input.val("1-_");
-            input.blur();
-
-            equal(input.val(), "1-_");
-        });
-    });
-
-    asyncTest("MaskedTextBox persists empty mask on ENTER", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000"
-        });
-
-        input.focus();
-        setTimeout(function() {
-            start();
-            caret(input[0], 7);
-            input.trigger({
-                type: "keydown",
-                keyCode: kendo.keys.ENTER
+        it("MaskedTextBox shows empty mask on focus", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0-0"
             });
 
-            equal(input.val(), "(___) ___-____");
-        });
-    });
+            input.focus();
 
-    asyncTest("MaskedTextBox should not call mask if e.which is 0", 0, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000"
-        });
-
-        input.focus();
-
-        setTimeout(function() {
-            start();
-            caret(input[0], 7);
-            input.trigger({
-                type: "keypress",
-                which: 0,
-                preventDefault: function() {
-                    ok(false);
-                }
+            setTimeout(function() {
+                assert.equal(maskedtextbox.value(), "_-_");
+                done();
             });
         });
-    });
 
-    asyncTest("MaskedTextBox should not call mask on Ctrl + C", 0, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000"
-        });
+        it("MaskedTextBox positions caret in the beginning", function(done) {
+            createMasked(input, "0-0");
 
-        input.focus();
+            input.focus();
 
-        setTimeout(function() {
-            start();
-            caret(input[0], 7);
-            input.trigger({
-                type: "keypress",
-                which: "c".charCodeAt(0),
-                keyCode: "c".charCodeAt(0),
-                ctrlKey: true,
-                preventDefault: function() {
-                    ok(false);
-                }
+            setTimeout(function() {
+                assert.equal(caret(input[0])[0], 0);
+                assert.equal(caret(input[0])[1], 0);
+                done();
             });
         });
-    });
 
-    asyncTest("Allow pasting with Ctrl+V (MacOS)", 0, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000"
-        });
+        it("MaskedTextBox selects whole text if value", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0-0"
+            });
 
-        input.focus();
+            maskedtextbox.value("1-1");
 
-        setTimeout(function() {
-            start();
-            caret(input[0], 7);
-            input.trigger({
-                type: "keypress",
-                which: "c".charCodeAt(0),
-                keyCode: "c".charCodeAt(0),
-                metaKey: true,
-                preventDefault: function() {
-                    ok(false);
-                }
+            input.focus();
+
+            setTimeout(function() {
+                assert.equal(input.val(), "1-1");
+                assert.equal(caret(input[0])[0], 0);
+                assert.equal(caret(input[0])[1], 3);
+                done();
             });
         });
-    });
 
-    test("MaskedTextBox doesn't show promptChar", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000",
-            clearPromptChar: true,
-            value: "123"
+        it("MaskedTextBox does not remove input value on blur", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0-0"
+            });
+
+            maskedtextbox.value("1-1");
+
+            input.focus();
+
+            setTimeout(function() {
+                input.blur();
+                assert.equal(input.val(), "1-1");
+                done();
+            });
         });
 
-        equal(maskedtextbox.value(), "(123)    -    ");
-    });
+        it("MaskedTextBox removes empty mask on blur", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0-0"
+            });
 
-    asyncTest("MaskedTextBox shows promptChar on focus", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000",
-            clearPromptChar: true,
-            value: "123"
+            input.focus();
+
+            setTimeout(function() {
+                input.blur();
+                assert.equal(maskedtextbox.value(), "");
+                done();
+            });
         });
 
-        input.focus();
+        it("MaskedTextBox does not remove widget value if an empty symbol is left", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0-0"
+            });
 
-        setTimeout(function() {
-            start();
-            equal(maskedtextbox.value(), "(123) ___-____");
-        });
-    });
+            input.focus();
 
-    test("MaskedTextBox shows promptChar on focus", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000",
-            clearPromptChar: true,
-            value: "123"
-        });
+            setTimeout(function() {
+                input.val("1-_");
+                input.blur();
 
-        input.focus();
-        input.focusout();
-
-        equal(maskedtextbox.value(), "(123)    -    ");
-    });
-
-    test("MaskedTextBox does not focus when input is not active", 1, function() {
-        var maskedtextbox = new MaskedTextBox(input, {
-            mask: "(000) 000-0000"
+                assert.equal(input.val(), "1-_");
+                done();
+            });
         });
 
-        input.value = "test";
+        it("MaskedTextBox persists empty mask on ENTER", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000"
+            });
 
-        //trigger change
-        input.trigger("input");
-        input.trigger("propertychange");
+            input.focus();
+            setTimeout(function() {
+                caret(input[0], 7);
+                input.trigger({
+                    type: "keydown",
+                    keyCode: kendo.keys.ENTER
+                });
 
-        notEqual(input[0], kendo._activeElement());
+                assert.equal(input.val(), "(___) ___-____");
+                done();
+            });
+        });
+
+        it("MaskedTextBox should not call mask if e.which is 0", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000"
+            });
+
+            input.focus();
+
+            setTimeout(function() {
+                caret(input[0], 7);
+                input.trigger({
+                    type: "keypress",
+                    which: 0,
+                    preventDefault: function() {
+                        assert.isOk(false);
+                    }
+                });
+                done();
+            });
+        });
+
+        it("MaskedTextBox should not call mask on Ctrl + C", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000"
+            });
+
+            input.focus();
+
+            setTimeout(function() {
+                caret(input[0], 7);
+                input.trigger({
+                    type: "keypress",
+                    which: "c".charCodeAt(0),
+                    keyCode: "c".charCodeAt(0),
+                    ctrlKey: true,
+                    preventDefault: function() {
+                        assert.isOk(false);
+                    }
+                });
+                done();
+            });
+        });
+
+        it("Allow pasting with Ctrl+V (MacOS)", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000"
+            });
+
+            input.focus();
+
+            setTimeout(function() {
+                caret(input[0], 7);
+                input.trigger({
+                    type: "keypress",
+                    which: "c".charCodeAt(0),
+                    keyCode: "c".charCodeAt(0),
+                    metaKey: true,
+                    preventDefault: function() {
+                        assert.isOk(false);
+                    }
+                });
+                done();
+            });
+        });
+
+        it("MaskedTextBox doesn't show promptChar", function() {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000",
+                clearPromptChar: true,
+                value: "123"
+            });
+
+            assert.equal(maskedtextbox.value(), "(123)    -    ");
+        });
+
+        it("MaskedTextBox shows promptChar on focus", function(done) {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000",
+                clearPromptChar: true,
+                value: "123"
+            });
+
+            input.focus();
+
+            setTimeout(function() {
+                assert.equal(maskedtextbox.value(), "(123) ___-____");
+                done();
+            });
+        });
+
+        it("MaskedTextBox shows promptChar on focus", function() {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000",
+                clearPromptChar: true,
+                value: "123"
+            });
+
+            input.focus();
+            input.focusout();
+
+            assert.equal(maskedtextbox.value(), "(123)    -    ");
+        });
+
+        it("MaskedTextBox does not focus when input is not active", function() {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "(000) 000-0000"
+            });
+
+            input.value = "test";
+
+            //trigger change
+            input.trigger("input");
+            input.trigger("propertychange");
+
+            assert.notEqual(input[0], kendo._activeElement());
+        });
+
+        it("Add content in 'input' event when input is focused", function() {
+            var masked = new MaskedTextBox(input, {
+                mask: "00.00",
+                promptChar: "_"
+            });
+
+            masked.value("1");
+            masked.element[0].value = "12_.__";
+
+            input[0].focus();
+            caret(input[0], 2, 2);
+            input.trigger("input");
+            input.trigger("propertychange");
+
+            assert.equal(masked.value(), "12.__");
+        });
+
+        it("Change value in `input` event when input element is focused", function() {
+            var masked = new MaskedTextBox(input, {
+                mask: "00.00"
+            });
+
+            stub(masked, { inputChange: masked.inputChange });
+
+            input[0].focus();
+            input.trigger("input");
+            input.trigger("propetychange");
+
+            assert.equal(masked.calls("inputChange"), 1);
+        });
+
+        it("Prevent change in `input` event when input element is not focused", function() {
+            var masked = new MaskedTextBox(input, {
+                mask: "00.00"
+            });
+
+            stub(masked, { inputChange: masked.inputChange });
+
+            input.trigger("input");
+            input.trigger("propetychange");
+
+            assert.equal(masked.calls("inputChange"), 0);
+        });
+
+        it("MaskedTextBox value is not undefined when clearPromptChar is true and empty mask is used", function() {
+            input.attr("value", "123");
+            var maskedtextbox = new MaskedTextBox(input, {
+                clearPromptChar: true
+            });
+
+            input.focus();
+
+            assert.equal(maskedtextbox.value(), "123");
+        });
+
+        it("MaskTextBox will not shift character if it is not correct", function() {
+            var maskedtextbox = new MaskedTextBox(input, {
+                mask: "0ba",
+                rules: {
+                    "b": function(chr) {
+                        return (chr === "0" || chr === "1" || chr === "2" ||
+                            chr === "3" || chr === "4" || chr === "5");
+                    },
+                    "a": function(chr) {
+                        return (chr === "0" || chr === "1" || chr === "2");
+                    }
+                },
+                value: "9__"
+            });
+
+            updateInput(maskedtextbox, "6");
+
+            assert.equal(input.val(), "6__");
+        });
+
+        it("Entering invalid symbol does not change the value", function() {
+            var masked = createMasked(input, "0-000");
+            masked.value("0-__3");
+
+            updateInputAt(masked, "g", 2);
+
+            assert.equal(input.val(), "0-__3");
+        });
+
+        it("Drop does not change content when deleting", function() {
+            var masked = createMasked(input, "0-000");
+            masked.value("1");
+            stub(masked, { _mask: masked._mask });
+
+            masked.element.trigger("drop");
+            deleteContent(masked, 0);
+
+            assert.equal(masked.calls("_mask"), 0);
+        });
+
+        it("Drop does not change content when deleting", function() {
+            var masked = createMasked(input, "0-000");
+            masked.value("1");
+
+            masked.element.trigger("drop");
+            updateInput(masked, "2");
+
+            assert.equal(masked.value(), "2-1__");
+        });
+
+        it("Detach input event for $angular scenario", function() {
+            input.on("input", function() { assert.isOk(false); });
+            var masked = createMasked(input, "0-000");
+            masked.options.$angular = true;
+
+            masked.setOptions({ mask: "0-0" });
+            input.trigger("input");
+
+            assert.isOk(true);
+        });
+
     });
-})();
+}());

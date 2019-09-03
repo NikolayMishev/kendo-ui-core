@@ -7,11 +7,11 @@ slug: howto_customize_masks_through_mvvmbinding_mvvm_maskedtextbox
 
 # Customize Masks through MVVM Binding
 
-The example below demonstrates how to implement [a custom MVVM binding](http://docs.telerik.com/kendo-ui/framework/mvvm/bindings/custom) to set the widget mask option.
+The following example demonstrates how to implement [a custom MVVM binding](http://docs.telerik.com/kendo-ui/framework/mvvm/bindings/custom) to set the mask option of the MaskedTextBox.
 
 ###### Example
 
-```html
+```dojo
 <div id="example">
     <div class="demo-section k-header">
         <div class="box-col" style="width: 300px">
@@ -51,10 +51,6 @@ The example below demonstrates how to implement [a custom MVVM binding](http://d
 ```
 
 ## See Also
-
-## See Also
-
-Other articles on the Kendo UI MaskedTextBox:
 
 * [MaskedTextBox JavaScript API Reference](/api/javascript/ui/maskedtextbox)
 * [How to Show Custom Placeholder on Blur]({% slug howto_show_custom_placeholderon_blur_maskedtextbox %})

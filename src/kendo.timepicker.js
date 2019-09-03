@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.popup" ], f);
+    define([ "./kendo.popup", "./kendo.dateinput" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -90,9 +90,11 @@ var __meta__ = { // jshint ignore:line
             if (candidate !== undefined) {
                 if (that._current) {
                     that._current
-                        .removeClass(SELECTED)
-                        .removeAttr(ARIA_SELECTED)
-                        .removeAttr(ID);
+                        .removeClass(SELECTED);
+                        if(that._current && that._current.length) {
+                            that._current[0].removeAttribute(ID);
+                            that._current[0].removeAttribute(ARIA_SELECTED);
+                        }
                 }
 
                 if (candidate) {
@@ -127,12 +129,24 @@ var __meta__ = { // jshint ignore:line
 
         open: function() {
             var that = this;
+            var popupHovered;
 
             if (!that.ul[0].firstChild) {
                 that.bind();
             }
 
+            // In some cases when the popup is opened resize is triggered which will cause it to close
+            // Setting the below flag will prevent this from happening
+            // Reference: https://github.com/telerik/kendo/pull/7553
+            popupHovered = that.popup._hovered;
+            that.popup._hovered = true;
+
             that.popup.open();
+
+            setTimeout(function() {
+                that.popup._hovered = popupHovered;
+            }, 1);
+
             if (that._current) {
                 that.scroll(that._current[0]);
             }
@@ -166,17 +180,20 @@ var __meta__ = { // jshint ignore:line
                 format = options.format,
                 offset = dst(),
                 ignoreDST = offset < 0,
+                value = kendo.parseDate(that._value),
+                parsedValue = value ? mergeDateAndTime(value, options.min) : mergeDateAndTime(new Date(), options.min),
                 min = options.min,
                 max = options.max,
                 msMin = getMilliseconds(min),
                 msMax = getMilliseconds(max),
+                msLastTime = getMilliseconds(lastTimeOption(options.interval)),
                 msInterval = options.interval * MS_PER_MINUTE,
                 toString = kendo.toString,
                 template = that.template,
-                start = new DATE(+min),
-                startDay = start.getDate(),
-                msStart, lastIdx,
-                idx = 0, length,
+                start = options.useValueToRender ? parsedValue : new Date(+options.min),
+                startDate = new DATE(start),
+                msStart,
+                length,
                 html = "";
 
             if (ignoreDST) {
@@ -185,8 +202,7 @@ var __meta__ = { // jshint ignore:line
                 length = MS_PER_DAY / msInterval;
             }
 
-
-            if (msMin != msMax) {
+            if (msMin != msMax || msLastTime === msMax) {
                 if (msMin > msMax) {
                     msMax += MS_PER_DAY;
                 }
@@ -194,26 +210,25 @@ var __meta__ = { // jshint ignore:line
                 length = ((msMax - msMin) / msInterval) + 1;
             }
 
-            lastIdx = parseInt(length, 10);
-
-            for (; idx < length; idx++) {
-                if (idx) {
-                    setTime(start, msInterval, ignoreDST);
-                }
-
-                if (msMax && lastIdx == idx) {
+            while (true) {
+                if (msMax && (getMilliseconds(start) >= msMax || startDate.getDate() != start.getDate())) {
                     msStart = getMilliseconds(start);
-                    if (startDay < start.getDate()) {
+                    if (startDate < start) {
                         msStart += MS_PER_DAY;
                     }
-
                     if (msStart > msMax) {
                         start = new DATE(+max);
                     }
+                    if (getMilliseconds(start) > 0) {
+                        html += template(toString(start, format, options.culture));
+                    }
+                    break;
                 }
-
-                that._dates.push(getMilliseconds(start));
+                if (startDate.getDate() != start.getDate()) {
+                    break;
+                }
                 html += template(toString(start, format, options.culture));
+                start.setTime(start.getTime() + msInterval);
             }
 
             that._html(html);
@@ -371,7 +386,9 @@ var __meta__ = { // jshint ignore:line
         _parse: function(value) {
             var that = this,
                 options = that.options,
-                current = that._value || TODAY;
+                min = getMilliseconds(options.min) != getMilliseconds(TODAY) ? options.min : null,
+                max = getMilliseconds(options.max) != getMilliseconds(TODAY) ? options.max : null,
+                current = that._value || min || max || TODAY;
 
             if (value instanceof DATE) {
                 return value;
@@ -468,18 +485,6 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
-    function setTime(date, time, ignoreDST) {
-        var offset = date.getTimezoneOffset(),
-            offsetDiff;
-
-        date.setTime(date.getTime() + time);
-
-        if (!ignoreDST) {
-            offsetDiff = date.getTimezoneOffset() - offset;
-            date.setTime(date.getTime() + offsetDiff * MS_PER_MINUTE);
-        }
-    }
-
     function dst() {
         var today = new DATE(),
             midnight = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0),
@@ -490,6 +495,12 @@ var __meta__ = { // jshint ignore:line
 
     function getMilliseconds(date) {
         return date.getHours() * 60 * MS_PER_MINUTE + date.getMinutes() * MS_PER_MINUTE + date.getSeconds() * 1000 + date.getMilliseconds();
+    }
+
+    function lastTimeOption(interval) {
+        var date = new Date(2100, 0, 1);
+        date.setMinutes(-interval);
+        return date;
     }
 
     function isInRange(value, min, max) {
@@ -566,7 +577,9 @@ var __meta__ = { // jshint ignore:line
                     }
                 },
                 active: function(current) {
-                    element.removeAttr(ARIA_ACTIVEDESCENDANT);
+                    if(element && element.length) {
+                        element[0].removeAttribute(ARIA_ACTIVEDESCENDANT);
+                    }
                     if (current) {
                         element.attr(ARIA_ACTIVEDESCENDANT, timeView._optionID);
                     }
@@ -587,7 +600,8 @@ var __meta__ = { // jshint ignore:line
                    .attr({
                         "role": "combobox",
                         "aria-expanded": false,
-                        "aria-owns": timeView._timeViewID
+                        "aria-owns": timeView._timeViewID,
+                        "autocomplete": "off"
                    });
 
             disabled = element.is("[disabled]") || $(that.element).parents("fieldset").is(':disabled');
@@ -596,7 +610,24 @@ var __meta__ = { // jshint ignore:line
             } else {
                 that.readonly(element.is("[readonly]"));
             }
+            if (options.dateInput) {
+                var min = options.min;
+                var max = options.max;
+                var today = new DATE();
+                if (getMilliseconds(min) == getMilliseconds(max)) {
+                    min = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+                    max = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), 24, 0, 0);
+                }
 
+                that._dateInput = new ui.DateInput(element, {
+                    culture: options.culture,
+                    format: options.format,
+                    min: min,
+                    max: max,
+                    value: options.value,
+                    interval: options.interval
+                });
+            }
             that._old = that._update(options.value || that.element.val());
             that._oldText = element.val();
 
@@ -613,7 +644,8 @@ var __meta__ = { // jshint ignore:line
             value: null,
             interval: 30,
             height: 200,
-            animation: {}
+            animation: {},
+            dateInput: false
         },
 
         events: [
@@ -652,21 +684,30 @@ var __meta__ = { // jshint ignore:line
                 element = that.element.off(ns),
                 wrapper = that._inputWrapper.off(ns);
 
+            if (that._dateInput) {
+                that._dateInput._unbindInput();
+            }
+
             if (!readonly && !disable) {
                 wrapper
                     .addClass(DEFAULT)
                     .removeClass(STATEDISABLED)
                     .on(HOVEREVENTS, that._toggleHover);
 
-                element.removeAttr(DISABLED)
-                       .removeAttr(READONLY)
-                       .attr(ARIA_DISABLED, false)
+                if(element && element.length) {
+                    element[0].removeAttribute(DISABLED);
+                    element[0].removeAttribute(READONLY);
+                }
+                element.attr(ARIA_DISABLED, false)
                        .on("keydown" + ns, proxy(that._keydown, that))
                        .on("focusout" + ns, proxy(that._blur, that))
                        .on("focus" + ns, function() {
                            that._inputWrapper.addClass(FOCUSED);
                        });
 
+                if (that._dateInput) {
+                    that._dateInput._bindInput();
+                }
                arrow.on(CLICK, proxy(that._click, that))
                    .on(MOUSEDOWN, preventDefault);
             } else {
@@ -760,23 +801,28 @@ var __meta__ = { // jshint ignore:line
             that.timeView.toggle();
 
             if (!support.touch && element[0] !== activeElement()) {
-                element.focus();
+                element.trigger("focus");
             }
         },
 
         _change: function(value) {
-            var that = this;
+            var that = this,
+            oldValue = that.element.val(),
+            dateChanged;
 
             value = that._update(value);
+            dateChanged = !kendo.calendar.isEqualDate(that._old, value);
 
-            if (+that._old != +value) {
+            var valueUpdated = dateChanged && !that._typing;
+            var textFormatted = oldValue !== that.element.val();
+
+            if (valueUpdated || textFormatted) {
+                that.element.trigger(CHANGE);
+            }
+
+            if (dateChanged) {
                 that._old = value;
                 that._oldText = that.element.val();
-
-                if (!that._typing) {
-                    // trigger the DOM change event so any subscriber gets notified
-                    that.element.trigger(CHANGE);
-                }
 
                 that.trigger(CHANGE);
             }
@@ -809,6 +855,9 @@ var __meta__ = { // jshint ignore:line
 
             if (timeView.popup.visible() || e.altKey) {
                 timeView.move(e);
+                if (that._dateInput && e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
+                }
             } else if (key === keys.ENTER && value !== that._oldText) {
                 that._change(value);
             } else {
@@ -852,7 +901,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             that._value = date;
-            that.element.val(kendo.toString(date || value, options.format, options.culture));
+            if (that._dateInput && date) {
+                that._dateInput.value(date || value);
+            } else {
+                that.element.val(kendo.toString(date || value, options.format, options.culture));
+            }
             timeView.value(date);
 
             return date;
@@ -871,8 +924,8 @@ var __meta__ = { // jshint ignore:line
             }
 
             wrapper[0].style.cssText = element[0].style.cssText;
-            that.wrapper = wrapper.addClass("k-widget k-timepicker k-header")
-                                  .addClass(element[0].className);
+            that.wrapper = wrapper.addClass("k-widget k-timepicker")
+                .addClass(element[0].className);
 
             element.css({
                 width: "100%",
@@ -912,6 +965,16 @@ var __meta__ = { // jshint ignore:line
 
     function preventDefault(e) {
         e.preventDefault();
+    }
+
+    function mergeDateAndTime(date, time) {
+        return new Date(date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            time.getHours(),
+            time.getMinutes(),
+            time.getSeconds(),
+            time.getMilliseconds());
     }
 
     ui.plugin(TimePicker);

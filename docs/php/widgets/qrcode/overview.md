@@ -25,7 +25,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI QRCod
         $qrcode = new \Kendo\Dataviz\UI\QRCode('qrcode');
         $qrcode->value("foo");
 
-**Step 3** Choose the appropriate [error correction level](/api/javascript/dataviz/ui/qrcode#configuration-errorCorrection) and [encoding](/api/javascript/dataviz/ui/qrcode#configuration-encoding).
+**Step 3** Choose the appropriate [error correction level](/api/javascript/dataviz/ui/qrcode/configuration/errorcorrection) and [encoding](/api/javascript/dataviz/ui/qrcode/configuration/encoding).
 
 ###### Example
 
@@ -57,8 +57,6 @@ You are able to reference an existing QRCode instance via the [`jQuery.data()`](
         </script>
 
 ## See Also
-
-Other articles on Telerik UI for PHP and on the QRCode:
 
 * [Overview of the Kendo UI QRCode Widget]({% slug overview_kendoui_qrcode_widget %})
 * [Telerik UI for PHP API Reference Folder](/api/php/Kendo/UI/AutoComplete)

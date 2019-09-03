@@ -13,13 +13,13 @@ The PivotGrid JSP tag is a server-side wrapper for the [Kendo UI PivotGrid](/api
 
 > **Important**
 >
-> The Kendo UI PivotGrid for JSP supports only Ajax data-binding to HTTP accessible OLAP cube. For more information on the OLAP concepts, refer to the article about the [fundamentals of the OLAP Cube]({%slug fundamentals_pivotgrid_widget %}), the [setup of an OLAP cube]({% slug olap_cube_setup_pivotgrid_widget %}) or use Telerik OLAP service at [http://demos.telerik.com/olap/msmdpump.dll](http://demos.telerik.com/olap/msmdpump.dll).
+> The Kendo UI PivotGrid for JSP supports only Ajax data-binding to HTTP accessible OLAP cube. For more information on the OLAP concepts, refer to the article about the [fundamentals of the OLAP Cube]({%slug fundamentals_pivotgrid_widget %}), the [setup of an OLAP cube]({% slug olap_cube_setup_pivotgrid_widget %}) or use Telerik OLAP service at `http://demos.telerik.com/olap/msmdpump.dll` (the URL does not open directly in the browser).
 
 ## Getting Started
 
 ### Configuration
 
-Below are listed the steps for you to follow when configuring the Kendo UI PivotGrid for JSP to do Ajax binding to an **Adventure Works** cube hosted on [http://demos.telerik.com/olap/msmdpump.dll](http://demos.telerik.com/olap/msmdpump.dll).
+Below are listed the steps for you to follow when configuring the Kendo UI PivotGrid for JSP to do Ajax binding to an **Adventure Works** cube hosted on `http://demos.telerik.com/olap/msmdpump.dll` (the URL does not open directly in the browser).
 
 **Step 1** Make sure you followed all the steps from the [introductory article on Telerik UI for JSP]({% slug overview_uiforjsp %}).
 
@@ -42,7 +42,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Pivot
 
 ###### Example
 
-        <c:url value="http://demos.telerik.com/olap/msmdpump.dll" var="transportReadUrl" />  
+        <c:url value="http://demos.telerik.com/olap/msmdpump.dll" var="transportReadUrl" />
 
 **Step 5** Add a `pivotgrid` tag.
 
@@ -50,11 +50,11 @@ Below are listed the steps for you to follow when configuring the Kendo UI Pivot
 
         <kendo:pivotGrid name="pivotgrid">
     		<kendo:pivotDataSource type="xmla">
-    			<kendo:pivotDataSource-columns>				
+    			<kendo:pivotDataSource-columns>
     				<kendo:pivotDataSource-column name="[Date].[Calendar]" expand="true"/>
     				<kendo:pivotDataSource-column name="[Geography].[City]"/>
     			</kendo:pivotDataSource-columns>
-    			<kendo:pivotDataSource-rows>				
+    			<kendo:pivotDataSource-rows>
     				<kendo:pivotDataSource-row name="[Product].[Product]"/>
     			</kendo:pivotDataSource-rows>
     			<kendo:pivotDataSource-measures>
@@ -64,9 +64,9 @@ Below are listed the steps for you to follow when configuring the Kendo UI Pivot
     			</kendo:pivotDataSource-schema>
     			<kendo:pivotDataSource-transport>
     				<kendo:pivotDataSource-transport-connection catalog="Adventure Works DW 2008R2" cube="Adventure Works"/>
-    				<kendo:pivotDataSource-transport-discover url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">					
+    				<kendo:pivotDataSource-transport-discover url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">
     				</kendo:pivotDataSource-transport-discover>
-    				<kendo:pivotDataSource-transport-read url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">					
+    				<kendo:pivotDataSource-transport-read url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">
     				</kendo:pivotDataSource-transport-read>
     			</kendo:pivotDataSource-transport>
     		</kendo:pivotDataSource>
@@ -86,11 +86,11 @@ You can subscribe to all [events exposed by Kendo UI PivotGrid](/api/javascript/
 
         <kendo:pivotGrid name="pivotgrid" dataBound="pivotgrid_dataBound" expandMember="pivotgrid_expandMember" collapseMember="pivotgrid_collapseMember">
     		<kendo:pivotDataSource type="xmla">
-    			<kendo:pivotDataSource-columns>				
+    			<kendo:pivotDataSource-columns>
     				<kendo:pivotDataSource-column name="[Date].[Calendar]" expand="true"/>
     				<kendo:pivotDataSource-column name="[Geography].[City]"/>
     			</kendo:pivotDataSource-columns>
-    			<kendo:pivotDataSource-rows>				
+    			<kendo:pivotDataSource-rows>
     				<kendo:pivotDataSource-row name="[Product].[Product]"/>
     			</kendo:pivotDataSource-rows>
     			<kendo:pivotDataSource-measures>
@@ -100,9 +100,9 @@ You can subscribe to all [events exposed by Kendo UI PivotGrid](/api/javascript/
     			</kendo:pivotDataSource-schema>
     			<kendo:pivotDataSource-transport>
     				<kendo:pivotDataSource-transport-connection catalog="Adventure Works DW 2008R2" cube="Adventure Works"/>
-    				<kendo:pivotDataSource-transport-discover url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">					
+    				<kendo:pivotDataSource-transport-discover url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">
     				</kendo:pivotDataSource-transport-discover>
-    				<kendo:pivotDataSource-transport-read url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">					
+    				<kendo:pivotDataSource-transport-read url="${transportReadUrl}" dataType="text" contentType="text/xml" type="POST">
     				</kendo:pivotDataSource-transport-read>
     			</kendo:pivotDataSource-transport>
     		</kendo:pivotDataSource>
@@ -139,8 +139,6 @@ You are able to reference an existing PivotGrid instance via [`jQuery.data()`](h
     </script>
 
 ## See Also
-
-Other articles on Telerik UI for JSP and on the PivotGrid:
 
 * [Overview of the Kendo UI PivotGrid Widget]({% slug overview_kendoui_pivotgrid_widget %})
 * [Telerik UI for JSP API Reference Folder](/api/jsp/autocomplete/animation)

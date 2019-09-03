@@ -1,6 +1,6 @@
 ---
 title: Wrappers vs Widgets
-page_title: Wrappers vs Widgets | Telerik UI for ASP.NET MVC
+page_title: Wrappers vs Widgets - Getting Started
 description: "Compare the HTML- and JavaScript-based Kendo UI widgets and their ASP.NET MVC wrappers."
 slug: wrappersvswidgets_aspnetmvc
 previous_url: /kendo-ui-vs-mvc-wrappers
@@ -9,13 +9,15 @@ position: 10
 
 # Wrappers vs Widgets
 
-From a client-side point of view, the vanilla HTML/JavaScript Kendo UI widgets and their ASP.NET MVC wrappers (UI helpers) represent the same thing and provide the same capabilities. However, there are some implementation specifications to consider before choosing one product over the other.
+From a client-side point of view, the vanilla HTML/JavaScript Kendo UI widgets and their ASP.NET MVC wrappers (UI helpers) represent the same thing and provide the same capabilities.
 
-## Lists of Pros
+However, before choosing one product over another, you need to consider existing implementation specifications.
+
+## List of Pros and Cons
 
 ### Telerik UI for ASP.NET MVC Wrappers
 
-The UI for ASP.NET MVC helpers (Kendo UI MVC wrappers) provide the following benefits:
+The Telerik UI for ASP.NET MVC helpers (Kendo UI MVC wrappers) provide the following benefits:
 
 * They enable you to create widgets with no HTML and JavaScript coding. JavaScript knowledge is still required if you want to apply client-side methods and events.
 * They provide for [server-side data binding]({% slug serverbinding_grid_aspnetmvc %}) and in some cases, server-side rendering.
@@ -39,7 +41,7 @@ The vanilla HTML/JavaScript Kendo UI widgets (Kendo UI Professional) provide the
 
 ## Conclusion
 
-You can use UI for ASP.NET MVC helpers and vanilla Kendo UI widgets at the same time on the same page, if a specific scenario requires that.
+You can use Telerik UI for ASP.NET MVC helpers and vanilla Kendo UI widgets at the same time on the same page, if a specific scenario requires that.
 
 ## See Also
 

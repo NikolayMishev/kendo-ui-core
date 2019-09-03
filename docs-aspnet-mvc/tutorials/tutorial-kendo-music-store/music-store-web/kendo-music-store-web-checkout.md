@@ -8,9 +8,7 @@ position: 9
 
 # Create the Checkout Page
 
-**Figure 1. A screenshot of the Kendo UI Music Store Checkout page**
-
-![kendo-checkout-screenshot](/tutorials/tutorial-kendo-music-store/music-store-web/images/kendo-checkout-screenshot.png)
+![A screenshot of the Kendo UI Music Store Checkout page](images/kendo-checkout-screenshot.png)
 
 Users navigate to the Checkout page when they hover over the Shopping Cart Menu and click the **Checkout** button. This provides them with a chance to review the items in their cart. Users can change quantities or remove items from the cart and review the subtotal.
 
@@ -19,8 +17,6 @@ Users navigate to the Checkout page when they hover over the Shopping Cart Menu 
 ### Create the Grid
 
 The examples use an MVVM-bound [Kendo UI Grid](http://demos.telerik.com/kendo-ui/web/grid/index.html) widget to render the shopping cart contents on the Checkout page. This is done by defining a `<div>` element and specifying `data-role="grid"`.
-
-###### Example
 
     <div id="cart-grid"
         data-role="grid"
@@ -42,8 +38,6 @@ The `data-scrollable="false"` attribute tells the grid to display its entire con
 The `data-columns` attribute contains a JSON formatted array. Each item in the array represents a column.
 
 The `data-row-template="rowTemplate"` attribute specifies a custom row template to use for each item. The example uses a row template because it aims at customizing the layout of each row to show the album art and always show the editor for the quantity. The template is then defined as demonstrated in the example below.
-
-###### Example
 
     <script id="rowTemplate" type="text/x-kendo-tmpl">
         <tr>
@@ -67,8 +61,6 @@ The `data-row-template="rowTemplate"` attribute specifies a custom row template 
 
 Finally, on page load the page is bound to the view model.
 
-###### Example
-
     (function ($, kendo, store) {
         var cartDataSource = store.cart.getCart();
 
@@ -90,8 +82,6 @@ Finally, on page load the page is bound to the view model.
 
 When a **Remove** button is clicked, the `remove()` function on the view model is called. The data record that is bound to that grid row is located in `e.data` and is used to remove it from the data source.
 
-###### Example
-
         remove: function (e) {
             this.cartItems.remove(e.data);
         },
@@ -100,15 +90,11 @@ When a **Remove** button is clicked, the `remove()` function on the view model i
 
 In the HTML at the bottom of the Checkout page, an element to display the subtotal and bind it to the `total` property on the view model is included.
 
-###### Example
-
     <td data-bind="textFormatted: Total" data-format="c"></td>
 
 This is using a custom binder named `textFormatted` to format the number as a currency. This custom binder is located in the `Scripts\App\kendo-custom-bindings.js` file.
 
 When the Checkout page is loaded, include a `calcTotal()` function and bind it to the `change` event on the data source.
-
-###### Example
 
     var cartDataSource = store.cart.getCart();
 
@@ -126,8 +112,6 @@ When the Checkout page is loaded, include a `calcTotal()` function and bind it t
 For any item in the cart, if the quantity is changed or removed, the `calcTotal()` function is called. This then calls `viewModel.set("total", store.cart.getTotalPrice());` which updates the `total` property on the view model to the sum of all the items. The MVVM framework then updates the element's text to show the total amount.
 
 ## See Also
-
-Other articles on the Kendo UI Music Store Web Application sample project:
 
 * [Overview of the Kendo UI Music Store Sample Project]({% slug overview_muscistoretutorial_aspnetmvc %})
 * [Set Up the Kendo UI Music Store Web App]({% slug projectsetup_muscistorewebapp_aspnetmvc %})

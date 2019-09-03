@@ -3,6 +3,7 @@ title: kendo
 page_title: API Reference for methods and properties in Kendo UI Framework
 description: Examples and detailed explanation of Kendo UI methods and properties.
 previous_url: /api/introduction
+res_type: api
 ---
 
 # kendo
@@ -32,11 +33,13 @@ found on the page.
 These include tokens used by ASP.NET, Ruby on Rails and others.
 
 #### Example - Send CSRF tokens in DataSource read request
+
+    <input type="hidden" name="__RequestVerificationToken" value="token" />
     <script>
     var dataSource = new kendo.data.DataSource({
       transport: {
         read: {
-          url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+          url: "https://demos.telerik.com/kendo-ui/service/products",
           dataType: "jsonp",
           data: function() {
             return kendo.antiForgeryTokens();
@@ -46,15 +49,16 @@ These include tokens used by ASP.NET, Ruby on Rails and others.
     });
 
     dataSource.fetch();
+    // check the request in the NetworkTab
     </script>
 
 #### Returns
 `Object` An object that contains common CSRF tokens found on the page
 
 ### bind
-Binds a HTML View to a View-Model and initializes Kendo UI widgets from DOM elements based on `data-role` attributes, similar to [`kendo.init()`](#methods-init).
+Binds a HTML View to a View-Model and initializes Kendo UI widgets from DOM elements based on `data-role` attributes, similar to [`kendo.init()`](/api/javascript/kendo/methods/init).
 
-Model View ViewModel ([MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel)) is a design pattern which helps developers separate the Model from the View. The View-Model part of MVVM is responsible for
+Model View ViewModel ([MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)) is a design pattern which helps developers separate the Model from the View. The View-Model part of MVVM is responsible for
 exposing the data objects from the Model in such a way that those objects are easily consumed in the View.
 
 > **Important:** Kendo UI Mobile is not included in the default list of initialized namespaces. You can initialize it explicitly by
@@ -107,6 +111,141 @@ The View-Model which the elements are bound to. Wrapped as an instance of `kendo
 Optional namespace to look in when instantiating Kendo UI widgets. The valid namespaces are `kendo.ui`, `kendo.dataviz.ui` and `kendo.mobile.ui`. If omitted
 `kendo.ui` will be used. Multiple namespaces can be passed.
 
+### confirm
+Opens a [Kendo UI Confirm](/api/javascript/ui/confirm) popup. Similar to the native [window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) method.
+
+#### Example - Open a Kendo UI Confirm on the page
+
+    <script>
+        kendo.confirm("Confirm text");
+    </script>
+
+#### Parameters
+
+##### text `String`
+
+The text to be shown in the Confirm popup.
+
+#### Returns
+
+`Promise` a [jQuery promise instance](https://api.jquery.com/Types/#Promise), which can be used for callbacks, or passed to [jQuery.when](https://api.jquery.com/jQuery.when/). The jQuery Deferred object resolves to:
+
+* `done()` - when user has pressed the "OK" button;
+* `fail()` - when user has pressed the "Cancel" button.
+
+#### Example
+
+    <script>
+        kendo.confirm("Confirm text")
+            .done(function(){
+                console.log("User accepted");
+            })
+            .fail(function(){
+                console.log("User rejected");
+            });
+    </script>
+
+### culture
+
+Sets or gets the current culture. Uses the passed culture name to select a culture from the culture scripts that you have included and then sets the current culture.
+If there is no corresponding culture then the method will try to find culture which is equal to the country part of the culture name.
+If no culture is found the default one is used.
+
+> The culture must be set before any Kendo UI widgets that rely on it, are initialized.
+
+#### Example -  include a culture-specific JavaScript file and set the culture
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.en-GB.min.js"></script>
+    <script>
+      console.log(kendo.format("{0:c}", 99)); // outputs "$99.00" using the default en-US culture
+      kendo.culture("en-GB"); // change the culture
+      console.log(kendo.format("{0:c}", 99)); // outputs "£99.00"
+    </script>
+
+#### Get the current culture
+    <script>
+    var culture = kendo.culture();
+    console.log(culture.name); // outputs "en-US"
+    </script>
+
+#### Parameters
+
+##### culture `String`
+
+The culture to set.
+
+### destroy
+
+Finds all Kendo widgets that are children of the specified element and calls their destroy method.
+
+#### Example
+
+    <input id="autocomplete">
+    <script>
+    $("#autocomplete").kendoAutoComplete();
+      console.log($("#autocomplete").data("kendoAutoComplete") != null); // outputs "true"
+      kendo.destroy(document.body);
+      console.log($("#autocomplete").data("kendoAutoComplete") != null); // outputs "false"
+    </script>
+
+#### Parameters
+
+##### element `String|jQuery|Element`
+
+### format
+
+Replaces each format item in a specified string with the text equivalent of a corresponding object's value. Uses [toString](/api/javascript/kendo/methods/tostring) for every format item.
+
+#### Parameters
+
+##### format `String`
+The format string.
+
+#### Returns
+`String` The formatted string.
+
+#### Example
+    <script>
+    console.log(kendo.format("{0} - {1}", 12, 24));  // outputs "12 - 24"
+    console.log(kendo.format("{0:c} - {1:c}", 12, 24)); // outputs "$12.00 - $24.00"
+    </script>
+
+#### See Also
+
+[Supported number formats](/framework/globalization/numberformatting)
+
+### guid
+
+Generates a random GUID (globally unique identifier).
+
+#### Example
+    <script>
+    var value = kendo.guid();
+    console.log(value);
+    </script>
+
+#### Returns
+
+`String` The generated GUID.
+
+### htmlEncode
+
+Encodes HTML characters to entities.
+
+#### Example
+    <script>
+    var value = kendo.htmlEncode("<span>Hello</span>");
+    console.log(value);
+    </script>
+
+#### Parameters
+
+##### value `String`
+
+The string that needs to be HTML encoded.
+
+#### Returns
+
+`String` The encoded string.
 
 ### init
 
@@ -156,6 +295,7 @@ Optional namespace too look in when instantiating Kendo UI widgets. The valid na
      kendo.init($("#view"), kendo.mobile.ui, kendo.ui);
      </script>
 
+
 ### observableHierarchy
 
 Creates an ObservableArray instance that is bound to a HierarchicalDataSource. Required to bind a HierarchicalDataSource-enabled widget (such as the Kendo UI TreeView) to a view-model.
@@ -183,128 +323,6 @@ Creates an ObservableArray instance that is bound to a HierarchicalDataSource. R
 ##### array `Array`
 
 The array that will be converted to an ObservableArray.
-
-### confirm
-Opens a [Kendo UI Confirm](/api/javascript/ui/confirm) popup. Similar to the native [window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) method.
-
-#### Example - Open a Kendo UI Confirm on the page
-
-    <script>
-        kendo.confirm("Confirm text");
-    </script>
-
-#### Parameters
-
-##### text `String`
-
-The text to be shown in the Confirm popup.
-
-#### Returns
-
-`Promise` a [jQuery promise instance](http://api.jquery.com/Types/#Promise), which can be used for callbacks, or passed to [jQuery.when](http://api.jquery.com/jQuery.when/). The jQuery Deferred object resolves to:
-
-* `done()` - when user has pressed the "OK" button;
-* `fail()` - when user has pressed the "Cancel" button.
-
-#### Example
-
-    <script>
-        kendo.confirm("Confirm text")
-            .done(function(){
-                console.log("User accepted");
-            })
-            .fail(function(){
-                console.log("User rejected");
-            });
-    </script>
-
-### culture
-
-Sets or gets the current culture. Uses the passed culture name to select a culture from the culture scripts that you have included and then sets the current culture.
-If there is no corresponding culture then the method will try to find culture which is equal to the country part of the culture name.
-If no culture is found the default one is used.
-
-> The culture must be set before any Kendo UI widgets that rely on it, are initialized.
-
-#### Example -  include a culture-specific JavaScript file and set the culture
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.en-GB.min.js"></script>
-    <script>
-      console.log(kendo.format("{0:c}", 99)); // outputs "$99.00" using the default en-US culture
-      kendo.culture("en-GB"); // change the culture
-      console.log(kendo.format("{0:c}", 99)); // outputs "£99.00"
-    </script>
-
-#### Get the current culture
-    <script>
-    var culture = kendo.culture();
-    console.log(culture.name); // outputs "en-US"
-    </script>
-
-#### Parameters
-
-##### culture `String`
-
-The culture to set.
-
-### destroy
-
-Finds all Kendo widgets that are children of the specified element and calls their destroy method.
-
-#### Example
-
-    <input id="autocomplete">
-    <script>
-    $("#autocomplete").kendoAutoComplete();
-      console.log($("#autocomplete").data("kendoAutoComplete") != null); // outputs "true"
-      kendo.destroy(document.body);
-      console.log($("#autocomplete").data("kendoAutoComplete") != null); // outputs "false"
-    </script>
-
-#### Parameters
-
-##### element `String|jQuery|Element`
-
-### format
-
-Replaces each format item in a specified string with the text equivalent of a corresponding object's value. Uses [toString](#methods-toString) for every format item.
-
-#### Parameters
-
-##### format `String`
-The format string.
-
-#### Returns
-`String` The formatted string.
-
-#### Example
-    <script>
-    console.log(kendo.format("{0} - {1}", 12, 24));  // outputs "12 - 24"
-    console.log(kendo.format("{0:c} - {1:c}", 12, 24)); // outputs "$12.00 - $24.00"
-    </script>
-
-#### See Also
-[Supported number formats](http://docs.telerik.com/kendo-ui/framework/globalization/numberformatting)
-
-
-### htmlEncode
-
-Encodes HTML characters to entities.
-
-#### Example
-    <script>
-    var value = kendo.htmlEncode("<span>Hello</span>");
-    console.log(value);
-    </script>
-
-#### Parameters
-
-##### value `String`
-
-The string that needs to be HTML encoded.
-
-#### Returns
-
-`String` The encoded string.
 
 ### parseDate
 
@@ -337,13 +355,48 @@ The culture used to parse the number. The current culture is used by default.
 
 `Date` the parsed date. Returns `null` if the value cannot be parsed as a valid `Date`.
 
+### parseExactDate
+
+Parses a formatted string as a `Date`. The method returns `null` if the string doesn't match the format exactly. Also see [Date Parsing](/framework/globalization/dateparsing)
+
+#### Example
+    <script>
+      console.log(kendo.parseExactDate("2013/3/4 10:00 AM")); // outputs "Mon Mar 04 2013 10:00:00"
+      console.log(kendo.parseExactDate("3/4/2013", "MM/dd/yyyy")); // outputs "Mon Mar 04 2013 00:00:00"
+      // When the format is not matched, null is returned
+      console.log(kendo.parseExactDate("3/4/2013", "MM/dd/yy")); // outputs "null"
+      // Unlike kendo.parseDate, which tries to parse the string even though it's a different format:
+      console.log(kendo.parseDate("3/4/2013", "MM/dd/yy")); // Wed Mar 04 2020 00:00:00 GMT+0200"
+      console.log(kendo.parseExactDate("invalid")); // outputs "null"
+    </script>
+
+#### Parameters
+
+##### value `String`
+
+The string which should be parsed as `Date`.
+
+##### formats `String|Array` *(optional)*
+
+The format(s) that will be used to parse the date. If you do not explicitly state a date parsing format, the [standard date formats](/framework/globalization/dateformatting#standard) of the current culture will apply. If you state a format, and the date string doesn't match the format exactly, `null` is returned.
+
+For more information on the custom date parsing formats, refer to [this article](/framework/globalization/dateformatting#custom).
+
+##### culture `String` *(optional)*
+
+The culture used to parse the number. The current culture is used by default.
+
+#### Returns
+
+`Date` the parsed date. Returns `null` if the value cannot be parsed as a valid `Date`.
+
 ### parseFloat
 
 Parses a string as a floating point number.
 
 #### Example
 
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.de-DE.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.de-DE.min.js"></script>
     <script>
       console.log(kendo.parseFloat("12.22")); // outputs "12.22"
       kendo.culture("de-DE");
@@ -371,7 +424,7 @@ Parses as a string as an integer.
 
 #### Example
 
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.de-DE.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.de-DE.min.js"></script>
     <script>
       console.log(kendo.parseInt("12.22")); // outputs "12"
       kendo.culture("de-DE");
@@ -447,7 +500,7 @@ The default value that will be shown in the popup's input.
 
 #### Returns
 
-`Promise` a [jQuery promise instance](http://api.jquery.com/Types/#Promise), which can be used for callbacks, or passed to [jQuery.when](http://api.jquery.com/jQuery.when/). The jQuery Deferred object resolves to:
+`Promise` a [jQuery promise instance](https://api.jquery.com/Types/#Promise), which can be used for callbacks, or passed to [jQuery.when](https://api.jquery.com/jQuery.when/). The jQuery Deferred object resolves to:
 
 * `done()` - when user has pressed the "OK" button and the `data` passed to the callback is the inputted text;
 * `fail()` - when user has pressed the "Cancel" button and the `data` passed to the callback is the inputted text.
@@ -491,7 +544,7 @@ Renders the specified template using the provided array.
 
 ##### template `Function`
 
-The Kendo UI template which should be rendered. Create one via the [template](#methods-template) method.
+The Kendo UI template which should be rendered. Create one via the [template](/api/javascript/kendo/methods/template) method.
 
 ##### data `Array`
 
@@ -586,13 +639,16 @@ Such browsers are IE version 9 and lower and Safari.
 
 The developer is responsible for implementing the server-side proxy.
 
+When a proxy is used the `kendo.saveAs()` method includes any CSRF and anti-forgery tokens out of the box as long as they are present on the page. The logic internally uses the [`kendo.antiForgeryTokens()`](/api/javascript/kendo/methods/antiforgerytokens) method and adds that to the request data as it posts to the proxy.
+
 The proxy will receive a POST request with the following parameters in the request body:
 
-* contentType: The MIME type of the file
-* base64: The base-64 encoded file content
-* fileName: The file name, as requested by the caller.
+* `contentType`&mdash;This is the MIME type of the file.
+* `base64`&mdash;The `base-64`-encoded file content.
+* `fileName`&mdash;The file name as requested by the caller.
+* Any anti-forgery tokens if present on the page
 
-The proxy should return the decoded file with set "Content-Disposition" header.
+The proxy should return the decoded file with set `"Content-Disposition"` header.
 
 #### Example - Saving a text file
     <script>
@@ -611,7 +667,7 @@ the proxy should set the "Content-Disposition" header to `inline; filename="<fil
 
 ### stringify
 
-Converts a JavaScript object to [JSON](http://en.wikipedia.org/wiki/JSON). Uses [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) in browsers that support it.
+Converts a JavaScript object to [JSON](https://en.wikipedia.org/wiki/JSON). Uses [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) in browsers that support it.
 
 #### Parameters
 
@@ -770,7 +826,7 @@ The container element to enable scrolling for.
 Formats a `Number` or `Date` using the specified format and the current culture.
 
 #### Example
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.de-DE.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.de-DE.min.js"></script>
     <script>
       // Format a number using standard number formats and default culture (en-US)
       console.log(kendo.toString(10.12, "n"));  // "10.12"
@@ -841,6 +897,29 @@ Unbinds a tree of HTML elements from a View-Model.
 
 The root element(s) from which the unbinding starts. Can be a valid jQuery string selector, a DOM element or a jQuery object.
 All descendant elements are traversed.
+
+### unescape
+
+Decodes string from UTF-8 or a Unicode character set. Substitutes the native [`unescape`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/unescape) function, which should not be used according to the recommendations of the ECMA-262 standard.
+
+#### Example
+    <script>
+        var result = kendo.unescape("This is a test: %97 %3f %D5 %e5 %U0107 %U123F %u39f5 %uDEe5");
+        console.log(result);
+
+        var second = kendo.unescape("This is a test: %D1%88%D0%B5%D0%BB%D0%BB%D1%8B");
+        console.log(second);
+    </script>
+
+#### Parameters
+
+##### value `String`
+
+The string that needs to be unescaped (decoded).
+
+#### Returns
+
+`String` The unescaped (decoded) string.
 
 ### widgetInstance
 
@@ -1017,7 +1096,7 @@ Returns true if running in a Cordova/PhoneGap/Telerik AppBuilder application.
 
 ### support.browser `Object`
 Convenience replacement for the now deprecated jQuery.browser. It returns an object with the browser identifier initialized as a boolean property and a version.
-The identifiers are identical to jQuery ones, e.g. "webkit", "opera", "msie" and "mozilla". In addition WebKit browsers will return their name e.g. "safari" and "chrome".
+The identifiers are identical to jQuery ones, e.g. "webkit", "opera", "msie", "edge" and "mozilla". In addition WebKit browsers will return their name e.g. "safari" and "chrome".
 
     <script>
         console.log(kendo.stringify(kendo.support.browser));
@@ -1034,13 +1113,13 @@ The current browser major version, e.g. "7" in Internet Explorer 7.
 Returns the Kendo UI version as a string, for example `"2013.3.1119"` or `"2013.2.918"`, etc. In general, Kendo UI version identifiers provide the following information:
 
 * year in YYYY format (2013, 2012, etc);
-* major release as "1", "2" or "3" (derived from Q1, Q2 and Q3). All service packs and internal builds, which come after a given major release, share the same major release number;
+* major release as "1", "2" or "3" (derived from R1, R2 and R3). All service packs and internal builds, which come after a given major release, share the same major release number;
 * month and day of the release in Mdd format (November 19, September 18, etc);
 
-Q3 service packs and internal builds may be released in the following year. In this case 12 is added to the month number, e.g. 13 means January, 14 means February and so on.
-For example `"2012.3.1315"` means a service pack (internal build) released after Q3 **2012** on January 15, **2013**.
+R3 service packs and internal builds may be released in the following year. In this case 12 is added to the month number, e.g. 13 means January, 14 means February and so on.
+For example `"2012.3.1315"` means a service pack (internal build) released after R3 **2012** on January 15, **2013**.
 
-The returned value does not give clues whether the given Kendo UI version represents a major release, service pack, or the so-called internal (nightly) build.
+The returned value does not indicate if the given Kendo UI version represents a major release, service pack, or the so-called internal (nightly) build.
 
 ## Standard number formats
 
@@ -1050,7 +1129,7 @@ Formats the value as a number with decimal and thousand separators.
 
 #### Example
 
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.de-DE.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.de-DE.min.js"></script>
     <script>
     console.log(kendo.toString(1234.567, "n")); // outputs "1,234.57"
     kendo.culture("de-DE");
@@ -1063,7 +1142,7 @@ Formats the value by adding the currency symbol.
 
 #### Example
 
-    <script src="http://kendo.cdn.telerik.com/2013.2.716/js/cultures/kendo.culture.de-DE.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/cultures/kendo.culture.de-DE.min.js"></script>
     <script>
     console.log(kendo.toString(1234.567, "c")); // outputs "$1,234.57"
     kendo.culture("de-DE");

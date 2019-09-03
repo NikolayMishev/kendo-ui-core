@@ -10,7 +10,7 @@ position: 1
 
 The [Kendo UI PanelBar widget](http://demos.telerik.com/kendo-ui/panelbar/index) displays hierarchical data as a multi-level, expandable widget.
 
-Regarding its structure, you can apply either of the approaches:  
+Regarding its structure, you can apply either of the approaches:
 * Define it in HTML.
 * Dynamically configure it through the API of the PanelBar.
 
@@ -140,7 +140,7 @@ The following example demonstrates how to create a PanelBar and bind it to a rem
             dataSource: {
                 transport: {
                     read: {
-                        url: "http://demos.telerik.com/kendo-ui/service/Employees",
+                        url: "https://demos.telerik.com/kendo-ui/service/Employees",
                         dataType: "jsonp"
                     }
                 },
@@ -212,6 +212,41 @@ The following example demonstrates how to load a PanelBar item content asynchron
 
 When the PanelBar loads remote content via AJAX, the server response is cached in-memory so that subsequent expand/collapse actions do not trigger subsequent AJAX requests.
 
+### Expand Mode
+
+The PanelBar provides the `Single` or `Multiple` expand mode options.
+
+* If `ExpandMode` is set to `Single`, the user can expand only a single root item or a single child item of a specific parent item. Expanding another root item or another child of the currently expanded item's parent will collapse the currently expanded item. This approach is also the only way to collapse an expanded item in the `single` expand mode.
+* If `ExpandMode` is set to `Multiple`, the user can expand multiple root items or children of the same parent item at a time. Expanding an item does not collapse the currently expanded items. Expanded items can be collapsed by clicking on them.
+
+###### Example
+
+	<div id="panelbar"></div>
+	<script>
+		var items = [
+			{ ProductName: "Root1", items: [
+				{ ProductName: "Level2 1", items: [
+					{ ProductName: "Level3 1" },
+					{ ProductName: "Level3 2" }
+				]},
+				{ ProductName: "Level2 2", items: [
+					{ ProductName: "Level3 1" },
+					{ ProductName: "Level3 2" }
+				]}
+			]},
+			{ ProductName: "Root2", items: [
+				{ ProductName: "Level2 1" }
+			]}
+		];
+
+		$("#panelbar").kendoPanelBar({
+			dataTextField: "ProductName",
+			dataSource: items,
+			expandMode: "single"
+		});
+	</script>
+
+
 ### PanelBar Animations
 
 By default, a PanelBar uses animations to expand and reveal sub-items when an item header is clicked. These animations can be modified in configuration via the open and close animation properties. A PanelBar can also be configured to only allow one panel be opened at a time.
@@ -266,7 +301,7 @@ The following example demonstrates how to use the `disable`, `expand`, and `sele
 ###### Example
 
     <div id="panelBar"></div>
-    <button id="btn1" class="k-button">Update Data Item</button>   
+    <button id="btn1" class="k-button">Update Data Item</button>
     <script>
      $(document).ready(function() {
             $("#panelBar").kendoPanelBar({
@@ -283,12 +318,12 @@ The following example demonstrates how to use the `disable`, `expand`, and `sele
                 ]
             })
         $("#btn1").on('click', function(){
-            var panelBar = $("#panelBar").data("kendoPanelBar");  
+            var panelBar = $("#panelBar").data("kendoPanelBar");
             var dataItem = panelBar.dataItem(".k-item:first"); // get reference to the first item
             dataItem.set("expanded", true); //set the item as expanded
             dataItem.set("enabled", false); //set the item as enabled
             //dataItem.set("selected", true);  set the item as selected
-     })        
+     })
     });
     </script>
 
@@ -298,11 +333,9 @@ As of the R1 2017 release, the PanelBar has provided an built-in functionality o
 
 **Figure 1: The Retry button of the PanelBar prompting you to re-initiate the data binding**
 
-![PanelBar areas](/controls/navigation/panelbar/retry-request-failed.png)
+![PanelBar areas](retry-request-failed.png)
 
 ## See Also
-
-Other articles on the Kendo UI PanelBar:
 
 * [Overview of the ASP.NET MVC HtmlHelper Extension for the PanelBar Widget](/aspnet-mvc/helpers/panelbar/overview)
 * [Overview of the PanelBar JSP Tag]({% slug overview_panelbar_uiforjsp %})

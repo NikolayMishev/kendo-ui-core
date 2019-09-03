@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["zh-CHT"] = {
         name: "zh-CHT",
         numberFormat: {
@@ -45,8 +45,8 @@
                     F: "yyyy'年'M'月'd'日' H:mm:ss",
                     g: "d/M/yyyy H:mm",
                     G: "d/M/yyyy H:mm:ss",
-                    m: "M'月'd'日'",
-                    M: "M'月'd'日'",
+                    m: "M月d日",
+                    M: "M月d日",
                     s: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
                     t: "H:mm",
                     T: "H:mm:ss",

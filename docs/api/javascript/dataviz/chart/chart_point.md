@@ -1,6 +1,7 @@
 ---
 title: ChartPoint
 page_title: API reference for Kendo UI ChartPoint
+res_type: api
 ---
 
 # kendo.dataviz.ChartPoint
@@ -23,7 +24,7 @@ The point value represented as a percentage value. Available only for donut, pie
 
 ### runningTotal `Number`
 
-The sum of point values since the last "runningTotal" [summary point](/api/javascript/dataviz/ui/chart.html#configuration-series.summaryField). Available for waterfall series points.
+The sum of point values since the last "runningTotal" [summary point](/api/javascript/dataviz/ui/chart/configuration/series.summaryfield). Available for waterfall series points.
 
 ### total `Number`
 

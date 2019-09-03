@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI Scroller
 description: "Achieve a touch-friendly scrolling functionality of the contents of a given DOM element by using the hybrid Kendo UI Scroller widget."
 slug: overview_hybridscroller
 position: 1
+component: scroller
 ---
 
 # Scroller Overview
@@ -63,8 +64,6 @@ The Hybrid UI Scroller widget exposes the following fields:
 *   `scrollLeft`&mdash;The number of pixels that are hidden from view to the left of the scrollable area.
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the Scroller:
 
 * [Hybrid UI Scroller JavaScript API Reference](/api/javascript/mobile/ui/scroller)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

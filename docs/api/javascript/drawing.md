@@ -1,6 +1,7 @@
 ---
 title: drawing
 page_title: API reference for Kendo UI Drawing API static functions
+res_type: api
 ---
 
 # kendo.drawing
@@ -52,7 +53,7 @@ Converts the given DOM element to a [Drawing API](/framework/drawing/overview) s
 
 The operation is asynchronous and returns a [promise](http://api.jquery.com/Types/#Promise).
 
-The promise will be resolved with the root [Group](drawing/group) of the scene.
+The promise will be resolved with the root [Group](/api/javascript/drawing/group) of the scene.
 
 #### Parameters
 
@@ -106,6 +107,7 @@ The [page template](/framework/drawing/drawing-dom#page-template-headers-and-foo
 `Promise` A promise that will be resolved with the root Group of the scene.
 
 #### Example - Exporting a DOM element to an image
+
     <div id="calendar"></div>
     <script>
         $("#calendar").kendoCalendar();
@@ -125,8 +127,9 @@ The [page template](/framework/drawing/drawing-dom#page-template-headers-and-foo
             });
         });
     </script>
-    
+
 #### Example - Exporting a DOM element to a PDF file (via Base64-encoded string)
+
     <div id="calendar"></div>
     <script>
         $("#calendar").kendoCalendar();
@@ -150,7 +153,8 @@ The [page template](/framework/drawing/drawing-dom#page-template-headers-and-foo
         });
     </script>
 
-#### Example - Exporting a DOM element to a PDF Base64-encoded string and send it to the server via jQuery.post() 
+#### Example - Exporting a DOM element to a PDF Base64-encoded string and send it to the server via jQuery.post()
+
     <div id="calendar"></div>
     <script>
         $("#calendar").kendoCalendar();
@@ -178,6 +182,7 @@ The [page template](/framework/drawing/drawing-dom#page-template-headers-and-foo
     </script>
 
 #### Example - Exporting a DOM element to a PDF file (direct)
+
     <div id="calendar"></div>
     <script>
         $("#calendar").kendoCalendar();
@@ -215,10 +220,10 @@ The root group containing all elements to export.
 ##### options `Object`
 Parameters for the exported image.
 
-##### options.width `String`
+##### options.width `Number`
 The width of the exported image. Defaults to the scene width.
 
-##### options.height `String`
+##### options.height `Number`
 The height of the exported image. Defaults to the scene height.
 
 ##### options.cors `String` *(default: "anonymous")*
@@ -446,7 +451,7 @@ An array with the drawing elements that should be stacked.
 
       var pathA = Path.fromRect(pathRect);
       var pathB = Path.fromRect(pathRect);
-			var pathC = Path.fromRect(pathRect);
+      var pathC = Path.fromRect(pathRect);
 
       draw.stack([pathA, pathB, pathC]);
 

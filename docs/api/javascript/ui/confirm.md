@@ -2,11 +2,12 @@
 title: Confirm
 page_title: Configuration, methods and events of Kendo UI Confirm
 description: How to initialize an Confirm UI widget, configure its properties and open it.
+res_type: api
 ---
 
 # kendo.ui.Confirm : kendo.ui.Dialog
 
-Represents the Kendo UI Confirm.
+Represents the Kendo UI Confirm. Inherits from [Dialog](/api/javascript/ui/dialog).
 
 ## Configuration
 
@@ -15,7 +16,7 @@ Represents the Kendo UI Confirm.
 Defines the text of the labels that are shown within the confirm dialog. Used primarily for localization.
 
 #### Example
-    
+
     <div id="confirm"></div>
     <script>
     $("#confirm").kendoConfirm({

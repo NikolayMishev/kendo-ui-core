@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["mr-IN"] = {
         name: "mr-IN",
         numberFormat: {
@@ -8,7 +8,7 @@
             ".": ".",
             groupSize: [3,2],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -18,7 +18,7 @@
             currency: {
                 name: "Indian Rupee",
                 abbr: "INR",
-                pattern: ["$ -n","$ n"],
+                pattern: ["$ -n","$n"],
                 decimals: 2,
                 ",": ",",
                 ".": "`",

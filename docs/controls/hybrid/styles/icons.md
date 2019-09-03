@@ -75,7 +75,7 @@ Using [Fontello](http://fontello.com/) is pretty straightforward&mdash;pick the 
 
 #### Create Icons Manually
 
-The manual approach is considerably more difficult. First, create the desired icons using a vector editing software such as Inkscape or Adobe Illustrator. Export them to the `SVG` format. Consult [these](http://www.webdesignerdepot.com/2012/01/how-to-make-your-own-icon-webfont/) [articles](http://cleversomeday.wordpress.com/2010/02/09/inkscape-dings/) about `SVG` font creation using [Inkscape](http://inkscape.org/). Import the `SVG` icons in Inkscape and create the `SVG` font icon by icon, assigning them to separate characters. After creating the `SVG` font, convert it to `TTF`/`WOFF` formats, using the [Online Font Converter](https://onlinefontconverter.com/) or other similar service.
+The manual approach is considerably more difficult. First, create the desired icons using a vector editing software such as Inkscape or Adobe Illustrator. Export them to the `SVG` format. Consult [these](http://www.webdesignerdepot.com/2012/01/how-to-make-your-own-icon-webfont/) [articles](http://cleversomeday.wordpress.com/2010/02/09/inkscape-dings/) about `SVG` font creation using [Inkscape](https://inkscape.org/en). Import the `SVG` icons in Inkscape and create the `SVG` font icon by icon, assigning them to separate characters. After creating the `SVG` font, convert it to `TTF`/`WOFF` formats, using the [Online Font Converter](https://onlinefontconverter.com/) or other similar service.
 
 The example below demonstrates how to load the two fonts (`TTF`/`WOFF`) with `@font-face`.
 
@@ -446,7 +446,7 @@ Keep in mind that icons with Unicode codes from `\e0ca` to `\e0f0` are the origi
   text-align: center;
   color: #787878;
 }
-.button {
+.additional-icons .button {
     display: block;
     width: 48px;
     height: 48px;
@@ -458,7 +458,7 @@ Keep in mind that icons with Unicode codes from `\e0ca` to `\e0f0` are the origi
     border: 1px solid #ebecee;
     background-color: #f5f7f8;
 }
-.button:after
+.additional-icons .button:after
 {
     position: static;
     display: block;
@@ -1202,8 +1202,6 @@ Keep in mind that icons with Unicode codes from `\e0ca` to `\e0f0` are the origi
 </ul>
 
 ## See Also
-
-Other articles related to the appearance and styling of Kendo UI hybrid distribution:
 
 * [Style the Hybrid UI Form Elements]({% slug forms_hybridkendoui %})
 * [Apply CSS]({% slug styling_hybridkendoui %})

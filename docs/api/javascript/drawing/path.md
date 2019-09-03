@@ -1,12 +1,15 @@
 ---
 title: Path
 page_title: API reference for Kendo UI Drawing API Path
+res_type: api
 ---
 
 # kendo.drawing.Path : kendo.drawing.Element
-Draws a path consisting of linear or cubic Bézier curve segments.
+
+Represents a path consisting of linear or cubic Bézier curve segments.
 
 #### Example - draw a path
+
     <div id="surface" style="width: 250px; height: 250px;"></div>
     <script>
         var draw = kendo.drawing;
@@ -25,7 +28,50 @@ Draws a path consisting of linear or cubic Bézier curve segments.
 ### options `Object`
 The configuration options.
 
-## Class methods
+#### Example - create and draw a path
+
+    <div id="surface" style="width: 250px; height: 165px;"></div>
+    <script>
+      var draw = kendo.drawing;
+
+      // Initialize a path using an options object
+      var path = new draw.Path({
+        stroke: {
+          color: "#9999b6",
+          width: 2
+        },
+        fill: {
+          color: "#33ccff"
+        },
+        opacity: 0.5,
+        cursor: "pointer"
+      });
+
+      // Describe the path
+      path.moveTo(0, 0)
+        .lineTo(150, 0).lineTo(150, 65).lineTo(0, 65)
+        .close();
+
+      // Draw the path on a drawing surface
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(path);
+    </script>
+
+## Class Methods
+
+### fromArc
+Create a curve from the given arc.
+
+#### Parameters
+
+##### arc `kendo.geometry.Arc`
+The source arc to trace.
+
+##### options `Object` *optional*
+The [configuration](/api/javascript/drawing/path#configuration) options for the path.
+
+#### Returns
+`kendo.drawing.Path` The newly constructed path.
 
 ### fromPoints
 Create a straight path from the given points.
@@ -33,7 +79,10 @@ Create a straight path from the given points.
 #### Parameters
 
 ##### points `Array`
-Array of [kendo.geometry.Point](../geometry/point) objects or [x, y] arrays.
+Array of [kendo.geometry.Point](/api/javascript/geometry/point) objects or [x, y] arrays.
+
+##### options `Object` *optional*
+The [configuration](/api/javascript/drawing/path#configuration) options for the path.
 
 #### Returns
 `kendo.drawing.Path` The newly constructed path.
@@ -46,6 +95,9 @@ Create a straight path from the given rectangle.
 
 ##### rect `kendo.geometry.Rect`
 The source rectangle to trace.
+
+##### options `Object` *optional*
+The [configuration](/api/javascript/drawing/path#configuration) options for the path.
 
 #### Returns
 `kendo.drawing.Path` The newly constructed path.
@@ -78,27 +130,27 @@ Parses a path encoded in [SVG Path Data format](http://www.w3.org/TR/SVG/paths.h
 The path encoded in [SVG Path Data format](http://www.w3.org/TR/SVG/paths.html#PathData).
 
 ##### options `Object` *optional*
-The [configuration](#configuration) options for the path.
+The [configuration](/api/javascript/drawing/path#configuration) options for the path.
 
 #### Returns
-`kendo.drawing.Path` A path matching the supplied SVG data.
+`kendo.drawing.MultiPath` A path matching the supplied SVG data.
 
 ## Configuration
 
 ### clip `kendo.drawing.Path`
 The element clipping path.
-Inherited from [Element.clip](element#configuration-clip)
+Inherited from [Element.clip](/api/javascript/drawing/element#configuration-clip)
 
 ### cursor `String`
 The element cursor.
-Inherited from [Element.cursor](element#configuration-cursor)
+Inherited from [Element.cursor](/api/javascript/drawing/element#configuration-cursor)
 
 ### fill `kendo.drawing.FillOptions`
 The fill options of the shape.
 
 ### opacity `Number`
 The element opacity.
-Inherited from [Element.opacity](element#configuration-opacity)
+Inherited from [Element.opacity](/api/javascript/drawing/element#configuration-opacity)
 
 ### stroke `kendo.drawing.StrokeOptions`
 The stroke options of the shape.
@@ -108,22 +160,22 @@ The tooltip options of the shape.
 
 ### transform `kendo.geometry.Transformation`
 The transformation to apply to this element.
-Inherited from [Element.transform](element#configuration-transform)
+Inherited from [Element.transform](/api/javascript/drawing/element#configuration-transform)
 
 ### visible `Boolean`
 A flag, indicating if the element is visible.
-Inherited from [Element.visible](element#configuration-visible)
+Inherited from [Element.visible](/api/javascript/drawing/element#configuration-visible)
 
 ## Fields
 
 ### segments `Array`
-A collection of the path [segments](segment).
+A collection of the path [segments](/api/javascript/drawing/segment).
 
 ## Methods
 
 ### bbox
 Returns the bounding box of the element with transformations applied.
-Inherited from [Element.bbox](element#methods-bbox)
+Inherited from [Element.bbox](/api/javascript/drawing/element#methods-bbox)
 
 #### Returns
 `kendo.geometry.Rect` The bounding box of the element with transformations applied.
@@ -131,7 +183,7 @@ Inherited from [Element.bbox](element#methods-bbox)
 
 ### clip
 Gets or sets the element clipping path.
-Inherited from [Element.clip](element#methods-clip)
+Inherited from [Element.clip](/api/javascript/drawing/element#methods-clip)
 
 #### Parameters
 
@@ -144,7 +196,7 @@ The element clipping path.
 
 ### clippedBBox
 Returns the bounding box of the element with clipping and transformations applied.
-Inherited from [Element.clippedBBox](element#methods-clippedBBox)
+Inherited from [Element.clippedBBox](/api/javascript/drawing/element#methods-clippedBBox)
 
 #### Returns
 `kendo.geometry.Rect` The bounding box of the element with clipping transformations applied.
@@ -154,6 +206,7 @@ Inherited from [Element.clippedBBox](element#methods-clippedBBox)
 Closes the path by linking the current end point with the start point.
 
 #### Example - Draw a closed path
+
     <div id="surface" style="width: 250px; height: 250px;"></div>
     <script>
         var draw = kendo.drawing;
@@ -219,15 +272,15 @@ The curve end point.
 
 
 ### fill
-Sets the shape [fill](#configuration-fill).
+Sets the shape [fill](/api/javascript/drawing/path#configuration-fill).
 
 #### Parameters
 
 ##### color `String`
-The [fill color](fill-options#fields-color) to set.
+The [fill color](/api/javascript/drawing/fill-options#fields-color) to set.
 
 ##### opacity `Number` *optional*
-The [fill opacity](fill-options#fields-opacity) to set.
+The [fill opacity](/api/javascript/drawing/fill-options#fields-opacity) to set.
 
 #### Returns
 `kendo.drawing.Path` The current instance to allow chaining.
@@ -306,7 +359,7 @@ Optional if the first parameter is a Point/Array.
 
 ### opacity
 Gets or sets the element opacity.
-Inherited from [Element.opacity](element#methods-opacity)
+Inherited from [Element.opacity](/api/javascript/drawing/element#methods-opacity)
 
 If set, the stroke and fill opacity will be multiplied by the element opacity.
 
@@ -320,18 +373,18 @@ The element opacity. Ranges from 0 (completely transparent) to 1 (completely opa
 
 
 ### stroke
-Sets the shape [stroke](#configuration-stroke).
+Sets the shape [stroke](/api/javascript/drawing/path#configuration-stroke).
 
 #### Parameters
 
 ##### color `String`
-The [stroke color](stroke-options#fields-color) to set.
+The [stroke color](/api/javascript/drawing/stroke-options#fields-color) to set.
 
 ##### width `Number` *optional*
-The [stroke width](stroke-options#fields-width) to set.
+The [stroke width](/api/javascript/drawing/stroke-options#fields-width) to set.
 
 ##### opacity `Number` *optional*
-The [stroke opacity](stroke-options#fields-opacity) to set.
+The [stroke opacity](/api/javascript/drawing/stroke-options#fields-opacity) to set.
 
 #### Returns
 `kendo.drawing.Path` The current instance to allow chaining.
@@ -339,7 +392,7 @@ The [stroke opacity](stroke-options#fields-opacity) to set.
 
 ### transform
 Gets or sets the transformation of the element.
-Inherited from [Element.transform](element#methods-transform)
+Inherited from [Element.transform](/api/javascript/drawing/element#methods-transform)
 
 #### Parameters
 
@@ -352,7 +405,7 @@ The transformation to apply to the element.
 
 ### visible
 Gets or sets the visibility of the element.
-Inherited from [Element.visible](element#methods-visible)
+Inherited from [Element.visible](/api/javascript/drawing/element#methods-visible)
 
 #### Parameters
 

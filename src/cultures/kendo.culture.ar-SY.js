@@ -1,14 +1,14 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["ar-SY"] = {
         name: "ar-SY",
         numberFormat: {
-            pattern: ["n-"],
+            pattern: ["-n"],
             decimals: 2,
             ",": ",",
             ".": ".",
             groupSize: [3],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -18,12 +18,12 @@
             currency: {
                 name: "Syrian Pound",
                 abbr: "SYP",
-                pattern: ["$n-","$ n"],
+                pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
                 groupSize: [3],
-                symbol: "ل.س.‏‏"
+                symbol: "ل.س.‏"
             }
         },
         calendars: {

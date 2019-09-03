@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI View
 description: "Use the hybrid mobile Kendo UI View widget, mark header and footer elements, and view parameters of navigational widgets and DOM elements."
 slug: overview_hybridview
 position: 1
+component: view
 ---
 
 # View Overview
@@ -68,8 +69,6 @@ Each mobile View instance exposes the following fields:
 * `scrollerContent`&mdash;The View mobile Scroller container DOM element. Recommended if the mobile View contents need to be manipulated or replaced.
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the View:
 
 * [Hybrid UI View JavaScript API Reference](/api/javascript/mobile/ui/view)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

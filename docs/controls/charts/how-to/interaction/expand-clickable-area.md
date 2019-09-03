@@ -10,13 +10,13 @@ slug: howto_extendclickableareaofpoints_charts
 
 In some scenarios, the Kendo UI Charts produce series of points that are too small to be reliably clicked or touched.
 
-It is possible to expand the active area by adding a transparent element as part of the [`visual`](/api/javascript/dataviz/ui/chart#configuration-series.visual) configuration.
+It is possible to expand the active area by adding a transparent element as part of the [`visual`](/api/javascript/dataviz/ui/chart/configuration/series.visual) configuration.
 
 The example below demonstrates how to achieve this behavior in a Bar Charts series.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <div id="log">Click on the area next to a point...</div>
     <script>
@@ -60,7 +60,7 @@ The example below demonstrates how to expand the clickable or touchable area of 
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <div id="log">Click on the area next to a point...</div>
     <script>
@@ -104,8 +104,6 @@ The example below demonstrates how to expand the clickable or touchable area of 
 
 ## See Also
 
-Other articles and how-to examples on the Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
 * [How to Aggregate Data in Pie Charts]({% slug howto_aggregatedata_piecharts %})
@@ -117,4 +115,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

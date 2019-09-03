@@ -4,6 +4,7 @@ page_title: Overview | Hybrid UI ModalView
 description: "Initialize and use the Hybrid UI ModalView widget in the Kendo UI framework."
 slug: overview_hybridmodalview
 position: 1
+component: modal-view
 ---
 
 # ModalView Overview
@@ -91,8 +92,6 @@ The example below demonstrates how to create a button that closes a ModalView.
     </script>
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the ModalView:
 
 * [Hybrid UI ModalView JavaScript API Reference](/api/javascript/mobile/ui/modalview)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

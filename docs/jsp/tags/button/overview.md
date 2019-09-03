@@ -135,7 +135,7 @@ The example below demonstrates how to use the `enable` method.
     <kendo:button name="disabledButton" type="button" enable="false" content="Disabled button">
     </kendo:button>
 
-For more information on the [`enable` method of the Button](/api/javascript/ui/button#methods-enable), refer to the [Button API](/api/javascript/ui/button).
+For more information on the [`enable` method of the Button](/api/javascript/ui/button/methods/enable), refer to the [Button API](/api/javascript/ui/button).
 
 ## Reference
 
@@ -144,8 +144,6 @@ For more information on the [`enable` method of the Button](/api/javascript/ui/b
 To reference an existing Button instance, refer to the [introductory article on the Button]({% slug overview_kendoui_button_widget %}#reference).
 
 ## See Also
-
-Other articles on Telerik UI for JSP and on the Button:
 
 * [Overview of the Kendo UI Button Widget]({% slug overview_kendoui_button_widget %})
 * [Telerik UI for JSP API Reference Folder](/api/jsp/autocomplete/animation)

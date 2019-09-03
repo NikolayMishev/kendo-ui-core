@@ -2,6 +2,8 @@
 title: LinearGauge
 page_title: Configuration, methods and events of Kendo UI DataViz LinearGauge
 description: Manipulate the configuration options of linear gauge, change the border of the gauge area and its color, learn how to use methods.
+res_type: api
+component: gauges
 ---
 
 # kendo.dataviz.ui.LinearGauge
@@ -13,9 +15,9 @@ description: Manipulate the configuration options of linear gauge, change the bo
 The gauge area configuration options.
 This is the entire visible area of the gauge.
 
-### gaugeArea.background `Object`*(default: "white")*
+### gaugeArea.background `String`*(default: "white")*
 
- The background of the gauge area.
+The background of the gauge area.
 Any valid CSS color string will work here, including hex and rgb.
 
 ### gaugeArea.border `Object`
@@ -194,7 +196,6 @@ The color of the pointer.
 ### pointer.opacity `Number`*(default: 1)*
 
  The opacity of the pointer.
-Any valid CSS color string will work here, including hex and rgb.
 
 ### pointer.shape `String`
 
@@ -625,6 +626,25 @@ Reverses the axis direction - values increase from right to left and from top to
 
 The position of the gauge.
 
+### theme `String`
+
+The gauge theme. This can be either a built-in theme or "sass".
+When set to "sass" the chart will read the variables from the [Sass-based themes]({% slug sassbasedthemes_kendoui %}).
+
+The supported values are:
+
+* "sass" - special value, see notes
+* "black"
+* "blueopal"
+* "bootstrap"
+* "default"
+* "highcontrast"
+* "metro"
+* "metroblack"
+* "moonlight"
+* "silver"
+* "uniform"
+
 ### transitions `Boolean`*(default: true)*
 
 A value indicating if transition animations should be played.
@@ -681,7 +701,7 @@ Detaches event handlers and removes data entries in order to avoid memory leaks.
 
 ### exportImage
 Exports the Gauge as an image.
-The result can be saved using [kendo.saveAs](/api/javascript/kendo#methods-saveAs).
+The result can be saved using [kendo.saveAs](/api/javascript/kendo/methods/saveas).
 
 The export operation is asynchronous and returns a [promise](http://api.jquery.com/Types/#Promise).
 The promise will be resolved with a PNG image encoded as a [Data URI](https://developer.mozilla.org/en-US/docs/data_URIs).
@@ -725,7 +745,7 @@ The height of the exported image. Defaults to the Gauge height.
 
 ### exportPDF
 Exports the Gauge as a PDF file.
-The result can be saved using [kendo.saveAs](/api/javascript/kendo#methods-saveAs).
+The result can be saved using [kendo.saveAs](/api/javascript/kendo/methods/saveas).
 
 The export operation is asynchronous and returns a [promise](http://api.jquery.com/Types/#Promise).
 The promise will be resolved with a PDF file encoded as a [Data URI](https://developer.mozilla.org/en-US/docs/data_URIs).
@@ -763,7 +783,7 @@ Parameters for the exported PDF file.
 
 ### exportSVG
 Exports the Gauge as an SVG document.
-The result can be saved using [kendo.saveAs](/api/javascript/kendo#methods-saveAs).
+The result can be saved using [kendo.saveAs](/api/javascript/kendo/methods/saveas).
 
 The export operation is asynchronous and returns a [promise](http://api.jquery.com/Types/#Promise).
 The promise will be resolved with a SVG document encoded as a [Data URI](https://developer.mozilla.org/en-US/docs/data_URIs).
@@ -844,15 +864,38 @@ Adjusts the widget layout to match the size of the container.
 
 Defines whether the widget should proceed with resizing even if the element dimensions have not changed.
 
+### setOptions
+
+Sets the current gauge options.
+
+#### Parameters
+
+##### options `Object`
+
+The gauge settings to update.
+
+#### Example
+
+    <div id="gauge"></div>
+    <script>
+        $("#gauge").kendoLinearGauge({
+            pointer: [{
+                value: 20
+            }]
+        });
+
+        $("#gauge").data("kendoLinearGauge").setOptions({ theme: 'metro' });
+    </script>
+
 ### svg
 
 Returns the [SVG](http://www.w3.org/Graphics/SVG/) representation of the gauge.
 The returned string is a self-contained SVG document that can be used as is or
-converted to other formats using tools like [Inkscape](http://inkscape.org/) and
+converted to other formats using tools like [Inkscape](https://inkscape.org/en) and
 [ImageMagick](http://www.imagemagick.org/).
 Both programs provide command-line interface suitable for server-side processing.
 
-> This method is obsoleted by [exportSVG](#methods-exportSVG), but will remain fully functional.
+> This method is obsoleted by [exportSVG](/api/javascript/dataviz/ui/lineargauge/methods/exportsvg), but will remain fully functional.
 
 #### Example
 
@@ -876,7 +919,7 @@ Both programs provide command-line interface suitable for server-side processing
 
 Returns a PNG image of the gauge encoded as a [Data URL](https://developer.mozilla.org/en-US/docs/data_URIs).
 
-> This method is obsoleted and replaced by [exportImage](#methods-exportImage), but will remain fully functional.
+> This method is obsoleted and replaced by [exportImage](/api/javascript/dataviz/ui/lineargauge/methods/exportimage), but will remain fully functional.
 
 #### Returns
 

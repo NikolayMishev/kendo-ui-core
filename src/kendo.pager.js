@@ -15,15 +15,19 @@ var __meta__ = { // jshint ignore:line
         ui = kendo.ui,
         Widget = ui.Widget,
         proxy = $.proxy,
-        FIRST = ".k-i-seek-w",
-        LAST = ".k-i-seek-e",
-        PREV = ".k-i-arrow-w",
-        NEXT = ".k-i-arrow-e",
+        FIRST = ".k-i-arrow-end-left",
+        LAST = ".k-i-arrow-end-right",
+        PREV = ".k-i-arrow-60-left",
+        NEXT = ".k-i-arrow-60-right",
+        SIZE = "k-pager-lg k-pager-md k-pager-sm",
         CHANGE = "change",
         NS = ".kendoPager",
         CLICK = "click",
         KEYDOWN = "keydown",
         DISABLED = "disabled",
+        MOUSEDOWN = "down",
+        DOCUMENT_ELEMENT = $(document.documentElement),
+        MAX_VALUE = Number.MAX_VALUE,
         iconTemplate = kendo.template('<a href="\\#" aria-label="#=text#" title="#=text#" class="k-link k-pager-nav #= wrapClassName #"><span class="k-icon #= className #"></span></a>');
 
     function button(template, idx, text, numeric, title) {
@@ -71,11 +75,12 @@ var __meta__ = { // jshint ignore:line
     var Pager = Widget.extend( {
         init: function(element, options) {
             var that = this, page, totalPages;
+            var sizeClassName = null;
 
             Widget.fn.init.call(that, element, options);
 
             options = that.options;
-            that.dataSource = kendo.data.DataSource.create(options.dataSource);
+            that._createDataSource(options);
             that.linkTemplate = kendo.template(that.options.linkTemplate);
             that.selectTemplate = kendo.template(that.options.selectTemplate);
             that.currentPageTemplate = kendo.template(that.options.currentPageTemplate);
@@ -86,7 +91,7 @@ var __meta__ = { // jshint ignore:line
             that._refreshHandler = proxy(that.refresh, that);
 
             that.dataSource.bind(CHANGE, that._refreshHandler);
-
+            that.downEvent = kendo.applyEventMap(MOUSEDOWN, kendo.guid());
             if (options.previousNext) {
                 if (!that.element.find(FIRST).length) {
                     that.element.append(icon(FIRST, options.messages.first, "k-pager-first"));
@@ -107,6 +112,10 @@ var __meta__ = { // jshint ignore:line
                 if (!that.list.length) {
                    that.list = $('<ul class="k-pager-numbers k-reset" />').appendTo(that.element);
                 }
+                if (options.dataSource && !options.dataSource.total()) {
+                    that.list.empty().append(that.currentPageTemplate({ text: 0 })).append(that.selectTemplate({ text: 0 }));
+                }
+                that.list.wrap('<div class="k-pager-numbers-wrap"></div>');
             }
 
             if (options.input) {
@@ -164,7 +173,7 @@ var __meta__ = { // jshint ignore:line
             if (options.refresh) {
                 if (!that.element.find(".k-pager-refresh").length) {
                     that.element.append('<a href="#" class="k-pager-refresh k-link" title="' + options.messages.refresh +
-                        '"><span class="k-icon k-i-reload"></span></a>');
+                        '" aria-label="' + options.messages.refresh + '"><span class="k-icon k-i-reload"></span></a>');
                 }
 
                 that.element.on(CLICK + NS, ".k-pager-refresh", proxy(that._refreshClick, that));
@@ -186,6 +195,14 @@ var __meta__ = { // jshint ignore:line
                 that.refresh();
             }
 
+            that._resizeHandler = proxy(that.resize, that, true);
+            $(window).on("resize" + NS, that._resizeHandler);
+
+            sizeClassName = that._getWidthSizeClass(that.element.width());
+            if (sizeClassName) {
+                that.element.addClass(sizeClassName);
+            }
+
             kendo.notify(that);
         },
 
@@ -197,6 +214,7 @@ var __meta__ = { // jshint ignore:line
             that.element.off(NS);
             that.dataSource.unbind(CHANGE, that._refreshHandler);
             that._refreshHandler = null;
+            $(window).off("resize" + NS, this._resizeHandler);
 
             kendo.destroy(that.element);
             that.element = that.list = null;
@@ -219,6 +237,7 @@ var __meta__ = { // jshint ignore:line
             previousNext: true,
             pageSizes: false,
             refresh: false,
+            responsive: true,
             messages: {
                 allPages: "All",
                 display: "{0} - {1} of {2} items",
@@ -247,6 +266,24 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _resize: function(size) {
+            if (size.width) {
+                var sizeClassName = this._getWidthSizeClass(size.width);
+                var el = this.element;
+
+                if (!sizeClassName) {
+                    el.removeClass(SIZE);
+                } else if (!el.hasClass(sizeClassName)) {
+                    el.removeClass(SIZE);
+                    el.addClass(sizeClassName);
+                }
+            }
+        },
+
+        _createDataSource: function(options) {
+            this.dataSource = kendo.data.DataSource.create(options.dataSource);
+        },
+
         refresh: function(e) {
             var that = this,
                 idx,
@@ -257,11 +294,13 @@ var __meta__ = { // jshint ignore:line
                 html = "",
                 options = that.options,
                 pageSize = that.pageSize(),
+                collapsedTotal = that._collapsedTotal(),
                 total = that.dataSource.total(),
                 totalPages = that.totalPages(),
                 linkTemplate = that.linkTemplate,
                 buttonCount = options.buttonCount;
 
+            DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
             if (e && e.action == "itemchange") {
                 return;
             }
@@ -300,8 +339,8 @@ var __meta__ = { // jshint ignore:line
             if (options.info) {
                 if (total > 0) {
                     html = kendo.format(options.messages.display,
-                        Math.min((page - 1) * pageSize + 1, total), // first item in the page
-                        Math.min(page * pageSize, total), // last item in the page
+                        that.dataSource.options.endless ? 1 : Math.min((page - 1) * (that.dataSource.pageSize() || 0) + 1, collapsedTotal), // first item in the page
+                        Math.min(page * pageSize, collapsedTotal), // last item in the page
                     total);
                 } else {
                     html = options.messages.empty;
@@ -314,7 +353,7 @@ var __meta__ = { // jshint ignore:line
                 that.element
                     .find(".k-pager-input")
                     .html(that.options.messages.page +
-                        '<input class="k-textbox">' +
+                        '<input class="k-textbox" aria-label="' + page + '">' +
                         kendo.format(options.messages.of, totalPages))
                     .find("input")
                     .val(page)
@@ -334,7 +373,7 @@ var __meta__ = { // jshint ignore:line
 
             if (options.pageSizes) {
                 var hasAll = that.element.find(".k-pager-sizes option[value='all']").length > 0;
-                var selectAll = hasAll && pageSize === this.dataSource.total();
+                var selectAll = hasAll && (pageSize === this.dataSource.total() || pageSize == MAX_VALUE);
                 var text = pageSize;
                 if (selectAll) {
                     pageSize = "all";
@@ -344,10 +383,15 @@ var __meta__ = { // jshint ignore:line
                 that.element
                     .find(".k-pager-sizes select")
                     .val(pageSize)
+                    .attr("aria-label", pageSize)
                     .filter("[" + kendo.attr("role") + "=dropdownlist]")
                     .kendoDropDownList("value", pageSize)
                     .kendoDropDownList("text", text); // handles custom values
             }
+        },
+
+        _collapsedTotal: function() {
+            return this.dataSource.total();
         },
 
         _keydown: function(e) {
@@ -379,12 +423,32 @@ var __meta__ = { // jshint ignore:line
             if (!isNaN(pageSize)){
                 dataSource.pageSize(pageSize);
             } else if ((value + "").toLowerCase() == "all") {
-                dataSource.pageSize(dataSource.total());
+                dataSource._pageSize = undefined;
+                dataSource._take = undefined;
+                dataSource._skip = 0;
+                dataSource.fetch();
             }
         },
 
         _toggleActive: function() {
-            this.list.toggleClass("k-state-expanded");
+            var that = this;
+
+            if (that.list.hasClass("k-state-expanded")) {
+                DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
+            } else {
+                DOCUMENT_ELEMENT.bind(that.downEvent, $.proxy(that._hideList, that));
+            }
+            that.list.toggleClass("k-state-expanded");
+        },
+
+        _hideList: function(e) {
+             var that = this,
+                target = kendo.eventTarget(e);
+
+            if (!$.contains(that.list[0], target)) {
+                DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
+                that.list.removeClass("k-state-expanded");
+            }
         },
 
         _click: function(e) {
@@ -393,7 +457,7 @@ var __meta__ = { // jshint ignore:line
             e.preventDefault();
 
             if (!target.is(".k-state-disabled")) {
-                this.page(target.attr(kendo.attr("page")));
+                this.page(parseInt(target.attr(kendo.attr("page")), 10));
             }
         },
 
@@ -406,7 +470,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         page: function(page) {
-            if (page !== undefined) {
+            if (page) {
                 if (this.trigger("pageChange", { index: page })) {
                    return;
                 }
@@ -421,6 +485,22 @@ var __meta__ = { // jshint ignore:line
                     return 0;
                 }
             }
+        },
+
+        _getWidthSizeClass: function(width) {
+            var that = this,
+                sizes = SIZE.split(" ");
+
+            if (!that.options.responsive) {
+                return null;
+            } else if (width <= 480) {
+                return sizes[2];
+            } else if (width <= 640) {
+                return sizes[1];
+            } else if (width <= 1024) {
+                return sizes[0];
+            }
+            return null;
         }
     });
 

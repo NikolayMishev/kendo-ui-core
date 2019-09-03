@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["kl-GL"] = {
         name: "kl-GL",
         numberFormat: {
@@ -6,19 +6,19 @@
             decimals: 2,
             ",": ".",
             ".": ",",
-            groupSize: [3,0],
+            groupSize: [3],
             percent: {
                 pattern: ["-n %","n %"],
                 decimals: 2,
                 ",": ".",
                 ".": ",",
-                groupSize: [3,0],
+                groupSize: [3],
                 symbol: "%"
             },
             currency: {
                 name: "Danish Krone",
                 abbr: "DKK",
-                pattern: ["$ -n","$ n"],
+                pattern: ["$ -n","$n"],
                 decimals: 2,
                 ",": ".",
                 ".": ",",

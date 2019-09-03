@@ -17,7 +17,7 @@ To see how the example works:
 
 ###### Example
 
-```html
+```dojo
   <div id="example">
     <div class="demo-section k-header">
       <h4>Products</h4>
@@ -38,7 +38,7 @@ To see how the example works:
             serverFiltering: true,
             transport: {
               read: {
-                url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
               }
             }
           }
@@ -69,8 +69,6 @@ To see how the example works:
 
 ## See Also
 
-Other articles on the Kendo UI ComboBox:
-
 * [ComboBox JavaScript API Reference](/api/javascript/ui/combobox)
 * [How to Bypass Boundary Detection]({% slug howto_bypass_boudary_detection_combobox %})
 * [How to Configure Deferred Value Binding]({% slug howto_configure_deffered_value_binding_combobox %})
@@ -82,4 +80,4 @@ Other articles on the Kendo UI ComboBox:
 * [How to Select Items on Tab]({% slug howto_select_items_ontab_combobox %})
 * [How to Underline Matched Search]({% slug howto_underline_matched_search_combobox %})
 
-For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_define_virtual_option_combobox %}).
+For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_bindobjectstongmodel_combobox %}).

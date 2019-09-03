@@ -24,7 +24,7 @@ The example below demonstrates how to use FontAwesome icons in series labels wit
 
 ###### Example
 
-```html
+```dojo
     <!-- Include FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 
@@ -57,7 +57,7 @@ The example below demonstrates how to use FontAwesome icons in series notes with
 
 ###### Example
 
-```html
+```dojo
     <!-- Include FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 
@@ -106,7 +106,7 @@ The example below demonstrates how to construct a visual that uses two [Text](/a
 
 ###### Example
 
-```html
+```dojo
     <!-- Include FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css">
 
@@ -164,8 +164,6 @@ The example below demonstrates how to construct a visual that uses two [Text](/a
 
 ## See Also
 
-Other articles and how-to examples on Kendo UI Charts:
-
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [How to Embed Font Awesome in Exported PDF]({% slug howto_embedfontawesome_inexportedpdf_drawingapi %})
 * [Drawing API: layout](/api/javascript/drawing/layout)
@@ -175,4 +173,4 @@ Other articles and how-to examples on Kendo UI Charts:
 * [How to Shorten Chart Labels]({% slug howto_shortenchartlabels_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

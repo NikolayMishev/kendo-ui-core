@@ -7,13 +7,15 @@ slug: howto_rendercustomsymbols_forbubblelayers_map
 
 # Render Custom Symbols for Bubble Layers
 
-The Bubble Layer allows you to define the way symbols are rendered. This works by defining a [`symbol` function](http://docs.telerik.com/KENDO-UI/api/javascript/dataviz/ui/map#configuration-layers.symbol) that uses the [Drawing API](/framework/drawing/overview) to define the shape. The symbol is typically a [Group](http://docs.telerik.com/kendo-ui/api/javascript/drawing/group) of shapes.
+The Bubble Layer allows you to define the way symbols are rendered.
 
-The example below demonstrates how to render 200-kilometer lines in West-East direction as a symbol. Notice that the lines get longer the farther you go North, which is due to that fact that the [Mercator Projection](https://en.wikipedia.org/wiki/Mercator_projection) is used.
+This approach works by defining a [`symbol`](/api/javascript/dataviz/ui/map/configuration/layers.symbol) function that uses the [Drawing API]({% slug overview_kendoui_drawingapi %}) to define the shape. The symbol is typically a [Group](/api/javascript/drawing/group) of shapes.
+
+The following example demonstrates how to render 200-kilometer lines in West-East direction as a symbol. Note that the lines get longer the farther you go North, which is due to that fact that the example uses the [Mercator Projection](https://en.wikipedia.org/wiki/Mercator_projection).
 
 ###### Example
 
-```html
+```dojo
     <div id="map"></div>
     <script>
       var draw = kendo.dataviz.drawing;
@@ -26,16 +28,16 @@ The example below demonstrates how to render 200-kilometer lines in West-East di
         wraparound: false,
         layers: [{
           type: "tile",
-          urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+          urlTemplate: "https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
           subdomains: ["a", "b", "c"],
-          attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+          attribution: "&copy; <a href='https://osm.org/copyright'>OpenStreetMap contributors</a>"
         }, {
           type: "bubble",
           attribution: "Population data from Nordpil and UN Population Division.",
           dataSource: {
             transport: {
               read: {
-                url: "http://runner.telerik.io/fullscreen/EsuDU.json",
+                url: "https://runner.telerik.io/fullscreen/EsuDU.json",
                 dataType: "json"
               }
             }
@@ -50,7 +52,7 @@ The example below demonstrates how to render 200-kilometer lines in West-East di
 
             // Find locations 100km west and east of center
             //
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/map/location#methods-destination
+            // https://docs.telerik.com/kendo-ui/api/javascript/dataviz/map/location/methods/destination
             //
             // Actual distance can be bound to e.dataItem fields
             var l1 = location.destination(100000, 270);
@@ -58,13 +60,13 @@ The example below demonstrates how to render 200-kilometer lines in West-East di
 
             // View (screen) coordinates for the locations
             //
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/map#methods-locationToView
+            // https://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/map/methods/locationToView
             var p1 = map.locationToView(l1);
             var p2 = map.locationToView(l2);
 
             // Draw the lines
             //
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/drawing/circle
+            // https://docs.telerik.com/kendo-ui/api/javascript/dataviz/drawing/circle
             var path = new draw.Path({
               stroke: {
                 width: 2,
@@ -87,8 +89,6 @@ The example below demonstrates how to render 200-kilometer lines in West-East di
 
 ## See Also
 
-Other articles on the Kendo UI Map:
-
 * [Map JavaScript API Reference](/api/javascript/dataviz/ui/map)
 * [How to Add Shape Titles]({% slug howto_addhspaetitles_map %})
 * [How to Drag and Drop Markers]({% slug howto_draganddropmarkers_map %})
@@ -96,4 +96,4 @@ Other articles on the Kendo UI Map:
 * [How to Update Map Shapes by ID]({% slug howto_updatemapshapesbyid_map %})
 * [How to Zoom on Area]({% slug howto_zoomonarea_map %})
 
-For more runnable examples on the Kendo UI Map, browse the [**How To** documentation folder]({% slug howto_customizemarkersonmap_map %}).
+For more runnable examples on the Kendo UI Map, browse the [**How To** documentation folder]({% slug howto_addhspaetitles_map %}).

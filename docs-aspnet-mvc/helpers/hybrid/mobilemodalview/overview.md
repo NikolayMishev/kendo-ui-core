@@ -9,7 +9,9 @@ position: 1
 
 # ModalView HtmlHelper Overview
 
-The hybrid ModalView HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ModalView](http://demos.telerik.com/kendo-ui/m/index#modalview/index) widget. It allows you to configure the hybrid Kendo UI ModalView from server-side code.
+The hybrid ModalView HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ModalView](http://demos.telerik.com/kendo-ui/m/index#modalview/index) widget.
+
+It allows you to configure the hybrid Kendo UI ModalView from server-side code.
 
 ## Getting Started
 
@@ -17,11 +19,8 @@ The hybrid ModalView HtmlHelper extension is a server-side wrapper for the [hybr
 
 Below are listed the steps for you to follow when configuring the hybrid Kendo UI ModalView for ASP.NET MVC.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
@@ -30,29 +29,25 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
             return View();
         }
 
-**Step 3** Add a hybrid Kendo UI Button to open the ModalView.
+1. Add a hybrid Kendo UI Button to open the ModalView.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <% Html.Kendo().MobileView()
-                .Name("modalview-view")
-                .Content(() =>
-                {
-                    %>
-                    <%: Html.Kendo().MobileButton()
-                            .Text("Open")
-                            .Rel(MobileButtonRel.ModalView)
-                            .Url("#ModalView")
-                    %>
-                    <%
-                })
-                .Render();
+            .Name("modalview-view")
+            .Content(() =>
+            {
+                %>
+                <%: Html.Kendo().MobileButton()
+                        .Text("Open")
+                        .Rel(MobileButtonRel.ModalView)
+                        .Url("#ModalView")
+                %>
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileView()
             .Name("modalview-view")
             .Content(
@@ -64,142 +59,126 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
                     )
                 </text>)
         )
-```
+    ```
 
-**Step 4** Add a Kendo UI ModalView to the `Index` view.
+1. Add a Kendo UI ModalView to the `Index` view.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <% Html.Kendo().MobileModalView()
-                .Name("ModalView")
-                .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
-                .Content(() =>
-                {
-                    %>
-                    ModalView Content
-                    <%
-                })
-                .Render();
+            .Name("ModalView")
+            .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
+            .Content(() =>
+            {
+                %>
+                ModalView Content
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileModalView()
-                .Name("ModalView")
-                .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
-                .Content(
-                    @<text>
-                        ModalView Content
-                    </text>
-                )
+            .Name("ModalView")
+            .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
+            .Content(
+                @<text>
+                    ModalView Content
+                </text>
+            )
         )
-```
+    ```
 
-**Step 5** Initialize the mobile application.
+1. Initialize the mobile application.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileApplication()
-                .ServerNavigation(true)
+            .ServerNavigation(true)
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 6** Build and run the application.
+1. Build and run the application.
 
 ## Event Handling
 
-You can subscribe to all hybrid ModalView [events](../../../../kendo-ui/api/javascript/mobile/ui/modalview#events).
+You can subscribe to all hybrid ModalView [events](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/view#events).
 
 ### By Handler Name
 
-The examples below demonstrates how to subscribe to events by a handler name.
+The following example demonstrates how to subscribe to events by a handler name.
 
-###### Example
-
-```tab-ASPX
-
-        <% Html.Kendo().MobileModalView()
-                .Name("ModalView")
-                .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
-                .Content(() =>
-                {
-                    %>
-                    ModalView Content
-                    <%
-                })
-                .Events(events => events
-                    .Close("onClose")
-                )
-                .Render();
-        %>
-
-        <script>
-        function onClose() {
-            //Handle the close event.
-        }
-        </script>
-```
-```tab-Razor
-
-        @(Html.Kendo().MobileModalView()
-                .Name("ModalView")
-                .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
-                .Content(
-                    @<text>
-                        ModalView Content
-                    </text>
-                )
-                .Events(events => events
-                    .Close("onClose")
-                )
+```ASPX
+    <% Html.Kendo().MobileModalView()
+        .Name("ModalView")
+        .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
+        .Content(() =>
+        {
+            %>
+            ModalView Content
+            <%
+        })
+        .Events(events => events
+            .Close("onClose")
         )
+        .Render();
+    %>
 
-        <script>
+    <script>
         function onClose() {
-            //Handle the close event.
+            // Handle the close event.
         }
-        </script>
+    </script>
+```
+```Razor
+    @(Html.Kendo().MobileModalView()
+            .Name("ModalView")
+            .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
+            .Content(
+                @<text>
+                    ModalView Content
+                </text>
+            )
+            .Events(events => events
+                .Close("onClose")
+            )
+    )
+
+    <script>
+        function onClose() {
+            // Handle the close event.
+        }
+    </script>
 ```
 
 ## Reference
 
 ### Instances
 
-You can reference a hybrid ModalView instance by using the code from the example below. Once a reference is established, use the [hybrid ModalView API](../../../../kendo-ui/api/javascript/mobile/ui/modalview#methods) to control its behavior.
+You can reference a hybrid ModalView instance by using the code from the following example. Once a reference is established, use the [hybrid ModalView API](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/view#methods) to control its behavior.
 
-###### Example
-
-        @(Html.Kendo().MobileModalView()
-                .Name("ModalView")
-                .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
-                .Content(
-                    @<text>
-                        ModalView Content
-                    </text>
-                )
-        )
-        <script>
+    @(Html.Kendo().MobileModalView()
+            .Name("ModalView")
+            .HtmlAttributes(new { style = "width: 95%; height: 18em;"  })
+            .Content(
+                @<text>
+                    ModalView Content
+                </text>
+            )
+    )
+    <script>
         $(function() {
-            //Notice that the Name() of the ModalView is used to get its client-side instance.
+            // The Name() of the ModalView is used to get its client-side instance.
             var modalview = $("#ModalView").data("kendoMobileModalView");
         });
-        </script>
+    </script>
 
 ## See Also
 
-Other articles on Telerik UI for ASP.NET MVC and on the ModalView:
-
-* [ASP.NET MVC API Reference: ModalViewBuilder](/api/Kendo.Mvc.UI.Fluent/MobileModalViewBuilder)
+* [Telerik UI for ASP.NET MVC API Reference: ModalViewBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/MobileModalViewBuilder)
 * [Overview of the Hybrid UI ModalView Widget](http://docs.telerik.com/kendo-ui/controls/hybrid/modalview/modalview)
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})

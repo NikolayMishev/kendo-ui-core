@@ -1,9 +1,11 @@
 ---
 title: TooltipOptions
 page_title: API reference for Kendo UI Drawing API Tooltip options
+res_type: api
 ---
 
 # kendo.drawing.TooltipOptions
+
 Shape tooltip configuration options.
 
 ## Fields

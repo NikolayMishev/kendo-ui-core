@@ -34,7 +34,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI QRCod
         <kendo:qRCode name="qrcode" value="foo" >
         </kendo:qRCode>
 
-**Step 4** Choose the appropriate [error correction level](/api/javascript/dataviz/ui/qrcode#configuration-errorCorrection) and [encoding](/api/javascript/dataviz/ui/qrcode#configuration-encoding).
+**Step 4** Choose the appropriate [error correction level](/api/javascript/dataviz/ui/qrcode/configuration/errorcorrection) and [encoding](/api/javascript/dataviz/ui/qrcode/configuration/encoding).
 
 ###### Example
 
@@ -59,8 +59,6 @@ You are able to reference an existing QRCode instance via [`jQuery.data()`](http
         </script>
 
 ## See Also
-
-Other articles on Telerik UI for JSP and on the QRCode:
 
 * [Overview of the Kendo UI QRCode Widget]({% slug overview_kendoui_qrcode_widget %})
 * [Telerik UI for JSP API Reference Folder](/api/jsp/autocomplete/animation)

@@ -1,26 +1,24 @@
 ---
 title: Modes of Operation
-page_title: Modes of Operation | Kendo UI Upload
-description: "Use the different modes of operation supported by the Kendo UI Upload widget, initialize it from an existing file and how to use its asynchronous mode."
+page_title: jQuery Upload Documentation | Modes of Operation | Kendo UI
+description: "Get started with the jQuery Upload by Kendo UI and learn how to upload files in its synchronous or asynchronous mode of operation."
 slug: modes_upload_widget
-position: 5
+position: 4
 ---
 
 # Modes of Operation
 
-The Kendo UI Upload widget supports two modes of operation:   
-* [Synchronous](#synchronous-mode)
-* [Asynchronous](#asynchronous-mode)
+The Upload supports a [synchronous](#synchronous-mode) and [asynchronous](#ssynchronous-mode) modes of operation.
 
 ## Synchronous Mode
 
-A Kendo UI Upload in a synchronous mode behaves much like a regular file input. The selected files are uploaded upon form submission. Users benefit from the opportunity to select a variable number of files. This feature does not require that the browser supports a multiple file selection.
+When the Upload is in its synchronous mode, the widget behaves like a regular file input. The selected files are uploaded upon form submission, the user can select a variable number of files, and the browser in use is not required to support the selection of multiple files.
 
-![](/controls/editors/upload/upload-sync.png)
+**Figure 1: An Upload in the synchronous mode**
 
-The Upload is initialized from an existing file input placed in a form. The array syntax in the input name is used to hint the Upload handler to treat the photos as an array.
+![Upload Sync](upload-sync.png)
 
-###### Example
+The following example demonstrates how to initialize the Upload in a synchronous mode from an existing file input that is placed in a form. The array syntax in the input name is used to hint the Upload handler to treat the photos as an array. For more information on how to handle the uploaded files, refer to the documentation of your specific server technology.
 
     <form method="post" action="handler.php">
         <div>
@@ -32,85 +30,57 @@ The Upload is initialized from an existing file input placed in a form. The arra
         $("#photos").kendoUpload();
     });
 
-For detailed information on how to send metadata to the save handler and receive metadata in the Upload widget, see [this article]({% slug metadata_upload_widget %}).
-
-For more information on how to handle the uploaded files, refer to the documentation of your specific server technology.
-
 ## Asynchronous Mode
 
-In this mode, the Kendo UI Upload requires dedicated server handlers to store and remove uploaded files. Files are uploaded immediately or, optionally, after the confirmation from the user. The upload request is executed out-of-band without interrupting the page flow.
+When the Upload is in its asynchronous mode, the widget requires dedicated server handlers to store and remove the uploaded files. The selected files are immediately uploaded or, optionally, the selected files are uploaded upon user confirmation. The upload request is executed out-of-band without interrupting the page flow. For the runnable example, refer to the [demo on setting the Upload in an asynchronous mode of operation](https://demos.telerik.com/kendo-ui/upload/async).
 
-![](/controls/editors/upload/upload-async.png)
+**Figure 2: An Upload in the asynchronous mode**
 
-The asynchronous mode is implemented using the [HTML5 File API](https://en.wikipedia.org/wiki/HTML5_File_API). The upload will gracefully degrade and continue to function in legacy browsers using a hidden `iframe`.
+![Upload Async](upload-async.png)
 
-### Implementation
+### Getting Started
 
-To implement the asynchronous mode of operation, follow the steps below:
+The asynchronous mode is implemented over the [HTML5 File API](https://en.wikipedia.org/wiki/HTML5_File_API). In legacy browsers, the Upload will continue to function by using a hidden `iframe` element.
 
-**Step 1.** Create an HTML `input` of type `"file"` (no `form` is required).
+1. Create an HTML `input` of type `"file"` (no `form` is required).
 
-###### Example
+        <input name="photos[]" id="photos" type="file" />
 
-    <input name="photos[]" id="photos" type="file" />
+2. Initialize the Upload and configure the asynchronous upload end-points. The array syntax for the field name is used to hint the upload handler to treat `"photos"` as an array.
 
-**Step 2.** Initialize the Upload and configure the asynchronous upload end-points. The array syntax for the field name is used to hint the upload handler to treat `"photos"` as an array.
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "saveHandler.php",
+                removeUrl: "removeHandler.php",
+                removeField: "fileNames[]"
+            }
+        });
 
-###### Example
+### Configuring the save Handler
 
-    $("#photos").kendoUpload({
-        async: {
-            saveUrl: "saveHandler.php",
-            removeUrl: "removeHandler.php",
-            removeField: "fileNames[]"
-        }
-    });
+The `save` handler has to accept POST requests. The requests will contain one or more files with the same name as the `input`&mdash;in the case of the previous example, this is `"photos[]"`.
 
-### Save Handler
-
-The save handler has to accept POST requests. The requests are going to contain one or more files with the same name as the `input`, in this case `"photos[]"`.
-
-The handler is expected to return either:
+The `save` handler is expected to return any of the following responses:
 
 * An empty response to signify success.
 * A JSON string with `"text/plain"` content encoding. The de-serialized object is available in the `success` event handler.
 * Any other response to signify failure.
 
-### Remove Handler
+### Configuring the remove Handler
 
-The remove handler should accept POST requests, which are configurable via the [`removeVerb`](/api/javascript/ui/upload#configuration-async.removeVerb) option. The requests are going to contain one or more text fields with the `"fileNames"` name. In this case, change it to `"fileNames[]"` using the `removeField` option.
+The `remove` handler has to accept POST requests which can be configured through the [`removeVerb`](/api/javascript/ui/upload/configuration/async.removeverb) option. The requests will contain one or more text fields with the `"fileNames"` name&mdash;in the case of the previous example, change it to `"fileNames[]"` by using the `removeField` option.
 
-The handler is expected to return either:
+The `remove` handler is expected to return any of the following responses:
 
 * An empty response to signify success.
-* A JSON string with `"text/plain"` content encoding. The de-serialized object is available in the [`success`](/api/javascript/ui/upload#events-success) event handler.
+* A JSON string with `"text/plain"` content encoding. The de-serialized object is available in the [`success`](/api/javascript/ui/upload/events/success) event handler.
 * Any other response to signify failure.
 
-### Asynchronous Mode Fallback
+### Setting the Asynchronous Mode Fallback
 
-The Upload has a fallback mechanism when it is placed inside a `form` and is configured for asynchronous operation. Files that were not fully uploaded are going to be sent as part of the form upon its submission by the user. This ensures that no files are lost, even if you do not take any special measures to block the **Submit** button during upload.
-
-The uploaded files must be handled both in the save handler and in the form submit action, as in synchronous mode.
-
-### Programmatic Trigger of Asynchronous Upload
-
-The Upload widget does not provide a public API method for asynchronous uploading of the already selected files, when `autoUpload` is set to `false`. To achieve the same result, it is possible to trigger the `click` event of the widget's **Upload** button.
-
-###### Example
-
-    var upload = $("UploadID").data("kendoUpload");
-    upload.wrapper.find("button.k-upload-selected").click();
-
-The [`wrapper` property]({% slug widgetwrapperandelement_references_gettingstarted %}) returns the Upload widget's outermost element.
+When the Upload is placed inside a `form` and is configured for asynchronous operation, the widget has a fallback mechanism. Files that were not fully uploaded will be sent as part of the form upon its submission by the user. This behavior ensures that even if you do not take any special measures to block the **Submit** button during upload, no files will be lost. You need to handle the uploaded files both in the `save` handler and in the form submit action as in synchronous mode.
 
 ## See Also
 
-Other articles on the Kendo UI Upload:
-
-* [Overview of the Upload Widget]({% slug overview_kendoui_upload_widget %})
-* [Drag and Drop]({% slug dragandrop_upload_widget %})
-* [Send and Receive Metadata]({% slug metadata_upload_widget %})
-* [Browser Support]({% slug browsersupport_upload_widget %})
-* [Troubleshooting]({% slug troubleshooting_upload_widget %})
-
-For how-to examples on the Kendo UI Upload widget, browse its [**How To** documentation folder]({% slug howto_remove_files_with_errors %}).
+* [Setting the Upload in Its Asynchronous Mode of Operation (Demo)](https://demos.telerik.com/kendo-ui/upload/async)
+* [JavaScript API Reference of the Upload](/api/javascript/ui/upload)

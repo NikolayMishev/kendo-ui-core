@@ -14,7 +14,7 @@ Basically, the approach is to set the input width to 100%.
 
 ###### Example
 
-```html
+```dojo
   <div class="row">
     <div class="col-md-8"><input id="categories" style="width: 100%" /></div>
     <div class="col-md-4">.col-md-4</div>
@@ -28,7 +28,7 @@ Basically, the approach is to set the input width to 100%.
                 type: "odata",
                 serverFiltering: true,
                 transport: {
-                    read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                    read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
                 }
             }
         });
@@ -38,8 +38,6 @@ Basically, the approach is to set the input width to 100%.
 ```
 
 ## See Also
-
-Other articles on the Kendo UI ComboBox:
 
 * [ComboBox JavaScript API Reference](/api/javascript/ui/combobox)
 * [How to Bypass Boundary Detection]({% slug howto_bypass_boudary_detection_combobox %})
@@ -51,4 +49,4 @@ Other articles on the Kendo UI ComboBox:
 * [How to Select Items on Tab]({% slug howto_select_items_ontab_combobox %})
 * [How to Underline Matched Search]({% slug howto_underline_matched_search_combobox %})
 
-For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_define_virtual_option_combobox %}).
+For more runnable examples on the Kendo UI ComboBox, check its [how-to articles]({% slug howto_bindobjectstongmodel_combobox %}).

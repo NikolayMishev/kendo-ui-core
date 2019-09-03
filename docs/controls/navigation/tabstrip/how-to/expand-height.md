@@ -19,7 +19,7 @@ The example below demonstrates how to make the TabStrip widget 100% high and res
 
 ###### Example
 
-```html
+```dojo
     <style>
 
     html,
@@ -88,14 +88,12 @@ The example below demonstrates how to make the TabStrip widget 100% high and res
           text: "Item N",
           content: "Appended Item Content"
         });
-        expandContentDivs(tabStripElement.children(".k-content").last());
+        resizeAll();
       });
     </script>
 ```
 
 ## See Also
-
-Other articles on the Kendo UI TabStrip:
 
 * [TabStrip JavaScript API Reference](/api/javascript/ui/tabstrip)
 * [How to Add Close Button to Tabs]({% slug howto_addclosebuttontotabs_tabstrip %})

@@ -13,11 +13,105 @@ This page provides solutions for common problems related to the Kendo UI Charts.
 
 ## Rendering
 
+### Chart Labels Overlap after Refresh in Internet Explorer
+
+This limitation is browser-specific and is due to the lack of events that can be handled in regards to the font loading of the browser.
+
+**Solution**
+
+To work around this issue, either:
+
+* Delay the initialization of the Chart, or
+* Add the [`@telerik/kendo-pack-fonts`](https://www.npmjs.com/package/@telerik/kendo-pack-fonts) module. For more information on how to implement this approach, refer to the article on [packing fonts for export]({% slug howto_packfontsforpdfexport_drawingapi %}).
+
+The following Dojo example demonstrates how to handle the issue by using `kendo-pack-fonts`. In Internet Explorer, open the implementation in full-screen mode.
+
+```dojo
+ <script src="https://cdn.rawgit.com/telerik/kendo-pack-fonts/8dc63142/sample/fonts.js"></script>
+    <div id="example">
+      <div class="demo-section k-content wide">
+        <div id="chart"></div>
+      </div>
+       <script>
+        function createChart() {
+          $("#chart").kendoChart({
+            title: {
+              text: "Gross domestic product growth \n /GDP annual %/"
+            },
+            legend: {
+              position: "bottom",
+              labels: {
+                font: "10px 'DejaVu Sans'"
+              }
+            },
+            chartArea: {
+              background: ""
+            },
+            seriesDefaults: {
+              type: "line",
+              style: "smooth"
+            },
+            series: [{
+              name: "India Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+              data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
+            },{
+              name: "World Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+              data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727]
+            },{
+              name: "Russian Federation Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+              data: [4.743, 7.295, 7.175, 6.376, 8.153, 8.535, 5.247, -7.832, 4.3, 4.3]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            },{
+              name: "Haiti  Lorem ipsum dolor sit amet, consectetur adipisicing elits",
+              data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+            }],
+            valueAxis: {
+              labels: {
+                format: "{0}%"
+              },
+              line: {
+                visible: false
+              },
+              axisCrossingValue: -10
+            },
+            categoryAxis: {
+              categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+              majorGridLines: {
+                visible: false
+              },
+              labels: {
+                rotation: "auto"
+              }
+            },
+            tooltip: {
+              visible:false
+            }
+          });
+        }
+        $(document).ready(createChart);
+      </script>
+    </div>
+```
+
 ### Chart Graphics Do Not Render in Internet Explorer
 
-**Figure 1. Chart in the Internet Explorer with its graphics failing to render**
+**Figure 1: Chart in the Internet Explorer with its graphics failing to render**
 
-![Chart in IE](/styles-and-layout/chart-ie.png)
+![Chart in IE](../../../styles-and-layout/chart-ie.png)
 
 > **Important**
 >
@@ -27,9 +121,9 @@ This page provides solutions for common problems related to the Kendo UI Charts.
 
 Select **Internet Options** > **Security** > **Internet** (or **Local intranet**) > **Custom Level**  and enable **Binary and script behaviors** by ticking the **Enable** radio button.
 
-**Figure 2. Options and settings to apply to render the chart graphics**
+**Figure 2: Options and settings to apply to render the chart graphics**
 
-![IEscript behaviors](/styles-and-layout/chart-ie-script-behaviors.png)
+![IEscript behaviors](../../../styles-and-layout/chart-ie-script-behaviors.png)
 
 ### Chart Does Not Render with JavaScript Disabled
 
@@ -57,15 +151,13 @@ For display, the browser will substitute the selected font with whatever is prov
 
 **Solution**
 
-The solution is to [make the fonts available for embedding]({% slug pdfderawingexport_drawingapi %}#configuration-Custom). This means that the fonts should be available as binary TTF files and registered for export.
+The solution is to [make the fonts available for embedding]({% slug pdfderawingexport_drawingapi %}#configuration-Custom). This means that the fonts should be available as binary TTF files and registered for export, which is demonstrated in the [PDF Export demo on Charts](http://demos.telerik.com/kendo-ui/pdf-export/index) as well.
 
-This is demonstrated in the [PDF Export demo on Charts](http://demos.telerik.com/kendo-ui/pdf-export/index) as well.
-
-The example below demonstrates how to embed fonts in exported PDF.
+The following example demonstrates how to embed fonts in exported PDF.
 
 ###### Example
 
-```html
+```dojo
 <button class='export-pdf k-button'>Save as PDF</button>
 
 <div id="chart"></div>
@@ -92,7 +184,7 @@ The example below demonstrates how to embed fonts in exported PDF.
      $("#chart").kendoChart({
         pdf: {
             fileName: "Kendo UI Chart Export.pdf",
-            proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+            proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
         },
         title: {
             text: "Gross domestic product growth \n /GDP annual %/",
@@ -122,13 +214,8 @@ The example below demonstrates how to embed fonts in exported PDF.
 
 ## See Also
 
-Other articles on styling, appearance, and rendering of Kendo UI widgets:
-
 * [Themes and Appearance of the Kendo UI Widgets]({% slug themesandappearnce_kendoui_desktopwidgets %})
 * [Rendering Modes for Data Visualization]({% slug renderingmodesfor_datavisualization_kendouistyling %})
-
-Other articles on troubleshooting:
-
 * [Performance Issues in Kendo UI Widgets for Data Visualization]({% slug tipsandtricks_kendouistyling %})
 * [Common Issues in Kendo UI]({% slug troubleshooting_common_issues_kendoui %})
 * [Kendo UI JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
@@ -142,7 +229,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Scheduler]({% slug troubleshooting_scheduler_widget %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

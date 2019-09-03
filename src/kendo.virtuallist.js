@@ -16,7 +16,7 @@ var __meta__ = { // jshint ignore:line
         Widget = ui.Widget,
         DataBoundWidget = ui.DataBoundWidget,
         proxy = $.proxy,
-
+        percentageUnitsRegex = /^\d+(\.\d+)?%$/i,
         WRAPPER = "k-virtual-wrap",
         VIRTUALLIST = "k-virtual-list",
         CONTENT = "k-virtual-content",
@@ -157,18 +157,28 @@ var __meta__ = { // jshint ignore:line
             itemTemplate = templates.placeholderTemplate;
         }
 
+         if (data.index === 0 && this.header && data.group) {
+             this.header.html(templates.fixedGroupTemplate(data.group));
+         }
+
         this.angular("cleanup", function() {
             return { elements: [ element ]};
         });
 
         element
             .attr("data-uid", data.item ? data.item.uid : "")
-            .attr("data-offset-index", data.index)
-            .html(itemTemplate(data.item || {}));
+            .attr("data-offset-index", data.index);
+
+         if (this.options.columns && this.options.columns.length && data.item) {
+            element.html(renderColumns(this.options, data.item, templates));
+        } else {
+            element.html(itemTemplate(data.item || {}));
+        }
 
         element.toggleClass(FOCUSED, data.current);
         element.toggleClass(SELECTED, data.selected);
         element.toggleClass("k-first", data.newGroup);
+        element.toggleClass("k-last", data.isLastGroupedItem);
         element.toggleClass("k-loading-item", !data.item);
 
         if (data.index !== 0 && data.newGroup) {
@@ -184,6 +194,28 @@ var __meta__ = { // jshint ignore:line
         this.angular("compile", function() {
             return { elements: [ element ], data: [ { dataItem: data.item, group: data.group, newGroup: data.newGroup } ]};
         });
+    }
+
+    function renderColumns(options, dataItem, templates) {
+        var item = "";
+
+        for (var i = 0; i < options.columns.length; i++) {
+            var currentWidth = options.columns[i].width;
+            var currentWidthInt = parseInt(currentWidth, 10);
+            var widthStyle = '';
+
+            if(currentWidth){
+                widthStyle += "style='width:";
+                widthStyle += currentWidthInt;
+                widthStyle += percentageUnitsRegex.test(currentWidth) ? "%" : "px";
+                widthStyle += ";'";
+            }
+            item += "<span class='k-cell' " + widthStyle + ">";
+            item += templates["column"+ i](dataItem);
+            item += "</span>";
+        }
+
+        return item;
     }
 
     function mapChangedItems(selected, itemsToMatch) {
@@ -245,6 +277,10 @@ var __meta__ = { // jshint ignore:line
             that.wrapper = that.content.wrap("<div class='" + WRAPPER + "'></div>").parent();
             that.header = that.content.before("<div class='" + HEADER + "'></div>").prev();
 
+            if (options.columns && options.columns.length) {
+                that.element.removeClass(LIST);
+            }
+
             that.element.on("mouseenter" + VIRTUAL_LIST_NS, "li:not(.k-loading-item)", function() { $(this).addClass(HOVER); })
                         .on("mouseleave" + VIRTUAL_LIST_NS, "li", function() { $(this).removeClass(HOVER); });
 
@@ -283,7 +319,7 @@ var __meta__ = { // jshint ignore:line
             template: "#:data#",
             placeholderTemplate: "loading...",
             groupTemplate: "#:data#",
-            fixedGroupTemplate: "fixed header template",
+            fixedGroupTemplate: "#:data#",
             mapValueTo: "index",
             valueMapper: null
         },
@@ -378,6 +414,15 @@ var __meta__ = { // jshint ignore:line
             });
         },
 
+        _highlightSelectedItems: function () {
+            for (var i = 0; i < this._selectedDataItems.length; i++) {
+                var item = this._getElementByDataItem(this._selectedDataItems[i]);
+                if(item.length){
+                    item.addClass(SELECTED);
+                }
+            }
+        },
+
         refresh: function(e) {
             var that = this;
             var action = e && e.action;
@@ -395,15 +440,18 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 that._createList();
-                if (!action && that._values.length && !filtered && !that.options.skipUpdateOnBind) {
+                if (!action && that._values.length && !filtered &&
+                     !that.options.skipUpdateOnBind && !that._emptySearch) {
                     that._selectingValue = true;
-                    that.value(that._values, true).done(function() {
-                        that.bound(true);
+
+                    that.bound(true);
+                    that.value(that._values, true).done(function () {
                         that._selectingValue = false;
                         that._triggerListBound();
                     });
                 } else {
                     that.bound(true);
+                    that._highlightSelectedItems();
                     that._triggerListBound();
                 }
             } else {
@@ -476,6 +524,17 @@ var __meta__ = { // jshint ignore:line
             return that._valueDeferred;
         },
 
+        _checkValuesOrder: function (value) {
+            if (this._removedAddedIndexes &&
+                this._removedAddedIndexes.length === value.length) {
+                    var newValue = this._removedAddedIndexes.slice();
+                    this._removedAddedIndexes = null;
+                return newValue;
+            }
+
+            return value;
+        },
+
         _prefetchByValue: function(value) {
             var that = this,
                 dataView = that._dataView,
@@ -517,7 +576,12 @@ var __meta__ = { // jshint ignore:line
                     }
                 });
             } else {
-                that.select([-1]);
+                 if (!that.value()[0]) {
+                     that.select([-1]);
+                 } else {
+                    that._selectingValue = false;
+                    that._triggerListBound();
+                 }
             }
         },
 
@@ -565,7 +629,9 @@ var __meta__ = { // jshint ignore:line
                 this._selectedIndexes = [];
 
                 for (var i = 0; i < this._selectedDataItems.length; i++) {
-                    this._selectedIndexes.push(undefined);
+                    var item = this._getElementByDataItem(this._selectedDataItems[i]);
+                    this._selectedIndexes.push(this._getIndecies(item)[0]);
+                    item.addClass(SELECTED);
                 }
 
                 this._triggerChange(removed, added);
@@ -662,11 +728,27 @@ var __meta__ = { // jshint ignore:line
         },
 
         dataItemByIndex: function(index) {
-            var take = this.itemCount;
-            var skip = this._getSkip(index, take);
+            var that = this;
+            var take = that.itemCount;
+            var skip = that._getSkip(index, take);
             var view = this._getRange(skip, take);
 
-            return this._findDataItem(view, [index - skip]);
+            //should not return item if data is not loaded
+            if (!that._getRange(skip, take).length) {
+                return null;
+            }
+
+            if (that.options.type === "group") {
+                kendo.ui.progress($(that.wrapper), true);
+                that.mute(function() {
+                    that.dataSource.range(skip, take, function () {
+                        kendo.ui.progress($(that.wrapper), false);
+                    });
+                    view = that.dataSource.view();
+                });
+            }
+
+            return that._findDataItem(view, [index - skip]);
         },
 
         selectedDataItems: function() {
@@ -780,7 +862,7 @@ var __meta__ = { // jshint ignore:line
         focusLast: function() {
             var lastIndex = this.dataSource.total();
             this.scrollTo(this.heightContainer.offsetHeight);
-            this.focus(lastIndex);
+            this.focus(lastIndex - 1);
         },
 
         focusPrev: function() {
@@ -843,6 +925,7 @@ var __meta__ = { // jshint ignore:line
         select: function(candidate) {
             var that = this,
                 indices,
+                initialIndices,
                 singleSelection = that.options.selectable !== "multiple",
                 prefetchStarted = isActivePromise(that._activeDeferred),
                 filtered = this.isFiltered(),
@@ -867,7 +950,7 @@ var __meta__ = { // jshint ignore:line
                 that._triggerChange(removed);
 
                 if (that._valueDeferred) {
-                    that._valueDeferred.resolve();
+                    that._valueDeferred.resolve().promise();
                 }
 
                 return that._selectDeferred.resolve().promise();
@@ -877,6 +960,7 @@ var __meta__ = { // jshint ignore:line
                 indices = [];
             }
 
+            initialIndices = indices;
             result = that._deselect(indices);
             removed = result.removed;
             indices = result.indices;
@@ -891,7 +975,10 @@ var __meta__ = { // jshint ignore:line
             var done = function() {
                 var added = that._select(indices);
 
-                that.focus(indices);
+                if (initialIndices.length === indices.length || singleSelection) {
+                    that.focus(indices);
+                }
+
                 that._triggerChange(removed, added);
 
                 if (that._valueDeferred) {
@@ -954,7 +1041,7 @@ var __meta__ = { // jshint ignore:line
                 element, match;
 
             for (var i = 0; i < dataView.length; i++) {
-                match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : valueGetter(dataView[i].item) === valueGetter(dataItem);
+                match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : dataView[i].item && dataItem && valueGetter(dataView[i].item) == valueGetter(dataItem);
                 if (match) {
                     element = dataView[i];
                     break;
@@ -1029,6 +1116,15 @@ var __meta__ = { // jshint ignore:line
                 groupTemplate: options.groupTemplate,
                 fixedGroupTemplate: options.fixedGroupTemplate
             };
+
+            if (options.columns) {
+                for (var i = 0; i < options.columns.length; i++) {
+                    var currentColumn = options.columns[i];
+                    var templateText = currentColumn.field ? currentColumn.field.toString(): "text";
+
+                    templates["column"+ i] = currentColumn.template || "#: " + templateText + "#";
+                }
+            }
 
             for (var key in templates) {
                 if (typeof templates[key] !== "function") {
@@ -1116,6 +1212,7 @@ var __meta__ = { // jshint ignore:line
 
             that._renderItems();
             that._calculateGroupPadding(that._screenHeight);
+            that._calculateColumnsHeaderPadding();
         },
 
         _setHeight: function(height) {
@@ -1219,7 +1316,8 @@ var __meta__ = { // jshint ignore:line
                 var firstVisibleGroup = firstVisibleDataItem.group;
 
                 if (firstVisibleGroup !== group) {
-                    this.header[0].innerHTML = firstVisibleGroup || "";
+                    var fixedGroupText = firstVisibleGroup || "";
+                    this.header.html(this.templates.fixedGroupTemplate(fixedGroupText));
                     this.currentVisibleGroup = firstVisibleGroup;
                 }
             }
@@ -1240,7 +1338,7 @@ var __meta__ = { // jshint ignore:line
 
             if (listType === "group") {
                 if (item) {
-                    newGroup = index === 0 || (this._currentGroup && this._currentGroup !== item.group);
+                    newGroup = index === 0 || (this._currentGroup !== false && this._currentGroup !== item.group);
                     this._currentGroup = item.group;
                 }
 
@@ -1248,11 +1346,19 @@ var __meta__ = { // jshint ignore:line
                 item = item ? item.item : null;
             }
 
-            if (!this.isFiltered() && value.length && item) {
-                for (var i = 0; i < value.length; i++) {
-                    match = isPrimitive(item) ? value[i] === item : value[i] === valueGetter(item);
+            if (this.options.mapValueTo === "dataItem" && this._selectedDataItems.length && item) {
+                for (var i = 0; i < this._selectedDataItems.length; i++) {
+                    match = valueGetter(this._selectedDataItems[i]) === valueGetter(item);
                     if (match) {
-                        value.splice(i , 1);
+                        selected = true;
+                        break;
+                    }
+                }
+            } else if (!this.isFiltered() && value.length && item) {
+                for (var j = 0; j < value.length; j++) {
+                    match = isPrimitive(item) ? value[j] === item : value[j] === valueGetter(item);
+                    if (match) {
+                        value.splice(j , 1);
                         selected = true;
                         break;
                     }
@@ -1281,10 +1387,13 @@ var __meta__ = { // jshint ignore:line
                 item;
 
             this._view = {};
-            this._currentGroup = null;
+            this._currentGroup = false;
 
             for (var i = index, length = index + itemCount; i < length; i++) {
                 item = this._itemMapper(this.getter(i, index), i, value);
+                if(items[items.length - 1]){
+                    items[items.length - 1].isLastGroupedItem = item.newGroup;
+                }
                 items.push(item);
                 this._view[item.index] = item;
             }
@@ -1547,7 +1656,9 @@ var __meta__ = { // jshint ignore:line
             for (; idx < indices.length; idx++) {
                 position = -1;
                 index = indices[idx];
-                value = this._valueGetter(this.dataItemByIndex(index));
+                if (this.dataItemByIndex(index)) {
+                    value = this._valueGetter(this.dataItemByIndex(index));
+                }
 
                 for (j = 0; j < values.length; j++) {
                     if (value == values[j]) {
@@ -1610,6 +1721,8 @@ var __meta__ = { // jshint ignore:line
                 });
             });
 
+            that._values = that._checkValuesOrder(that._values);
+
             return added;
         },
 
@@ -1625,7 +1738,7 @@ var __meta__ = { // jshint ignore:line
             this._valueGetter = kendo.getter(this.options.dataValueField);
         },
 
-        _calculateGroupPadding: function(height) {
+        _calculateGroupPadding: function (height) {
             var firstItem = this.items().first(),
                 groupHeader = this.header,
                 padding = 0;
@@ -1638,6 +1751,17 @@ var __meta__ = { // jshint ignore:line
                 padding += parseFloat(firstItem.css("border-right-width"), 10) + parseFloat(firstItem.children(".k-group").css("right"), 10);
 
                 groupHeader.css("padding-right", padding);
+            }
+        },
+
+        _calculateColumnsHeaderPadding: function () {
+            if(this.options.columns && this.options.columns.length){
+                var isRtl = kendo.support.isRtl(this.wrapper);
+                var scrollbar = kendo.support.scrollbar();
+                var columnsHeader = this.content.parent().parent().find(".k-grid-header");
+                var total = this.dataSource.total();
+
+                columnsHeader.css((isRtl ? "padding-left" : "padding-right"), total ? scrollbar : 0);
             }
         }
 

@@ -1,15 +1,15 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["st"] = {
         name: "st",
         numberFormat: {
             pattern: ["-n"],
-            decimals: 0,
+            decimals: 2,
             ",": " ",
             ".": ",",
             groupSize: [3],
             percent: {
-                pattern: ["-n%","%n"],
-                decimals: 0,
+                pattern: ["-n%","n%"],
+                decimals: 2,
                 ",": " ",
                 ".": ",",
                 groupSize: [3],

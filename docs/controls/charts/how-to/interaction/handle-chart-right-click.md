@@ -12,7 +12,7 @@ The example below demonstrates how to handle the right click in Kendo UI Charts.
 
 ###### Example
 
-```html
+```dojo
     <div id="chart"></div>
     <script>
        $("#chart").kendoChart({
@@ -36,15 +36,12 @@ The example below demonstrates how to handle the right click in Kendo UI Charts.
 
         $("#chart").on("contextmenu", function(e) {
           e.preventDefault();        
-          $("#chart").getKendoChart()._click(e);
           	alert("Right clicked!");
         });
     </script>
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Charts:
 
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
@@ -57,4 +54,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

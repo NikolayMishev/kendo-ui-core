@@ -3,12 +3,14 @@ title: Custom Functions
 page_title: Custom Functions | Kendo UI Spreadsheet
 description: "Learn how to make your own JavaScript functions in the Kendo UI Spreadsheet widget."
 slug: custom_functions_spreadsheet_widget
-position: 4
+position: 6
 ---
 
 # Custom Functions
 
-In formulas, you can create your own custom JavaScript functions ("primitives") by calling the `kendo.spreadsheet.defineFunction(name, func)`. The first argument (`string`) is the name for your function in formulas (case-insensitive), and the second one is a JavaScript function (the implementation).
+In formulas, you can create your own custom JavaScript functions (primitives) by calling the `kendo.spreadsheet.defineFunction(name, func)`.
+
+The first argument (string) is the name for your function in formulas (case-insensitive), and the second one is a JavaScript function (the implementation).
 
 ## Primitives
 
@@ -97,7 +99,7 @@ If you call `=TRUNCATE(12.634)`, the result is `12`. You can also call `=TRUNCAT
 
 ### Getting Error Values
 
-By default, if an argument is an error, your function is not called and that error is returned.  
+By default, if an argument is an error, your function is not called and that error is returned.
 
 ###### Example
 
@@ -480,7 +482,11 @@ The following example demonstrates how to use a function that doubles each numbe
         [ "m", "matrix" ]
     ]);
 
-You can now type `"=doublematrix(A1:B2)"` in a cell. This returns a matrix&mdash;that is, fills all the required cells to the right and bottom from where this formula is defined with the doubled values. As of now, this behavior is different from Excel where to get all values that are returned by an array formula, you have to preselect the range and save the formula with the `CTRL`+`SHIFT`+`ENTER` keyboard shortcut.
+To use this formula:
+
+1. Select a range&mdash;for example `A1:B2`.
+1. Press `F12` and type `=doublematrix(C3:D4)`.
+1. Press `Ctrl`+`Shift`+`Enter` (same as in Excel). As a result, cells `A1:B2` get the doubles of the values from `C3:D4`.
 
 The following table lists some of the methods and properties the `Matrix` objects provide.
 
@@ -540,8 +546,6 @@ Results:
 In other words, if you use this raw form, you are responsible for type-checking the arguments and your primitive is always expected to be asynchronous.
 
 ## See Also
-
-Other articles on the Kendo UI Spreadsheet:
 
 * [Overview]({% slug overview_spreadsheet_widget %})
 * [Cell Formatting]({% slug cell_formatting_spreadsheet_widget %})

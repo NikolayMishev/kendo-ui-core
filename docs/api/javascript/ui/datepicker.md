@@ -2,6 +2,8 @@
 title: DatePicker
 page_title: Configuration, methods and events of Kendo UI DatePicker
 description: Easy to follow steps guide how to quickly configure DatePicker UI widget, easily enable/disable it using methods and how to change events.
+res_type: api
+component: date-time-pickers
 ---
 
 # kendo.ui.DatePicker
@@ -101,7 +103,7 @@ The duration of the open animation in milliseconds.
 
 ### ARIATemplate `String`*(default: "Current focused date is #=kendo.toString(data.current, 'D')#")*
 
- Specifies a template used to populate value of the aria-label attribute.
+ Specifies a template used to populate the value of the aria-label attribute of the currently focused cell of the calendar.
 
 #### Example
 
@@ -135,9 +137,22 @@ The duration of the open animation in milliseconds.
     });
     </script>
 
+### dateInput `Boolean`*(default: false)*
+
+ Specifies if the DatePicker will use [DateInput](/api/javascript/ui/dateinput) for editing value
+
+#### Example
+
+    <input id="datepicker" />
+    <script>
+    $("#datepicker").kendoDatePicker({
+        dateInput: true
+    });
+    </script>
+
 ### dates `Array`
 
-Specifies a list of dates, which will be passed to the [month template](#configuration-month.content).
+Specifies a list of dates, which will be passed to the [month content](/api/javascript/ui/datepicker/configuration/month#monthcontent).
 
 #### Example - specify a list of dates
 
@@ -188,7 +203,7 @@ settings are available for the **depth** value:
 * `"decade"` - Shows the years of the decade.
 * `"century"` - Shows the decades from the century.
 
-> Note the option will not be applied if **start** option is *lower* than **depth**. Always set both and **start** and **depth** options.
+> Note the option will not be applied if **start** option is *lower* than **depth**. Always set both **start** and **depth** options.
 
 #### Example - set navigation depth of the calendar popup
 
@@ -249,7 +264,7 @@ note that a check for an empty `date` is needed, as the widget can work with a n
 
 ### footer `String|Function`
 
- The [template](/api/javascript/kendo#methods-template) which renders the footer of the calendar. If false, the footer will not be rendered.
+ The [template](/api/javascript/kendo/methods/template) which renders the footer of the calendar. If false, the footer will not be rendered.
 
 #### Example - specify footer template as a function
 
@@ -276,6 +291,8 @@ note that a check for an empty `date` is needed, as the widget can work with a n
 
  Specifies the format, which is used to format the value of the DatePicker displayed in the input. The format also will be used to parse the input.
 
+ For more information on date and time formats please refer to [Date Formatting](/framework/globalization/dateformatting).
+
 #### Example - specify a custom date format
 
     <input id="datepicker" />
@@ -294,7 +311,7 @@ note that a check for an empty `date` is needed, as the widget can work with a n
     <input id="datepicker" />
     <script>
     $("#datepicker").kendoDatePicker({
-        max: new Date(2013, 0, 1) // sets max date to Jan 1st, 2013
+        max: new Date() // sets max date to today's date
     });
     </script>
 
@@ -307,7 +324,7 @@ note that a check for an empty `date` is needed, as the widget can work with a n
     <input id="datepicker" />
     <script>
     $("#datepicker").kendoDatePicker({
-        min: new Date(2011, 0, 1) // sets min date to Jan 1st, 2011
+        min: new Date() // sets min date to today's date
     });
     </script>
 
@@ -342,13 +359,13 @@ The template to be used for rendering the cells in "month" view, which are betwe
 
 ### month.weekNumber `String`
 
- The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year. 
+ The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.
  The properties available in the data object are:
 
  * currentDate - returns the first date of the current week.
  * weekNumber - calculated week number.
 
- These properties can be used in the template to make additional calculations. 
+ These properties can be used in the template to make additional calculations.
 
 #### Example - specify week number template as a string
 
@@ -359,12 +376,12 @@ The template to be used for rendering the cells in "month" view, which are betwe
     </style>
     <body>
 
-    <div id="calendar"></div>
+    <input id="datepicker1" />
     <script id="week-template" type="text/x-kendo-template">
        <a class="italic">#= data.weekNumber #</a>
     </script>
     <script>
-      $("#calendar").kendoCalendar({
+      $("#datepicker1").kendoDatePicker({
         weekNumber: true,
         month: {
           weekNumber: $("#week-template").html()
@@ -398,15 +415,119 @@ The template used for rendering cells in the "month" view, which are outside the
     });
     </script>
 
+### popup `Object`
+
+The options that will be used for the popup initialization. For more details about the available options
+refer to [Popup](/api/javascript/ui/popup) documentation.
+
+#### Example - append the popup to a specific element
+
+    <div id="container">
+        <input id="datepicker" />
+    </div>
+    <script>
+    $("#datepicker").kendoDatePicker({
+      popup: {
+        appendTo: $("#container")
+      }
+    });
+    </script>
+
+### popup.appendTo `String`
+
+Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.
+
+#### Example - append the popup to a specific element
+
+    <div id="container">
+        <input id="datepicker" />
+    </div>
+    <script>
+    $("#datepicker").kendoDatePicker({
+      popup: {
+        appendTo: $("#container")
+      }
+    });
+    </script>
+
+### popup.origin `String`
+
+Specifies how to position the popup element based on anchor point. The value is
+space separated "y" plus "x" position.
+
+The available "y" positions are:
+- "bottom"
+- "center"
+- "top"
+
+The available "x" positions are:
+- "left"
+- "center"
+- "right"
+
+#### Example - append the popup to a specific element
+
+
+    <div id="container">
+        <input id="datepicker" />
+    </div>
+    <script>
+    $("#datepicker").kendoDatePicker({
+      popup: {
+        origin: "top left"
+      }
+    });
+    </script>
+
+### popup.position `String`
+
+Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.
+
+The available "y" positions are:
+- "bottom"
+- "center"
+- "top"
+
+The available "x" positions are:
+- "left"
+- "center"
+- "right"
+
+#### Example - append the popup to a specific element
+
+
+    <div id="container">
+        <input id="datepicker" />
+    </div>
+    <script>
+    $("#datepicker").kendoDatePicker({
+      popup: {
+        position: "top center"
+      }
+    });
+    </script>
+    <style>
+      #container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+
 ### weekNumber `Boolean` *(default: false)*
 
-If set to `true` a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.  
+If set to `true` a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
 
 #### Example - enable the week of the year option
 
-    <div id="calendar"></div>
+    <input id="datepicker1" />
     <script>
-        $("#calendar").kendoCalendar({
+        $("#datepicker1").kendoDatePicker({
             weekNumber: true
         });
     </script>
@@ -713,9 +834,9 @@ The value to set.
 
 `Date` The value of the DatePicker.
 
-> * This method **does not trigger** [change](#events-change) event.
+> * This method **does not trigger** [change](/api/javascript/ui/datepicker/events/change) event.
 This could affect [MVVM value binding](/framework/mvvm/bindings/value). The model bound to the widget will not be updated.
-You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable#methods-trigger) method.
+You can overcome this behavior trigerring the `change` event manually using [trigger("change")](/api/javascript/observable/methods/trigger) method.
 
     <input id="datepicker" />
     <script>

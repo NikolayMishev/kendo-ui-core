@@ -16,6 +16,8 @@ var __meta__ = { // jshint ignore:line
         proxy = $.proxy,
         keys = kendo.keys,
         CLICK = "click",
+        MOUSEDOWN = kendo.support.mousedown,
+        MOUSEUP = kendo.support.mouseup,
         KBUTTON = "k-button",
         KBUTTONICON = "k-button-icon",
         KBUTTONICONTEXT = "k-button-icontext",
@@ -23,7 +25,7 @@ var __meta__ = { // jshint ignore:line
         DISABLED = "disabled",
         DISABLEDSTATE = "k-state-disabled",
         FOCUSEDSTATE = "k-state-focused",
-        SELECTEDSTATE = "k-state-selected";
+        SELECTEDSTATE = "k-state-active";
 
     var Button = Widget.extend({
         init: function(element, options) {
@@ -39,16 +41,20 @@ var __meta__ = { // jshint ignore:line
             options.enable = options.enable && !element.attr(DISABLED);
             that.enable(options.enable);
 
-            that._tabindex();
+            if (options.enable) {
+                that._tabindex();
+            }
 
-            that._graphics();
+            that.iconElement();
 
             element
                 .on(CLICK + NS, proxy(that._click, that))
                 .on("focus" + NS, proxy(that._focus, that))
                 .on("blur" + NS, proxy(that._blur, that))
                 .on("keydown" + NS, proxy(that._keydown, that))
-                .on("keyup" + NS, proxy(that._keyup, that));
+                .on("keyup" + NS, proxy(that._removeActive, that))
+                .on(MOUSEDOWN + NS, proxy(that._addActive, that))
+                .on(MOUSEUP + NS, proxy(that._removeActive, that));
 
             kendo.notify(that);
         },
@@ -68,6 +74,7 @@ var __meta__ = { // jshint ignore:line
         options: {
             name: "Button",
             icon: "",
+            iconClass: "",
             spriteCssClass: "",
             imageUrl: "",
             enable: true
@@ -92,38 +99,48 @@ var __meta__ = { // jshint ignore:line
         },
 
         _blur: function() {
-            this.element.removeClass(FOCUSEDSTATE);
+            var that = this;
+            that.element.removeClass(FOCUSEDSTATE);
+            setTimeout(function() {
+                that.element.removeClass(SELECTEDSTATE);
+            });
         },
 
         _keydown: function(e) {
             var that = this;
-            if (!that._isNativeButton()) {
-                if (e.keyCode == keys.ENTER || e.keyCode == keys.SPACEBAR) {
+            if (e.keyCode == keys.ENTER || e.keyCode == keys.SPACEBAR) {
+                that._addActive();
+
+                if (!that._isNativeButton()) {
                     if (e.keyCode == keys.SPACEBAR) {
                         e.preventDefault();
-                        if (that.options.enable) {
-                            that.element.addClass(SELECTEDSTATE);
-                        }
                     }
                     that._click(e);
                 }
             }
         },
 
-        _keyup: function() {
+        _removeActive: function() {
             this.element.removeClass(SELECTEDSTATE);
         },
 
-        _graphics: function() {
+        _addActive: function() {
+            if (this.options.enable) {
+                this.element.addClass(SELECTEDSTATE);
+            }
+        },
+
+        iconElement: function() {
             var that = this,
                 element = that.element,
                 options = that.options,
                 icon = options.icon,
+                iconClass = options.iconClass,
                 spriteCssClass = options.spriteCssClass,
                 imageUrl = options.imageUrl,
                 span, img, isEmpty;
 
-            if (spriteCssClass || imageUrl || icon) {
+            if (spriteCssClass || imageUrl || icon || iconClass) {
                 isEmpty = true;
 
                 element.contents().filter(function() {
@@ -141,24 +158,24 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (icon) {
+            if (imageUrl) {
+                img = element.children("img.k-image").first();
+                if (!img[0]) {
+                    img = $('<img alt="icon" class="k-image" />').prependTo(element);
+                }
+                img.attr("src", imageUrl);
+            } else if (icon || iconClass) {
                 span = element.children("span.k-icon").first();
                 if (!span[0]) {
-                    span = $('<span class="k-icon"></span>').prependTo(element);
+                    span = $('<span></span>').prependTo(element);
                 }
-                span.addClass("k-i-" + icon);
+                span.attr("class", icon ? "k-icon k-i-" + icon : iconClass);
             } else if (spriteCssClass) {
                 span = element.children("span.k-sprite").first();
                 if (!span[0]) {
                     span = $('<span class="k-sprite"></span>').prependTo(element);
                 }
                 span.addClass(spriteCssClass);
-            } else if (imageUrl) {
-                img = element.children("img.k-image").first();
-                if (!img[0]) {
-                    img = $('<img alt="icon" class="k-image" />').prependTo(element);
-                }
-                img.attr("src", imageUrl);
             }
         },
 
@@ -175,6 +192,11 @@ var __meta__ = { // jshint ignore:line
             element.toggleClass(DISABLEDSTATE, !enable)
                    .attr("aria-disabled", !enable)
                    .attr(DISABLED, !enable);
+
+            if (enable) {
+                that._tabindex();
+            }
+
             // prevent 'Unspecified error' in IE when inside iframe
             try {
                 element.blur();

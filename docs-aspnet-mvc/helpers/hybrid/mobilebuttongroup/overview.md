@@ -9,19 +9,16 @@ position: 1
 
 # Hybrid ButtonGroup HtmlHelper Overview
 
-The hybrid ButtonGroup HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ButtonGroup](http://demos.telerik.com/kendo-ui/m/index#buttongroup/mobile) widget. It allows you to configure the hybrid Kendo UI Button from server-side code.
+The hybrid ButtonGroup HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ButtonGroup](http://demos.telerik.com/kendo-ui/m/index#buttongroup/mobile) widget.
 
-## Getting Started
+It allows you to configure the hybrid Kendo UI Button from server-side code.
 
-### Configuration
+## Configuration
 
 Below are listed the steps for you to follow when configuring the hybrid Kendo UI ButtonGroup for ASP.NET MVC.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
@@ -30,42 +27,35 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
             return View();
         }
 
-**Step 3** Add a hybrid Kendo UI ButtonGroup to the `Index` view. Like most hybrid Kendo UI widgets, the ButtonGroup must be initialized within the hybrid View content.
+1. Add a hybrid Kendo UI ButtonGroup to the `Index` view. Like most hybrid Kendo UI widgets, the ButtonGroup must be initialized within the hybrid View content.
 
-###### Example
-
-```tab-ASPX
-
-       <% Html.Kendo().MobileView()
-                .Name("buttongroup-view")
-                .Title("Inbox")
-                .Content(() =>
-                {
-                    %>
-
-                    <%: Html.Kendo().MobileButtonGroup()
-                            .Name("select-period")
-                            .Items(items =>
-                            {
-                                items.Add().Text("Month");
-                                items.Add().Text("Quarter");
-                                items.Add().Text("Year");
-                            })
-                            .Index(0)
-                    %>
-                    <%
-                })
-                .Render();
+    ```ASPX
+        <% Html.Kendo().MobileView()
+            .Name("buttongroup-view")
+            .Title("Inbox")
+            .Content(() =>
+            {
+                %>
+                <%: Html.Kendo().MobileButtonGroup()
+                    .Name("select-period")
+                    .Items(items =>
+                    {
+                        items.Add().Text("Month");
+                        items.Add().Text("Quarter");
+                        items.Add().Text("Year");
+                    })
+                    .Index(0)
+                %>
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileView()
             .Name("buttongroup-view")
             .Title("Inbox")
-            .Content(
-                @<text>
-
+            .Content(@<text>
                 @(Html.Kendo().MobileButtonGroup()
                     .Name("select-period")
                     .Items(items =>
@@ -76,116 +66,103 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
                     })
                     .Index(0)
                 )
-
             </text>)
         )
-```
+    ```
 
-**Step 4** Initialize the mobile application.
+1. Initialize the mobile application.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileApplication()
                 .ServerNavigation(true)
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 5** Build and run the application.
+1. Build and run the application.
 
 ## Event Handling
 
-You can subscribe to all hybrid ButtonGroup [events](../../../../kendo-ui/api/javascript/mobile/ui/buttongroup#events).
+You can subscribe to all hybrid ButtonGroup [events](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/buttongroup#events).
 
 ### By Handler Name
 
-The examples below demonstrates how to subscribe to events by a handler name.
+The following example demonstrates how to subscribe to events by a handler name.
 
-###### Example
+```ASPX
+    <%: Html.Kendo().MobileButtonGroup()
+        .Name("select-period")
+        .Items(items =>
+        {
+            items.Add().Text("Month");
+            items.Add().Text("Quarter");
+            items.Add().Text("Year");
+        })
+        .Index(0)
+        .Events(events => events.Select("onSelect"))
+    %>
 
-```tab-ASPX
-
-        <%: Html.Kendo().MobileButtonGroup()
-                .Name("select-period")
-                .Items(items =>
-                {
-                    items.Add().Text("Month");
-                    items.Add().Text("Quarter");
-                    items.Add().Text("Year");
-                })
-                .Index(0)
-                .Events(events => events.Select("onSelect"))
-        %>
-
-        <script>
+    <script>
         function onSelect() {
-            //Handle the select event
+            // Handle the select event
         }
-        </script>
+    </script>
 ```
-```tab-Razor
+```Razor
+    @(Html.Kendo().MobileButtonGroup()
+        .Name("select-period")
+        .Items(items =>
+        {
+            items.Add().Text("Month");
+            items.Add().Text("Quarter");
+            items.Add().Text("Year");
+        })
+        .Index(0)
+        .Events(events => events.Select("onSelect"))
+    )
 
-        @(Html.Kendo().MobileButtonGroup()
-                .Name("select-period")
-                .Items(items =>
-                {
-                    items.Add().Text("Month");
-                    items.Add().Text("Quarter");
-                    items.Add().Text("Year");
-                })
-                .Index(0)
-                .Events(events => events.Select("onSelect"))
-        )
-
-        <script>
+    <script>
         function onSelect() {
-            //Handle the select event
+            // Handle the select event
         }
-        </script>
+    </script>
 ```
 
 ## Reference
 
 ### Instances
 
-You can reference a hybrid ButtonGroup instance by using the code from the example below. Once a reference is established, use the [hybrid ButtonGroup API](../../../../kendo-ui/api/javascript/mobile/ui/buttongroup#methods) to control its behavior.
+You can reference a hybrid ButtonGroup instance by using the code from the following example. Once a reference is established, use the [hybrid ButtonGroup API](https://docs.telerik.com/kendo-ui/api/javascript/mobile/ui/buttongroup#methods) to control its behavior.
 
-###### Example
-
-        @(Html.Kendo().MobileButtonGroup()
-            .Name("select-period")
-            .Items(items =>
-            {
-                items.Add().Text("Month");
-                items.Add().Text("Quarter");
-                items.Add().Text("Year");
-            })
-            .Index(0)
-        )
-        <script>
+    @(Html.Kendo().MobileButtonGroup()
+        .Name("select-period")
+        .Items(items =>
+        {
+            items.Add().Text("Month");
+            items.Add().Text("Quarter");
+            items.Add().Text("Year");
+        })
+        .Index(0)
+    )
+    <script>
         $(function() {
-            // Notice that the Name() of the buttongroup is used to get its client-side instance
+            // The Name() of the buttongroup is used to get its client-side instance
             var buttongroup = $("#select-period").data("kendoMobileButtonGroup");
         });
-        </script>
+    </script>
 
 ## See Also
 
-Other articles on Telerik UI for ASP.NET MVC and on the ButtonGroup:
-
-* [ASP.NET MVC API Reference: Hybrid UI ButtonGroupBuilder](/api/Kendo.Mvc.UI.Fluent/MobileButtonGroupBuilder)
+* [Telerik UI for ASP.NET MVC API Reference: Hybrid UI ButtonGroupBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/MobileButtonGroupBuilder)
 * [Overview of the Hybrid UI ButtonGroup Widget](http://docs.telerik.com/kendo-ui/controls/hybrid/buttongroup/buttongroup)
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})
 * [Scaffolding in Telerik UI for ASP.NET MVC]({% slug scaffolding_aspnetmvc %})
-* [Telerik UI for ASP.NET MVC API Reference Folder](/api/Kendo.Mvc/AggregateFunction)
+* [Telerik UI for ASP.NET MVC API Reference Folder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc/AggregateFunction)
 * [Telerik UI for ASP.NET MVC HtmlHelpers Folder]({% slug overview_barcodehelper_aspnetmvc %})
 * [Tutorials on Telerik UI for ASP.NET MVC]({% slug overview_timeefficiencyapp_aspnetmvc6 %})
 * [Telerik UI for ASP.NET MVC Troubleshooting]({% slug troubleshooting_aspnetmvc %})

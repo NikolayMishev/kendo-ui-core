@@ -14,7 +14,7 @@ This page provides solutions for common issues you may encounter while working w
 
 ### Selected Item Is Lost When Bound to Shared DataSource
 
-> **Important**  
+> **Important**
 >
 > This issue can also be observed in [Kendo UI DropDownList]({% slug troubleshooting_common_issues_dropdownlist_kendoui %}) and [Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %}). The solution demonstrated in the examples below is fully applicable to the case of them both as well.
 
@@ -38,7 +38,7 @@ The example below demonstrates a sample issue.
         dataSource: ds
     });
 
-The example below demonstrates the solution to the above issue.   
+The example below demonstrates the solution to the above issue.
 
 ###### Example
 
@@ -59,26 +59,21 @@ For more information on handling repetitive requests performed while filtering i
 
 ## See Also
 
-Other articles on the Kendo UI ComboBox:
-
 * [ComboBox JavaScript API Reference](/api/javascript/ui/combobox)
 * [Grouping Functionality]({% slug grouping_kendoui_combobox_widget %})
 * [Virtualization]({% slug virtualization_kendoui_combobox_widget %})
 * [Cascading ComboBoxes]({% slug cascading_kendoui_combobox_widget %})
 * [Server Filtering]({% slug server_filtering_kendoui_combobox_widget %})
 * [How to Add Option Label Manually]({% slug howto_add_option_label_manually_combobox %})
-* [How to Implement Cascading with Local Data]({% slug howto_implement_cascading_local_data_combobox %})
+* [How to Bypass Boundary Detection]({% slug howto_bypass_boudary_detection_combobox %})
+* [How to Clear Filter on Open]({% slug howto_clear_filter_open_combobox %})
 * [How to Configure Deferred Value Binding]({% slug howto_configure_deffered_value_binding_combobox %})
 * [How to Declaratively Initialize ComboBox with Templates]({% slug howto_declaratively_initialize_with_templates_combobox %})
-* [How to Clear Filter on Open]({% slug howto_clear_filter_open_combobox %})
 * [How to Detect When All Widgets Are Bound]({% slug howto_detect_when_widgets_bound_combobox %})
-* [How to Bypass Boundary Detection]({% slug howto_bypass_boudary_detection_combobox %})
 * [How to Disable Child Cascading ComboBoxes]({% slug howto_disable_child_cascading_combobox %})
 * [How to Expand Background of Long List Items]({% slug howto_expand_background_longlist_items_combobox %})
+* [How to Implement Cascading with Local Data]({% slug howto_implement_cascading_local_data_combobox %})
 * [Overview of the ComboBox Widget]({% slug overview_kendoui_combobox_widget %})
-
-Other articles on troubleshooting:
-
 * [Common Issues in Kendo UI]({% slug troubleshooting_common_issues_kendoui %})
 * [Kendo UI JavaScript Errors]({% slug troubleshooting_javascript_errors_kendoui %})
 * [Kendo UI Performance Issues]({% slug troubleshooting_system_memory_symptoms_kendoui %})
@@ -92,7 +87,6 @@ Other articles on troubleshooting:
 * [Common Issues in Kendo UI MultiSelect]({% slug troubleshooting_common_issues_multiselect_kendoui %})
 * [Common Issues in Kendo UI Scheduler]({% slug troubleshooting_scheduler_widget %})
 * [Common Issues in Kendo UI Upload]({% slug troubleshooting_upload_widget %})
-* [Common Issues Related to Styling, Appearance, and Rendering]({% slug commonissues_troubleshooting_kendouistyling %})
 * [Common Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting)
 * [Validation Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-validation)
 * [Scaffolding Issues in Telerik UI for ASP.NET MVC](http://docs.telerik.com/aspnet-mvc/troubleshoot/troubleshooting-scaffolding)

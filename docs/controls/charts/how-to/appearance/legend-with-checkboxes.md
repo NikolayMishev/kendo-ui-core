@@ -8,7 +8,7 @@ slug: howto_displaycheckboxes_nexttolegenditems_charts
 
 # Display Checkboxes next to Legend Items
 
-The [`legend.item.visual`](/api/javascript/dataviz/ui/chart#configuration-legend.item.visual) can be overridden to render custom text, images, and shapes.
+The [`legend.item.visual`](/api/javascript/dataviz/ui/chart/configuration/legend.item.visual) can be overridden to render custom text, images, and shapes.
 
 For example, you might need to draw a checkbox that matches the visible state of the series. In this case, the checkbox is represented by using an [Unicode Ballot Box symbol](https://en.wikipedia.org/wiki/Checkbox#Unicode).
 
@@ -18,7 +18,7 @@ The example below demonstrates how to customize the appearance of the legend ite
 
 ###### Example
 
-```html
+```dojo
     <div id="chart" />
     <script>
       $("#chart").kendoChart({
@@ -27,9 +27,11 @@ The example below demonstrates how to customize the appearance of the legend ite
             visual: function (e) {
               var color = e.options.markers.background;
               var labelColor = e.options.labels.color;
-
+              // This will give us the default box + text
+              var defaultVisual = e.createVisual();
+              var defaultSize = defaultVisual.bbox().size;
               // Define the target dimensions for the legend item
-              var rect = new kendo.geometry.Rect([0, 0], [100, 50]);
+              var rect = new kendo.geometry.Rect([0, 0], [defaultSize.width + 30, defaultSize.height]);
 
               // A layout will hold the checkbox and the default visual
               //
@@ -50,8 +52,6 @@ The example below demonstrates how to customize the appearance of the legend ite
                 font: "14px sans-serif"
               });
 
-              // This will give us the default box + text
-              var defaultVisual = e.createVisual();
 
               // Reflow them together
               layout.append(cb, defaultVisual);
@@ -62,7 +62,7 @@ The example below demonstrates how to customize the appearance of the legend ite
           }
         },
         series: [
-          { name: "Series 1", data: [1, 2, 3] },
+          { name: "Series 1 with longer name", data: [1, 2, 3] },
           { name: "Series 2", data: [3, 4, 5] }
         ]
       });
@@ -70,8 +70,6 @@ The example below demonstrates how to customize the appearance of the legend ite
 ```
 
 ## See Also
-
-Other articles and how-to examples on the Kendo UI Charts:
 
 * [Chart JavaScript API Reference](/api/javascript/dataviz/ui/chart)
 * [Drawing API]({% slug overview_kendoui_drawingapi %})
@@ -85,4 +83,4 @@ Other articles and how-to examples on the Kendo UI Charts:
 * [How to Set Different Marker Types for Grouped Line Charts]({% slug howto_setdifrerentmarkers_forgroupedlinecharts_charts %})
 * [How to Use Linear Gradient As Background in Bars]({% slug howto_uselineargradient_inbars_charts %})
 
-For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_createdynamicplotbands_charts %}).
+For more runnable examples on Kendo UI Charts, browse the [**How To** documentation folder]({% slug howto_implementcolorcodedranges_inbars_charts %}).

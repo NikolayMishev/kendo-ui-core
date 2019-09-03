@@ -66,7 +66,7 @@ var __meta__ = { // jshint ignore:line
                 var widget = kendoWidgetInstance(element);
 
                 if (widget && typeof widget.setDataSource == "function") {
-                    if (mew !== current) {
+                    if (mew !== current && mew !== widget.dataSource) {
                         var ds = toDataSource(mew, type);
                         widget.setDataSource(ds);
                         current = mew;
@@ -185,6 +185,10 @@ var __meta__ = { // jshint ignore:line
                         var first = $(options[0]);
                         if (!/\S/.test(first.text()) && /^\?/.test(first.val())) {
                             first.remove();
+                        }
+
+                        for (var i = 0; i < options.length; i++) {
+                            $(options[i]).off("$destroy");
                         }
                     }
                 }(element[0].options));
@@ -442,7 +446,7 @@ var __meta__ = { // jshint ignore:line
         var onChange = function(pristine) {
             return function() {
                 var formPristine;
-                if (haveChangeOnElement) {
+                if (haveChangeOnElement && !element.is("select")) {
                     return;
                 }
                 if (pristine && ngForm) {
@@ -483,18 +487,36 @@ var __meta__ = { // jshint ignore:line
     }
 
     function bindToKNgModel(widget, scope, kNgModel) {
+        if(kendo.ui.DateRangePicker && widget instanceof kendo.ui.DateRangePicker){
+            var rangePickerModels = kNgModel.split(",");
+            var rangePickerStartModel = rangePickerModels[0].trim();
+            var rangePickerEndModel;
+
+            bindToKNgModel(widget._startDateInput, scope, rangePickerStartModel);
+            if (rangePickerModels[1]) {
+                rangePickerEndModel = rangePickerModels[1].trim();
+                bindToKNgModel(widget._endDateInput, scope, rangePickerEndModel);
+                widget.range({start:scope[rangePickerStartModel], end:scope[rangePickerEndModel] });
+            } else {
+                widget.range({start:scope[rangePickerStartModel], end: null });
+            }
+
+            return;
+        }
+
         if (typeof widget.value != "function") {
             $log.warn("k-ng-model specified on a widget that does not have the value() method: " + (widget.options.name));
             return;
         }
 
-        var form  = $(widget.element).parents("form");
+        var form  = $(widget.element).parents("ng-form, form").first();
         var ngForm = kendo.getter(form.attr("name"), true)(scope);
         var getter = $parse(kNgModel);
         var setter = getter.assign;
         var updating = false;
 
-        var valueIsCollection = kendo.ui.MultiSelect && widget instanceof kendo.ui.MultiSelect;
+        var valueIsCollection = kendo.ui.MultiSelect && widget instanceof kendo.ui.MultiSelect ||
+                                kendo.ui.RangeSlider && widget instanceof kendo.ui.RangeSlider;
 
         var length = function(value) {
             //length is irrelevant when value is not collection
@@ -779,11 +801,13 @@ var __meta__ = { // jshint ignore:line
         MobileDetailButton  : "a",
         ListView       : "ul",
         MobileListView: "ul",
+        ScrollView       : "div",
         PanelBar       : "ul",
         TreeView       : "ul",
         Menu           : "ul",
         ContextMenu    : "ul",
-        ActionSheet    : "ul"
+        ActionSheet    : "ul",
+        Switch    : "input"
     };
 
     var SKIP_SHORTCUTS = [
@@ -908,6 +932,18 @@ var __meta__ = { // jshint ignore:line
                 .removeClass("ng-scope");
         }
     }
+
+    var encode = kendo.htmlEncode;
+    var open = /{{/g;
+    var close = /}}/g;
+    var encOpen = '{&#8203;{';
+    var encClose = '}&#8203;}';
+
+    kendo.htmlEncode = function(str) {
+        return encode(str)
+            .replace(open, encOpen)
+            .replace(close, encClose);
+    };
 
     var pendingPatches = [];
 
@@ -1108,52 +1144,12 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
-    defadvice("ui.AutoComplete", "$angular_getLogicValue", function(){
-        var options = this.self.options;
+    /* AutoComplete's getter and setter are removed!
+       By design, AutoComplete should be bound only to primitive string
+       value and data items are bound only to serve the list of suggestions.
 
-        var values = this.self.value().split(options.separator);
-        var valuePrimitive = options.valuePrimitive;
-        var data = this.self.listView.selectedDataItems(); //.concat(this.self.dataSource.data());
-        var dataItems = [];
-        for (var idx = 0, length = data.length; idx < length; idx++) {
-            var item = data[idx];
-            var dataValue = options.dataTextField ? item[options.dataTextField] : item;
-            for (var j = 0; j < values.length; j++) {
-                if (dataValue === values[j]) {
-                    if (valuePrimitive) {
-                        dataItems.push(dataValue);
-                    } else {
-                        dataItems.push(item.toJSON());
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return dataItems;
-    });
-
-    defadvice("ui.AutoComplete", "$angular_setLogicValue", function(value) {
-        if (value == null) {
-            value = [];
-        }
-
-        var self = this.self,
-            dataTextField = self.options.dataTextField;
-
-        if (dataTextField && !self.options.valuePrimitive) {
-            if (value.length !== undefined) {
-                value = $.map(value, function(item){
-                    return item[dataTextField];
-                });
-            } else {
-                value = value[dataTextField];
-            }
-        }
-
-        self.value(value);
-    });
+       Binding multiple data items is supported by the MultiSelect widget.
+    */
 
     // All event handlers that are strings are compiled the Angular way.
     defadvice("ui.Widget", "$angular_init", function(element, options) {
@@ -1194,6 +1190,9 @@ var __meta__ = { // jshint ignore:line
             if (angular.isString(options.selectable)) {
                 cell = options.selectable.indexOf('cell') !== -1;
                 multiple = options.selectable.indexOf('multiple') !== -1;
+            }
+            if (widget._checkBoxSelection) {
+                multiple = true;
             }
 
             elems = locals.selected = this.select();
@@ -1426,6 +1425,7 @@ var __meta__ = { // jshint ignore:line
         "Pager": [ "SelectTemplate", "LinkTemplate" ],
         "PivotGrid": [ "ColumnHeaderTemplate", "DataCellTemplate", "RowHeaderTemplate" ],
         "Scheduler": ["AllDayEventTemplate", "DateHeaderTemplate", "EventTemplate", "MajorTimeHeaderTemplate", "MinorTimeHeaderTemplate"],
+        "ScrollView": [ "Template" ],
         "PanelBar": [ "Template" ],
         "TreeView": [ "Template" ],
         "Validator": [ "ErrorTemplate" ]

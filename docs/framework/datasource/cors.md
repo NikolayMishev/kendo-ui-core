@@ -9,7 +9,9 @@ position: 4
 
 # CORS Data Fetching
 
-This article was written by Todd Anglin, [originally published in the Kendo UI Blogs](http://www.telerik.com/blogs/using-cors-with-all-modern-browsers) on October 3, 2011 and consequently updated in July 2012. The original spelling, grammar, and structure of the item is preserved here for consistency.
+This article was written by Todd Anglin, [originally published in the Kendo UI Blogs](http://www.telerik.com/blogs/using-cors-with-all-modern-browsers) on October 3, 2011 and consequently updated in July 2012.
+
+The original spelling, grammar, and structure of the item is preserved here for consistency.
 
 ## Using CORS with All (Modern) Browsers
 
@@ -33,7 +35,7 @@ With this configuration, only scripts that originate from [http://htmlui.com](ht
 
 Alternatively, site owners can grant wide-open access with the always ready to party asterisk: `__Access-Control-Allow-Origin: *__`.
 
-Now, any site that wants to load a resource directly using Ajax can do so without getting the browser security error. It's a very helpful technique for modern apps that often load data using JavaScript, and hopefully more modern web APIs will start to support CORS. You can already find CORS in action with the [`GeoNames.org`](http://www.geonames.org/export/ws-overview.html) and [`Last.fm`](http://www.last.fm/api) APIs. Twitter does not yet support CORS, but [they are considering it](https://twittercommunity.com/t/access-control-allow-origin/7253) for APIs that already support JSONP. Facebook does not support CORS.
+Now, any site that wants to load a resource by directly using Ajax can do so without getting the browser security error. The technique is helpful for modern applications which often load data by using JavaScript and a greater number of modern web APIs are considering support for CORS. To see CORS in action, see the [GeoNames.org](http://www.geonames.org/export/ws-overview.html), [Last.fm](http://www.last.fm/api), and [Google](https://developers.google.com/api-client-library/javascript/features/cors) APIs.
 
 ### Server-Side Setting
 
@@ -162,8 +164,6 @@ Now, Opera (any other non-CORS browser) will use an alternate configuration of t
 Hopefully this post helps highlight the value of CORS and how it can be used with most modern browsers. As more app code moves to the client, the need for CORS will only grow. Start playing with it today and help push web standards to the next level.
 
 ## See Also
-
-Other articles on the Kendo UI DataSource component:
 
 * [DataSource Overview]({% slug overview_kendoui_datasourcecomponent %})
 * [Basic Usage]({% slug basicusage_kendoui_datasourcecomponent %})

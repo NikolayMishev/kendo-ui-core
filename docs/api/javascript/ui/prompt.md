@@ -2,11 +2,12 @@
 title: Prompt
 page_title: Configuration, methods and events of Kendo UI Prompt
 description: How to initialize an Prompt UI widget, configure its properties and open it.
+res_type: api
 ---
 
 # kendo.ui.Prompt : kendo.ui.Dialog
 
-Represents the Kendo UI Prompt.
+Represents the Kendo UI Prompt. Inherits from [Dialog](/api/javascript/ui/dialog).
 
 ## Configuration
 
@@ -15,7 +16,7 @@ Represents the Kendo UI Prompt.
 Defines the text of the labels that are shown within the prompt dialog. Used primarily for localization.
 
 #### Example
-    
+
     <div id="prompt"></div>
     <script>
     $("#prompt").kendoPrompt({
@@ -70,12 +71,12 @@ The title of the Cancel button.
     <div id="prompt"></div>
     <script>
     $("#prompt").kendoPrompt({
-    content: "Prompt text", 
-    value: "Default input text", 
+    content: "Prompt text",
+    value: "Default input text",
     messages:{
       okText: "OK"
     }
-  }).data("kendoPrompt").result.done(function(data){
+    }).data("kendoPrompt").result.done(function(data){
           console.log("User accepted with text: " + data);
       })
       .fail(function(data){

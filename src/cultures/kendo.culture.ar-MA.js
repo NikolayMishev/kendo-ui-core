@@ -1,14 +1,14 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["ar-MA"] = {
         name: "ar-MA",
         numberFormat: {
-            pattern: ["n-"],
+            pattern: ["-n"],
             decimals: 2,
             ",": ",",
             ".": ".",
             groupSize: [3],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -18,12 +18,12 @@
             currency: {
                 name: "Moroccan Dirham",
                 abbr: "MAD",
-                pattern: ["$n-","$ n"],
+                pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
                 groupSize: [3],
-                symbol: "د.م.‏‏"
+                symbol: "د.م.‏"
             }
         },
         calendars: {

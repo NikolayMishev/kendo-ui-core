@@ -14,8 +14,8 @@ However, this is not required as demonstrated in the following example. It shows
 
 For additional information about the code used in the example, refer to:
 
-* [How to Configure Editor Tools](/api/javascript/ui/editor#configuration-tools)
-* [How to Execute Editor Commands](/api/javascript/ui/editor#methods-exec)
+* [How to Configure Editor Tools](/api/javascript/ui/editor/configuration/tools)
+* [How to Execute Editor Commands](/api/javascript/ui/editor/methods/exec)
 * [Editor Custom Tools Demo](http://demos.telerik.com/kendo-ui/editor/custom-tools)
 * [How to Configure a Window](/api/javascript/ui/window)
 * [How to Obtain Widget's Element from Its Client Object](/framework/widgets/wrapper-element)
@@ -23,7 +23,7 @@ For additional information about the code used in the example, refer to:
 
 ###### Example
 
-```html
+```dojo
     <div id="example">
       <textarea id="editor" rows="10" cols="30" style="width:100%;height:400px">
         &lt;p&gt;
@@ -53,6 +53,10 @@ For additional information about the code used in the example, refer to:
 
             var editor = $(this).data("kendoEditor");
 
+            // Store the editor range object
+            // Needed for IE
+            var storedRange = editor.getRange();
+
             // create a modal Window from a new DOM element
             var popupWindow = $(popupHtml)
             .appendTo(document.body)
@@ -72,6 +76,7 @@ For additional information about the code used in the example, refer to:
             // insert the new content in the Editor when the Insert button is clicked
             popupWindow.element.find(".k-dialog-insert").click(function(){
                 var customHtml = popupWindow.element.find("textarea").val();
+                editor.selectRange(storedRange);
                 editor.exec("inserthtml", { value: customHtml });
             });
 
@@ -100,12 +105,10 @@ For additional information about the code used in the example, refer to:
 
 ## See Also
 
-Other articles on the Kendo UI Editor:
-
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
 * [How to Get Reference to Child Widgets]({% slug howto_get_referenceto_child_widgets_editor %})
 * [How to Set Caret Position]({% slug howto_set_caret_position_editor %})
 * [How to Show Editor in Full Screen]({% slug howto_show_infull_screen_editor %})
 * [How to Use Inline Editor inside Windows]({% slug howto_use_inline_editor_inside_windows_editor %})
 
-For more runnable examples on the Kendo UI Editor, browse its [**How To** documentation folder]({% slug howto_add_max_length_validation_editor %}).
+For more runnable examples on the Kendo UI Editor, browse its [**How To** documentation folder]({% slug howto_handleblurandfocuseventsangular_editor %}).

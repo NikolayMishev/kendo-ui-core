@@ -10,7 +10,9 @@ position: 4
 
 The Editor works with standard [`range`](https://developer.mozilla.org/en/docs/Web/API/Range) objects that provide a polyfill for Internet Explorer versions that do not fully support them.
 
-To set the Editor selection, create a `Range` object that specifies the desired selection and pass it to the [`selectRange`](/api/javascript/ui/editor#methods-selectRange) method.
+## Setting the Editor Selection
+
+To set the Editor selection, create a `Range` object that specifies the desired selection and pass it to the [`selectRange`](/api/javascript/ui/editor/methods/selectrange) method.
 
 The following example demonstrates how to set the Editor selections.
 
@@ -50,9 +52,57 @@ For the `Element` nodes, the range boundary is set between the child nodes:
 
 For more information, refer to the [tutorial on `Range` objects on Quirksmode](http://www.quirksmode.org/dom/range_intro.html).
 
-## See Also
+## Working with Custom Tools in IE
 
-Other articles on the Kendo UI Editor:
+Because Internet Explorer keeps a single instance of the selection and the range, any custom tools that draw the focus away from the content area apply the executed command at the begging of the content instead of at the caret position. To prevent this behavior, cache the range and re-select it at the correct moments.
+
+The following example shows how to implement a custom tool in a DropDownList with its filtering enabled.
+
+###### Example
+
+    <textarea id="editor" rows="10" cols="30" style="width:100%;height:400px">
+    </textarea>
+
+    <script type="text/x-kendo-template" id="custom-template">
+        <label for='templateTool' style='vertical-align:middle;'>Insert tag:</label>
+        <input id='templateTool' style='width: 130px;' />
+    </script>
+
+    <script>
+        $("#editor").kendoEditor({
+            tools: [
+                {
+                    name: "customTemplate",
+                    template: $("#custom-template").html()
+                }
+            ]
+        });
+
+      var _Editor_Range = null;
+
+      $("#templateTool").kendoDropDownList({
+        filter: "contains",
+        dataTextField: "text",
+        dataValueField: "value",
+        change: function(e) {
+  				var editor = $("#editor").data("kendoEditor");
+          editor.selectRange(_Editor_Range);
+          editor.exec("inserthtml", { value: e.sender.value() });
+        },
+        open: function () {
+        	var editor = $("#editor").data("kendoEditor");
+          _Editor_Range = editor.getRange();
+        },
+        dataSource: [
+          { text: "Item1", value: 1 },
+          { text: "Item2", value: 2 },
+          { text: "Item3", value: 3 }
+        ]
+      });
+    </script>
+
+
+## See Also
 
 * [Overview of the Editor Widget]({% slug overview_kendoui_editor_widget %})
 * [Image Browser]({% slug image_browser_editor_widget %})
@@ -61,5 +111,5 @@ Other articles on the Kendo UI Editor:
 * [Prevent Cross-Site Scripting]({% slug prevent_xss_editor_widget %})
 * [Troubleshooting]({% slug troubleshooting_editor_widget %})
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
-
-For how-to examples on the Kendo UI Editor widget, browse its [**How To** documentation folder]({% slug howto_add_max_length_validation_editor %}).
+* [How-To Examples]({% slug howto_handleblurandfocuseventsangular_editor %})
+* [Knowledge Base Section](/knowledge-base)

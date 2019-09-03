@@ -8,11 +8,9 @@ position: 1
 
 # Telerik Extensions Migration Overview
 
-This article aims at demonstrating these differences and at providing a general overview of issues that might occur when migrating from Telerik Extensions for ASP.NET MVC to Telerik UI for ASP.NET MVC.
+This article provides a general overview of issues that might occur when migrating from Telerik Extensions for ASP.NET MVC to Telerik UI for ASP.NET MVC.
 
-Telerik UI for ASP.NET MVC differs in many ways from Telerik Extensions for ASP.NET MVC. Some of these differences are breaking changes.
-
-Because of the greater changes in terms of assembly names and namespaces, both Telerik Extensions for ASP.NET MVC and Telerik UI for ASP.NET MVC can be used in the same project, side-by-side. This enables you to migrate an application component by component, without the need to immediately remove all Telerik Extensions components.
+Telerik UI for ASP.NET MVC differs in many ways from Telerik Extensions for ASP.NET MVC. Some of these differences are breaking changes. Because of the greater changes in terms of assembly names and namespaces, both Telerik Extensions for ASP.NET MVC and Telerik UI for ASP.NET MVC can be used in the same project, side-by-side. This enables you to migrate an application component by component, without the need to immediately remove all Telerik Extensions components.
 
 Below are listed the major changes coming from Telerik UI for ASP.NET MVC. Each change marks a difference between Kendo UI and the Telerik Extensions for ASP.NET MVC. For each there is a quick summary of the change as well as a detailed description of the modifications.
 
@@ -38,9 +36,9 @@ With Telerik Extensions for ASP.NET MVC, the import statement found within the `
 
 ### Version Support
 
-**Change** Telerik UI for ASP.NET MVC supports ASP.NET MVC 3 and 4.
+**Change** Telerik UI for ASP.NET MVC supports ASP.NET MVC 3, 4 and 5.
 
-Previously, Telerik Extensions offered support for ASP.NET 1, 2, and 3. With Telerik UI for ASP.NET MVC, the supported ASP.NET MVC versions are 3 and 4. The decision about which ASP.NET MVC versions should be supported was based on an investigation and discussions about the Kendo UI client-base and the industry adaptation of more recent ASP.NET MVC versions. Additionally, the support for the latest two ASP.NET MVC versions only offer additional opportunities to implement features otherwise impossible to implement in older ASP.NET MVC releases. To make use of Telerik UI for ASP.NET MVC, all the projects which use ASP.NET MVC 1 or 2 need to be upgraded to ASP.NET MVC 3 or 4.
+Previously, Telerik Extensions offered support for ASP.NET 1, 2, and 3. With Telerik UI for ASP.NET MVC, the supported ASP.NET MVC versions are 3, 4 and 5. The decision about which ASP.NET MVC versions should be supported was based on an investigation and discussions about the Kendo UI client-base and the industry adaptation of more recent ASP.NET MVC versions. Additionally, the support for the latest two ASP.NET MVC versions only offer additional opportunities to implement features otherwise impossible to implement in older ASP.NET MVC releases. To make use of Telerik UI for ASP.NET MVC, all the projects which use ASP.NET MVC 1 or 2 need to be upgraded to ASP.NET MVC 3, 4, or 5.
 
 ### ScriptRegistrar and StyleSheetRegistrar
 
@@ -89,9 +87,9 @@ As seen when comparing the two pieces of sample code above, the `.DataBinding()`
 
 ### JavaScript Files Inclusion
 
-**Change** The JavaScript files associated with Telerik UI for ASP.NET MVC are the files associated with the Kendo UI widgets&mdash;`kendo.web.min.js`, specific widget files, or a custom file build, and `kendo.aspnetmvc.min.js`.
+**Change** The JavaScript files associated with Telerik UI for ASP.NET MVC are the files associated with the Kendo UI widgets&mdash;`kendo.all.min.js`, specific widget files, or a custom file build, and `kendo.aspnetmvc.min.js`.
 
-Telerik Extensions for ASP.NET MVC include JavaScript files for each individual component as well as some of the component features&mdash;for example, the Grid filtering JS file. With Telerik UI for ASP.NET MVC, the bare minimum is `kendo.web.min.js`, which contains Kendo UI-specific JavaScript, and `kendo.aspnetmvc.min.js`, which contains the MVC-specific parts of Telerik UI for ASP.NET MVC. Alternatively, instead of `kendo.web.min.js` you can include the component-specific JavaScript files from Kendo UI or
+Telerik Extensions for ASP.NET MVC include JavaScript files for each individual component as well as some of the component features&mdash;for example, the Grid filtering JS file. With Telerik UI for ASP.NET MVC, the bare minimum is `kendo.all.min.js`, which contains Kendo UI-specific JavaScript, and `kendo.aspnetmvc.min.js`, which contains the MVC-specific parts of Telerik UI for ASP.NET MVC. Alternatively, instead of `kendo.all.min.js` you can include the component-specific JavaScript files from Kendo UI or
 even use the custom download builder tool to create a single customized JavaScript file. This means that the new JavaScript files must be added to the project for Telerik UI for ASP.NET MVC to function.
 
 ### Server-Side Code Blocks
@@ -106,26 +104,26 @@ even use the custom download builder tool to create a single customized JavaScri
 
 Within Telerik Extensions for ASP.NET MVC, you can subscribe to a client-side event handler in three ways.
 
-**Option 1** Use the name of the event handler.
+* **Option 1** Use the name of the event handler.
 
-###### Example
+    ###### Example
 
-        .OnSelect("onSelect")
-        <script>function onSelect() {}</script>
+            .OnSelect("onSelect")
+            <script>function onSelect() {}</script>
 
-**Option 2** Apply a server-side code block in the WebForms ViewEngine.
+* **Option 2** Apply a server-side code block in the WebForms ViewEngine.
 
-###### Example
+    ###### Example
 
-        .OnSelect(() => { %>
-            function() { }
-        <% });
+            .OnSelect(() => { %>
+                function() { }
+            <% });
 
-**Option 3** Use inline templates for the Razor ViewEngine.
+* **Option 3** Use inline templates for the Razor ViewEngine.
 
-###### Example
+    ###### Example
 
-        .OnSelect(@<text> function() {} </text>)
+            .OnSelect(@<text> function() {} </text>)
 
 With Telerik UI for ASP.NET MVC, the second approach&mdash;using the server-side code block within the WebForms ViewEngine&mdash;is no longer supported. The reason for this are the complications and limitations around the server-side code block because of the utilization of the `Response.Write` to add this JavaScript to the page. The third approach&mdash;using Razor&mdash;takes a string-based approach which removes these limitations. If the second approach is the one currently implemented, it is recommended to use approach number one for the migration.
 
@@ -223,19 +221,15 @@ With the usage of Kendo UI events, this no longer works with Telerik UI for ASP.
 
 By default, Telerik UI for ASP.NET MVC uses the Kendo UI stylesheets. Similar to Telerik Extensions for ASP.NET MVC, the Kendo UI widgets use a base stylesheet&mdash;`kendo.common.css`&mdash;and a theme-specific stylesheet&mdash;`kendo.[theme_name].css`. Register both of them manually on the page. Make sure you list the base stylesheet before the theme stylesheet, because the theme might need to override some of the base styles.
 
-The Kendo UI widgets are shipped with the following themes:
-* Black
-* BlueOpal
-* Default
-* Metro (Green)
-* Silver
+The Kendo UI widgets are shipped with Less- and Sass-based themes. The full lists of the themes are available in:
+
+* [Less-Based Themes](https://docs.telerik.com/kendo-ui/styles-and-layout/appearance-styling)
+* [Sass-Based Themes](https://docs.telerik.com/kendo-ui/styles-and-layout/sass-themes)
 
 The styling mechanism of the MVC extensions and the Kendo UI widgets is quite similar. For more information on the Kendo UI styling, refer to the [article on appearance and styling](http://docs.telerik.com/kendo-ui/styles-and-layout/appearance-styling).
 
 In some cases when developers migrate from Telerik Extensions for ASP.NET MVC to Telerik UI for ASP.NET MVC, they might want to preserve the previous look of the components. This is the purpose for providing the so-called legacy themes. They represent modified versions of the MVC extensions stylesheets, so that they are compatible with the Kendo UI widgets. Changes include updates in the classnames prefix from `t-` to `k-` and some tweaks required by the slightly different HTML output of the Kendo UI widgets.
 
-> **Important**
->
 > Using Kendo UI stylesheets and legacy themes on the same page is not supported.
 
 Generally, it is recommended that you use the Kendo UI themes and not the legacy ones. The latter are located in the `wrappers/aspnetmvc/LegacyThemes` folder of the Telerik UI for ASP.NET MVC distribution package. Legacy themes can also be referenced from the Kendo UI CDN. If so, do not forget to specify the version&mdash;for example, 2012.2.710.
@@ -245,9 +239,9 @@ Generally, it is recommended that you use the Kendo UI themes and not the legacy
     <link href="http://kendo.cdn.telerik.com/<VERSION>/styles/telerik/telerik.common.min.css" rel="stylesheet" type="text/css" />
     <link href="http://kendo.cdn.telerik.com/<VERSION>/styles/telerik/telerik.black.min.css" rel="stylesheet" type="text/css" />
 
-## See Also
+> As of the R3 2015 release, legacy themes are not shipped.
 
-Other articles on migrating from Telerik Extensions:
+## See Also
 
 * [Migrate the AutoComplete]({% slug autocomplete_migrationextensions_aspnetmvc %})
 * [Migrate the Calendar]({% slug calendar_migrationextensions_aspnetmvc %})

@@ -2,6 +2,8 @@
 title: Window
 page_title: Configuration, methods and events of Kendo UI Window
 description: How to initialize a Window UI widget and configure its behaviors, center a window, set its content and toggle the state of the UI widget.
+res_type: api
+component: window
 ---
 
 # kendo.ui.Window
@@ -12,8 +14,15 @@ Represents the Kendo UI Window. Inherits from [Widget](/api/javascript/ui/widget
 
 ### actions `Array` *(default: ["Close"])*
 
-The buttons for interacting with the window. Predefined array values are "Close", "Refresh", "Minimize",
-and "Maximize".
+The buttons for interacting with the Window.
+
+The predefined array values are:
+
+* `Close`
+* `Refresh`
+* `Minimize`
+* `Maximize`
+* `Pin`
 
 #### Example
 
@@ -26,11 +35,11 @@ and "Maximize".
 
 ### animation `Boolean|Object`
 
-A collection of {Animation} objects, used to change default animations. A value of `false` will disable all animations in the widget.
+A collection of `{Animation}` objects that is used to change the default animations. When set to `false`, all animations will be disabled.
 
-`animation:true` is not a valid configuration.
+> `animation:true` is not a valid configuration.
 
-#### Example - disable animation
+#### Example - disabling the animation
 
     <div id="dialog"></div>
     <script>
@@ -43,7 +52,7 @@ A collection of {Animation} objects, used to change default animations. A value 
 
 The animation that will be used when a Window closes.
 
-#### Example - disable close animation
+#### Example - disabling the closing animation
 
     <div id="dialog"></div>
     <script>
@@ -56,9 +65,9 @@ The animation that will be used when a Window closes.
 
 ### animation.close.effects `String`
 
-Effect to be used for closing of the popup.
+The effect that will be used when the popup closes.
 
-#### Example - use only fade out animation when closing window
+#### Example - using only the fade-out animation when closing the Window
 
     <div id="dialog"></div>
     <script>
@@ -73,9 +82,9 @@ Effect to be used for closing of the popup.
 
 ### animation.close.duration `Number`
 
-Defines the close animation duration.
+Defines the duration of the closing animation.
 
-#### Example - make the close animation 2 seconds long
+#### Example - making the closing animation two seconds long
 
     <div id="dialog"></div>
     <script>
@@ -92,7 +101,7 @@ Defines the close animation duration.
 
 The animation that will be used when a Window opens.
 
-#### Example - disable open animation
+#### Example - disabling the opening animation
 
     <div id="dialog"></div>
     <script>
@@ -107,9 +116,9 @@ The animation that will be used when a Window opens.
 
 ### animation.open.effects `String`
 
-Effect to be used for opening of the popup.
+The effect that will be used when the popup opens.
 
-#### Example - use only fade animation when opening window
+#### Example - using only the fade animation when opening the Window
 
     <div id="dialog"></div>
     <script>
@@ -126,9 +135,9 @@ Effect to be used for opening of the popup.
 
 ### animation.open.duration `Number`
 
-Defines the open animation duration.
+Defines the duration of the opening animation.
 
-#### Example - make the open animation 100 milliseconds long
+#### Example - making the opening animation 100 milliseconds long
 
     <div id="dialog"></div>
     <script>
@@ -145,12 +154,11 @@ Defines the open animation duration.
 
 ### appendTo `Object|String` *(default: document.body)*
 
-The element that the Window will be appended to. Beneficial if the [Window is used together with a form](/web/window/overview#using-kendo-ui-window-with-a-form).
-Note that this *does not* constrain the window dragging within the given element.
+The element to which the Window will be appended. It is beneficial to [use the Window together with a form](/web/window/overview#using-kendo-ui-window-with-a-form) which does not constrain the dragging of the Window within the specific element. For such scenarios, use the [`draggable.containment`](/api/javascript/ui/window/configuration/draggable.containment) setting.
 
-> Appending the Window to an element with an `overflow:hidden`, `overflow:auto` or `overflow:scroll` style may result in undesired behavior, because the Window will not be able to be displayed outside the element's boundaries. Unwanted scrollbars may appear as well.
+> Appending the Window to an element styled with `overflow:hidden`, `overflow:auto`, or `overflow:scroll` may result in undesired behavior because the Window will not be displayed outside the  boundaries of the element. Unwanted scrollbars may appear as well.
 
-#### Example - set the window container to be the form with id="mainForm"
+#### Example - setting the Window container to be with the id="mainForm" form
 
     <div id="dialog"></div>
     <script>
@@ -161,9 +169,9 @@ Note that this *does not* constrain the window dragging within the given element
 
 ### autoFocus `Boolean` *(default: true)*
 
-Determines whether the Window will be focused automatically when opened. The property also influences the focus behavior when the Window is clicked when already opened.
+Determines whether the Window will be focused automatically when opened. The property also influences the focus behavior when an already opened Window is clicked.
 
-#### Example - set the autoFocus property
+#### Example - setting the autoFocus property
 
     <div id="dialog"></div>
     <script>
@@ -174,13 +182,11 @@ Determines whether the Window will be focused automatically when opened. The pro
 
 ### content `Object|String`
 
-Specifies a URL or request options that the window should load its content from.
+Specifies a URL or request options from where the Window will load its content.
 
-Note: For URLs starting with a protocol (e.g. http://),
-a container iframe element is automatically created. This behavior may change in future
-versions, so it is advisable to always use the [iframe configuration option](#iframe).
+> For URLs which start with a protocol (for example, http://), a container `iframe` element is automatically created. As this behavior may change in future versions, try to always use the [iframe configuration option](#iframe).
 
-#### Example - fetch content from the server
+#### Example - fetching content from the server
 
     <div id="dialog"></div>
     <script>
@@ -191,24 +197,25 @@ versions, so it is advisable to always use the [iframe configuration option](#if
 
 ### content.template `String`
 
-Template for the content of a **Window**. Returned data from the server will be given as the `data` of this template.
-Note that if the returned data is JSON, the [`dataType` parameter](http://api.jquery.com/jQuery.ajax/) should be passed, so that the data gets parsed by jQuery.
+The template for the content of a Window. Returned data from the server will be given as the `data` of this template.
 
-If the URL contains a protocol, set `iframe` to `false`, otherwise the JSON response will be injected "as is" in the Window content area.
+If the returned data is JSON, the [`dataType`](http://api.jquery.com/jQuery.ajax/) parameter has to be passed so that the data gets parsed by jQuery.
 
-#### Example - fetch JSON and display it through a template
+If the URL contains a protocol, set `iframe` to `false`. Otherwise, the JSON response will be injected in the content area of the Window as is.
+
+#### Example - fetching JSON and displaying it through a template
 
     <div id="dialog">
-        <p><strong>This example will not work, unless you define a valid JSON service URL for `content.url`.</p>
+        <p><strong>This example will not work unless you define a valid JSON service URL for `content.url`.</p>
         <p>The expected JSON response is:
             <pre>
-            
+
             { username: "...my username here..." }
-            
+
             </pre>
-        </strong></p>    
+        </strong></p>
     </div>
-    
+
     <script>
     $("#dialog").kendoWindow({
       content: {
@@ -220,11 +227,11 @@ If the URL contains a protocol, set `iframe` to `false`, otherwise the JSON resp
     });
     </script>
 
-### draggable `Boolean` *(default: true)*
+### draggable `Object|Boolean` *(default: true)*
 
-Enables (**true**) or disables (**false**) the ability for users to move/drag the widget.
+Enables (`true`) or disables (`false`) the dragging of the widget.
 
-#### Example - disable window dragging
+#### Example - disabling the dragging of the Window
 
     <div id="dialog"></div>
     <script>
@@ -233,11 +240,106 @@ Enables (**true**) or disables (**false**) the ability for users to move/drag th
     });
     </script>
 
+#### Example - setting draggable object configuration
+
+    <div id="container">
+      <div id="dialog">
+        <div style="width: 20px; height: 20px; border: 1px solid red;" id="handle"></div>
+      </div>
+    </div>
+    <script>
+    $("#dialog").kendoWindow({
+      draggable: {
+        containment: "#container",
+        axis: "x",
+        dragHandle: "#handle"
+      }
+    });
+    </script>
+
+### draggable.containment `String|Element|jQuery` *default: ""*
+
+Defines the element in which the window will be able to move. The window is appended to this element and in this way overrides the [`appendTo`](/api/javascript/ui/window/configuration/draggable.containment) option. Accepts either a selector or an element.
+
+> The containment element has to be positioned, that is, its CSS `position` attribute has to be set to `relative`, `absolute`, or `fixed`.
+
+#### Example
+
+    <style>
+        #container {
+          position: relative;
+          width: 500px;
+          height: 500px;
+          border: 1px solid grey;
+        }
+    </style>
+
+    <div id="container">
+        <div id="window">
+            <p>Alvar Aalto is one of the greatest names in modern architecture and design.
+              Glassblowers at the iittala factory still meticulously handcraft the legendary vases
+              that are variations on one theme, fluid organic shapes that let the end user decide the use.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+          $("#window").kendoWindow({
+            width: "300px",
+            height: "200px",
+            draggable: {
+                containment: "#container"
+            }
+          });
+        });
+    </script>
+
+### draggable.axis `String` *default: ""*
+
+Constrains dragging to the horizontal (x) or to the vertical (y) axis.
+
+The supported values are:
+
+* `x`
+* `y`
+
+#### Example
+
+    <div id="container">
+      <div id="dialog">
+      </div>
+    </div>
+    <script>
+    $("#dialog").kendoWindow({
+      draggable: {
+        axis: "x"
+      }
+    });
+    </script>
+
+### draggable.dragHandle `String` *default: ".k-window-titlebar"*
+
+Restricts the dragging of the window through the specified element which will be part of the window content. Accepts either a selector or an element.
+
+#### Example
+
+    <div id="dialog">
+      <div style="width: 20px; height: 20px; border: 1px solid red;" id="handle"></div>
+    </div>
+    <script>
+    $("#dialog").kendoWindow({
+      draggable: {
+        dragHandle: "#handle"
+      }
+    });
+    </script>
+
 ### iframe `Boolean`
 
-Explicitly states whether a content iframe should be created. For more information, please read [Using iframes](/web/window/overview#using-iframes).
+Explicitly states whether a content `iframe` will be created. For more information, refer to the documentation on [using `iframes`](/web/window/overview#using-iframes).
 
-#### Example - load full page
+#### Example - loading the full page
 
     <div id="dialog"></div>
     <script>
@@ -249,7 +351,7 @@ Explicitly states whether a content iframe should be created. For more informati
 
 ### height `Number | String`
 
-Specifies height of the window.
+Specifies the height of the Window.
 
 #### Example
 
@@ -260,7 +362,7 @@ Specifies height of the window.
     });
     </script>
 
-#### Example - specify window height in percent
+#### Example - specifying the height of the Window in percent
 
     <div id="dialog"></div>
     <script>
@@ -271,7 +373,7 @@ Specifies height of the window.
 
 ### maxHeight `Number` *(default: Infinity)*
 
-The maximum height (in pixels) that may be achieved by resizing the window.
+The maximum height (in pixels) that may be achieved by resizing the Window.
 
 #### Example
 
@@ -284,7 +386,7 @@ The maximum height (in pixels) that may be achieved by resizing the window.
 
 ### maxWidth `Number` *(default: Infinity)*
 
-The maximum width (in pixels) that may be achieved by resizing the window.
+The maximum width (in pixels) that may be achieved by resizing the Window.
 
 #### Example
 
@@ -297,7 +399,7 @@ The maximum width (in pixels) that may be achieved by resizing the window.
 
 ### minHeight `Number` *(default: 50)*
 
-The minimum height (in pixels) that may be achieved by resizing the window.
+The minimum height (in pixels) that may be achieved by resizing the Window.
 
 #### Example
 
@@ -310,7 +412,7 @@ The minimum height (in pixels) that may be achieved by resizing the window.
 
 ### minWidth `Number` *(default: 50)*
 
-The minimum width (in pixels) that may be achieved by resizing the window.
+The minimum width (in pixels) that may be achieved by resizing the Window.
 
 #### Example
 
@@ -321,9 +423,9 @@ The minimum width (in pixels) that may be achieved by resizing the window.
     });
     </script>
 
-### modal `Boolean` *(default: false)*
+### modal `Boolean|Object` *(default: false)*
 
-Specifies whether the window should show a modal overlay over the page.
+Specifies whether the Window will display a modal overlay over the page.
 
 #### Example
 
@@ -334,9 +436,26 @@ Specifies whether the window should show a modal overlay over the page.
     });
     </script>
 
+### modal.preventScroll `Boolean` *(default: false)*
+
+Specifies whether the document will stop scrolling when a modal dialog is opened. Closing the modal dialog has to restore the initial document overflow. The `modal.preventScroll` setting will modify the overflow rule of the document and, therefore, cannot be used together with the [`containment`](/api/javascript/ui/window/configuration/draggable.containment) option.
+
+> Multiple windows with different `preventScroll` settings are not supported.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      modal: {
+          preventScroll: true
+      }
+    });
+    </script>
+
 ### pinned `Boolean` *(default: false)*
 
-Specifies whether the window should be pinned, i.e. it will not move together with the page content during scrolling.
+Specifies whether the Window will be pinned, that is, that it will not move together with the page content during scrolling.
 
 #### Example
 
@@ -351,7 +470,7 @@ Specifies whether the window should be pinned, i.e. it will not move together wi
 
 ### position `Object`
 
-A collection of one or two members, which define the initial Window's top and/or left position on the page.
+A collection of one or two members which define the initial top and/or left position of the Window or the position of the [`containment` element](/api/javascript/ui/window/configuration/draggable.containment) on the page.
 
 #### Example
 
@@ -367,15 +486,15 @@ A collection of one or two members, which define the initial Window's top and/or
 
 ### position.top `Number|String`
 
-Specifies the initial top position of the window. Numeric values are treated as pixels. String values can specify pixels, percentages, ems or other valid values.
+Specifies the initial top position of the Window. Numeric values are treated as pixels. String values can specify pixels, percentages, ems, or other valid values.
 
 ### position.left `Number|String`
 
-Specifies the initial left position of the window. Numeric values are treated as pixels. String values can specify pixels or percentages, ems or other valid values.
+Specifies the initial left position of the Window. Numeric values are treated as pixels. String values can specify pixels, percentages, ems or other valid values.
 
 ### resizable `Boolean` *(default: true)*
 
-Enables (**true**) or disables (**false**) the ability for users to resize a **Window**.
+Enables (`true`) or disables (`false`) the resizing of the Window.
 
 #### Example
 
@@ -388,7 +507,7 @@ Enables (**true**) or disables (**false**) the ability for users to resize a **W
 
 ### scrollable `Boolean` *(default: true)*
 
-Enables (**true**) or disables (**false**) the ability for users to scroll the window contents.
+Enables (`true`) or disables (`false`) the scrolling of the Window contents.
 
 #### Example
 
@@ -399,9 +518,11 @@ Enables (**true**) or disables (**false**) the ability for users to scroll the w
     });
     </script>
 
-### title `String|Boolean` *default: ""*
+### title `Object|String|Boolean` *default: ""*
 
-The text in the window title bar. If `false`, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.
+The text in the title bar of the Window. If set to `false`, the Window will be displayed without a title bar.
+
+> The title bar buttons of the Window will not be displayed. Unless [`dragHandle`](/api/javascript/ui/window/configuration/draggable.draghandle) is configured, this will prevent the Window from dragging.
 
 #### Example
 
@@ -412,7 +533,7 @@ The text in the window title bar. If `false`, the window will be displayed witho
     });
     </script>
 
-#### Example - create a window without a title
+#### Example - creating a Window without a title
 
     <div id="dialog"></div>
     <script>
@@ -421,11 +542,42 @@ The text in the window title bar. If `false`, the window will be displayed witho
     });
     </script>
 
+### title.text `String` *default: ""*
+
+The text in the title bar of the Window.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoWindow({
+      title: {
+        text: "Customer details"
+      }
+    });
+    </script>
+
+### title.encoded `Boolean` *default: true*
+
+Specifies whether the title text will be encoded.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoWindow({
+      title: {
+        text: "<b>Customer details</b>",
+        encoded: false
+      }
+    });
+    </script>
+
 ### visible `Boolean` *(default: true)*
 
-Specifies whether the window will be initially visible.
+Specifies whether the Window will be initially visible.
 
-#### Example - show a dialog after one second delay
+#### Example - showing a dialog after one second delay
 
     <div id="dialog"></div>
     <script>
@@ -439,7 +591,7 @@ Specifies whether the window will be initially visible.
 
 ### width `Number | String`
 
-Specifies width of the window.
+Specifies the width of the Window.
 
 #### Example
 
@@ -450,7 +602,7 @@ Specifies width of the window.
     });
     </script>
 
-#### Example - specify window width in percent
+#### Example - specifying the width of the Window in percentage points
 
     <div id="dialog"></div>
     <script>
@@ -459,17 +611,38 @@ Specifies width of the window.
     });
     </script>
 
+
+### size `String` *(default: "auto")*
+
+Sets a predefined size to the Window. The `width` and `height` configuration options override the predefined `size`.
+
+The supported values are:
+
+* `auto`
+* `small`
+* `medium`
+* `large`
+
+#### Example
+
+    <div id="window"></div>
+    <script>
+    $("#window").kendoWindow({
+      size: "wide"
+    });
+    </script>
+
 ## Methods
 
 ### center
 
-Centers the window within the viewport.
+Centers the Window within the viewport.
 
-If the Window has no set dimensions and is centered before its content is loaded with Ajax, it is probably going to resize after the content is loaded. This naturally changes the position of the widget on the screen and it is no longer centered. If this is a requirement, then either center the Window in its [`refresh`](#events-refresh) event, or set some [explicit dimensions](#configuration-height).
+If the Window has no set dimensions and is centered before its content is loaded with Ajax, it might resize after the content is loaded. This will change the position of the widget on the screen and it will no longer be centered. If you need to center the Window, then either center it in its [`refresh`](/api/javascript/ui/window/events/refresh) event or set [explicit dimensions](/api/javascript/ui/window#configuration-height).
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining, for example center and open the Window with a single expression.
+`kendo.ui.Window` - Returns the Window object to support chaining. For example, center and open the Window with a single expression.
 
 #### Example
 
@@ -484,13 +657,13 @@ If the Window has no set dimensions and is centered before its content is loaded
 
 ### close
 
-Closes a Window.
+Closes the Window.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
-#### Example - close a window after one second
+#### Example - closing a Window after one second
 
     <div id="dialog"></div>
     <script>
@@ -503,20 +676,19 @@ Closes a Window.
 
 ### content
 
-Gets or set the content of a window. Supports chaining when used as a setter.
+Gets or sets the content of a Window. When used as a setter, supports chaining.
 
 #### Parameters
 
 ##### content `String|jQuery` *(optional)*
 
-The content of the Window. Can be an HTML string or jQuery object.
-
+The content of the Window. Can be an HTML string or a jQuery object.
 
 #### Returns
 
-`String` The current window content, if used as a getter. If used as a setter, the method will return the window object to support chaining.
+`String` - If used a getter, the current content of the Window. If used as a setter, the method returns the Window object to support chaining.
 
-#### Example - get the window content
+#### Example - getting the content of the Window
 
     <div id="dialog">foo</div>
     <script>
@@ -525,7 +697,7 @@ The content of the Window. Can be an HTML string or jQuery object.
     console.log(dialog.content()); // logs "foo"
     </script>
 
-#### Example - set the window content
+#### Example - setting the content of the Window
 
     <div id="dialog"></div>
     <script>
@@ -536,7 +708,7 @@ The content of the Window. Can be an HTML string or jQuery object.
 
 ### destroy
 
-Destroys the window and its modal overlay, if necessary. Removes the widget HTML elements from the DOM.
+Destroys the Window and its modal overlay if necessary. Removes the HTML elements of the widget from the DOM.
 
 #### Example
 
@@ -549,13 +721,13 @@ Destroys the window and its modal overlay, if necessary. Removes the widget HTML
 
 ### isMaximized
 
-Indicates whether the window is maximized.
+Indicates whether the Window is maximized.
 
 #### Returns
 
 `Boolean`
 
-#### Example - check if window is maximized
+#### Example - checking if the Window is maximized
 
     <div id="dialog"></div>
     <script>
@@ -563,17 +735,17 @@ Indicates whether the window is maximized.
     var dialog = $("#dialog").data("kendoWindow");
     dialog.maximize();
     var maximized = dialog.isMaximized();
-    </script>    
+    </script>
 
 ### isMinimized
 
-Indicates whether the window is minimized.
+Indicates whether the Window is minimized.
 
 #### Returns
 
 `Boolean`
 
-#### Example - check if window is minimized
+#### Example - checking if the Window is minimized
 
     <div id="dialog"></div>
     <script>
@@ -581,15 +753,15 @@ Indicates whether the window is minimized.
     var dialog = $("#dialog").data("kendoWindow");
     dialog.minimize();
     var minimized = dialog.isMinimized();
-    </script>   
+    </script>
 
 ### maximize
 
-Maximizes a Window to the entire viewing area of the user agent. Triggers the resize event.
+Maximizes a Window to the entire viewing area of the user agent. Triggers the `resize` event.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -602,11 +774,11 @@ Maximizes a Window to the entire viewing area of the user agent. Triggers the re
 
 ### minimize
 
-Maximizes a Window to its title bar.
+Minimizes a Window to its title bar.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -619,11 +791,11 @@ Maximizes a Window to its title bar.
 
 ### open
 
-Opens a Window and brings it on top of any other open Window instances by calling [`toFront`](#methods-tofront) internally.
+Opens a Window and brings it on top of any other open Window instances by internally calling [`toFront`](/api/javascript/ui/window/methods/tofront).
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -638,8 +810,7 @@ Opens a Window and brings it on top of any other open Window instances by callin
 
 ### pin
 
-Pins the Window at its current position with a position:fixed style, i.e. the widget stops moving together with the other page content when the page is scrolled.
-The user will still be able to move the Window with the mouse or keyboard.
+Pins the Window to its current position with a `position:fixed` style, that is, the widget stops moving together with the other page content when the page is scrolled. The user will still be able to move the Window with the mouse or through the keyboard.
 
 #### Example
 
@@ -655,17 +826,15 @@ The user will still be able to move the Window with the mouse or keyboard.
 
 ### refresh
 
-Refreshes the content of a Window from a remote URL or the initially defined [content template](/api/javascript/ui/window#configuration-content.template).
-**Note that passing `data` and non-GET requests cannot be sent to an iframe**, as they require a form with a target attribute.
+Refreshes the content of a Window from a remote URL or from the initially defined [content template](/api/javascript/ui/window/configuration/content.template).
+
+> Passing `data` and non-`GET` requests cannot be sent to an `iframe` as they require a form with a `target` attribute.
 
 #### Parameters
 
 ##### options `Object|String`
 
-Options for requesting data from the server.
-If omitted, the window uses the `content` property
-that was supplied when the window was created.
-Any options specified here are passed to jQuery.ajax().
+Options for requesting data from the server. If omitted, the Window uses the `content` property that was supplied when the Window was created. Any specified options will be passed to `jQuery.ajax()`.
 
 ##### options.url `String`
 
@@ -673,27 +842,27 @@ The server URL that will be requested.
 
 ##### options.cache `Boolean`
 
-Indicates whether the Ajax request may use a previously cached response. By default Ajax request caching is not used.
+Indicates whether the Ajax request may use a previously cached response. By default, Ajax request caching is not used.
 
 ##### options.data `Object`
 
-A JSON object containing the data that will be passed to the server.
+A JSON object which contains the data that will be passed to the server.
 
 ##### options.type `String`
 
-The HTTP request method ("GET", "POST").
+The HTTP request method (`GET`, `POST`).
 
 ##### options.template `String`
 
-A template to be used for displaying the requested data.
+A template that will be used for displaying the requested data.
 
 ##### options.iframe `Boolean`
 
-Indicates whether the content should be fetched within an iframe, or with AJAX and rendered in the same page.
+Indicates whether the content will be fetched within an `iframe` or with AJAX, and rendered on the same page.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -718,11 +887,11 @@ Indicates whether the content should be fetched within an iframe, or with AJAX a
 
 ### restore
 
-Restores a maximized or minimized Window to its previous state. Triggers the resize event.
+Restores a maximized or minimized Window to its previous state. Triggers the `resize` event.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -731,7 +900,7 @@ Restores a maximized or minimized Window to its previous state. Triggers the res
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
 
-    // maximize the window
+    // maximize the Window
     dialog.maximize();
 
     setTimeout(function() {
@@ -744,17 +913,17 @@ Restores a maximized or minimized Window to its previous state. Triggers the res
 
 Allows the Window to be configured with new options.
 
-If you change the [content url](#configuration-content), call [`refresh`](#methods-refresh) afterwards. Another option is to execute the `refresh` method with the new URL directly.
+If you change the [content url](/api/javascript/ui/window#configuration-content), call [`refresh`](/api/javascript/ui/window/methods/refresh) afterwards. Another option is to directly execute the `refresh` method with the new URL.
 
-Changing the size or position of the Window requires the widget to not be in maximized or minimized state.
+Changing the size or the position of the Window is possible only if the widget is not maximized or minimized.
 
 #### Parameters
 
 ##### options `Object`
 
-The configuration options to be set.
+The configuration options that will be set.
 
-#### Example - set new dimensions to the window
+#### Example - setting new dimensions to the Window
 
     <div id="dialog"></div>
     <script>
@@ -766,9 +935,9 @@ The configuration options to be set.
     });
     </script>
 
-### title
+### title `String|Boolean|Object` *default: ""*
 
-Gets or sets the title of a Window. Supports chaining when used as a setter.
+Gets or sets the title of a Window. When used as a setter, supports chaining.
 
 #### Parameters
 
@@ -778,9 +947,9 @@ The title of the Window.
 
 #### Returns
 
-`String` The current window title, if used as a getter. If used as a setter, the method will return the window object to support chaining.
+`String` - If used as a getter, the current Window title. If used as a setter, the method returns the Window object to support chaining.
 
-#### Example - get the title of the window
+#### Example - getting the title of the Window
 
     <div id="dialog"></div>
     <script>
@@ -789,7 +958,7 @@ The title of the Window.
     var title = dialog.title();
     </script>
 
-#### Example - set the title of a window
+#### Example - setting the title of a Window
 
     <div id="dialog"></div>
     <script>
@@ -800,11 +969,11 @@ The title of the Window.
 
 ### toFront
 
-Increases the `z-index` style of a Window [`wrapper`](/intro/widget-basics/wrapper-element) to bring the instance on top of other open Windows. This method is executed automatically when the [`open`](#methods-open) method is used.
+Increases the `z-index` style of a Window [`wrapper`](/intro/widget-basics/wrapper-element) to bring the instance on top of other open Windows. This method is executed automatically when the [`open`](/api/javascript/ui/window/methods/open) method is used.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -817,11 +986,11 @@ Increases the `z-index` style of a Window [`wrapper`](/intro/widget-basics/wrapp
 
 ### toggleMaximization
 
-Toggles a Window between a maximized and restored state. Triggers the resize event.
+Toggles a Window between a maximized and restored state. Triggers the `resize` event.
 
 #### Returns
 
-`kendo.ui.Window` Returns the window object to support chaining.
+`kendo.ui.Window` - Returns the Window object to support chaining.
 
 #### Example
 
@@ -834,7 +1003,7 @@ Toggles a Window between a maximized and restored state. Triggers the resize eve
 
 ### unpin
 
-Disables the Window's pinned state, so that the widget will move together with the other page content when the page is scrolled.
+Disables the pinned state of the Window so that the widget will move together with the other page content when the page is scrolled.
 
 #### Example
 
@@ -861,7 +1030,7 @@ Triggered when a Window has finished its opening animation.
     <script>
     $("#dialog").kendoWindow({
       activate: function() {
-        // open animation has finished playing
+        // the opening animation has finished
       }
     });
     </script>
@@ -871,7 +1040,7 @@ Triggered when a Window has finished its opening animation.
     <div id="dialog"></div>
     <script>
     function window_activate() {
-      // open animation has finished playing
+      // the opening animation has finished
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -880,31 +1049,31 @@ Triggered when a Window has finished its opening animation.
 
 ### close
 
-Triggered when a Window is closed (by a user or through the close() method).
+Triggered when a Window is closed either by the user or through the `close()` method.
 
 #### Event Data
 
 ##### e.userTriggered `Boolean`
 
-Indicates whether the close action has been triggered by the user (by clicking the close button or hitting the escape key). When the close method has been called, this field is **false**.
+Indicates whether the close action was triggered by the user either by clicking the **Close** button or by pressing `Esc`. When the `close` method was called, this field is `false`.
 
-#### Example - subscribe to the "close" event during initialization
+#### Example - subscribing to the close event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       close: function(e) {
-        // close animation has finished playing
+        // the closing animation has finished
       }
     });
     </script>
 
-#### Example - subscribe to the "close" event after initialization
+#### Example - subscribing to the close event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_close(e) {
-      // close animation has finished playing
+      // the closing animation has finished
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -915,23 +1084,23 @@ Indicates whether the close action has been triggered by the user (by clicking t
 
 Triggered when a Window has finished its closing animation.
 
-#### Example - subscribe to the "deactivate" event during initialization
+#### Example - subscribing to the deactivate event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       deactivate: function() {
-        // close animation is about to finish
+        // the closing animation is about to finish
       }
     });
     </script>
 
-#### Example - subscribe to the "deactivate" event after initialization
+#### Example - subscribing to the deactivate event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_deactivate() {
-      // close animation will start soon
+      // the closing animation is about to start
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -940,25 +1109,25 @@ Triggered when a Window has finished its closing animation.
 
 ### dragend
 
-Triggered when a Window has been moved by a user.
+Triggered when a Window has been moved by the user.
 
-#### Example - subscribe to the "dragend" event during initialization
+#### Example - subscribing to the dragend event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       dragend: function() {
-        // user has released the window after dragging
+        // the user has released the Window after dragging
       }
     });
     </script>
 
-#### Example - subscribe to the "dragend" event after initialization
+#### Example - subscribing to the dragend event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_dragend() {
-      // user has released the window after dragging
+      // the user has released the Window after dragging
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -967,25 +1136,25 @@ Triggered when a Window has been moved by a user.
 
 ### dragstart
 
-Triggered when the user starts to move the window.
+Triggered when the user starts to move the Window.
 
-#### Example - subscribe to the "dragstart" event during initialization
+#### Example - subscribing to the dragstart event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       dragstart: function() {
-        // user has started dragging the window
+        // the user has started dragging the Window
       }
     });
     </script>
 
-#### Example - subscribe to the "dragstart" event after initialization
+#### Example - subscribing to the dragstart event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_dragstart() {
-      // user has started dragging the window
+      // the user has started dragging the Window
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -994,19 +1163,19 @@ Triggered when the user starts to move the window.
 
 ### error
 
-Triggered when an AJAX request for content fails.
+Triggered when an Ajax request for content fails.
 
 #### Event Data
 
 ##### e.xhr `jqXHR`
 
-The XHR request object, as returned from [jQuery.ajax](http://api.jquery.com/jQuery.ajax/)
+The XHR request object as returned from [`jQuery.ajax`](http://api.jquery.com/jQuery.ajax/).
 
 ##### e.status `String`
 
-The status of the request, as returned from [jQuery.ajax](http://api.jquery.com/jQuery.ajax/)
+The status of the request as returned from [`jQuery.ajax`](http://api.jquery.com/jQuery.ajax/).
 
-#### Example - subscribe to the "error" event during initialization
+#### Example - subscribing to the error event during initialization
 
     <div id="dialog"></div>
     <script>
@@ -1017,7 +1186,7 @@ The status of the request, as returned from [jQuery.ajax](http://api.jquery.com/
     });
     </script>
 
-#### Example - subscribe to the "error" event after initialization
+#### Example - subscribing to the error event after initialization
 
     <div id="dialog"></div>
     <script>
@@ -1031,9 +1200,9 @@ The status of the request, as returned from [jQuery.ajax](http://api.jquery.com/
 
 ### maximize
 
-Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+Triggered when the user maximizes the Window. Introduced in 2016.Q1.SP1.
 
-#### Example - subscribe to the "maximize" event during initialization
+#### Example - subscribing to the maximize event during initialization
 
     <div id="dialog"></div>
     <script>
@@ -1045,7 +1214,7 @@ Triggered when the window has been minimized by the user. Introduced in 2016.Q1.
     });
     </script>
 
-#### Example - subscribe to the "maximize" event after initialization
+#### Example - subscribing to the maximize event after initialization
 
     <div id="dialog"></div>
     <script>
@@ -1059,9 +1228,9 @@ Triggered when the window has been minimized by the user. Introduced in 2016.Q1.
 
 ### minimize
 
-Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+Triggered when the user minimizes the Window. Introduced in 2016.Q1.SP1.
 
-#### Example - subscribe to the "minimize" event during initialization
+#### Example - subscribing to the minimize event during initialization
 
     <div id="dialog"></div>
     <script>
@@ -1073,7 +1242,7 @@ Triggered when the window has been minimized by the user. Introduced in 2016.Q1.
     });
     </script>
 
-#### Example - subscribe to the "minimize" event after initialization
+#### Example - subscribing to the minimize event after initialization
 
     <div id="dialog"></div>
     <script>
@@ -1087,25 +1256,25 @@ Triggered when the window has been minimized by the user. Introduced in 2016.Q1.
 
 ### open
 
-Triggered when a Window is opened (i.e. the open() method is called).
+Triggered when a Window is opened, that is, when the `open()` method is called.
 
-#### Example - subscribe to the "open" event during initialization
+#### Example - subscribing to the open event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       open: function() {
-        // open animation will start soon
+        // the opening animation is about to start
       }
     });
     </script>
 
-#### Example - subscribe to the "open" event after initialization
+#### Example - subscribing to the open event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_open() {
-      // open animation will start soon
+      // the opening animation is about to start
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
@@ -1114,11 +1283,9 @@ Triggered when a Window is opened (i.e. the open() method is called).
 
 ### refresh
 
-Triggered when the content of a Window has finished loading via AJAX,
-when the window iframe has finished loading, or when the refresh button
-has been clicked on a window with static content.
+Triggered when the content of a Window has finished loading via Ajax, when the Window `iframe` has finished loading, or when the **Refresh** button has been clicked on a Window with static content.
 
-#### Example - subscribe to the "refresh" event during initialization
+#### Example - subscribing to the refresh event during initialization
 
     <div id="dialog"></div>
     <script>
@@ -1129,7 +1296,7 @@ has been clicked on a window with static content.
     });
     </script>
 
-#### Example - subscribe to the "refresh" event after initialization
+#### Example - subscribing to the refresh event after initialization
 
     <div id="dialog"></div>
     <script>
@@ -1143,28 +1310,27 @@ has been clicked on a window with static content.
 
 ### resize
 
-Triggered when a window has been resized by a user.
+Triggered when the user resizes the Window.
 
-#### Example - subscribe to the "resize" event during initialization
+#### Example - subscribing to the resize event during initialization
 
     <div id="dialog"></div>
     <script>
     $("#dialog").kendoWindow({
       resize: function() {
-        // user has finished resizing the window
+        // the user has finished resizing the Window
       }
     });
     </script>
 
-#### Example - subscribe to the "resize" event after initialization
+#### Example - subscribing to the resize event after initialization
 
     <div id="dialog"></div>
     <script>
     function window_resize() {
-      // user has finished resizing the window
+      // the user has finished resizing the Window
     }
     $("#dialog").kendoWindow();
     var dialog = $("#dialog").data("kendoWindow");
     dialog.bind("resize", window_resize);
     </script>
-

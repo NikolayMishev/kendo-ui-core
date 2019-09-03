@@ -2,6 +2,8 @@
 title: ToolBar
 page_title: Configuration, methods and events of Kendo UI ToolBar
 relatedDocs: gs-web-toolbar-overview
+res_type: api
+component: toolbar
 ---
 
 # kendo.ui.ToolBar
@@ -292,14 +294,14 @@ If set, the ToolBar will render an image with the specified URL in the button.
     <div id="toolbar"></div>
 
     <script>
-    var baseUrl = "http://demos.telerik.com/kendo-ui/content/shared/icons";
+    var baseUrl = "https://demos.telerik.com/kendo-ui/content/shared/icons";
     $("#toolbar").kendoToolBar({
       items: [
         {
           type: "buttonGroup",
           buttons: [
-            { text: "foo", imageUrl: "/sports/snowboarding.png" },
-            { text: "bar", imageUrl: "/sports/snowboarding.png" }
+            { text: "foo", imageUrl: baseUrl + "/sports/snowboarding.png" },
+            { text: "bar", imageUrl: baseUrl + "/sports/snowboarding.png" }
           ]
         }
       ]
@@ -330,7 +332,7 @@ Specifies if the toggle button is initially selected. Applicable only for the ch
 
 ### items.buttons.showIcon `String` *(default: "both")*
 
-Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+Applicable only for the buttons of a ButtonGroup. Specifies where the icon of the button will be displayed. Whether it should be displayed always (*both*), only when the button is visible on the ToolBar (*toolbar*), or only when the button is overflowed (*overflow*).
 
 #### Example
 
@@ -338,40 +340,42 @@ Specifies where the icon of the button will be displayed. Applicable only for th
 
     <script>
         $("#toolbar").kendoToolBar({
-            items: [
-            {
-                type: "buttonGroup",
-                buttons: [
-                { text: "foo", icon: "clock", showIcon: "toolbar" },
-                { text: "bar", icon: "note", showIcon: "toolbar" },
-                { text: "baz", icon: "refresh", showIcon: "toolbar" }
-                ]
-            }
-            ]
-        });
+			items: [{
+				type: "button",
+				text: "This button has a very long text so the ButtonGroup would be collapsed on larger screen"
+			},{
+				type: "buttonGroup",
+				buttons: [
+					{ text: "foo", icon: "clock", showIcon: "overflow" },
+					{ text: "bar", icon: "error", showIcon: "both" },
+					{ text: "baz", icon: "refresh", showIcon: "toolbar" }
+				]
+			}]
+		});
     </script>
 
 ### items.buttons.showText `String` *(default: "both")*
 
-Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+Applicable only for the buttons of a ButtonGroup. Specifies where the text of the button will be displayed. Whether it should be displayed always (*both*), only when the button is visible on the ToolBar (*toolbar*), or only when the button is overflowed (*overflow*).
 
 #### Example
 
     <div id="toolbar"></div>
 
     <script>
-        $("#toolbar").kendoToolBar({
-            items: [
-            {
-                type: "buttonGroup",
-                buttons: [
-                { text: "foo", icon: "clock", showText: "overflow" },
-                { text: "bar", icon: "note", showText: "overflow" },
-                { text: "baz", icon: "refresh",showText: "overflow" }
-                ]
-            }
-            ]
-        });
+		$("#toolbar").kendoToolBar({
+			items: [{
+				type: "button",
+				text: "This button has a very long text so the ButtonGroup would be collapsed on larger screen"
+			},{
+				type: "buttonGroup",
+				buttons: [
+					{ text: "foo", icon: "clock", showText: "overflow" },
+					{ text: "bar", icon: "error", showText: "both" },
+					{ text: "baz", icon: "refresh", showText: "toolbar" }
+				]
+			}]
+		});
     </script>
 
 ### items.buttons.spriteCssClass `String`
@@ -383,18 +387,19 @@ Defines a CSS class (or multiple classes separated by spaces) which will be used
     <div id="toolbar"></div>
 
     <script>
-    $("#toolbar").kendoToolBar({
-      items: [
-        {
-          type: "buttonGroup",
-          buttons: [
-            { text: "foo", spriteCssClass: "foo, bar" },
-            { text: "bar", spriteCssClass: "bar" },
-            { text: "baz", spriteCssClass: "baz" }
-          ]
-        }
-      ]
-    });
+		$("#toolbar").kendoToolBar({
+		  items: [
+			{
+			  type: "buttonGroup",
+			  buttons: [
+				{ text: "foo", spriteCssClass: "foo, bar" },
+				{ text: "bar", spriteCssClass: "bar" },
+				{ text: "baz", spriteCssClass: "baz" }
+			  ]
+			}
+		  ]
+		});
+	</script>
 
 ### items.buttons.toggle `Function`
 
@@ -612,7 +617,7 @@ If set, the ToolBar will render an image with the specified URL in the button.
     <div id="toolbar"></div>
 
     <script>
-        var baseUrl = "http://demos.telerik.com/kendo-ui/content/shared/icons";
+        var baseUrl = "https://demos.telerik.com/kendo-ui/content/shared/icons";
         $("#toolbar").kendoToolBar({
           items: [
               { type: "button", text: "foo", imageUrl: "/sports/snowboarding.png" },
@@ -780,7 +785,7 @@ If set, the ToolBar will render an image with the specified URL in the menu butt
     <div id="toolbar"></div>
 
     <script>
-        var baseUrl = "http://demos.telerik.com/kendo-ui/content/shared/icons";
+        var baseUrl = "https://demos.telerik.com/kendo-ui/content/shared/icons";
         $("#toolbar").kendoToolBar({
             items: [
             {
@@ -1083,7 +1088,7 @@ Specifies the toggle event handler of the button. Applicable only for commands o
 
 ### items.type `String`
 
-Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator", "spacer".
 
 > Specifying the type is **mandatory**. Only commands that have a `template` do not need a `type`.
 
@@ -1393,6 +1398,10 @@ The jQuery object that represents the command element.
 
 The id of the command element.
 
+##### e.item `Object`
+
+The item instance of the clicked item.
+
 ##### e.sender `kendo.ui.ToolBar`
 
 The widget instance which fired the event.
@@ -1564,6 +1573,10 @@ Boolean flag that indicates the button state.
 ##### e.id `String`
 
 The id of the command element.
+
+##### e.item `Object`
+
+The item instance of the toggled item.
 
 ##### e.sender `kendo.ui.ToolBar`
 

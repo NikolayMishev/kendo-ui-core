@@ -29,7 +29,8 @@ var __meta__ = { // jshint ignore:line
             apply  : "Apply",
             cancel : "Cancel",
             noColor: "no color",
-            clearColor: "Clear color"
+            clearColor: "Clear color",
+            previewInput: "Color Hexadecimal Code"
         },
         NS = ".kendoColorTools",
         CLICK_NS = "click" + NS,
@@ -208,7 +209,9 @@ var __meta__ = { // jshint ignore:line
             }
         },
         focus: function(){
-            this.wrapper.focus();
+            if (this.wrapper && !this.wrapper.is("[unselectable='on']")) {
+                this.wrapper.focus();
+            }
         },
         options: {
             name: "ColorPalette",
@@ -307,7 +310,9 @@ var __meta__ = { // jshint ignore:line
         init: function(element, options) {
             var that = this;
             ColorSelector.fn.init.call(that, element, options);
+
             options = that.options;
+            options.messages = options.options ? $.extend(that.options.messages, options.options.messages) : that.options.messages;
             element = that.element;
 
             that.wrapper = element.addClass("k-widget k-flatcolorpicker")
@@ -395,13 +400,16 @@ var __meta__ = { // jshint ignore:line
         },
         _sliders: function() {
             var that = this,
-                element = that.element;
+                element = that.element,
+                hueSlider = element.find(".k-hue-slider"),
+                opacitySlider = element.find(".k-transparency-slider");
 
             function hueChange(e) {
                 that._updateUI(that._getHSV(e.value, null, null, null));
             }
 
-            that._hueSlider = element.find(".k-hue-slider").kendoSlider({
+            hueSlider.attr("aria-label", "hue saturation");
+            that._hueSlider = hueSlider.kendoSlider({
                 min: 0,
                 max: 360,
                 tickPlacement: "none",
@@ -414,7 +422,8 @@ var __meta__ = { // jshint ignore:line
                 that._updateUI(that._getHSV(null, null, null, e.value / 100));
             }
 
-            that._opacitySlider = element.find(".k-transparency-slider").kendoSlider({
+            opacitySlider.attr("aria-label", "opacity");
+            that._opacitySlider = opacitySlider.kendoSlider({
                 min: 0,
                 max: 100,
                 tickPlacement: "none",
@@ -566,6 +575,7 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
+            this._colorAsText.attr("title", that.options.messages.previewInput);
             this._colorAsText.removeClass("k-state-error");
 
             that._selectedColor.css(BACKGROUNDCOLOR, color.toDisplay());
@@ -600,12 +610,12 @@ var __meta__ = { // jshint ignore:line
                     '# } #' +
                     '#= !data.input ? \'style=\"visibility: hidden;\"\' : \"\" #>' +
                 '# if (clearButton && !_standalone) { #' +
-                    '<span class="k-clear-color k-button-bare" title="#: messages.clearColor #"></span>' +
+                    '<span class="k-clear-color k-button k-bare" title="#: messages.clearColor #"></span>' +
                 '# } #' +
                 '</div></div></div>' +
             '# } #' +
              '# if (clearButton && !_standalone && !preview) { #' +
-                    '<div class="k-clear-color-container"><span class="k-clear-color k-button-bare">#: messages.clearColor #</span></div>' +
+                    '<div class="k-clear-color-container"><span class="k-clear-color k-button k-bare">#: messages.clearColor #</span></div>' +
              '# } #' +
             '<div class="k-hsv-rectangle"><div class="k-hsv-gradient"></div><div class="k-draghandle"></div></div>' +
             '<input class="k-hue-slider" />' +
@@ -737,7 +747,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _template: kendo.template(
-            '<span role="textbox" aria-haspopup="true" class="k-widget k-colorpicker k-header">' +
+            '<span role="textbox" aria-haspopup="true" class="k-widget k-colorpicker">' +
                 '<span class="k-picker-wrap k-state-default">' +
                     '# if (toolIcon) { #' +
                         '<span class="k-icon k-tool-icon #= toolIcon #">' +
@@ -876,6 +886,7 @@ var __meta__ = { // jshint ignore:line
                     click: function(e) {
                         selector.options._clearedColor = true;
                         that.value(null);
+                        that.element.val(null);
                         that._updateUI(null);
                         selector._colorAsText.val("");
                         selector._hsvHandle.css({
@@ -883,6 +894,8 @@ var __meta__ = { // jshint ignore:line
                             left: "0px"
                         });
                         selector._selectedColor.css(BACKGROUNDCOLOR, WHITE);
+
+                        that.trigger("change", { value: that.value() });
                         e.preventDefault();
                     }
                 });
@@ -918,7 +931,7 @@ var __meta__ = { // jshint ignore:line
                         var options = selector.options;
                         if (!color) {
                             setTimeout(function(){
-                                if (that.wrapper) {
+                                if (that.wrapper && !that.wrapper.is("[unselectable='on']")) {
                                     that.wrapper.focus();
                                 }
                             });

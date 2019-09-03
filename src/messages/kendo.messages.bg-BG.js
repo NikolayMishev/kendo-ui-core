@@ -180,18 +180,11 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "showWarning": "Покажи предупреждение",
       "showHint": "Покажи входно съобщение",
       "hintTitle": "Заглавие",
-      "hintMessage": "СъобщениеHint message"
+      "hintMessage": "Съобщение"
     },
     "placeholders": {
       "typeTitle": "Напишете заглавие",
       "typeMessage": "Напишете съобщение"
-    }
-  },
-  "saveAsDialog": {
-    "title": "Запиши като...",
-    "labels": {
-      "fileName": "Име на файл",
-      "saveAsType": "Запиши като"
     }
   },
   "modifyMergedDialog": {
@@ -221,7 +214,7 @@ $.extend(true, kendo.spreadsheet.messages.filterMenu,{
   "filterByCondition": "Филтрирай по критерий",
   "apply": "Приложи",
   "search": "Търси",
-  "clear": "Премахни филтър",
+  "clear": "Премахни",
   "blanks": "(Празни места)",
   "operatorNone": "Без критерии",
   "and": "И",
@@ -248,6 +241,16 @@ $.extend(true, kendo.spreadsheet.messages.filterMenu,{
       "lt": "Е по-малко от"
     }
   }
+});
+}
+
+if (kendo.spreadsheet && kendo.spreadsheet.messages.colorPicker) {
+kendo.spreadsheet.messages.colorPicker =
+$.extend(true, kendo.spreadsheet.messages.colorPicker,{
+  "reset": "Махни цвета",
+  "customColor": "Избери цвят...",
+  "apply": "Приложи",
+  "cancel": "Откажи"
 });
 }
 
@@ -316,6 +319,7 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
     "undo": "Стъпка назад"
   },
   "saveAs": "Запиши като...",
+  "sort": "Сортирай",
   "sortAsc": "Сортирай възходящо",
   "sortDesc": "Сортирай низходящо",
   "sortButtons": {
@@ -334,6 +338,7 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
 if (kendo.spreadsheet && kendo.spreadsheet.messages.view) {
 kendo.spreadsheet.messages.view =
 $.extend(true, kendo.spreadsheet.messages.view,{
+  "nameBox": "Име на клетка",
   "errors": {
     "shiftingNonblankCells": "Не може да се вмъкнат клетки поради възможност от загуба на данни. Изберете друга локация за вмъкване на клетки или изтрийте данни от края на работния лист."
   },
@@ -463,6 +468,16 @@ $.extend(true, kendo.ui.ColorPicker.prototype.options.messages,{
 });
 }
 
+/* DateRangePicker messages */
+
+if (kendo.ui.DateRangePicker) {
+kendo.ui.DateRangePicker.prototype.options.messages =
+$.extend(true, kendo.ui.DateRangePicker.prototype.options.messages,{
+  "startLabel": "Начало",
+  "endLabel": "Край"
+});
+}
+
 /* Filter menu operator messages */
 
 if (kendo.ui.FilterMenu) {
@@ -543,7 +558,10 @@ $.extend(true, kendo.ui.ColumnMenu.prototype.options.messages,{
   "sortAscending": "Сортирай възходящо",
   "sortDescending": "Сортирай низходящо",
   "filter": "Филтрирай",
+  "column": "Колона",
   "columns": "Колони",
+  "clear": "Премахни",
+  "cancel": "Откажи",
   "done": "Готово",
   "settings": "Настройки на колоната",
   "lock": "Заключи",
@@ -629,7 +647,27 @@ $.extend(true, kendo.ui.Grid.prototype.options.messages,{
     "confirmation": "Сигурни ли сте, че искате да изтриете записа?",
     "confirmDelete": "Изтрий"
   },
-  "noRecords": "Няма налични записи."
+  "noRecords": "Няма налични записи.",
+  "search": "Търси...",
+  "groupHeader": "Натиснете ctrl + space за да групирате",
+  "ungroupHeader": "Натиснете ctrl + space за да разгрупирате"
+});
+}
+
+/* ListBox messaages */
+
+if (kendo.ui.ListBox) {
+kendo.ui.ListBox.prototype.options.messages =
+$.extend(true, kendo.ui.ListBox.prototype.options.messages,{
+  "tools": {
+    "remove": "Премахни",
+    "moveUp": "Премести нагоре",
+    "moveDown": "Премести надолу",
+    "transferTo": "Прехвърли към",
+    "transferFrom": "Прехвърли от",
+    "transferAllTo": "Премести вс. към",
+    "transferAllFrom": "Премести вс. от"
+  }
 });
 }
 
@@ -675,6 +713,26 @@ $.extend(true, kendo.ui.Pager.prototype.options.messages,{
 });
 }
 
+/* TreeListPager messages */
+
+if (kendo.ui.TreeListPager) {
+    kendo.ui.TreeListPager.prototype.options.messages =
+    $.extend(true, kendo.ui.TreeListPager.prototype.options.messages,{
+      "allPages": "Всички",
+      "page": "Страница",
+      "display": "{0} - {1} от {2} записи",
+      "of": "от {0}",
+      "empty": "Няма записи за показване!",
+      "refresh": "Опресни",
+      "first": "Към първата страница",
+      "itemsPerPage": "записи на страница",
+      "last": "Към последната страница",
+      "next": "Към следващата страница",
+      "previous": "Към предишната страница",
+      "morePages": "Още страници"
+    });
+    }
+
 /* FilterMenu messages */
 
 if (kendo.ui.FilterMenu) {
@@ -682,15 +740,21 @@ kendo.ui.FilterMenu.prototype.options.messages =
 $.extend(true, kendo.ui.FilterMenu.prototype.options.messages,{
   "filter": "Филтрирай",
   "and": "и",
-  "clear": "Премахни филтър",
+  "clear": "Премахни",
   "info": "Покажи записи със стойност, която",
+  "title": "Покажи записи със стойност, която",
   "selectValue": "-Избери стойност-",
   "isFalse": "не е вярно",
   "isTrue": "е вярно",
   "or": "или",
   "cancel": "Откажи",
   "operator": "Оператор",
-  "value": "Стойност"
+  "additionalOperator": "Допълнителен оператор",
+  "value": "Стойност",
+  "additionalValue": "Допълнителна стойност",
+  "logic": "Логика",
+  "done": "Готово",
+  "into": "в"
 });
 }
 
@@ -700,7 +764,7 @@ if (kendo.ui.FilterCell) {
 kendo.ui.FilterCell.prototype.options.messages =
 $.extend(true, kendo.ui.FilterCell.prototype.options.messages,{
   "filter": "Филтрирай",
-  "clear": "Премахни филтър",
+  "clear": "Премахни",
   "isFalse": "не е вярно",
   "isTrue": "е вярно",
   "operator": "Оператор"
@@ -713,9 +777,14 @@ if (kendo.ui.FilterMultiCheck) {
 kendo.ui.FilterMultiCheck.prototype.options.messages =
 $.extend(true, kendo.ui.FilterMultiCheck.prototype.options.messages,{
   "checkAll": "Избери всички",
-  "clear": "Премахни филтър",
+  "clearAll": "Премахни всички",
+  "clear": "Премахни",
   "filter": "Филтрирай",
-  "search": "Търси"
+  "search": "Търси",
+  "cancel": "Откажи",
+  "selectedItemsFormat": "{0} селектирани записи",
+  "done": "Готово",
+  "into": "в"
 });
 }
 
@@ -837,7 +906,11 @@ if (kendo.ui.Upload) {
 kendo.ui.Upload.prototype.options.localization =
 $.extend(true, kendo.ui.Upload.prototype.options.localization,{
   "cancel": "Спри",
-  "dropFilesHere": "преместете с мишката файлове тук за да ги качите",
+  "clearSelectedFiles": "Изчисти файловете",
+  "dropFilesHere": "Преместете с мишката файлове тук за да ги качите",
+  "invalidMaxFileSize": "Размерът на файла е твърде голям.",
+  "invalidMinFileSize": "Размерът на файла е твърде малък.",
+  "invalidFileExtension": "Този тип файл не е разрешен.",
   "remove": "Премахни",
   "retry": "Опитай отново",
   "select": "Избери...",
@@ -845,8 +918,8 @@ $.extend(true, kendo.ui.Upload.prototype.options.localization,{
   "statusUploaded": "качен",
   "statusUploading": "качва се",
   "uploadSelectedFiles": "Качи файловете",
-  "headerStatusUploaded": "Done",
-  "headerStatusUploading": "Uploading..."
+  "headerStatusUploaded": "Готово",
+  "headerStatusUploading": "Качване..."
 });
 }
 
@@ -949,6 +1022,82 @@ kendo.ui.progress.messages =
 $.extend(true, kendo.ui.progress.messages, {
     loading: "Зареждане..."
 });
+}
+
+/* DateInput */
+if (kendo.ui.DateInput) {
+  kendo.ui.DateInput.prototype.options.messages =
+    $.extend(true, kendo.ui.DateInput.prototype.options.messages, {
+      "year": "година",
+      "month": "месец",
+      "day": "ден",
+      "weekday": "ден от седмицата",
+      "hour": "часа",
+      "minute": "минути",
+      "second": "секунди",
+      "dayperiod": "AM/PM"
+    });
+}
+
+/* List messages */
+if (kendo.ui.List) {
+    kendo.ui.List.prototype.options.messages =
+    $.extend(true, kendo.ui.List.prototype.options.messages,{
+      "clear": "изчисти",
+      "noData": "Няма налични опции."
+    });
+}
+
+/* DropDownList messages */
+
+if (kendo.ui.DropDownList) {
+    kendo.ui.DropDownList.prototype.options.messages =
+    $.extend(true, kendo.ui.DropDownList.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* ComboBox messages */
+
+if (kendo.ui.ComboBox) {
+    kendo.ui.ComboBox.prototype.options.messages =
+    $.extend(true, kendo.ui.ComboBox.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* AutoComplete messages */
+
+if (kendo.ui.AutoComplete) {
+    kendo.ui.AutoComplete.prototype.options.messages =
+    $.extend(true, kendo.ui.AutoComplete.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* MultiColumnComboBox messages */
+
+if (kendo.ui.MultiColumnComboBox) {
+    kendo.ui.MultiColumnComboBox.prototype.options.messages =
+    $.extend(true, kendo.ui.MultiColumnComboBox.prototype.options.messages, kendo.ui.List.prototype.options.messages);
+}
+
+/* DropDownTree messages */
+
+if (kendo.ui.DropDownTree) {
+    kendo.ui.DropDownTree.prototype.options.messages =
+    $.extend(true, kendo.ui.DropDownTree.prototype.options.messages,{
+        "singleTag": "избрана/и опция/и",
+        "clear": "изчисти",
+        "deleteTag": "премахни",
+        "noData": "Няма налични опции."
+    });
+}
+
+/* MultiSelect messages */
+
+if (kendo.ui.MultiSelect) {
+    kendo.ui.MultiSelect.prototype.options.messages =
+    $.extend(true, kendo.ui.MultiSelect.prototype.options.messages,{
+        "singleTag": "избрана/и опция/и",
+        "clear": "изчисти",
+        "deleteTag": "премахни",
+        "noData": "Няма налични опции."
+    });
 }
 
 })(window.kendo.jQuery);

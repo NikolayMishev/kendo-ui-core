@@ -13,7 +13,7 @@ This article demonstrates the ASP.NET MVC server-side API for the Kendo UI TreeV
 
 ### Remote Data Binding
 
-```tab-Previous
+```Previous
 
     <%= Html.Telerik().TreeView()
          .Name("TreeView")
@@ -22,7 +22,7 @@ This article demonstrates the ASP.NET MVC server-side API for the Kendo UI TreeV
          )
      %>
 ```
-```tab-Current
+```Current
 
     <%= Html.Telerik().TreeView()
          .Name("TreeView")
@@ -64,7 +64,7 @@ All fields are optional&mdash;skipping the text field shows the item with the te
                });
          })
      %>
-<!--_-->
+
 The above code allows the items to be serialized in the form below.
 
 ###### Example
@@ -106,7 +106,7 @@ The value field is removed. Depending on your use case, apply either of the appr
 
 ### Conditional Load on Demand
 
-The conditional load on demand for some nodes can be achieved through using custom transport, as demonstrated in the article on [mixing local data and remote binding](http://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/mix-local-data-and-remote-loading).
+The conditional load on demand for some nodes can be achieved through using custom transport, as demonstrated in the article on [mixing local data and remote binding](https://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/binding/mix-local-data-and-remote-loading).
 
 Define the local transport by using the server-side wrappers in the way shown below.
 
@@ -163,11 +163,11 @@ This functionality requires a custom checkbox template, as demonstrated in the e
         )
     )
 
-For more information on this issue, refer to the article on [how to hide checkboxes for root level](http://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/hide-checkboxes-for-root-level).
+For more information on this issue, refer to the article on [how to hide checkboxes for root level](https://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/templates/hide-checkboxes-for-root-level).
 
 #### Node Lines Display
 
-The node-line functionality is not supported out of the box, but can be achieved through custom styling, as demonstrated in the article on [how to show lines between nodes](http://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/show-node-lines).
+The node-line functionality is not supported out of the box, but can be achieved through custom styling, as demonstrated in the article on [how to show lines between nodes](https://docs.telerik.com/kendo-ui/controls/navigation/treeview/how-to/appearance/show-node-lines).
 
 ## Client-Side API
 
@@ -202,10 +202,8 @@ Apart from changing the event builders, the changes listed below are now introdu
 
 ## See Also
 
-Other articles on migrating from Telerik Extensions:
-
 * [Migrate the AutoComplete]({% slug autocomplete_migrationextensions_aspnetmvc %})
 * [Migrate the Calendar]({% slug calendar_migrationextensions_aspnetmvc %})
 * [Migrate the Chart]({% slug chart_migrationextensions_aspnetmvc %})
 
-To see the articles on migrating Kendo  UI controls from Telerik Extensions, browse [this section]({% slug combobox_migrationextensions_aspnetmvc %}).
+To see the articles on migrating Kendo UI controls from Telerik Extensions, browse the [**Widgets** folder]({% slug autocomplete_migrationextensions_aspnetmvc %}).

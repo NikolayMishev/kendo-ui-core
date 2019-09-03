@@ -165,7 +165,7 @@ The default base unit is determined by the smallest duration between categories,
 
 ##### Manual configuration
 
-The [`base unit`](/api/javascript/dataviz/ui/chart#configuration-categoryAxis.baseUnit) can also be specified manually. The valid options are:
+The [`base unit`](/api/javascript/dataviz/ui/chart/configuration/categoryaxis.baseunit) can also be specified manually. The valid options are:
 
 * minutes
 * hours
@@ -200,9 +200,9 @@ If more than one category falls within a base unit, then its values are aggregat
 
 This code results in the following Sparklines. Note that values are displayed as are.
 
-**Figure 1. Sparklines with a date category axis**
+**Figure 1: Sparklines with a date category axis**
 
-![Sparkline with date category axis](/controls/charts/sparkline/sparkline-category-date-axis.png)
+![Sparkline with date category axis](sparkline-category-date-axis.png)
 
 The example below demonstrates the Sparklines with its base unit changed to `"years"`.
 
@@ -221,9 +221,9 @@ The example below demonstrates the Sparklines with its base unit changed to `"ye
 
 Notice below how the Sparklines display the maximum value for each year.
 
-**Figure 2. Sparklines with a grouped date category axis**
+**Figure 2: Sparklines with a grouped date category axis**
 
-![Sparkline with grouped date category axis](/controls/charts/sparkline/sparkline-category-date-axis-grouped.png)
+![Sparkline with grouped date category axis](sparkline-category-date-axis-grouped.png)
 
 The aggregate function can be changed for each series, as demonstrated below.
 
@@ -291,8 +291,6 @@ Each axis can be configured to display bands with different colors for predefine
     </script>
 
 ## See Also
-
-Other articles on Kendo UI Charts and chart types:
 
 * [Overview of the Chart Widgets]({% slug overview_kendoui_charts_widget %})
 * [Data Series Charts]({% slug seriestypeofcharts_widget %})

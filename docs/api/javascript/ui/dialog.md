@@ -2,6 +2,8 @@
 title: Dialog
 page_title: Configuration, methods and events of Kendo UI Dialog
 description: How to initialize a Dialog UI widget and configure its behaviors, center a dialog, set its content and toggle the state of the UI widget.
+res_type: api
+component: dialog
 ---
 
 # kendo.ui.Dialog
@@ -71,7 +73,7 @@ The callback function to be called after pressing the action button.
 
 ### actions.primary `Boolean`
 
-A boolean property indicating whether the action button will be decorated as primary button or not. 
+A boolean property indicating whether the action button will be decorated as primary button or not.
 
 #### Example
 
@@ -218,7 +220,13 @@ Possible values are:
     <div id="dialog"></div>
     <script>
         $("#dialog").kendoDialog({
-            buttonLayout: "normal"
+            buttonLayout: "normal",
+            actions: [{
+              text: "OK",
+              primary: true
+          },{
+              text: "Cancel"
+          }]
         });
     </script>
 
@@ -326,6 +334,21 @@ The title of the close button.
     });
     </script>
 
+### messages.promptInput `String` *(default: "Input")*
+
+The title of the prompt input.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      messages:{
+        promptInput: "Input!"
+      }
+    });
+    </script>
+
 ### minHeight `Number` *(default: 50)*
 
 The minimum height (in pixels) that may be achieved by resizing the dialog.
@@ -352,7 +375,7 @@ The minimum width (in pixels) that may be achieved by resizing the dialog.
     });
     </script>
 
-### modal `Boolean` *(default: true)*
+### modal `Boolean|Object` *(default: true)*
 
 Specifies whether the dialog should show a modal overlay over the page.
 
@@ -362,6 +385,21 @@ Specifies whether the dialog should show a modal overlay over the page.
     <script>
     $("#dialog").kendoDialog({
       modal: true
+    });
+    </script>
+
+### modal.preventScroll `Boolean` *(default: false)*
+
+Specifies whether the document should stop scrolling when modal dialog is opened. Closing it should restore the initial document overflow. Note that it's not supported to have multiple dialogs with different `preventScroll` setting.
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      modal: {
+          preventScroll: true
+      }
     });
     </script>
 
@@ -422,6 +460,27 @@ Specifies width of the dialog.
     <script>
     $("#dialog").kendoDialog({
       width: "50%"
+    });
+    </script>
+
+
+### size `String` *(default: "auto")*
+
+Set predefined size to the dialog. The `width` and `height` configuration options override the predefined `size`.
+
+Possible values are:
+
+* auto
+* small
+* medium
+* large
+
+#### Example
+
+    <div id="dialog"></div>
+    <script>
+    $("#dialog").kendoDialog({
+      size: "wide"
     });
     </script>
 
@@ -493,7 +552,7 @@ Destroys the dialog and its modal overlay, if necessary. Removes the widget HTML
 
 ### open
 
-Opens a Dialog and brings it on top of any other open Dialog or Window instances by calling [`toFront`](#methods-tofront) internally.
+Opens a Dialog and brings it on top of any other open Dialog or Window instances by calling [`toFront`](/api/javascript/ui/dialog/methods/tofront) internally.
 
 #### Returns
 
@@ -510,9 +569,9 @@ Opens a Dialog and brings it on top of any other open Dialog or Window instances
     dialog.open();
     </script>
 
-### title `String|jQuery` *(optional)*
+### title `String` *(optional)*
 
-Gets or sets the title of a Dialog. Can be an HTML string or jQuery object. Supports chaining when used as a setter.
+Gets or sets the title of a Dialog. Can be a text string. Supports chaining when used as a setter. If passed to the method, an HTML string would be escaped.
 
 #### Parameters
 
@@ -544,7 +603,7 @@ The title of the Dialog.
 
 ### toFront
 
-Increases the `z-index` style of a Dialog [`wrapper`](/intro/widget-basics/wrapper-element) to bring the instance on top of other open Dialogs. This method is executed automatically when the [`open`](#methods-open) method is used.
+Increases the `z-index` style of a Dialog [`wrapper`](/intro/widget-basics/wrapper-element) to bring the instance on top of other open Dialogs. This method is executed automatically when the [`open`](/api/javascript/ui/dialog/methods/open) method is used.
 
 #### Returns
 

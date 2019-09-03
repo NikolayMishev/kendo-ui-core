@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["ug-CN"] = {
         name: "ug-CN",
         numberFormat: {
@@ -16,7 +16,7 @@
                 symbol: "%"
             },
             currency: {
-                name: "PRC Renminbi",
+                name: "Chinese Yuan",
                 abbr: "CNY",
                 pattern: ["$-n","$n"],
                 decimals: 2,

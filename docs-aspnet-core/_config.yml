@@ -1,23 +1,391 @@
 # The public documentation URL, used for sitemap.xml
-url: "http://docs.telerik.com/aspnet-core"
+url: "https://docs.telerik.com/aspnet-core"
+
+all_pages_domain: "https://docs.telerik.com"
+
+capital_casing_redirects: true
 
 # Exclude files which should not be in the output
-exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb]
+exclude: [README.md, Gemfile, Gemfile.lock,api_sort.rb, Dockerfile, bs-config.js, build-docs.sh, copy_content.sh, copy_local.sh, docs-watcher/*, exclude_files.txt, install-npm.sh, start-docs.sh, watch.sh]
+exclude_navigation: ["knowledge-base/*",api/Kendo.Mvc/*,api/Kendo.Mvc.UI/*,api/Kendo.Mvc.UI.Fluent/*]
 navigation:
-
 
 ## List your directory names and order here, like this:
 
-   
+     "knowledge-base":
+        title: "Knowledge Base"
+        position: 280
+     "api":
+        title: "API Reference"
+        position: 0
+     "getting-started":
+        title: "Getting Started"
+        position: 2
+     "getting-started/prerequisites":
+        title: "Prerequisites"
+        position: 4
+     "getting-started/installation":
+        title: "Download and Installation"
+        position: 5
+     "getting-started/helper-basics":
+        title: "Working with Helpers"
+        position: 6
+     "getting-started/vs-integration":
+        title: "Integrating with VS"
+        position: 7
+     "getting-started/scripts":
+        title: "Helper Script Dependencies"
+        position: 8
+     "html-helpers":
+        title: "Html Helpers"
+        position: 3
+     "tag-helpers":
+        title: "Tag Helpers"
+        position: 4
+     "tag-helpers/datasource":
+        title: "Data Source"
+     "tag-helpers/data-management":
+        title: "Data Management"
+     "tag-helpers/data-management/grid":
+        title: "Grid"
+        position: 1
+     "tag-helpers/data-management/pivotgrid":
+        title: "PivotGrid"
+        position: 2
+     "tag-helpers/editors":
+        title: "Editors"
+     "tag-helpers/charts":
+        title: "Charts"
+     "tag-helpers/charts/treemap":
+        title: "TreeMap"
+        position: 2
+     "tag-helpers/gauges":
+        title: "Gauges"
+     "tag-helpers/barcodes":
+        title: "Barcodes"
+     "tag-helpers/diagrams-and-maps":
+        title: "Diagrams and Maps"
+     "tag-helpers/scheduling":
+        title: "Scheduling"
+     "tag-helpers/layout":
+        title: "Layout"
+     "tag-helpers/navigation":
+        title: "Navigation"
+     "tag-helpers/conversational-ui":
+        title: "Conversational UI"
+        isNew: true
+     "tag-helpers/conversational-ui/chat":
+        title: "Chat"
+     "tag-helpers/interactivity":
+        title: "Interactivity and UX"
+     "tag-helpers/media":
+        title: "Media"
+     "tag-helpers/pdf":
+        title: "PDF"
+     "tag-helpers/pdf/pdfviewer":
+        title: "PDFViewer"
+     "html-helpers/datasource":
+        title: "Data Source"
+     "html-helpers/data-management":
+        title: "Data Management"
+     "html-helpers/data-management/grid":
+        title: "Grid"
+     "html-helpers/data-management/grid/binding":
+        title: "Data Binding"
+        position: 2
+     "html-helpers/data-management/grid/editing":
+        title: "Editing"
+        position: 3
+     "html-helpers/data-management/grid/columns":
+        title: "Columns"
+        position: 12
+     "html-helpers/data-management/grid/grouping":
+        title: "Grouping"
+        position: 5
+     "html-helpers/data-management/grid/columns":
+        title: "Columns"
+        position: 11
+     "html-helpers/data-management/grid/scrolling":
+        title: "Scroll Modes"
+        position: 12
+     "html-helpers/data-management/grid/export":
+        title: "Export"
+        position: 14
+     "html-helpers/data-management/grid/templates":
+        title: "Templates"
+        position: 15
+     "html-helpers/data-management/grid/appearance":
+        title: "Appearance"
+        position: 16
+     "html-helpers/data-management/grid/performance":
+        title: "Performance Tips"
+        position: 17
+     "html-helpers/data-management/grid/globalization":
+        title: "Globalization"
+        position: 50
+     "html-helpers/data-management/grid/accessibility":
+        title: "Accessibility"
+        position: 60
+     "html-helpers/data-management/pivotgrid":
+        title: "PivotGrid"
+     "html-helpers/data-management/spreadsheet/import-and-export-data":
+        title: "Import and Export of Data"
+     "html-helpers/data-management/spreadsheet/end-user":
+        title: "End-User Documentation"
+     "html-helpers/editors":
+        title: "Editors"
+     "html-helpers/editors/datetimepicker/globalization":
+        title: "Globalization"
+        position: 40
+     "html-helpers/editors/datetimepicker/accessibility":
+        title: "Accessibility"
+        position: 50
+     "html-helpers/editors/listbox/globalization":
+        title: "Globalization"
+        position: 40
+     "html-helpers/editors/listbox/accessibility":
+        title: "Accessibility"
+        position: 50
+     "html-helpers/editors/listbox/binding":
+        title: "Data Binding"
+        position: 2
+     "html-helpers/editors/flatcolorpicker":
+        title: "FlatColorPicker"
+     "html-helpers/editors/datepicker/accessibility":
+        title: "Accessibility"
+        position: 50
+     "html-helpers/charts":
+        title: "Charts"
+     "html-helpers/charts/chart-types":
+        title: "Chart Types"
+        position: 3
+     "html-helpers/charts/stockchart":
+        title: "StockChart"
+        position: 4
+     "html-helpers/charts/treemap":
+        title: "TreeMap"
+        position: 5
+     "html-helpers/gauges":
+        title: "Gauges"
+     "html-helpers/barcodes":
+        title: "Barcodes"
+     "html-helpers/diagrams-and-maps":
+        title: "Diagrams and Maps"
+     "html-helpers/scheduling":
+        title: "Scheduling"
+     "html-helpers/layout":
+        title: "Layout"
+     "html-helpers/navigation":
+        title: "Navigation"
+     "html-helpers/navigation/radiobutton":
+        title: "RadioButton"
+     "html-helpers/navigation/menu/binding":
+        title: "Binding"
+        position: 2
+     "html-helpers/navigation/menu/contextmenu":
+        title: "ContextMenu"
+        position: 3
+     "html-helpers/conversational-ui":
+        title: "Conversational UI"
+        isNew: true
+     "html-helpers/conversational-ui/chat":
+        title: "Chat"
+     "html-helpers/interactivity":
+        title: "Interactivity and UX"
+     "html-helpers/media":
+        title: "Media"
+     "html-helpers/pdf":
+        title: "PDF"
+     "html-helpers/pdf/pdfviewer":
+        title: "PDFViewer"
+     "html-helpers/scheduling/scheduler/binding":
+        title: "Binding"
+        position: 2
+     "globalization":
+        title: "Globalization"
+        position: 5
+     "accessibility":
+        title: "Accesibility"
+        position: 6
+     "backwards-compatibility":
+        title: "Breaking Changes"
+        position: 7
+
+## List helpers directory names and order here, like this:
+     "*appearance":
+        title: "Appearance"
+     "*binding":
+        title: "Binding"
+        position: 2
+     "*troubleshoot":
+        title: "Troubleshooting"
+     "*editing":
+        title: "Editing"
+     "*export":
+        title: "Export"
+     "*filtering":
+        title: "Filtering"
+     "*integration":
+        title: "Integration"
+     "*selection":
+        title: "Selection"
+     "*state":
+        title: "State Management"
+     "*how-to":
+        title: "How To"
+     "*grid":
+        title: "Grid"
+     "*drawer":
+        title: "Drawer"
+        isNew: true
+     "*listview":
+        title: "ListView"
+     "*treelist":
+        title: "TreeList"
+     "*spreadsheet":
+        title: "Spreadsheet"
+     "*arcgauge":
+        title: "ArcGauge"
+     "*autocomplete":
+        title: "AutoComplete"
+     "*barcode":
+        title: "BarCode"
+     "*button":
+        title: "Button"
+     "*buttongroup":
+        title: "ButtonGroup"
+     "html-helpers/scheduling/calendar":
+        title: "Calendar"
+     "html-helpers/scheduling/calendar/accessibility":
+        title: "Accessibility"
+        position: 50
+     "html-helpers/scheduling/multiviewcalendar":
+        title: "MultiViewCalendar"
+     "tag-helpers/scheduling/multiviewcalendar":
+        title: "MultiViewCalendar"
+     "*colorpalette":
+        title: "ColorPalette"
+     "*colorpicker":
+        title: "ColorPicker"
+     "*/multicolumncombobox":
+        isNew: true
+        title: "MultiColumnComboBox"
+     "*combobox":
+        title: "ComboBox"
+     "*dateinput":
+        title: "DateInput"
+     "*datepicker":
+        title: "DatePicker"
+     "*daterangepicker":
+        title: "DateRangePicker"
+     "*datetimepicker":
+        title: "DateTimePicker"
+     "*dialog":
+        title: "Dialog"
+     "*draganddrop":
+        title: "DragAndDrop"
+     "*dropdownlist":
+        title: "DropDownList"
+     "*dropdowntree":
+        isNew: true
+        title: "DropDownTree"
+     "*editor":
+        title: "Editor"
+     "*flatcolorpicker":
+        title: "FlatColorPicker"
+     "*gantt":
+        title: "Gantt"
+     "*lineargauge":
+        title: "LinearGauge"
+     "*listbox":
+        title: "ListBox"
+     "*map":
+        title: "Map"
+     "*maskedtextbox":
+        title: "MaskedTextBox"
+     "*mediaplayer":
+        title: "MediaPlayer"
+     "*menu":
+        title: "Menu"
+     "*multiselect":
+        title: "MultiSelect"
+     "*notification":
+        title: "Notification"
+     "*popup":
+        title: "Popup"
+     "*numerictextbox":
+        title: "NumericTextBox"
+     "*rating":
+        title: "Rating"
+     "*progressbar":
+        title: "ProgressBar"
+     "*qrcode":
+        title: "QRCode"
+     "*/radiobutton":
+        title: "RadioButton"
+     "*radialgauge":
+        title: "RadialGauge"
+     "*rangeslider":
+        title: "RangeSlider"
+     "*responsivepanel":
+        title: "ResponsivePanel"
+     "*panelbar":
+        title: "PanelBar"
+     "*pivotgrid":
+        title: "PivotGrid"
+     "*scheduler":
+        title: "Scheduler"
+     "*scrollview":
+        title: "ScrollView"
+     "*slider":
+        title: "Slider"
+     "*sortable":
+        title: "Sortable"
+     "*splitter":
+        title: "Splitter"
+     "*stockchart":
+        title: "StockChart"
+     "*tabstrip":
+        title: "TabStrip"
+     "*timepicker":
+        title: "TimePicker"
+     "*tooltip":
+        title: "Tooltip"
+     "*toolbar":
+        title: "ToolBar"
+     "*treelist":
+        title: "TreeList"
+     "*treeview":
+        title: "TreeView"
+     "*treemap":
+        title: "TreeMap"
+     "*upload":
+        title: "Upload"
+     "*validator":
+        title: "Validator"
+     "*window":
+        title: "Window"
+     "*templates":
+        title: "Templates"
+     "*switch":
+        title: "Switch"
+     "*/accessibility":
+        title: "Accessibility"
 
 ## The application virtual path
 baseurl: /aspnet-core
 
 ## The Kendo UI version used
-cdnVersion: "2016.2.607"
+cdnVersion: "2019.1.115"
 
 ## The MVC Core version used
-mvcCoreVersion: "2016.2.616"
+mvcCoreVersion: "2019.1.115"
+
+ff-sheet-id: 1mottKpkbJFxkUq6rS3CsPrT8JQOE2JlUtsJBR622cxs
+
+## Product
+product: "Telerik UI for ASP.NET Core"
+platform: aspnet-core
 
 ## Assign layout and category per different paths
 defaults:
@@ -25,7 +393,7 @@ defaults:
     scope:
         path: ""
     values:
-        layout: "page"
+        layout: "documentation"
         category: "default"
         product: "aspnet-core"
         editable: true
@@ -35,6 +403,12 @@ defaults:
     values:
         product: "aspnet-core"
 
+    scope:
+        path: "api"
+    values:
+        editable: false
+        res_type: api
+        kind: api
 
 type_links:
     "kendo.Class": "/api/javascript/class"
@@ -55,7 +429,45 @@ type_links:
 
 # The google services configuration
 google_tag_manager: GTM-6X92
-google_custom_search: '001595215763381649090:rfbgc0yrusm'
+gcs_engine: '001595215763381649090:rfbgc0yrusm'
+gcs_api_key: 'AIzaSyCkef2O-98IZGc0Jv16ozv8gqL-r1mL2_0'
+
+has_web_api_index: true
+skip_tabbed_code: true
+code_lang: true
+has_kb_portal: true
+api_columns_count: 2
+edit_repo_url: https://github.com/telerik/kendo-ui-core/edit/master/docs-aspnet-core
+download: https://www.telerik.com/download-trial-file/v2/aspnet-core-ui
+nav:
+  "Demos": http://demos.telerik.com/aspnet-core/
+  "Release History": https://www.telerik.com/support/whats-new/aspnet-core-ui/release-history
+  "About": http://www.telerik.com/aspnet-mvc/mvc6-features
+  "Pricing": http://www.telerik.com/purchase/aspnet-core-ui
+
+footer:
+-
+  title: "Getting Started"
+  links:
+    "Getting Started": https://docs.telerik.com/aspnet-core/getting-started/getting-started
+    "Demos": https://demos.telerik.com/aspnet-core/
+    "Sample Applications": https://demos.telerik.com/aspnet-core/
+-
+  title: "Support Resources"
+  links:
+    "Knowledge Base": https://docs.telerik.com/aspnet-core/knowledge-base
+-
+  title: "Community"
+  links:
+    "Forums": https://www.telerik.com/forums/aspnet-core-ui
+    "Blogs": https://www.telerik.com/blogs/.net
+    "Feedback Portal": https://feedback.telerik.com/aspnet-core-ui
+
+footer_social:
+    facebook: https://www.facebook.com/Telerik/
+    youtube: https://www.youtube.com/user/TelerikInc
+    linkedin: https://www.linkedin.com/showcase/telerik/
+    twitter: https://twitter.com/Telerik/
 
 # Assets pipeline configuration
 assets:

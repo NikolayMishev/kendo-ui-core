@@ -88,7 +88,7 @@ The example below demonstrates how to initialize a Hybrid UI ScrollView bound to
             type: "odata",
             transport: {
                 read: {
-                    url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                    url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
                 }
             },
             serverPaging: true,
@@ -96,7 +96,7 @@ The example below demonstrates how to initialize a Hybrid UI ScrollView bound to
         });
 
         function setBackground(id) {
-            return "url(http://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
+            return "url(https://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
         }
     </script>
 
@@ -124,7 +124,7 @@ The example below demonstrates how to initialize a Hybrid UI ScrollView bound to
                     type: "odata",
                     transport: {
                         read: {
-                            url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                            url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
                         }
                     },
                     serverPaging: true,
@@ -137,7 +137,7 @@ The example below demonstrates how to initialize a Hybrid UI ScrollView bound to
         }
 
         function setBackground(id) {
-            return "url(http://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
+            return "url(https://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
         }
     </script>
 
@@ -197,7 +197,7 @@ The example below demonstrates a multiple-item template.
                     type: "odata",
                     transport: {
                         read: {
-                            url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                            url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
                         }
                     },
                     serverPaging: true,
@@ -211,7 +211,7 @@ The example below demonstrates a multiple-item template.
         }
 
         function setBackground(id) {
-            return "url(http://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
+            return "url(https://demos.telerik.com/kendo-ui/content/web/foods/" + id +".jpg)";
         }
     </script>
 
@@ -297,9 +297,9 @@ If a Kendo UI template is used to generate the pages, the whitespace gaps can be
 
 ### Pager Overlay
 
-**Figure 1. ScrollView pager overlay**
+**Figure 1: ScrollView pager overlay**
 
-![ScrollView pager overlay](/controls/hybrid/scrollview/pager-overlay.png)
+![ScrollView pager overlay](pager-overlay.png)
 
 To activate the feature, add the `km-scrollview-overlay` class to the ScrollView element.
 
@@ -316,21 +316,21 @@ To activate the feature, add the `km-scrollview-overlay` class to the ScrollView
 
 A data-bound ScrollView does not display any data. Below are listed some of the possible reasons and solutions for that.
 
-The [`pageSize`](/api/javascript/data/datasource#configuration-pageSize) of the DataSource is undefined.
+The [`pageSize`](/api/javascript/data/datasource/configuration/pagesize) of the DataSource is undefined.
 
 * **Solution** Set the `pageSize`. Setting the `pageSize` is mandatory.
 
-The [`total`](/api/javascript/data/datasource#configuration-schema.total) amount of records in the DataSource is undefined.
+The [`total`](/api/javascript/data/datasource/configuration/schema.total) amount of records in the DataSource is undefined.
 
 * **Solution** Set the `total`. Setting the `total` is mandatory.
 
-The widget's [`template`](/api/javascript/mobile/ui/scrollview#configuration-template) is undefined.
+The widget's [`template`](/api/javascript/mobile/ui/scrollview/configuration/template) is undefined.
 
 * **Solution** Set the `template`. Setting the `template` is mandatory.
 
 The widget's content height is zero.
 
-* **Solution** If the `contentHeight` is set to 100%, the ScrollView element should be the immediate child of the View and the View's `stretch` option should be set to `true`. For a code sample, refer to [this demo](/api/javascript/mobile/ui/scrollview#configuration-contentHeight).
+* **Solution** If the `contentHeight` is set to 100%, the ScrollView element should be the immediate child of the View and the View's `stretch` option should be set to `true`. For a code sample, refer to [this demo](/api/javascript/mobile/ui/scrollview/configuration/contentheight).
 
 ### Performance Issues
 
@@ -339,8 +339,6 @@ The widget loads data, but the application hangs or crashes. The possible reason
 **Solution** Set the [`enablePager`](/api/mobile/scrollview#configuration-enablePager) to `false`.
 
 ## See Also
-
-Other articles and how-to examples on the Hybrid UI components and on the ScrollView:
 
 * [Hybrid UI ScrollView JavaScript API Reference](/api/javascript/mobile/ui/scrollview)
 * [Overview of the Hybrid UI Components]({% slug overview_hybridkendoui %})

@@ -11,10 +11,10 @@ The example below demonstrates how to include an Esri(ArcGIS) map when working w
 
 ###### Example
 
-```html
-      <style id="jsbin-css"></style>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.6/js/esri/css/esri.css" />
-    <script src="http://js.arcgis.com/3.6/"></script>
+```dojo
+    <style id="jsbin-css"></style>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.6/js/esri/css/esri.css" />
+    <script src="https://js.arcgis.com/3.6/"></script>
     <div data-role="view" data-stretch="true" data-init="onInit">
       <header data-role="header">
         <div data-role="navbar">
@@ -29,7 +29,7 @@ The example below demonstrates how to include an Esri(ArcGIS) map when working w
         <div data-role="tabstrip">
           <a data-icon="home">Home</a>
           <a data-icon="info">Info</a>
-        </div>        
+        </div>
       </footer>
     </div>
     <script>
@@ -46,7 +46,7 @@ The example below demonstrates how to include an Esri(ArcGIS) map when working w
             zoom: 7,
             sliderStyle: "small"
           });
-        });   
+        });
       }
     </script>
 ```

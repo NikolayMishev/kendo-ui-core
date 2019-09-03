@@ -13,22 +13,22 @@ This article demonstrates the ASP.NET MVC server-side API for the Kendo UI Numer
 
 ### IncrementStep
 
-```tab-Previous
+```Previous
 
     Html.Telerik().NumericTextBox().IncrementStep(1)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().NumericTextBox().Step(1)
 ```
 
 ### Min Value
 
-```tab-Previous
+```Previous
 
     Html.Telerik().NumericTextBox().MinValue(1)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().NumericTextBox().Min(1)
 
@@ -36,22 +36,22 @@ This article demonstrates the ASP.NET MVC server-side API for the Kendo UI Numer
 
 ### Max Value
 
-```tab-Previous
+```Previous
 
     Html.Telerik().NumericTextBox().MaxValue(1)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().NumericTextBox().Max(1)
 ```
 
 ### Empty Message
 
-```tab-Previous
+```Previous
 
     Html.Telerik().NumericTextBox().EmptyMessage(“Enter”)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().NumericTextBox().Placeholder(“Enter”)
 ```
@@ -62,11 +62,11 @@ Not implemented.
 
 ### DecimalDigits
 
-```tab-Previous
+```Previous
 
     Html.Telerik().NumericTextBox().DecimalDigits(3)
 ```
-```tab-Current
+```Current
 
     Html.Kendo().NumericTextBox().Decimals(3)
 ```
@@ -83,12 +83,12 @@ None of the widgets features the `OnLoad` event anymore. Use the `$(document).re
 
 ### Enable and Disable
 
-```tab-Previous
+```Previous
 
     var datePicker = $("#DatePicker").data("tTextBox");
     datePicker.disable();
 ```
-```tab-Current
+```Current
 
     var datePicker = $("#datepicker").data("kendoNumericTextBox");
     datePicker.enable(false);
@@ -96,10 +96,8 @@ None of the widgets features the `OnLoad` event anymore. Use the `$(document).re
 
 ## See Also
 
-Other articles on migrating from Telerik Extensions:
-
 * [Migrate the AutoComplete]({% slug autocomplete_migrationextensions_aspnetmvc %})
 * [Migrate the Calendar]({% slug calendar_migrationextensions_aspnetmvc %})
 * [Migrate the Chart]({% slug chart_migrationextensions_aspnetmvc %})
 
-To see the articles on migrating Kendo UI controls from Telerik Extensions, browse [this section]({% slug combobox_migrationextensions_aspnetmvc %}).
+To see the articles on migrating Kendo UI controls from Telerik Extensions, browse the [**Widgets** folder]({% slug autocomplete_migrationextensions_aspnetmvc %}).

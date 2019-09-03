@@ -1,4 +1,4 @@
-﻿(function( window, undefined ) {
+(function( window, undefined ) {
     kendo.cultures["or"] = {
         name: "or",
         numberFormat: {
@@ -8,7 +8,7 @@
             ".": ".",
             groupSize: [3,2],
             percent: {
-                pattern: ["-n %","n %"],
+                pattern: ["-n%","n%"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",

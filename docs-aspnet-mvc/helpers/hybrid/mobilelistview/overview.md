@@ -9,7 +9,9 @@ position: 1
 
 # Hybrid ListView HtmlHelper Overview
 
-The hybrid ListView HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ListView](http://demos.telerik.com/kendo-ui/m/index#mobile-listview/index) widget. It allows you to configure the hybrid Kendo UI ListView from server-side code.
+The hybrid ListView HtmlHelper extension is a server-side wrapper for the [hybrid Kendo UI ListView](http://demos.telerik.com/kendo-ui/m/index#mobile-listview/index) widget.
+
+It allows you to configure the hybrid Kendo UI ListView from server-side code.
 
 ## Getting Started
 
@@ -24,65 +26,29 @@ There are two ways to configure the hybrid ListView for ASP.NET MVC:
 
 Below are listed the steps for you to follow when defining the items of a hybrid Kendo UI ListView.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
             return View();
         }
 
-**Step 3** Add a hybrid ListView to the `Index` view. It must be inside the View content.
+1. Add a hybrid ListView to the `Index` view. It must be inside the View content.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <% Html.Kendo().MobileView()
-                .Name("listview-home")
-                .Title("Destinations")
-                .Content(() =>
-                {
-                    %>
-                    <% Html.Kendo().MobileListView().Style("inset").Type("group")
-                           .Items(root => {
-                                //Add the root item.
-                                root.Add().Text("Africa").Items(items =>
-                                {
-                                    //Add the nested link item.
-                                    items.AddLink().Text("Nairobi").Icon("toprated");
-                                });
-
-                                root.Add().Text("America").Items(items =>
-                                {
-                                    items.AddLink().Text("Boston").Icon("globe");
-                                    items.AddLink().Text("Ottawa").Icon("globe");
-                                    items.AddLink().Text("San Francisco").Icon("toprated");
-                                });
-                            })
-                            .Render();
-                    %>
-                    <%
-                })
-                .Render();
-        %>
-```
-```tab-Razor
-
-        @(Html.Kendo().MobileView()
-                .Name("listview-home")
-                .Title("Destinations")
-                .Content(obj =>
-                    Html.Kendo().MobileListView().Style("inset").Type("group")
-                        .Items(root =>
-                        {
-                            //Add the root item.
+            .Name("listview-home")
+            .Title("Destinations")
+            .Content(() =>
+            {
+                %>
+                <% Html.Kendo().MobileListView().Style("inset").Type("group")
+                        .Items(root => {
+                            // Add the root item.
                             root.Add().Text("Africa").Items(items =>
                             {
-                                //Add the nested link item.
+                                // Add the nested link item.
                                 items.AddLink().Text("Nairobi").Icon("toprated");
                             });
 
@@ -93,47 +59,67 @@ Below are listed the steps for you to follow when defining the items of a hybrid
                                 items.AddLink().Text("San Francisco").Icon("toprated");
                             });
                         })
-                )
-        )
-```
-
-**Step 4** Initialize the mobile application.
-
-###### Example
-
-```tab-ASPX
-
-        <%: Html.Kendo().MobileApplication()
-                .ServerNavigation(true)
+                        .Render();
+                %>
+                <%
+            })
+            .Render();
         %>
-```
-```tab-Razor
+    ```
+    ```Razor
+        @(Html.Kendo().MobileView()
+            .Name("listview-home")
+            .Title("Destinations")
+            .Content(obj =>
+                Html.Kendo().MobileListView().Style("inset").Type("group")
+                    .Items(root =>
+                    {
+                        // Add the root item.
+                        root.Add().Text("Africa").Items(items =>
+                        {
+                            // Add the nested link item.
+                            items.AddLink().Text("Nairobi").Icon("toprated");
+                        });
 
+                        root.Add().Text("America").Items(items =>
+                        {
+                            items.AddLink().Text("Boston").Icon("globe");
+                            items.AddLink().Text("Ottawa").Icon("globe");
+                            items.AddLink().Text("San Francisco").Icon("toprated");
+                        });
+                    })
+            )
+        )
+    ```
+
+1. Initialize the mobile application.
+
+    ```ASPX
+        <%: Html.Kendo().MobileApplication()
+            .ServerNavigation(true)
+        %>
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 5** Build and run the application.
+1. Build and run the application.
 
 ### Data Binding
 
 Below are listed the steps for you to follow when configuring the hybrid Kendo UI ListView for data binding.
 
-**Step 1** Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
-
-**Step 2** Open `HomeController.cs` and modify the `Index` action method.
-
-###### Example
+1. Create a new ASP.NET MVC 4 application. If you have installed the [Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_aspnetmvc %}#kendo-ui-for-asp.net-mvc-visual-studio-extensions), create a Telerik UI for ASP.NET MVC application. If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the [introductory article]({% slug overview_aspnetmvc %}) to add Telerik UI for ASP.NET MVC to the application.
+1. Open `HomeController.cs` and modify the `Index` action method.
 
         public ActionResult Index()
         {
             return View();
         }
 
-**Step 3** Add a new action method that returns the data populating the ListView.
-
-###### Example
+1. Add a new action method that returns the data populating the ListView.
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
@@ -160,139 +146,123 @@ Below are listed the steps for you to follow when configuring the hybrid Kendo U
                 new { Name = "Yaki Udon", Letter = "Y" }
             };
 
-            //Return the data as JSON.
+            // Return the data as JSON.
             return Json(products.ToDataSourceResult(request));
         }
 
-**Step 4** Add a hybrid ListView to the `Index` view. It must be inside the View content.
+1. Add the hybrid ListView to the `Index` view. It must be inside the View content.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileView()
-                .Name("grouped")
-                .Title("ListView")
-                .Content(obj =>
-                    Html.Kendo().MobileListView()
-                        .Name("grouped-listview")
-                        .TemplateId("template") //configure the item template
-                        .FixedHeaders(true)
-                        .DataSource(dataSource =>
-                            dataSource
-                                .Read("Read", "Home") //configure DataSource `Read` action
-                                .Group(group => group.Add("Letter", typeof(string)))
-                        )
-                )
+            .Name("grouped")
+            .Title("ListView")
+            .Content(obj =>
+                Html.Kendo().MobileListView()
+                    .Name("grouped-listview")
+                    .TemplateId("template") //configure the item template
+                    .FixedHeaders(true)
+                    .DataSource(dataSource =>
+                        dataSource
+                            .Read("Read", "Home") //configure DataSource `Read` action
+                            .Group(group => group.Add("Letter", typeof(string)))
+                    )
+            )
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileView()
-                .Name("grouped")
-                .Title("ListView")
-                .Content(obj =>
-                    Html.Kendo().MobileListView()
-                        .Name("grouped-listview")
-                        .TemplateId("template") //configure the item template
-                        .FixedHeaders(true)
-                        .DataSource(dataSource =>
-                            dataSource
-                                .Read("Read", "Home") //configure DataSource `Read` action
-                                .Group(group => group.Add("Letter", typeof(string)))
-                        )
-                )
+            .Name("grouped")
+            .Title("ListView")
+            .Content(obj =>
+                Html.Kendo().MobileListView()
+                    .Name("grouped-listview")
+                    .TemplateId("template") //configure the item template
+                    .FixedHeaders(true)
+                    .DataSource(dataSource =>
+                        dataSource
+                            .Read("Read", "Home") //configure DataSource `Read` action
+                            .Group(group => group.Add("Letter", typeof(string)))
+                    )
+            )
         )
-```
+    ```
 
-**Step 5** Initialize the mobile application.
+1. Initialize the mobile application.
 
-###### Example
-
-```tab-ASPX
-
+    ```ASPX
         <%: Html.Kendo().MobileApplication()
-                .ServerNavigation(true)
+            .ServerNavigation(true)
         %>
-```
-```tab-Razor
-
+    ```
+    ```Razor
         @(Html.Kendo().MobileApplication()
             .ServerNavigation(true)
         )
-```
+    ```
 
-**Step 6** Build and run the application.
+1. Build and run the application.
 
 ## Reference
 
 ### Instances
 
-You can reference a hybrid Layout instance by using the [jQuery.data()](http://api.jquery.com/jQuery.data/) method and the value specified through the `Name()` method. Once a reference is established, use the [hybrid ListView API](../../../../kendo-ui/api/javascript/mobile/ui/listview#methods) to control its behavior.
+You can reference a hybrid Layout instance by using the [jQuery.data()](http://api.jquery.com/jQuery.data/) method and the value specified through the `Name()` method. Once a reference is established, use the [hybrid ListView API](https://docs.telerik.com/kendo-ui/api/javascript/ui/listview#methods) to control its behavior.
 
-###### Example
-
-        @(Html.Kendo().MobileListView()
-                .Name("MobileListView")
-        )
-        <script>
+    @(Html.Kendo().MobileListView()
+            .Name("MobileListView")
+    )
+    <script>
         $(function() {
-            //Notice that the Name() of the ListView is used to get its client-side instance.
+            // The Name() of the ListView is used to get its client-side instance.
             var listview = $("#MobileListView").data("kendoMobileListView");
         });
-        </script>
+    </script>
 
 ## Event Handling
 
-You can subscribe to all hybrid ListView [events](../../../../kendo-ui/api/javascript/mobile/ui/listview#events).
+You can subscribe to all hybrid ListView [events](https://docs.telerik.com/kendo-ui/api/javascript/ui/listview#events).
 
 ### By Handler Name
 
-The examples below demonstrates how to subscribe to events by a handler name.
+The following example demonstrates how to subscribe to events by a handler name.
 
-###### Example
+```ASPX
+    <%: Html.Kendo().MobileListView()
+            .Name("MobileListView")
+            .Events(events => events
+                .Click("onClick")
+            )
+    %>
 
-```tab-ASPX
-
-        <%: Html.Kendo().MobileListView()
-                .Name("MobileListView")
-                .Events(events => events
-                    .Click("onClick")
-                )
-        %>
-
-        <script>
+    <script>
         function onClick() {
-            //Handle the click event.
+            // Handle the click event.
         }
-        </script>
+    </script>
 ```
-```tab-Razor
+```Razor
+    @(Html.Kendo().MobileListView()
+            .Name("MobileListView")
+            .Events(events => events
+                .Click("onClick")
+            )
+    )
 
-        @(Html.Kendo().MobileListView()
-                .Name("MobileListView")
-                .Events(events => events
-                    .Click("onClick")
-                )
-        )
-
-        <script>
+    <script>
         function onClick() {
-            //Handle the click event.
+            // Handle the click event.
         }
-        </script>
+    </script>
 ```
 
 ## See Also
 
-Other articles on Telerik UI for ASP.NET MVC and on the ListView:
-
-* [ASP.NET MVC API Reference: Hybrid UI ListViewBuilder](/api/Kendo.Mvc.UI.Fluent/MobileListViewBuilder)
+* [Telerik UI for ASP.NET MVC API Reference: Hybrid UI ListViewBuilder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc.UI.Fluent/MobileListViewBuilder)
 * [Overview of the Hybrid UI ListView Widget](http://docs.telerik.com/kendo-ui/controls/hybrid/listview/overview)
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})
 * [Scaffolding in Telerik UI for ASP.NET MVC]({% slug scaffolding_aspnetmvc %})
-* [Telerik UI for ASP.NET MVC API Reference Folder](/api/Kendo.Mvc/AggregateFunction)
+* [Telerik UI for ASP.NET MVC API Reference Folder](http://docs.telerik.com/aspnet-mvc/api/Kendo.Mvc/AggregateFunction)
 * [Telerik UI for ASP.NET MVC HtmlHelpers Folder]({% slug overview_barcodehelper_aspnetmvc %})
 * [Tutorials on Telerik UI for ASP.NET MVC]({% slug overview_timeefficiencyapp_aspnetmvc6 %})
 * [Telerik UI for ASP.NET MVC Troubleshooting]({% slug troubleshooting_aspnetmvc %})

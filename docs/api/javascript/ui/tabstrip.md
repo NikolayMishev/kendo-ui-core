@@ -2,6 +2,8 @@
 title: TabStrip
 page_title: Configuration, methods and events of Kendo UI TabStrip
 description: Easily disable all animations, set the parameters, used for the visual animation and the effects used in TabStrip UI widget.
+res_type: api
+component: tabstrip
 ---
 
 # kendo.ui.TabStrip
@@ -239,10 +241,34 @@ Sets an array with the URLs from which the tabs content to be loaded from. If on
         $("#tabstrip").kendoTabStrip({
             contentUrls: [
                 null,
-                "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
+                "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
             ]
         });
     </script>
+
+As of the Kendo UI R1 2017 release, this option can contain configuration objects that are passed to [`jQuery.ajax`](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings), used by the widget for remote requests. This means that you can set options supported by `jQuery.ajax` through configuration objects such as `cache`, `url`, `type`, and others.
+
+    <div id="tabstrip">
+        <ul>
+            <li>Tab 1</li>
+            <li>Ajax Tab</li>
+        </ul>
+        <div>Content 1</div>
+        <div></div>
+    </div>
+
+    <script>
+        $("#tabstrip").kendoTabStrip({
+            contentUrls: [
+                null,
+                {
+                    url: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html",
+                    cache: true
+                }
+            ]
+        });
+    </script>
+
 
 ### dataContentField `String`*(default: "")*
 
@@ -276,8 +302,8 @@ Sets the field of the data item that provides the URL for the Ajax loaded tab co
             dataTextField: "Name",
             dataContentUrlField: "ContentUrl",
             dataSource: [
-              { Name: "Tab1", ContentUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
-              { Name: "Tab2", ContentUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
+              { Name: "Tab1", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
+              { Name: "Tab2", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
             ]
         });
     </script>
@@ -295,8 +321,8 @@ Sets the field of the data item that provides the image URL of the tab.
             dataTextField: "Name",
             dataImageUrlField: "ImageUrl",
             dataSource: [
-              { Name: "Tab1", ImageUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
-              { Name: "Tab2", ImageUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
+              { Name: "Tab1", ImageUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
+              { Name: "Tab2", ImageUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
             ]
         });
     </script>
@@ -401,11 +427,11 @@ Specifies whether the TabStrip should be keyboard navigatable.
         });
     </script>
 
-### scrollable `Boolean|Object`
+### scrollable `Boolean|Object` *(default: true)*
 
 If enabled, the TabStrip will display buttons that will scroll the tabs horizontally, when they cannot fit the TabStrip width. By default scrolling is enabled.
 
-The feature requires `"top"` or `"bottom"` [`tabPosition`](#configuration-tabPosition).
+The feature requires `"top"` or `"bottom"` [`tabPosition`](/api/javascript/ui/tabstrip#configuration-tabPosition).
 
 Unless disabled, `scrollable` must be set to a JavaScript object, which represents the scrolling configuration.
 
@@ -414,18 +440,25 @@ See [Scrollable Tabs](/controls/navigation/tabstrip/overview#configuration-Scrol
 #### Example - disable scrolling
 
     <div id="tabstrip">
-        <ul>
-            <li>Tab 1</li>
-            <li>Tab 2</li>
-        </ul>
-        <div>Content 1</div>
-        <div>Content 2</div>
-    </div>
-
-    <script>
-        $("#tabstrip").kendoTabStrip({
-            scrollable: false
-        });
+		<ul>
+			<li>Tab Header Number 1</li>
+			<li>Tab Header Number 2</li>
+			<li>Tab Header Number 3</li>
+			<li>Tab Header Number 4</li>
+			<li>Tab Header Number 5</li>
+			<li>Tab Header Number 6</li>
+		</ul>
+		<div>Content 1</div>
+		<div>Content 2</div>
+		<div>Content 3</div>
+		<div>Content 4</div>
+		<div>Content 5</div>
+		<div>Content 6</div>
+	</div>
+	<script>
+		$("#tabstrip").kendoTabStrip({
+			scrollable: false
+		});
     </script>
 
 ### scrollable.distance `Number` *(default: 200)*
@@ -435,26 +468,33 @@ Sets the scroll amount (in pixels) applied when the user clicks on a scroll butt
 #### Example
 
     <div id="tabstrip">
-        <ul>
-            <li>Tab 1</li>
-            <li>Tab 2</li>
-        </ul>
-        <div>Content 1</div>
-        <div>Content 2</div>
-    </div>
-
-    <script>
-        $("#tabstrip").kendoTabStrip({
-            scrollable: {
-                distance: 300
-            }
-        });
-    </script>
+		<ul>
+			<li>Tab Header Number 1</li>
+			<li>Tab Header Number 2</li>
+			<li>Tab Header Number 3</li>
+			<li>Tab Header Number 4</li>
+			<li>Tab Header Number 5</li>
+			<li>Tab Header Number 6</li>
+		</ul>
+		<div>Content 1</div>
+		<div>Content 2</div>
+		<div>Content 3</div>
+		<div>Content 4</div>
+		<div>Content 5</div>
+		<div>Content 6</div>
+	</div>
+	<script>
+		$("#tabstrip").kendoTabStrip({
+			scrollable: {
+				distance: 30
+			}
+		});
+	</script>
 
 ### tabPosition `String`*(default: "top")*
 
 Specifies the position of the widget tabs. Valid values are `"top"` (default), `"left"`, `"right"` and `"bottom"`.
-A [**fade animation**](#configuration-animation) is highly recommended with any of the non-default tab position settings.
+A [**fade animation**](/api/javascript/ui/tabstrip#configuration-animation) is highly recommended with any of the non-default tab position settings.
 
 #### Example
 
@@ -483,16 +523,20 @@ A [**fade animation**](#configuration-animation) is highly recommended with any 
 Specifies the selected tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.
 
 #### Example
+    <div id="tabstrip">
+    </div>
 
-    $("#tabstrip").kendoTabStrip({
-        value: "Tab1",
-        dataTextField: "Name",
-        dataContentField: "Content",
-        dataSource: [
-          { Name: "Tab1", Content: "Tab1: content" },
-          { Name: "Tab2", Content: "Tab2: content" }
-        ]
-    });
+    <script>
+        $("#tabstrip").kendoTabStrip({
+            value: "Tab1",
+            dataTextField: "Name",
+            dataContentField: "Content",
+            dataSource: [
+              { Name: "Tab1", Content: "Tab1: content" },
+              { Name: "Tab2", Content: "Tab2: content" }
+            ]
+        });
+    </script>
 
 > **Important:** This configuration options is available with releases after 2015.3.1002.
 
@@ -552,11 +596,11 @@ Appends a tab to the collection of tabs in a **TabStrip**.
             },
             {
                 text: "Item 3",
-                contentUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
+                contentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
             },
             {
                 text: "Item 4",
-                imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
             },
             {
                 text: "Item 5",
@@ -783,11 +827,11 @@ Inserts a newly-created tab after a specified tab.
             },
             {
                 text: "Item 3",
-                contentUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
+                contentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
             },
             {
                 text: "Item 4",
-                imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
             },
             {
                 text: "Item 5",
@@ -838,11 +882,11 @@ Inserts a newly-created tab before a specified tab.
             },
             {
                 text: "Item 3",
-                contentUrl: "http://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
+                contentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html"
             },
             {
                 text: "Item 4",
-                imageUrl: "http://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
+                imageUrl: "https://demos.telerik.com/kendo-ui/content/shared/icons/sports/baseball.png",
             },
             {
                 text: "Item 5",
@@ -896,15 +940,12 @@ Reloads TabStrip tab(s) via AJAX.
 
     <script>
         var tabStrip = $("#tabstrip").kendoTabStrip({
-            dataTextField: "text",
-            dataSource: [{
-                text: "Tab 1",
-                contentUrl: "partialContent1.html"
-            },
-            {
-                text: "Tab 2",
-                contentUrl: "partialContent2.html"
-            }]
+            dataTextField: "Name",
+            dataContentUrlField: "ContentUrl",
+            dataSource: [
+              { Name: "Tab1", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
+              { Name: "Tab2", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
+            ]
         }).data("kendoTabStrip");
 
         tabStrip.reload("li:first");
@@ -1056,7 +1097,7 @@ The content element of the activated tab.
 
 #### Attach activate event handler via bind(); detach via unbind()
 
-    <div id="tabstrip">
+    <div id="tabStrip">
         <ul>
             <li>Tab 1</li>
             <li>Tab 2</li>
@@ -1108,14 +1149,12 @@ The loaded content element that is retrieved via AJAX.
 
         // attach select event handler during initialization
         var tabStrip = $("#tabstrip").kendoTabStrip({
-            dataSource: [{
-                text: "Tab 1",
-                contentUrl: "partialContent1.html"
-            },
-            {
-                text: "Tab 2",
-                contentUrl: "partialContent2.html"
-            }],
+            dataTextField: "Name",
+            dataContentUrlField: "ContentUrl",
+            dataSource: [
+              { Name: "Tab1", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent1.html" },
+              { Name: "Tab2", ContentUrl: "https://demos.telerik.com/kendo-ui/content/web/tabstrip/ajax/ajaxContent2.html" }
+            ],
             contentLoad: onContentLoad
         }).data("kendoTabStrip");
     </script>
